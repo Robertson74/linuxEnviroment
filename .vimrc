@@ -1,4 +1,4 @@
-"new install 
+"new install
 "Install git
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "PluginInstall
@@ -57,6 +57,11 @@ Plugin 'raimondi/delimitmate'
 Plugin 'airblade/vim-gitgutter'
 " more readable indents
 Plugin 'nathanaelkane/vim-indent-guides'
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 
 " END OF PLUGINS
 "
@@ -134,17 +139,15 @@ function! BrowseDoc()
     endif
 endfunction
 
-"""""""""""""""""""""""""Plugin Bindings
-" indent line settings
-nnoremap <Leader>h :call BrowseDoc()
+nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
-nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>T :TagbarToggle<CR>
 " grundo mapping
-nnoremap <Leader>u :GundoToggle<CR>
+nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
-nnoremap <Leader>g :GitGutterToggle<CR>
+nnoremap <Leader>G :GitGutterToggle<CR>
 " indent  mapping
-nnoremap <Leader>i :IndentGuidesToggle<CR>
+nnoremap <Leader>I :IndentGuidesToggle<CR>
 
 
 
@@ -152,17 +155,85 @@ nnoremap <Leader>i :IndentGuidesToggle<CR>
 
 """""""""""""""""""""""""CUSTOM ADDITIONS
 """""""""""""""""""""""""rebinds
+" easy help access and zoom
+nnoremap <Leader>h :tab help 
+" zoom a split/ close and return
+nnoremap <Leader>z mb:tabnew %<cr>'bzz
+nnoremap <Leader>Z mv:tabprevious<CR>'vzz:+tabclose<CR>
+" find trailing spaces
+nnoremap <Leader>t /\S\zs\s\+$<cr>
+"turn off highlighting
+nnoremap <Leader>n :noh<cr>
+" vim edit rc and resource
+nnoremap <Leader>vvv :tabnew ~/.vimrc<cr>
+nnoremap <Leader>vs :source ~/.vimrc<CR>
+" Install vim plugins
+nnoremap <Leader>vp :PluginInstall<CR>
+" toggle spelling
+nnoremap <Leader>s :set spell!<CR>
+" rerun ctags
+nnoremap <Leader>ccc :!ctags -R --exclude=.git<CR>
+
 """""""""""""""""""""""""scripts
 " Rotate parameters in parenthesis
 """"""" (param(2), param(1), param[3])
-nnoremap <Leader>Rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
-nnoremap <Leader>Rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
+nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
+nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
 """"""" Add change inside parenths from cursor outside parenths
-nnoremap ci( :execute "normal! f(ci("<CR>a
-"this is a test (test 123);
-nnoremap ci[ :execute "normal! f[ci["<CR>a
-"this is a test [test 123];
-nnoremap ci{ :execute "normal! f{ci{"<CR>a
-"this is a test {test 123};
+nnoremap ci( %ci)
+nnoremap ci) F(ci)
+"this is a test (test 123) anothere test (here);
+nnoremap ci[ %ci[
+nnoremap ci] F[ci[
+"this is a test [test 123] anothere test [here];
+nnoremap ci{ %ci{
+nnoremap ci} F{ci}
+"this is a test {test 123} another test {here};
+nnoremap ci< f<ci>
+nnoremap ci> F<ci>
+"this is a test <test 123> this is a test <test 123>;
+""""""" flip true false
+function! FlipBoolean()
+    if expand('<cword>') == 'true'
+        :execute "normal! ciwfalse"
+    elseif expand('<cword>') == 'false'
+        :execute "normal! ciwtrue"
+    elseif expand('<cword>') == '1'
+        :execute "normal! ciw0"
+    elseif expand('<cword>') == '0'
+        :execute "normal! ciw1"
+    else
+        :echo "Not a Boolean"
+    endif
+endfunction
+nnoremap <Leader>b :call FlipBoolean()<CR>
+"true 1 0 false
 
-""""""" expand parameters for easy checking
+"""""""""""""""""""""""""TESTING AREA
+" function! GuiTabLabel()
+"   let label = ''
+"   let bufnrlist = tabpagebuflist(v:lnum)
+
+"   " Add '+' if one of the buffers in the tab page is modified
+"   for bufnr in bufnrlist
+"     if getbufvar(bufnr, "&modified")
+"       let label = '+'
+"       break
+"     endif
+"   endfor
+
+"   " Append the number of windows in the tab page if more than one
+"   let wincount = tabpagewinnr(v:lnum, '$')
+"   if wincount > 1
+"     let label .= wincount
+"   endif
+"   if label != ''
+"     let label .= ' '
+"   endif
+
+"   " Append the buffer name
+"   return label . bufname(bufnrlist[tabpagewinnr(v:lnum) - 1])
+" endfunction
+
+" set guitablabel=%{GuiTabLabel()}
+" <jdkasdkfj>
