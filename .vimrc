@@ -33,6 +33,7 @@ Plugin 'shinokada/SWTC.vim'
 Plugin 'scrooloose/syntastic'
 " auto complete
 Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Shougo/neocomplete.vim' 
 " tag browser
 Plugin 'majutsushi/tagbar'
 " extended tag matching with ^
@@ -69,6 +70,13 @@ Plugin 'honza/vim-snippets'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+"""""""""""""""""""""""""~configuration
+"spell checking
+setlocal spell spelllang=en_us
+" case sensitivity while searching
+set ignorecase
+set smartcase
+" syntax highlighting
 syntax on
 filetype plugin indent on
 "highlight when searching
@@ -76,53 +84,30 @@ set hlsearch incsearch
 let g:netrw_altv = 1
 " relative numbers
 set rnu
-" absolute numberline (with relative displays both)
+" absolute number line (with relative displays both)
 set nu
 "set path on project open
 set path=$PWD/**
-" show eisting tab with 4 spaces width
+" show exiting tab with 4 spaces width
 set tabstop=4
 " " when indenting with '>', use 4 spaces width
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set expandtab
 " enables auto complete on php
-" " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
+" autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
 " vdebug with xdebug options
 let g:vdebug_options = {}
 let g:vdebug_options["port"] = 9000
 let g:vdebug_options["break_on_open"] = 1
-let g:vdebug_options["path_maps"] = {"/var/www/html/repos/": "/Users/mrobertson/vms/dev/repos/"}
+let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 let g:vdebug_options['server'] = ""
 " gui configuration
 colorscheme darth
-" let g:solarized_termcolors=256
-" syntax enable
-" set background=light
-" colorscheme solarized
 "Netrw override to allow relative numbers
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 " status line config
 set laststatus=2
-" set statusline=%t
-" set statusline+=%h
-" set statusline+=%m
-" set statusline+=%r
-" set statusline+=%y
-" set statusline+=%=
-" set statusline+=%c,
-" set statusline+=%l/%L
-" set statusline+=\ %P
-"Syntastic recommended default settings
-" set statusline+=%#warningmsg#
-" let g:statline_sytastic =0
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-command! E Explore
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
 " F7 opens documentation for php/perl function under cursor
@@ -139,6 +124,16 @@ function! BrowseDoc()
     endif
 endfunction
 
+
+"""""""""""""""""""""""""~plugin configuration
+"Syntastic recommended default settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+command! E Explore
+
+"""""""""""""""""""""""""~plugin calls
 nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
@@ -149,14 +144,14 @@ nnoremap <Leader>G :GitGutterToggle<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 
-
-
-
-
-"""""""""""""""""""""""""CUSTOM ADDITIONS
-"""""""""""""""""""""""""rebinds
-" easy help access and zoom
-nnoremap <Leader>h :tab help 
+"""""""""""""""""""""""""~quick commands
+" quick command-line commands   
+nnoremap <Leader>h :tab help
+nnoremap <Leader>f. :find ./**/
+nnoremap <Leader>fs :find ./src/**/
+nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
+nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
+nnoremap <Leader>sw :w !sudo tee %<cr>
 " zoom a split/ close and return
 nnoremap <Leader>z mb:tabnew %<cr>'bzz
 nnoremap <Leader>Z mv:tabprevious<CR>'vzz:+tabclose<CR>
@@ -174,7 +169,7 @@ nnoremap <Leader>s :set spell!<CR>
 " rerun ctags
 nnoremap <Leader>ccc :!ctags -R --exclude=.git<CR>
 
-"""""""""""""""""""""""""scripts
+"""""""""""""""""""""""""~scripts
 " Rotate parameters in parenthesis
 """"""" (param(2), param(1), param[3])
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
@@ -210,30 +205,3 @@ nnoremap <Leader>b :call FlipBoolean()<CR>
 "true 1 0 false
 
 """""""""""""""""""""""""TESTING AREA
-" function! GuiTabLabel()
-"   let label = ''
-"   let bufnrlist = tabpagebuflist(v:lnum)
-
-"   " Add '+' if one of the buffers in the tab page is modified
-"   for bufnr in bufnrlist
-"     if getbufvar(bufnr, "&modified")
-"       let label = '+'
-"       break
-"     endif
-"   endfor
-
-"   " Append the number of windows in the tab page if more than one
-"   let wincount = tabpagewinnr(v:lnum, '$')
-"   if wincount > 1
-"     let label .= wincount
-"   endif
-"   if label != ''
-"     let label .= ' '
-"   endif
-
-"   " Append the buffer name
-"   return label . bufname(bufnrlist[tabpagewinnr(v:lnum) - 1])
-" endfunction
-
-" set guitablabel=%{GuiTabLabel()}
-" <jdkasdkfj>
