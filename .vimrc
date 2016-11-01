@@ -33,7 +33,7 @@ Plugin 'shinokada/SWTC.vim'
 Plugin 'scrooloose/syntastic'
 " auto complete
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim' 
+" Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
 " extended tag matching with ^
@@ -63,6 +63,8 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+" type script syntax highlighting
+Plugin 'leafgarland/typescript-vim'
 
 " END OF PLUGINS
 "
@@ -96,12 +98,6 @@ set shiftwidth=4
 set expandtab
 " enables auto complete on php
 " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
-" vdebug with xdebug options
-let g:vdebug_options = {}
-let g:vdebug_options["port"] = 9000
-let g:vdebug_options["break_on_open"] = 1
-let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
-let g:vdebug_options['server'] = ""
 " gui configuration
 colorscheme darth
 "Netrw override to allow relative numbers
@@ -133,6 +129,13 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 command! E Explore
 
+" vdebug with xdebug options
+let g:vdebug_options = {}
+let g:vdebug_options["port"] = 9000
+let g:vdebug_options["break_on_open"] = 1
+let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
+let g:vdebug_options['server'] = ""
+
 """""""""""""""""""""""""~plugin calls
 nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
@@ -145,8 +148,8 @@ nnoremap <Leader>G :GitGutterToggle<CR>
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 
 """""""""""""""""""""""""~quick commands
-" quick command-line commands   
-nnoremap <Leader>h :tab help
+" quick command-line commands
+nnoremap <Leader>h :tab help 
 nnoremap <Leader>f. :find ./**/
 nnoremap <Leader>fs :find ./src/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
