@@ -143,9 +143,15 @@ nnoremap <Leader>T :TagbarToggle<CR>
 " grundo mapping
 nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
-nnoremap <Leader>G :GitGutterToggle<CR>
+nnoremap <Leader>GG :GitGutterToggle<CR>
+" git status
+nnoremap <Leader>GS :Gstatus<CR>
+" git commit
+nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
+" toggle sytax checking
+nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """""""""""""""""""""""""~quick commands
 " quick command-line commands
