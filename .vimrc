@@ -43,7 +43,7 @@ Plugin 'sjl/gundo.vim'
 " easy comments
 Plugin 'tpope/vim-commentary'
 " color schemes
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'flazz/vim-colorschemes'
 " status bar plugin
 Plugin 'vim-airline/vim-airline'
 " status bar plugin
