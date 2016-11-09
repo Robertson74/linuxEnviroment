@@ -72,9 +72,13 @@ Plugin 'leafgarland/typescript-vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"""""""""""""""""""""""""~configuration
+"""""""""""""""""""""""""*configuration
+"setting initial fold methods
+set foldmethod=indent
+set foldlevel=1
+set foldnestmax=1
 "spell checking
-setlocal spell spelllang=en_us
+setlocal spelllang=en_us
 " case sensitivity while searching
 set ignorecase
 set smartcase
@@ -121,7 +125,7 @@ function! BrowseDoc()
 endfunction
 
 
-"""""""""""""""""""""""""~plugin configuration
+"""""""""""""""""""""""""*plugin configuration
 "Syntastic recommended default settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -136,7 +140,7 @@ let g:vdebug_options["break_on_open"] = 1
 let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 let g:vdebug_options['server'] = ""
 
-"""""""""""""""""""""""""~plugin calls
+"""""""""""""""""""""""""*plugin calls
 nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
@@ -153,7 +157,7 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " toggle sytax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
-"""""""""""""""""""""""""~quick commands
+"""""""""""""""""""""""""*quick commands
 " quick command-line commands
 nnoremap <Leader>h :tab help 
 nnoremap <Leader>f. :find ./**/
@@ -169,16 +173,26 @@ nnoremap <Leader>t /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>n :noh<cr>
 " vim edit rc and resource
-nnoremap <Leader>vvv :tabnew ~/.vimrc<cr>
-nnoremap <Leader>vs :source ~/.vimrc<CR>
+nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
+nnoremap <Leader>vs :source $MYVIMRC<CR>
 " Install vim plugins
 nnoremap <Leader>vp :PluginInstall<CR>
 " toggle spelling
-nnoremap <Leader>s :set spell!<CR>
+nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
-nnoremap <Leader>ccc :!ctags -R --exclude=.git<CR>
+nnoremap <Leader>ct :!ctags -R --exclude=.git<CR>
+" copen
+nnoremap <Leader>co :copen<CR>
+" cclose
+nnoremap <Leader>cc :ccl<CR>
+" cnext
+nnoremap <Leader>cn :cnext<CR>
+" cprevious
+nnoremap <Leader>cp :cprevious<CR>
+" Count search terms
+nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 
-"""""""""""""""""""""""""~scripts
+"""""""""""""""""""""""""*scripts
 " Rotate parameters in parenthesis
 """"""" (param(2), param(1), param[3])
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
@@ -195,6 +209,7 @@ nnoremap ci} F{ci}
 "this is a test {test 123} another test {here};
 nnoremap ci< f<ci>
 nnoremap ci> F<ci>
+nnoremap <Leader>!c :!code %<CR>
 "this is a test <test 123> this is a test <test 123>;
 """"""" flip true false
 function! FlipBoolean()
