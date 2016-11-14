@@ -1,3 +1,34 @@
 [user]
-	name = Michael Roberton
-	email = mrobertson@nationalmerchants.com
+	name = Michael Robertson
+	email = mrobertson@nationalmerchants.org
+[color]
+	ui = always
+[color "branch"]
+	current = green reverse
+	local = green
+	remote = yellow
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+[core]
+	editor = nano
+	excludesfile = /Users/jaytee/.gitignore_global
+[push]
+	default = current
+[alias]
+	sha = rev-parse HEAD
+	last = log -1 HEAD --pretty=oneline
+	lastid = rev-parse --short HEAD
+	shalog = log --pretty=oneline
+	set-master = branch --set-upstream-to=origin/master master
+	back = reset --soft HEAD~1
+	again = commit -c ORIG_HEAD
+	deploy = subtree push --prefix dist/ origin gh-pages
+	s = status
+	a = add .
+	cm = commit -m
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
