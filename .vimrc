@@ -65,6 +65,8 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
+" javascript debuggin
+Plugin 'sidorares/node-vim-debugger'
 
 " END OF PLUGINS
 "
@@ -227,5 +229,31 @@ function! FlipBoolean()
 endfunction
 nnoremap <Leader>b :call FlipBoolean()<CR>
 "true 1 0 false
+""""""" Call up Node Debugger
+let debugLaunchFile = "build/server.js"
+let debugWord = "none"
+let debugLine = "none"
+function! SetDebugFile()
+    :execute ":let g:debugLaunchFile = input('Enter Debug File: ')"
+endfunction
+function! SetDebugWord()
+    :execute ":let g:debugWord = expand('<cword>')"
+endfunction
+function! SetDebugLine()
+    :execute ":let g:debugLine = line('.')"
+endfunction
+function! NodeDebug()
+    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebug.sh ".@%." ".g:debugLine." ".g:debugWord." ".g:debugLaunchFile
+endfunction
+function! NodeDebugMon()
+    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".@%." ".g:debugLine." ".g:debugWord
+endfunction
+nnoremap <Leader>df :call SetDebugFile()<CR>
+nnoremap <Leader>dw :call SetDebugWord()<CR>
+nnoremap <Leader>dl :call SetDebugLine()<CR>
+" nnoremap <Leader>dd :call NodeDebug()<CR>
+nnoremap <Leader>dd :call NodeDebugMon()<CR>
+nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call NodeDebugMon()<CR>
+
 
 """""""""""""""""""""""""TESTING AREA
