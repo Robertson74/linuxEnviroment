@@ -17,7 +17,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 " File information display
 Plugin 'Shougo/unite.vim'
-" Debugger
+" PHP Debugger
 Plugin 'joonty/vdebug'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
