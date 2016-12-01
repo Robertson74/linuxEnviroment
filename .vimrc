@@ -75,6 +75,10 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """""""""""""""""""""""""*configuration
+"turn off .swp files
+"set backupdir=~/.vim/backup//
+"set directory=~/.vim/swap//
+"set undodir=~/.vim/undo//
 "setting initial fold methods
 set foldmethod=indent
 set foldlevel=1
@@ -139,8 +143,8 @@ command! E Explore
 let g:vdebug_options = {}
 let g:vdebug_options["port"] = 9000
 let g:vdebug_options["break_on_open"] = 1
-let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
-let g:vdebug_options['server'] = ""
+" let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
+" let g:vdebug_options['server'] = ""
 
 """""""""""""""""""""""""*plugin calls
 nnoremap <Leader>H :call BrowseDoc()
@@ -164,8 +168,10 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>h :tab help 
 nnoremap <Leader>f. :find ./**/
 nnoremap <Leader>fs :find ./src/**/
+nnoremap <Leader>fm :find ./server/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
 nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
+nnoremap <Leader>gm :grep -R "" ./server<left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>sw :w !sudo tee %<cr>
 " zoom a split/ close and return
 nnoremap <Leader>z mb:tabnew %<cr>'bzz
@@ -193,6 +199,8 @@ nnoremap <Leader>cn :cnext<CR>
 nnoremap <Leader>cp :cprevious<CR>
 " Count search terms
 nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
+" Turn on off numbers
+nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """""""""""""""""""""""""*scripts
 " Rotate parameters in parenthesis
@@ -231,9 +239,10 @@ nnoremap <Leader>b :call FlipBoolean()<CR>
 "true 1 0 false
 """"""" Call up Node Debugger
 let debugLaunchFile = "build/server.js"
+let debugFile = "none"
 let debugWord = "none"
 let debugLine = "none"
-function! SetDebugFile()
+function! SetDebugLaunchFile()
     :execute ":let g:debugLaunchFile = input('Enter Debug File: ')"
 endfunction
 function! SetDebugWord()
@@ -242,18 +251,25 @@ endfunction
 function! SetDebugLine()
     :execute ":let g:debugLine = line('.')"
 endfunction
+function! SetDebugFile()
+    if match(@%, ".ts") > 0 
+        let g:debugFile = substitute(expand('%:t'), '.ts', '.js', '')
+    else
+        let g:debugFile = expand('%:t')
+    endif
+endfunction
 function! NodeDebug()
     :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebug.sh ".@%." ".g:debugLine." ".g:debugWord." ".g:debugLaunchFile
 endfunction
 function! NodeDebugMon()
-    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".@%." ".g:debugLine." ".g:debugWord
+    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".g:debugFile." ".g:debugLine." ".g:debugWord
 endfunction
-nnoremap <Leader>df :call SetDebugFile()<CR>
+nnoremap <Leader>df :call SetDebugLaunchFile()<CR>
 nnoremap <Leader>dw :call SetDebugWord()<CR>
-nnoremap <Leader>dl :call SetDebugLine()<CR>
+nnoremap <Leader>dl :call SetDebugLine()<CR>:call SetDebugFile()<CR>
 " nnoremap <Leader>dd :call NodeDebug()<CR>
 nnoremap <Leader>dd :call NodeDebugMon()<CR>
-nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call NodeDebugMon()<CR>
+nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDebugFile()<CR>:call NodeDebugMon()<CR>
 
 
-"""""""""""""""""""""""""TESTING AREA
+""""""""""""""""""""""""TESTING AREA

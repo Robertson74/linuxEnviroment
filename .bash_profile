@@ -241,6 +241,7 @@ alias .....='cd ../../../../'
 # ====================================
 
 ##########################################################################config
+cd /var/www/html/repos
 set completion-ignore-case on | sudo tee -a /etc/inputrc
 
 alias la='ls -lah $LS_COLOR'
