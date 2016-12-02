@@ -75,6 +75,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """""""""""""""""""""""""*configuration
+let mapleader="\<Space>"
 "turn off .swp files
 "set backupdir=~/.vim/backup//
 "set directory=~/.vim/swap//
