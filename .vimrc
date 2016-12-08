@@ -110,7 +110,7 @@ set expandtab
 " enables auto complete on php
 " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
 " gui configuration
-colorscheme darth
+colorscheme pablo
 "Netrw override to allow relative numbers
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 " status line config
@@ -274,3 +274,18 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 
 
 """"""""""""""""""""""""TESTING AREA
+"""""""""""""""""""""""" Install latest vim
+
+# Create the directories you need
+sudo mkdir -p /opt/local/bin
+# Download, compile, and install the latest Vim
+cd ~
+git clone https://github.com/vim/vim.git
+cd vim
+./configure --prefix=/opt/local
+make
+sudo make install
+# Add the binary to your path, ahead of /usr/bin
+echo 'PATH=/opt/local/bin:$PATH' >> ~/.bash_profile
+# Reload bash_profile so the changes take effect in this window
+source ~/.bash_profile
