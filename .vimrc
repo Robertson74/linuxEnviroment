@@ -32,7 +32,7 @@ Plugin 'shinokada/SWTC.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
@@ -53,7 +53,7 @@ Plugin 'mattn/emmet-vim'
 " html5 autocomplete
 Plugin 'othree/html5.vim'
 " autocomplete for quotes and the like
-Plugin 'raimondi/delimitmate'
+" Plugin 'raimondi/delimitmate'
 " git gutter
 Plugin 'airblade/vim-gitgutter'
 " more readable indents
@@ -102,7 +102,7 @@ set nu
 "set path on project open
 set path=$PWD/**
 " show exiting tab with 4 spaces width
-set tabstop=4
+set tabstop=2
 " " when indenting with '>', use 4 spaces width
 set shiftwidth=4
 " On pressing tab, insert 4 spaces
@@ -164,8 +164,12 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " toggle sytax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
+"""""""""""""""""""""""""*file short cuts
+nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
+nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """""""""""""""""""""""""*quick commands
-" quick command-line commands
+nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
+nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>h :tab help 
 nnoremap <Leader>f. :find ./**/
 nnoremap <Leader>fs :find ./src/**/
@@ -204,6 +208,20 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """""""""""""""""""""""""*scripts
+"go to first/second third of the line, for easier f and t commands on long lines
+nnoremap gh :call GoToFirstThirdOfLine()<CR>
+nnoremap gl :call GoToSecondThirdOfLine()<CR>
+function! GoToFirstThirdOfLine()
+    :execute "normal! $"
+    :let endOfLine = col(".")
+    :cal cursor(line("."), endOfLine/3)
+endfunction
+
+function! GoToSecondThirdOfLine()
+    :execute "normal! $"
+    :let endOfLine = col(".")
+    :cal cursor(line("."), (endOfLine/3)*2)
+endfunction
 " Rotate parameters in parenthesis
 """"""" (param(2), param(1), param[3])
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
