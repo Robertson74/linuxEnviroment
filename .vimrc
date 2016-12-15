@@ -104,8 +104,8 @@ set path=$PWD/**
 " show exiting tab with 4 spaces width
 set tabstop=2
 " " when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
+set shiftwidth=2
+" On pressing tab, insert spaces
 set expandtab
 " enables auto complete on php
 " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
