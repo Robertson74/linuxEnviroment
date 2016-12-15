@@ -282,11 +282,7 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " cd ~
 " git clone https://github.com/vim/vim.git
 " cd vim
-" ./configure --prefix=/opt/local --with-features=huge
-" --enable-pythoninterp=yes
-"  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu
-"  --enable-python3interp=yes
-"  --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu
+" ./configure --prefix=/opt/local --with-features=huge --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu
 " make
 " sudo make install
 " # Add the binary to your path, ahead of /usr/bin
