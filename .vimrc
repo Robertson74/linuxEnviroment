@@ -32,7 +32,7 @@ Plugin 'shinokada/SWTC.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
@@ -168,6 +168,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """""""""""""""""""""""""*quick commands
+nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
 nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>h :tab help 
@@ -207,7 +208,37 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
+
+"""""""""""""""""""""""""*call scripts
+" Turn on off numbers
+nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
+nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
+nnoremap <Leader>yb :call YankBelowAndPaste()<CR>
+nnoremap <Leader>ymb :call YankMultipleBelowAndPaste()<CR>
+nnoremap <Leader>sp :set spell!<CR>
 """""""""""""""""""""""""*scripts
+" yank a line below or above and paste below
+function! YankAboveAndPaste()
+    :execute ":let g:yankLine = input('Line below to yank: ')"
+    :execute "-".g:yankLine."y|normal!p"
+endfunction
+" yank multipl lines below or above and paste below
+function! YankMultipleAboveAndPaste()
+    :execute ":let g:yankLineStart = input('Line below to start yanking: ')"
+    :execute ":let g:yankLineEnd = input('Line below to end yanking: ')"
+    :execute "-".g:yankLineStart.",-".g:yankLineEnd."y|normal!p"
+endfunction
+" yank a line below or above and paste below
+function! YankBelowAndPaste()
+    :execute ":let g:yankLine = input('Line below to yank: ')"
+    :execute "+".g:yankLine."y|normal!p"
+endfunction
+" yank multipl lines below or above and paste below
+function! YankMultipleBelowAndPaste()
+    :execute ":let g:yankLineStart = input('Line below to start yanking: ')"
+    :execute ":let g:yankLineEnd = input('Line below to end yanking: ')"
+    :execute "+".g:yankLineStart.",+".g:yankLineEnd."y|normal!p"
+endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
