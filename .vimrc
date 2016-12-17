@@ -74,7 +74,7 @@ Plugin 'sidorares/node-vim-debugger'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"""""""""""""""""""""""""*configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*configuration
 let mapleader="\<Space>"
 "turn off .swp files
 "set backupdir=~/.vim/backup//
@@ -94,6 +94,7 @@ syntax on
 filetype plugin indent on
 "highlight when searching
 set hlsearch incsearch
+:nohl
 let g:netrw_altv = 1
 " relative numbers
 set rnu
@@ -132,7 +133,7 @@ function! BrowseDoc()
 endfunction
 
 
-"""""""""""""""""""""""""*plugin configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*plugin configuration
 "Syntastic recommended default settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -147,7 +148,7 @@ let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 " let g:vdebug_options['server'] = ""
 
-"""""""""""""""""""""""""*plugin calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*plugin calls
 nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
@@ -164,10 +165,10 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " toggle sytax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
-"""""""""""""""""""""""""*file short cuts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*file short cuts
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
-"""""""""""""""""""""""""*quick commands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
 nnoremap <Leader>scr :windo set scrollbind!<CR>
@@ -180,8 +181,8 @@ nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
 nnoremap <Leader>gm :grep -R "" ./server<left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>sw :w !sudo tee %<cr>
 " zoom a split/ close and return
-nnoremap <Leader>z mb:tabnew %<cr>'bzz
-nnoremap <Leader>Z mv:tabprevious<CR>'vzz:+tabclose<CR>
+" nnoremap <Leader>z mb:tabnew %<cr>'bzz
+" nnoremap <Leader>Z mv:tabprevious<CR>'vzz:+tabclose<CR>
 " find trailing spaces
 nnoremap <Leader>t /\S\zs\s\+$<cr>
 "turn off highlighting
@@ -208,15 +209,32 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-
-"""""""""""""""""""""""""*call scripts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*call scripts
+" Zooming
+nnoremap <Leader>z :call ToggleZoom()<CR>
 " Turn on off numbers
 nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
 nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
 nnoremap <Leader>yb :call YankBelowAndPaste()<CR>
 nnoremap <Leader>ymb :call YankMultipleBelowAndPaste()<CR>
 nnoremap <Leader>sp :set spell!<CR>
-"""""""""""""""""""""""""*scripts
+" go to thirds of line
+nnoremap gh :call GoToFirstThirdOfLine()<CR>
+nnoremap gl :call GoToSecondThirdOfLine()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*scripts
+" Zooming
+let g:zoomedStatus = "false"
+function! ToggleZoom()
+  if(g:zoomedStatus == "false")
+    :mark b|:tabnew %|normal! 'bzz
+    let g:zoomedStatus = "true"
+  else
+    :mark v|:tabprevious|:normal! 'vzz
+    :+tabclose
+    let g:zoomedStatus = "false"
+  endif
+endfunction
 " yank a line below or above and paste below
 function! YankAboveAndPaste()
     :execute ":let g:yankLine = input('Line below to yank: ')"
@@ -240,8 +258,6 @@ function! YankMultipleBelowAndPaste()
     :execute "+".g:yankLineStart.",+".g:yankLineEnd."y|normal!p"
 endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
-nnoremap gh :call GoToFirstThirdOfLine()<CR>
-nnoremap gl :call GoToSecondThirdOfLine()<CR>
 function! GoToFirstThirdOfLine()
     :execute "normal! $"
     :let endOfLine = col(".")
@@ -322,8 +338,16 @@ nnoremap <Leader>dd :call NodeDebugMon()<CR>
 nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDebugFile()<CR>:call NodeDebugMon()<CR>
 
 
-""""""""""""""""""""""""TESTING AREA
-"""""""""""""""""""""""" Install latest vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
+
+
+
+
+
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* Install latest vim
 
 " # Create the directories you need
 " sudo mkdir -p /opt/local/bin
