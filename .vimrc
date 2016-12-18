@@ -362,3 +362,12 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " echo 'PATH=/opt/local/bin:$PATH' >> ~/.bash_profile
 " # Reload bash_profile so the changes take effect in this window
 " source ~/.bash_profile
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* You complete me install
+" # install youcompleteme
+" cd ~
+" mkdir ycm_build
+" cd ycm_build
+" cmake -G "Unix Makefiles" . /home/vagrant/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+" cmake --build . --target ycm_core --config Release
+" cd ~/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/tern_runtime/
