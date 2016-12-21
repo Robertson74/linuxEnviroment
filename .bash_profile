@@ -241,23 +241,27 @@ alias .....='cd ../../../../'
 # ====================================
 
 ##########################################################################config
+alias dirs="dirs -v"
+set -o vi
 cd /var/www/html/repos
 set completion-ignore-case on | sudo tee -a /etc/inputrc
 
 alias la='ls -lah $LS_COLOR'
 function cl(){ cd "$@" && la; }
 alias copypath='pwd|pbcopy'
-alias vagup='cd ~/vms/dev; vagrant up'
-alias vagssh='cd ~/vms/dev; vagrant ssh'
+
+########################################################################## Quick Directories
+alias vup='cd ~/vms/dev; vagrant up'
+alias vssh='cd ~/vms/dev; vagrant ssh'
 # Below here is an area for other commands added by outside programs or
 # commands. Attempt to reserve this area for their use!
 ##########################################################################
-set -o vi
 # Adding path for vim 8
 PATH=/opt/local/bin:$PATH
 alias resource="source ~/.bash_profile"
 ##########################################################vim related
-alias ccpwork='cd ~/vms/dev/repos/ccp_be; vim .'
+alias ccpwork='cd /var/www/html/repos/ccp_be; vim .'
+alias agentwork='cd /var/www/html/repos/agentportal; vim .'
 alias vimbash='cd ~;vim .bash_profile'
 alias vimtest=' cd ~/test;vim test.text'
 alias vimprivate='cd /Users/mroberston/Library/Application\ Support/Karabiner;vim private.xml'

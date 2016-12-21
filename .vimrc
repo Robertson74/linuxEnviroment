@@ -67,6 +67,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 Plugin 'sidorares/node-vim-debugger'
+" php autocomplete
+Plugin 'm2mdas/phpcomplete-extended'
 
 " END OF PLUGINS
 "
@@ -134,7 +136,11 @@ endfunction
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*plugin configuration
-"Syntastic recommended default settings
+" php extended config 
+let g:phpcomplete_index_composer_command = "composer"
+" Syntastic typescript linter
+let g:syntastic_typescript_checkers = ['tslint']
+" Syntastic recommended default settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
