@@ -177,6 +177,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
+nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
