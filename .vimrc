@@ -352,7 +352,7 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 
-
+nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 
 
 
