@@ -177,6 +177,8 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
+" swap comments quickly
+nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
 nnoremap <Leader>w :w<CR>
@@ -201,6 +203,9 @@ nnoremap <Leader>n :noh<cr>
 nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
+" update vimrc to github
+nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
+" Reload vimrc
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 " Install vim plugins
 nnoremap <Leader>vp :PluginInstall<CR>
@@ -209,10 +214,10 @@ nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
 nnoremap <Leader>ct :!ctags -R --exclude=.git<CR>
 " location list commands
-nnoremap <Leader>lo :copen<CR>
-nnoremap <Leader>lc :ccl<CR>
-nnoremap <Leader>ln :cnext<CR>
-nnoremap <Leader>lp :cprevious<CR>
+nnoremap <Leader>lo :lopen<CR>
+nnoremap <Leader>lc :lcl<CR>
+nnoremap <Leader>ln :lnext<CR>
+nnoremap <Leader>lp :lprevious<CR>
 " quick fix commands
 nnoremap <Leader>co :copen<CR>
 nnoremap <Leader>cc :ccl<CR>
@@ -354,8 +359,7 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%81v.\+/
-
+" match OverLength /\%120v.\+/
 
 
 
