@@ -68,7 +68,7 @@ Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 Plugin 'sidorares/node-vim-debugger'
 " php autocomplete
-Plugin 'm2mdas/phpcomplete-extended'
+" Plugin 'm2mdas/phpcomplete-extended'
 
 " END OF PLUGINS
 "
@@ -165,7 +165,7 @@ nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
 nnoremap <Leader>GG :GitGutterToggle<CR>
 " git status
-nnoremap <Leader>GS :Gstatus<CR>
+nnoremap <Leader>GS :Gstatus<CR>:tabnew %<CR>
 " git commit
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
@@ -198,6 +198,8 @@ nnoremap <Leader>t /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>n :noh<cr>
 " vim edit rc and resource
+nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
+nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 " Install vim plugins
@@ -206,13 +208,15 @@ nnoremap <Leader>vp :PluginInstall<CR>
 nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
 nnoremap <Leader>ct :!ctags -R --exclude=.git<CR>
-" copen
+" location list commands
+nnoremap <Leader>lo :copen<CR>
+nnoremap <Leader>lc :ccl<CR>
+nnoremap <Leader>ln :cnext<CR>
+nnoremap <Leader>lp :cprevious<CR>
+" quick fix commands
 nnoremap <Leader>co :copen<CR>
-" cclose
 nnoremap <Leader>cc :ccl<CR>
-" cnext
 nnoremap <Leader>cn :cnext<CR>
-" cprevious
 nnoremap <Leader>cp :cprevious<CR>
 " Count search terms
 nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
@@ -352,7 +356,6 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 
 
 
