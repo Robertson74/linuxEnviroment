@@ -184,7 +184,7 @@ nnoremap <Leader>ul :set cursorline!<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
 nnoremap <Leader>scr :windo set scrollbind!<CR>
-nnoremap <Leader>h :tab help 
+nnoremap <Leader>hl :tab help 
 nnoremap <Leader>f. :find ./**/
 nnoremap <Leader>fs :find ./src/**/
 nnoremap <Leader>fm :find ./server/**/
@@ -198,7 +198,7 @@ nnoremap <Leader>sw :w !sudo tee %<cr>
 " find trailing spaces
 nnoremap <Leader>t /\S\zs\s\+$<cr>
 "turn off highlighting
-nnoremap <Leader>n :noh<cr>
+nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
 nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
@@ -361,7 +361,38 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%120v.\+/
 
-
+nnoremap <Leader>sl :call SearchLocation()<CR>
+:let g:searchContextDefault = 0
+function! SearchLocation()
+  :let b:searchTerm = input('Search for: ')
+  :let b:searchContext = input('Context lines around search: ')
+  :normal! mm
+  if b:searchContext == ""
+    :echom "Search has no number"
+    :let b:searchContext = g:searchContextDefault
+  endif
+  :execute "silent lgrep \"".b:searchTerm."\" % -A ".b:searchContext." -B ".b:searchContext
+  :let @/ = b:searchTerm 
+  :normal! 'm
+  :redraw!
+  :lop
+  :resize 30
+  " :execute "normal! ggn"
+  :set hlsearch
+  :call PlaceSignAtPatternMatch("contextMarker", "--")
+endfunction
+  
+:sign define "contextMarker" linehl=Error
+function! PlaceSignAtPatternMatch(signName, contextPattern)
+  :let a:lineNumber = 1
+  while a:lineNumber <= line('$') 
+    if match(getline(a:lineNumber), a:contextPattern) != -1
+      " :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." file=".expand('%:p')
+      :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".expand('<abuf>')
+    endif
+    :let a:lineNumber = a:lineNumber + 1
+  endwhile
+endfunction
 
 
 
