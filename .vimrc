@@ -229,7 +229,7 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*call scripts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*script calls
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
