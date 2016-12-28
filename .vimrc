@@ -177,6 +177,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
+" place and unplace temp signs
 " swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
@@ -229,6 +230,8 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*call scripts
+nnoremap <Leader>st :call PlaceTempSign()<CR>
+nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
 nnoremap <Leader>z :call ToggleZoom()<CR>
 " Turn on off numbers
@@ -356,6 +359,16 @@ nnoremap <Leader>dl :call SetDebugLine()<CR>:call SetDebugFile()<CR>
 nnoremap <Leader>dd :call NodeDebugMon()<CR>
 nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDebugFile()<CR>:call NodeDebugMon()<CR>
 
+""""""" Place and unplace temp signs for reference
+sign define temp linehl=Error text=--
+let g:tempSignLine = 99
+function! PlaceTempSign()
+  :exec "sign place ".g:tempSignLine." line=".line('.')." name=temp file=".expand('%:p')
+  :let g:tempSignLine = g:tempSignLine - 1
+endfunction
+function! RemoveTempSign()
+  :exec "sign unplace"
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
