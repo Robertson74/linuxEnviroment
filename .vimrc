@@ -386,22 +386,25 @@ function! SearchLocation()
   endif
   :execute "silent lgrep \"".b:searchTerm."\" % -A ".b:searchContext." -B ".b:searchContext
   :let @/ = b:searchTerm 
+  :let @/ = l:searchTerm 
   :normal! 'm
   :redraw!
   :lop
   :resize 30
-  " :execute "normal! ggn"
-  :set hlsearch
-  :call PlaceSignAtPatternMatch("contextMarker", "--")
+  :execute "normal! ggn"
+  :execute "normal! n"
+  :execute "normal! n"
+  " :exe ":set hlsearch"
+  :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
 endfunction
   
-:sign define "contextMarker" linehl=Error
+:sign define contextMarker linehl=Error
 function! PlaceSignAtPatternMatch(signName, contextPattern)
   :let a:lineNumber = 1
   while a:lineNumber <= line('$') 
     if match(getline(a:lineNumber), a:contextPattern) != -1
       " :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." file=".expand('%:p')
-      :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".expand('<abuf>')
+      :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".bufnr('%')
     endif
     :let a:lineNumber = a:lineNumber + 1
   endwhile
