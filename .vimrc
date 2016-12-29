@@ -177,6 +177,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
+" place and unplace temp signs
 " swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
@@ -228,7 +229,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*call scripts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*script calls
+nnoremap <Leader>st :call PlaceTempSign()<CR>
+nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
 nnoremap <Leader>z :call ToggleZoom()<CR>
 " Turn on off numbers
@@ -356,6 +359,16 @@ nnoremap <Leader>dl :call SetDebugLine()<CR>:call SetDebugFile()<CR>
 nnoremap <Leader>dd :call NodeDebugMon()<CR>
 nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDebugFile()<CR>:call NodeDebugMon()<CR>
 
+""""""" Place and unplace temp signs for reference
+sign define temp linehl=Error text=--
+let g:tempSignLine = 99
+function! PlaceTempSign()
+  :exec "sign place ".g:tempSignLine." line=".line('.')." name=temp file=".expand('%:p')
+  :let g:tempSignLine = g:tempSignLine - 1
+endfunction
+function! RemoveTempSign()
+  :exec "sign unplace"
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
@@ -373,22 +386,25 @@ function! SearchLocation()
   endif
   :execute "silent lgrep \"".b:searchTerm."\" % -A ".b:searchContext." -B ".b:searchContext
   :let @/ = b:searchTerm 
+  :let @/ = l:searchTerm 
   :normal! 'm
   :redraw!
   :lop
   :resize 30
-  " :execute "normal! ggn"
-  :set hlsearch
-  :call PlaceSignAtPatternMatch("contextMarker", "--")
+  :execute "normal! ggn"
+  :execute "normal! n"
+  :execute "normal! n"
+  " :exe ":set hlsearch"
+  :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
 endfunction
   
-:sign define "contextMarker" linehl=Error
+:sign define contextMarker linehl=Error
 function! PlaceSignAtPatternMatch(signName, contextPattern)
   :let a:lineNumber = 1
   while a:lineNumber <= line('$') 
     if match(getline(a:lineNumber), a:contextPattern) != -1
       " :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." file=".expand('%:p')
-      :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".expand('<abuf>')
+      :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".bufnr('%')
     endif
     :let a:lineNumber = a:lineNumber + 1
   endwhile
