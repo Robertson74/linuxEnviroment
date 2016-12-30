@@ -392,6 +392,7 @@ function! NavigationBarToggle()
     :let t:navBuffer = bufnr('%')
     :let t:navActive = 1
     :normal! n
+    :exec "normal! :noh <CR>"
   elseif t:navActive==1
     :let t:navActive = 0
     :silent windo :call CheckIfBufferIsNav()
@@ -440,7 +441,8 @@ function! SearchContextually(searchType)
       :copen
     endif
     :resize 30
-    :execute "normal! ggn"
+    :execute ":call search(@/)"
+    :execute ":call matchadd('Search', @/)"
     :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
   endif
 endfunction
