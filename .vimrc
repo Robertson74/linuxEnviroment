@@ -390,6 +390,7 @@ function! NavigationBarToggle()
     :let t:navActive = 1
     :normal! n
     :exec "normal! :noh <CR>"
+    :set wfw
   elseif t:navActive==1
     :let t:navActive = 0
     :silent windo :call CheckIfBufferIsNav()
