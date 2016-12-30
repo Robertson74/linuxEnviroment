@@ -1,6 +1,4 @@
 "new install
-"Install git
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "PluginInstall
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -385,9 +383,8 @@ function! NavigationBarToggle()
   if t:navActive==0
     :let @/ = " ".expand('%:t')."\\?.$"
     :let g:netrw_liststyle = 3
-    :vs
-    :normal! <C-w>iiH
-    :E
+    :Vex
+    :exec "normal! \<C-W>H"
     :exe "vertical resize ".g:defautlNavWidth
     :let t:navBuffer = bufnr('%')
     :let t:navActive = 1
@@ -464,7 +461,9 @@ endfunction
 
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* Install latest vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* set up latest vim plus vundle
+"sudo apt-install git
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 " # Create the directories you need
 " sudo mkdir -p /opt/local/bin
