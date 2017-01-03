@@ -1,6 +1,4 @@
 "new install
-"Install git
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "PluginInstall
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -230,6 +228,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*script calls
+nnoremap <Leader>csl :call SearchContextually("local")<CR>
+nnoremap <Leader>csg :call SearchContextually("global")<CR>
+nnoremap <Leader>nav :call NavigationBarToggle()<CR>
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
@@ -370,32 +371,78 @@ function! RemoveTempSign()
   :exec "sign unplace"
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%120v.\+/
-
-nnoremap <Leader>sl :call SearchLocation()<CR>
-:let g:searchContextDefault = 0
-function! SearchLocation()
-  :let b:searchTerm = input('Search for: ')
-  :let b:searchContext = input('Context lines around search: ')
-  :normal! mm
-  if b:searchContext == ""
-    :echom "Search has no number"
-    :let b:searchContext = g:searchContextDefault
+""""""" Nav bar
+:let g:defautlNavWidth = 40
+function! NavigationBarToggle()
+  if exists("t:navActive") == 0
+    :let t:navActive=0
   endif
-  :execute "silent lgrep \"".b:searchTerm."\" % -A ".b:searchContext." -B ".b:searchContext
-  :let @/ = b:searchTerm 
-  :let @/ = l:searchTerm 
-  :normal! 'm
-  :redraw!
-  :lop
-  :resize 30
-  :execute "normal! ggn"
-  :execute "normal! n"
-  :execute "normal! n"
-  " :exe ":set hlsearch"
-  :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
+  if exists("t:navBuffer") == 0
+    :let t:navBuffer=0
+  endif
+  if t:navActive==0
+    :let @/ = " ".expand('%:t')."\\?.$"
+    :let g:netrw_liststyle = 3
+    :Vex
+    :exec "normal! \<C-W>H"
+    :exe "vertical resize ".g:defautlNavWidth
+    :let t:navBuffer = bufnr('%')
+    :let t:navActive = 1
+    :normal! n
+    :exec "normal! :noh <CR>"
+    :set wfw
+  elseif t:navActive==1
+    :let t:navActive = 0
+    :silent windo :call CheckIfBufferIsNav()
+    if t:navActive==1
+      :exe "silent bd ".t:navBuffer
+      :let t:navActive = 0
+    else
+      :call NavigationBarToggle()
+    endif
+  endif
+endfunction
+
+function! CheckIfBufferIsNav()
+  if bufnr('%') == t:navBuffer 
+    :let t:navActive=1 
+  endif
+endfunction
+
+""""""" Context Searching
+:let g:searchContextDefault = 0
+function! SearchContextually(searchType)
+  :let b:searchTerm = input('Search for: ')
+  if !empty(b:searchTerm)
+    :let b:searchContext = input('Context lines around search: ')
+    :normal! mm
+    if empty(b:searchContext)
+      :let b:searchContext = g:searchContextDefault
+    endif
+    if a:searchType == "local"
+      :execute "silent lgrep \"".b:searchTerm."\" % -A ".b:searchContext." -B ".b:searchContext
+    endif
+    if a:searchType == "global"
+      :let a:searchDir = input('DIR to search: ')
+      if empty(a:searchDir)
+        :let a:searchDir = "./"
+      endif
+      :execute "silent grep -R \"".b:searchTerm."\" ".a:searchDir." -A ".b:searchContext." -B ".b:searchContext
+    endif
+    :normal! 'm
+    :let @/ = b:searchTerm
+    :redraw!
+    if a:searchType == "local"
+      :lopen
+    elseif a:searchType == "global"
+      :echom a:searchType
+      :copen
+    endif
+    :resize 30
+    :execute ":call search(@/)"
+    :execute ":call matchadd('Search', @/)"
+    :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
+  endif
 endfunction
   
 :sign define contextMarker linehl=Error
@@ -403,16 +450,21 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
   :let a:lineNumber = 1
   while a:lineNumber <= line('$') 
     if match(getline(a:lineNumber), a:contextPattern) != -1
-      " :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." file=".expand('%:p')
       :exec ":sign place ".a:lineNumber." line=".a:lineNumber." name=".a:signName." buffer=".bufnr('%')
     endif
     :let a:lineNumber = a:lineNumber + 1
   endwhile
 endfunction
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%120v.\+/
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* Install latest vim
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* set up latest vim plus vundle
+"sudo apt-install git
+"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 " # Create the directories you need
 " sudo mkdir -p /opt/local/bin
