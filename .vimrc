@@ -163,7 +163,7 @@ nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
 nnoremap <Leader>GG :GitGutterToggle<CR>
 " git status
-nnoremap <Leader>GS :Gstatus<CR>:tabnew %<CR>
+nnoremap <Leader>GS :Gstatus<CR><C-W>T
 " git commit
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
@@ -175,8 +175,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
-" place and unplace temp signs
-" swap comments quickly
+" swap coments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
