@@ -8,7 +8,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
+"let Vundle manage Vundle, required
+Plugin 'wellle/targets.vim'
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Fuzzy file finder
@@ -25,8 +26,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'evidens/vim-twig'
 " Makes Async available
 Plugin 'Shougo/vimproc.vim'
-" Star wars goodness
-Plugin 'shinokada/SWTC.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
@@ -205,8 +204,9 @@ nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
 nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 " Reload vimrc
 nnoremap <Leader>vs :source $MYVIMRC<CR>
-" Install vim plugins
-nnoremap <Leader>vp :PluginInstall<CR>
+" Install/Updating vim plugins
+nnoremap <Leader>PI :PluginInstall<CR>
+nnoremap <Leader>PU :PluginUpdate<CR>
 " toggle spelling
 nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
@@ -295,20 +295,8 @@ endfunction
 """"""" (param(2), param(1), param[3])
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
 nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
-""""""" Add change inside parenths from cursor outside parenths
-nnoremap ci( %ci)
-nnoremap ci) F(ci)
-"this is a test (test 123) anothere test (here);
-nnoremap ci[ %ci[
-nnoremap ci] F[ci[
-"this is a test [test 123] anothere test [here];
-nnoremap ci{ %ci{
-nnoremap ci} F{ci}
-"this is a test {test 123} another test {here};
-nnoremap ci< f<ci>
-nnoremap ci> F<ci>
+""""""" open doc in code
 nnoremap <Leader>!c :!code %<CR>
-"this is a test <test 123> this is a test <test 123>;
 """"""" flip true false
 function! FlipBoolean()
     if expand('<cword>') == 'true'
