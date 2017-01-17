@@ -30,7 +30,6 @@ Plugin 'Shougo/vimproc.vim'
 Plugin 'scrooloose/syntastic'
 " auto complete
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
 " extended tag matching with ^
@@ -148,6 +147,8 @@ command! E Explore
 
 " vdebug with xdebug options
 let g:vdebug_options = {}
+let g:vdebug_options["debug_file"] = "~/vdebug.log"
+let g:vdebug_options["debug_file_level"] = 2
 let g:vdebug_options["port"] = 9000
 let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
@@ -167,14 +168,16 @@ nnoremap <Leader>GS :Gstatus<CR><C-W>T
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
-" toggle sytax checking
+" toggle syntax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*file short cuts
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
-" swap coments quickly
+" Search reference files
+nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+" swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
@@ -444,6 +447,8 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
+
+
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%120v.\+/
 
