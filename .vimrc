@@ -203,8 +203,6 @@ nnoremap <Leader>no :noh<CR>
 nnoremap <Leader>vup :!cd ~;git add .vimrc;git add .vim/michaelSoft/*;git commit -m "updating";git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
-" update vimrc to github
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 " Reload vimrc
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 " Install/Updating vim plugins
