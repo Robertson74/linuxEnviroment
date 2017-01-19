@@ -73,6 +73,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" Netrw list style to long tree form
+let g:netrw_liststyle= 3
 "cursor underlining
 set cursorline
 let mapleader="\<Space>"
@@ -160,7 +162,7 @@ nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
 nnoremap <Leader>GG :GitGutterToggle<CR>
 " git status
-nnoremap <Leader>GS :Gstatus<CR><C-W>T
+nnoremap <Leader>GS :Gstatus<CR>
 " git commit
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
@@ -379,7 +381,8 @@ function! NavigationBarToggle()
     :let t:navBuffer = bufnr('%')
     :let t:navActive = 1
     :normal! n
-    :exec "normal! :noh <CR>"
+    :.
+    :exec "normal! :noh \<CR>"
     :set wfw
   elseif t:navActive==1
     :let t:navActive = 0
