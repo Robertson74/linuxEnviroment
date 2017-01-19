@@ -473,6 +473,8 @@ function! ZoomContext()
   :set wfw
   :execute "normal!\<C-W>p"
 endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
