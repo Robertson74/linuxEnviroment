@@ -1,4 +1,4 @@
-"yew install
+"new install
 "PluginInstall
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -8,7 +8,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
+"let Vundle manage Vundle, required
+Plugin 'wellle/targets.vim'
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Fuzzy file finder
@@ -25,8 +26,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'evidens/vim-twig'
 " Makes Async available
 Plugin 'Shougo/vimproc.vim'
-" Star wars goodness
-Plugin 'shinokada/SWTC.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
@@ -149,6 +148,8 @@ command! E Explore
 
 " vdebug with xdebug options
 let g:vdebug_options = {}
+let g:vdebug_options["debug_file"] = "~/vdebug.log"
+let g:vdebug_options["debug_file_level"] = 2
 let g:vdebug_options["port"] = 9000
 let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
@@ -168,7 +169,7 @@ nnoremap <Leader>GS :Gstatus<CR><C-W>T
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
-" toggle sytax checking
+" toggle syntax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*file short cuts
@@ -176,6 +177,11 @@ nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
 " swap coments quickly
+"Obscure/UnObscure doc
+nnoremap <Leader>hid :normal! mmggg?G`m<CR>
+" Search reference files
+nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+" swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
@@ -207,6 +213,14 @@ nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push git
 nnoremap <Leader>vs :source $MYVIMRC<CR>
 " Install vim plugins
 nnoremap <Leader>vp :PluginInstall<CR>
+nnoremap <Leader>vup :!cd ~;git add .vimrc;git add .vim/michaelSoft/*;git commit -m "updating";git push github master;<CR>
+nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
+nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
+" Reload vimrc
+nnoremap <Leader>vs :source $MYVIMRC<CR>
+" Install/Updating vim plugins
+nnoremap <Leader>PI :PluginInstall<CR>
+nnoremap <Leader>PU :PluginUpdate<CR>
 " toggle spelling
 nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
@@ -309,6 +323,8 @@ nnoremap ci< f<ci>
 nnoremap ci> F<ci>
 nnoremap <Leader>!c :!code %<CR>
 "this is a test <test 123> this is a test <test 123>;
+""""""" open doc in code
+nnoremap <Leader>!c :!code %<CR>
 """"""" flip true false
 function! FlipBoolean()
     if expand('<cword>') == 'true'
