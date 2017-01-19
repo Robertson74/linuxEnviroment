@@ -1,0 +1,6739 @@
+http://help.limelightcrm.com/hc/en-us/articles/115000071463-Membership-API-Documentation
+,./limelight
+-------------------------------------------------------------------------------------------
+Membership API Documentation
+
+  Lime Light CRM Support
+December 20, 2016 09:24
+Follow
+Membership API Documentation
+
+ 
+
+Lime Light CRM will accept many different API calls which are outlined below for your reference. Each API call will be listed alphabetically and each will contain a brief overview of the call, the request parameters, and the response parameters.
+
+Posting Details – Posts should be made to https://<client-url>/admin/membership.php  Substitute the <client-url> for whatever URL has been assigned to your installation.  The membership.php file expects an HTTPS POST using name value pairs that are URL encoded.
+
+The following table represents the request parameters required with every single API Call:
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+username
+
+String
+
+Username assigned to you
+
+Required, cannot be blank
+
+password
+
+String
+
+Password assigned to you
+
+Required, cannot be blank
+
+method
+
+String
+
+API Method Call
+
+Required, cannot be blank
+
+ 
+
+Please be aware that the username and password used for the Membership API, are different than those used for your Lime Light CRM system. The username and password for your Membership API will be assigned to you by Lime Light CRM support, you can find these credentials under API Accounts from Admin Settings.
+
+ 
+
+Limitations:  The order_find, order_view, and order_update methods are limited to 30 requests per minute. All other API methods are limited to 10 requests per minute.
+
+ 
+
+API Calls
+
+API Method: campaign_find_active
+
+The campaign_find_active method is used to display all campaign Ids currently active.
+
+Request Parameters
+
+Use only the standard request parameters, above mentioned, required with every single API Call.
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response
+
+Numeric
+
+100, 200
+
+See Response Codes Section for definitions.
+
+campaign_id
+
+CSV-Numeric
+
+1,2,5,78,998
+
+Comma Separated campaign Ids
+
+campaign_name
+
+CSV-Numeric, URL Encoded
+
+Test+1,Test+2,
+
+Url encoded Comma Separated campaign names
+
+ 
+
+ 
+
+API Method: validate_credentials
+
+The validate_credentials method is used to check your credentials on your account to ensure they are active.
+
+Request Parameters
+
+Use only the standard request parameters, above mentioned, required with every single API Call.
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: campaign_view
+
+The campaign_view method is designed to return critical data about a campaign, based on the campaign_id submitted. It will return a comma-separated list of information regarding several fields.
+
+Request Parameters
+
+ 
+
+ 
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+Numeric
+
+Campaign Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100,200,400
+
+See Response Codes Section for definitions.
+
+campaign_name
+
+URL encoded Alphanumeric
+
+Campaign Name
+
+Test+1+Campaign
+
+campaign_description
+
+URL encoded Alphanumeric
+
+Campaign Description
+
+1.1.0+Campaign
+
+campaign_type
+
+URL encoded Alphanumeric
+
+Campaign Type
+
+One Page Campaign (Multiple Products)
+
+gateway_id
+
+Numeric or CSV-Numeric if load balanced
+
+Gateway Id
+
+1 or 1,2,3,4,5
+
+is_load_balanced
+
+Numeric
+
+Is the campaign in a load balancer.1 if so, 0 if not
+
+1
+
+load_balance_profile
+
+Numeric
+
+Load Balance Profile ID
+
+1
+
+success_url_1
+
+URL encoded Alphanumeric
+
+Success URL
+
+http://www.test.com/success.php
+
+success_url_2
+
+URL encoded Alphanumeric
+
+Success URL for second step, if applicable
+
+http://www.test.com/success.php
+
+product_id
+
+CSV-Numeric
+
+CSV Product Ids
+
+1,5,78,79,112
+
+Product_name
+
+CSV-URL encoded Alphanumeric
+
+CSV of product names
+
+Product+1,Product+2
+
+is_upsell
+
+CSV-Numeric
+
+CSV of Flags.  1 Indicating is upsell.  0 indicating main product
+
+0,0,1,1,1
+
+shipping_id
+
+CSV-Numeric
+
+CSV Shipping Ids
+
+1,3,4
+
+shipping_name
+
+CSV-URL encoded Alphanumeric
+
+CSV Shipping Name
+
+First+Class+Mail%2C, Second+Class+Mail%2C,
+
+Third+Class+Mail%2C
+
+shipping_description
+
+CSV-URL encoded Alphanumeric
+
+CSV Shipping Description
+
+First+Class+Mail%2C, Second+Class+Mail%2C,
+
+Third+Class+Mail%2C
+
+shipping_recurring_price
+
+CSV-Numeric
+
+CSV Shipping Recurring Price
+
+5.00, 15.00,25.00
+
+shipping_initial_price
+
+CSV-Numeric
+
+CSV Shipping Initial Price
+
+5.00, 10.00,20.00
+
+countries
+
+CSV-Numeric
+
+ISO 2 Character Codes*
+
+US, CA, GB
+
+payment_name
+
+CSV-URL encoded Alphanumeric
+
+Payment method names
+
+amex, discover, master, visa, checking,offline,solo,maestro,switch
+
+ 
+
+ 
+
+API Method: customer_find_active_product
+
+ 
+
+The customer_find_active_product request parameters are the username, password, method, and customer_id.  It also accepts an optional 5th parameter: campaign_id.  Campaign_id is used if you need to narrow the valid products returned down to the campaign level.  If this is not specified, all valid products are returned for that customer Id, regardless of the campaign.  The Info Response will return a list of all valid product Ids in Lime Light for the given parameters received in the Info Request.  The list will be a comma-separated list that contains 1 to many Lime Light product Ids.
+
+ 
+
+For example, if customer Id number 4 had three valid products in Lime Light (1,3,6)  the product Id string returned would be 1,3,6
+
+ 
+
+Request Parameters
+
+ 
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+customer_id
+
+Numeric
+
+Customer Id from Lime Light
+
+Required, cannot be blank
+
+campaign_id
+
+Numeric
+
+Campaign Id from Lime Light
+
+Optional.  If specified, it must be a valid campaign Id from Lime Light.
+
+ 
+
+Response Parameters
+
+ 
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_ids
+
+Alphanumeric
+
+Max 255 Characters
+
+Product Ids from Lime Light
+
+A list of valid product Ids that this customer has.  This will not include products that have been voided, refunded or put on hold. Example:  1,2,3,6
+
+response_code
+
+Numeric
+
+100, 200, 400, 500
+
+See Response Codes Section for definitions.
+
+ 
+
+API Method: order_calculate_refund
+
+The order_calculate_refund method is used to help figure out the pro-rate amount for recurring orders to be refunded. The recurring date is based on the main product recurring date. The amount is calculated as follows:
+
+ 
+
+Description                                                                                                              Example
+
+time_used = Number of days used (purchase_date   -   today)                            15 days
+
+total_time = Number of total days                                                                          30 days
+
+total_amount = Total amount of order (Minus Refunds Already)                          $10.00 - $2.00
+
+refund_amount = (time_used / total_time) * total_amount                       (15/30) * $8.00 = $4.00
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350, 380
+
+See Response Codes Section for definitions.
+
+amount
+
+Float
+
+5.35
+
+Calculated Pro Rate Refund based on above calculations
+
+ 
+
+ 
+
+API Method: order_find_overdue
+
+ 
+
+The order_find_overdue method is used to display orders that have been declined.  The days field for the request section, is the number of days in the history of orders to search within.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+days
+
+Numeric
+
+Number from remote
+
+Required. Number of days worth of history to retrieve.
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200
+
+See Response Codes Section for definitions.
+
+ancestor_id
+
+CSV-Numeric
+
+120,121,130,131
+
+Orders that have been archived, declined, held, voided, or refunded
+
+ 
+
+ 
+
+API Method: order_refund
+
+ 
+
+The order_refund method is used to perform a refund on the given order.
+
+ 
+
+Request Parameters:
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+amount
+
+Float
+
+Amount to refund the order
+
+Required. Must be valid numeric float.
+
+keep_recurring
+
+Boolean
+
+0 or 1
+
+Whether or not to keep recurring active. 0 = no, 1 = yes
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350, 370, 372, 701, 800
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+ 
+
+API Method: order_void
+
+ 
+
+The order_void method is used to perform a void on the given order.  Typically a void must be placed against an order within 24 hours of a transaction.  Subscriptions will be canceled when a successful void is put in place.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350, 370, 373, 701, 800
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: order_force_bill
+
+ 
+
+The order_force_bill method is used to perform a force bill on the given order. Note: It is possible to use the forceGatewayId similar to transact API to force a particular MID of your choosing.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+forceGatewayId
+
+Numeric
+
+Gateway Id from Lime Light
+
+Optional. Must be valid
+
+preserve_force_gateway
+
+Numeric
+
+0,1
+
+Optional. Flag to preserve the forceGatewayId (if provided)
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+errorFound
+
+Numeric
+
+0, 1
+
+If 1, an error has occurred
+
+responseMessage
+
+Alphanumeric
+
+ 
+
+Response message
+
+responseCode
+
+Numeric
+
+100, 200, 350, 380, 381, 701, 800
+
+See Response Codes Section for definitions.
+
+declineReaon
+
+Alphanumeric
+
+ 
+
+Optional, only posted if responseCode is 800
+
+authId
+
+Numeric
+
+ 
+
+Optional, only posted if responseCode is 100
+
+orderId
+
+Numeric
+
+ 
+
+Lime Light order id for the new order
+
+ 
+
+ 
+
+API Method: order_update_recurring
+
+ 
+
+The order_update_recurring method is used to update the recurring status of an order. Start: will process next recurring order and charge the customer. Stop: will cancel subscription and prevent future billings. Reset: will re-activate the original next recurring date that was on the order before it got placed on hold.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid and have an even pairing to status.
+
+status
+
+Alphanumeric
+
+start, stop, reset
+
+Required. Must be valid and have an even pairing to order_Id. Set the status of an order
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350, 351, 352, 353, 354, 355, 701
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: order_find
+
+ 
+
+The order_find method is an extremely powerful reporting engine to find orders and get a result of order Ids that meet your criteria. HTTPS is required for this call.
+
+Sometimes you may be looking for a particular order that matches a few criteria, but not necessarily requiring that ALL the criteria are met and other times you want to narrow down your search where you want each criteria in your search to only give you orders that have the exact match.
+
+ 
+
+That is why we created two different modes of searching using the search_type parameter of "any" (match) or "all".
+
+ 
+
+For example, if you wanted to find all the new orders that had an RMA as well as had upsells, you would pass:
+
+ 
+
+method=order_find&start_date=10/05/2009&end_date=10/05/2010&campaign_id=1&criteria=new,rma,has_upsells&search_type=all
+
+ 
+
+The response would be something like the following:
+
+ 
+
+response_code=100&total_orders=1&order_ids=15351
+
+ 
+
+But if you change the search type to any, then your criteria will have widened because this will give you orders that have RMA, but are also NEW and also have upsells :
+
+ 
+
+response_code=100&total_orders=17&order_ids=15339,15342,15345,15346,15347,15348,15349,15350,15351,15352,15353,15354,15355,15356,15359,15360,15361
+
+We also allow a wildcard search in criteria fields tracking_num, affiliate_id, sub_affiliate_id, first_name, last_name, address, city, state, zip, phone, email and ip_address.  This would allow you to do something like this:
+
+ 
+
+For instance, you are interested in orders on your first recurring cycle from a person named "Dave" who you know has a gmail email address, who also resides in Michigan, and whose order has been refunded.  You could pass:
+
+ 
+
+method=order_find&start_date=10/05/2009&end_date=10/05/2010&campaign_id=1&criteria= first_name=dav*,all_refunds,state=mi,email=*gmail*,billing_cycle=1&search_type=all
+
+Notice when you enter in your criteria, each additional filter will be another comma delimited search criteria.  Additionally when a value is needed you will pass "field_name"="your search value".
+
+ 
+
+By default if you are just looking to get all the orders off a campaign you must at least pass &criteria=all& in your query string.
+
+ 
+
+Other required parameters to this call are campaign_id and start_date and end_date.
+
+ 
+
+An optional parameter, return_type, may be passed. If return_type is sent as ”order_view”, in addition to the normal return parameters you will also receive a “data” parameter that contains a JSON (http://www.json.org/) encoded object of the data returned by the order_view method for each order returned by the query.
+
+ 
+
+method=order_find&start_date=10/05/2009&end_date=10/05/2010&campaign_id=1&criteria= first_name=dav* &search_type=all&return_type=order_view
+
+ 
+
+response_code=100&total_orders=1&order_ids=10001,10002&data={"10001":{<order_view return values>,"10002":{<order_view return values>}}
+
+ 
+
+See the order_view definition for return values.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+CSV-Numeric
+
+Campaign Id or CSV of Campaign Ids from Lime Light, or the word “all” to pull all campaigns
+
+Required. Must be valid
+
+product_ids
+
+CSV-Numeric
+
+Product Id or CSV of product Ids from Lime Light, or the word “all” to pull all products
+
+Required. Must be valid
+
+start_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid. Defaults to 00:00:00 time range for that date.
+
+end_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid.  Defaults to 23:59:59 time range for that date.
+
+start_time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+end_ time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+search_type
+
+"any" or "all"
+
+"any" or "all"
+
+ 
+
+Any to match any one of your criteria.
+
+ 
+
+All to filter only orders that match each criteria passed
+
+If omitted, will default to "any"
+
+return_type
+
+Blank or "order_view"
+
+Optional
+
+order_view will add an additional return parameter "data" which will contain a JSON encoded order_view object of each order found in the query
+
+Optional, if omitted will default to standard view
+
+criteria
+
+Alphanumeric
+
+Criteria key
+
+Possible Values Or Responses
+
+Required. Must be valid CSV of one or more criteria
+
+when
+
+customer_id
+
+ 
+
+Any customer id in limelight
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+When
+
+category_id
+
+Any category  id in limelight
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+first_4_cc
+
+Numeric string (Must be exactly 4 characters from beginning of credit card).
+
+ 
+
+Will return orders that match first 4 digits on the card.
+
+ 
+
+(Must be used with "=XXX" your search value)        
+
+when
+
+last_4_cc
+
+Numeric string (Must be exactly 4  characters from end of credit card)                           
+
+Will return orders that match last 4 digits on the card.
+
+ 
+
+(Must be used with "=XXX" your search value)        
+
+when
+
+order_total
+
+A non-negative dollar amount (without the dollar sign) or range (e.g. order total =2.00-100.00)
+
+Possible operators are =,>, and <.
+
+(Must be used with "[=,<,>]XXX" your search value)        
+
+when
+
+first_name
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns) 
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+billing_first_name
+
+Alphanumeric string (Allows wildcard *) (will search the billing column)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+shipping_first_name
+
+Alphanumeric string (Allows wildcard *) (will search the shipping column)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+last_name          
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns)  
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+billing_last_name
+
+ 
+
+Alphanumeric string (Allows wildcard *) (will search the billing column)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+shipping_last_name
+
+ 
+
+Alphanumeric string (Allows wildcard *) (will search the shipping column)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+address          
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns)     
+
+ 
+
+(Must be used with "=XXX" your search value)          
+
+when
+
+city          
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns) 
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+state
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+zip          
+
+Alphanumeric string (Allows wildcard *) (will search both billing and shipping columns)  
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+ 
+
+when
+
+country
+
+2 character country value*
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+phone
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+email
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+ip_address
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+transaction_id
+
+Must be an exact transaction_id on order.  No wildcards.
+
+(Must be used with "=XXX" your search value)
+
+when
+
+affiliate_id
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+sub_affiliate_id
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+billing_cycle
+
+0-Infinity
+
+ 
+
+Zero being initial cycle ONLY orders.  1 being first recurring orders etc etc
+
+Allows greater than (>) or less than (<) operators in addition to "=."
+
+(e.g. billing_cycle>0)
+
+when
+
+tracking_num
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+all
+
+Will return orders in any state/status.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+declines
+
+Will return orders that have declined.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+success
+
+Will return orders that have been approved from the payment gateway.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+new or approved
+
+Will return orders that have been approved from the payment gateway and have not been shipped or refunded in any way.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+pending
+
+Will return orders that are pending payment.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+hold
+
+Will return orders that have been put on hold.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+recurring
+
+Will return orders that have an active subscription tied to it.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+fraud
+
+Will return orders that have been marked as fraud.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+rma
+
+Will return orders that have been marked as RMA.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+archived
+
+Will return orders that have been processed successfully on the rebill cycle that at one point had a subscription that passed through the rebill process.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+chargeback
+
+Will return orders that have been marked as chargeback.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+void
+
+Will return orders that have been voided.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+shipped
+
+Will return orders that have been shipped.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+confirmed
+
+Will return orders that have been confirmed.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+not_confirmed
+
+Will return orders that have been marked as non-confirmed.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+no_confirmation_status
+
+Will return orders that have not been marked as confirmed or not. (new)
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+no_upsells
+
+Will return orders that do not have upsells.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+has_upsells
+
+Will return orders that have upsells.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+full_refunds
+
+Will return orders that were refunded in FULL.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+partial_refunds
+
+Will return orders that were refunded PARTIALLY
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+when
+
+last_4_routing
+
+Numeric string (Must be exactly 4  characters from end of routing number)                   
+
+Will return orders that match last 4 digits on the checking account routing number.
+
+ 
+
+(Must be used with "=XXX" your search value)        
+
+when
+
+last_4_account
+
+Numeric string (Must be exactly 4  characters from end of checking account)                   
+
+Will return orders that match last 4 digits on the checking account.
+
+ 
+
+(Must be used with "=XXX" your search value)        
+
+when
+
+last_4_ssn
+
+Numeric string (Must be exactly 4 characters) Will return orders that match the last 4 digits on the checking account, if the order uses a check provider requiring this.
+
+(Must be used with "=XXX" your search value)
+
+when
+
+no_preserve_gateway
+
+Will return all orders who are NOT set to preserve to the current original gateway they were charged initially.
+
+when
+
+preserve_gateway
+
+Will return all orders who are set to preserve to the current original gateway they were charged initially.
+
+when
+
+all_refunds
+
+Will return orders that were refunded both PARTIALLY and in FULL.
+
+ 
+
+(Does not need =XXX as this is filtering by status)
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+Success - 100
+
+No Data  - 333
+
+Errors - 331 - 339
+
+See Response Codes Section for definitions.  333 if no data found.
+
+total_orders
+
+Numeric
+
+The total number of order id's returned
+
+ 
+
+order_ids
+
+CSV
+
+A Comma Separated List of Order Id's in the system that match your criteria
+
+Most likely you can use the order_view method on each order returned to show the raw data on the order.
+
+data
+
+JSON object
+
+A JSON encoded object of data returned by order_view
+
+Optional, only returned if return_ type is set to order_view
+
+ 
+
+ 
+
+API Method: order_find_updated
+
+ 
+
+This method will return orders that have been modified since creation (excluding orders that have only been created and not updated). This date range that is requested returns orders based on the date orders were modified.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+Numeric
+
+Campaign Id from Lime Light, or the word “all” to pull all campaigns
+
+Required. Must be valid
+
+start_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid. Defaults to 00:00:00 time range for that date.
+
+end_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid.  Defaults to 23:59:59 time range for that date.
+
+start_time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+end_ time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+ group_keys
+
+CSV
+
+A CSV of one or more group keys
+
+Optional. Group keys are listed below.
+
+ group keys
+
+Alphanumeric
+
+Group Keys
+
+Possible Values Or Responses
+
+Optional. Must be valid CSV of one or more group keys
+
+When
+
+billing_info
+
+Billing name or address changed
+
+ 
+
+When
+
+blacklist
+
+Blacklist status changed
+
+        
+
+When
+
+chargeback
+
+Chargeback status changed     
+
+When
+
+confirmation
+
+Confirmation status changed
+
+    
+
+when
+
+credit_card_info
+
+Credit card information changed
+
+when
+
+email       
+
+Customer email address changed
+
+                    
+
+when
+
+failures         
+
+Billing failure      
+
+when
+
+force_rebill
+
+Forced subscription
+
+when
+
+fraud
+
+Fraud status changed
+
+                    
+
+when
+
+name         
+
+Customer shipping or billing name changed
+
+ 
+
+when
+
+next_rebill_product
+
+Subscription product customized
+
+when
+
+notes
+
+ 
+
+Notes added
+
+when
+
+offline_payment
+
+Offline payment status changed
+
+when
+
+phone
+
+Customer phone changed
+
+when
+
+rebill_discount
+
+Subscription discount customized
+
+ 
+
+when
+
+recurring_date
+
+Recurring or retry date changed
+
+when
+
+recurring _scheduling
+
+Subscription cycle customized
+
+ 
+
+when
+
+recurring_status
+
+Subscription status changed
+
+when
+
+refund
+
+Refund issued
+
+ 
+
+when
+
+reprocess
+
+Reprocess status changed
+
+ 
+
+when
+
+restored
+
+Deleted order restored
+
+ 
+
+when
+
+return
+
+Return status changed
+
+ 
+
+when
+
+rma
+
+RMA status changed
+
+when
+
+shipping_info
+
+Shipping name or address changed
+
+ 
+
+when
+
+shipping_method
+
+Shipping method changed
+
+ 
+
+when
+
+shipping_status
+
+Shipping status changed
+
+when
+
+tracking_number
+
+Tracking number changed
+
+ 
+
+when
+
+void
+
+Void issued
+
+ 
+
+ 
+
+when
+
+fulfillment_post
+
+posting to fulfillment
+
+                                                  
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+Success - 100
+
+No Data  - 333
+
+Errors - 331 - 339
+
+See Response Codes Section for definitions.  333 if no data found.
+
+total_orders
+
+Numeric
+
+The total number of order id's returned
+
+ 
+
+order_ids
+
+CSV
+
+A CSV of order Id's in the system that match your group keys
+
+ 
+
+Data
+
+JSON object
+
+A JSON encoded object of the last modified date of each order
+
+ 
+
+ 
+
+API Method: order_update
+
+ 
+
+The order_update method is currently used to update a range of values on an order.  It is similar to the above order_update_recurring in that it accepts a CSV of order_ids and similar actions, but with this call, you must supply a value to update.
+
+ 
+
+If the value you are passing has one or more commas (,) as part of the value, you must escape this string by surrounding it with double quotes(“).
+
+ 
+
+For example, if the desired billing address is :
+
+ 
+
+123 Main Street, Apt 201
+
+ 
+
+Then the value should be sent as :
+
+ 
+
+“123 Main Street, Apt 201”
+
+ 
+
+Request Parameters
+
+ 
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_ids
+
+Numeric
+
+Order ids from Lime Light
+
+Required. Must be valid and have an even pairing to actions.
+
+sync_all
+
+Numeric
+
+1 or 0
+
+Optional. If updating customer information, sync_all=1 will sync to all orders who share the same customer ID.  If not provided, will sync to other orders in the subscription.
+
+actions
+
+Alphanumeric
+
+ 
+
+check_account, check_routing, cc_number, cc_expiration_date, cc_payment_type, rebill_discount, next_rebill_product, confirmation_status, blacklist, fraud,notes, chargeback, first_name, last_name, email, phone,shipping_method, shipping_address1, shipping_address2, shipping_city, shipping_zip, shipping_state, shipping_country, billing_address1, billing_address2, billing_city, billing_zip, billing_state, billing_country, recurring_date, stop_recurring_next_success, rma, return, tracking_number, payment_received, subscription_override
+
+ 
+
+Required. Must be valid and have an even pairing to order_ids.
+
+values
+
+Alphanumeric
+
+Action
+
+Possible Values
+
+Required. Must be valid and have an even pairing to order_ids. Set the status of an order
+
+when
+
+confirmation status 
+
+"1"  for confirmed or "0" for not confirmed
+
+when
+
+blacklist 
+
+"1"  for blacklist on or "0" for blacklist off
+
+when
+
+fraud
+
+"1" for fraud checked or "0" for fraud unchecked
+
+when
+
+chargeback       
+
+"1" for chargeback checked or "0" for chargeback unchecked                           
+
+when
+
+notes          
+
+Alphanumeric string (Max 512)               
+
+when
+
+first_name          
+
+Alphanumeric string (Max 64)                  
+
+when
+
+last_name          
+
+Alphanumeric string (Max 64)                  
+
+when
+
+email          
+
+Alphanumeric string (Max 96)                  
+
+when
+
+phone          
+
+Alphanumeric string (Max 18)                  
+
+when
+
+shipping_method
+
+Numeric string
+
+when
+
+shipping_address1     
+
+Alphanumeric string (Max 64)                  
+
+when
+
+shipping_address2
+
+Alphanumeric string (Max 64)
+
+when
+
+shipping_city        
+
+Alphanumeric string (Max 32)                  
+
+when
+
+shipping_zip         
+
+Alphanumeric string (Max 10)                  
+
+when
+
+shipping_state      
+
+Alphanumeric string (Max 32)                  
+
+when
+
+shipping_country 
+
+2 character country value*
+
+when
+
+billing_address1
+
+Alphanumeric string (Max 64)                  
+
+when
+
+billing_address2
+
+Alphanumeric string (Max 64)
+
+when
+
+billing_city          
+
+Alphanumeric string (Max 32)                  
+
+when
+
+billing_zip          
+
+Alphanumeric string (Max 10)                  
+
+when
+
+billing_state   
+
+Alphanumeric string (Max 32)                  
+
+when
+
+rebill_discount
+
+Numeric 1 through 99 percent.  No percent sig
+
+when
+
+next_rebill_product
+
+Valid Lime Light CRM product ID.  Zero to default back to main product ID.
+
+when
+
+cc_number
+
+Must be sent via SSL.  A credit card number you wish to update on the order
+
+when
+
+check_routing
+
+Must be sent via SSL.  A checking routing number you wish to update on the order
+
+when
+
+check_account
+
+Must be sent via SSL.  A checking account number you wish to update on the order
+
+when
+
+check_ssn
+
+Must be sent via SSL. A checking account number you wish to update on the order
+
+when
+
+cc_expiration_date
+
+A date formatted MMYY.  No special characters
+
+when
+
+cc_payment_type
+
+Possible values are:
+
+amex
+
+discover
+
+visa
+
+master
+
+offline
+
+when
+
+billing_country 
+
+2 character country value*
+
+when
+
+recurring_date
+
+URL encoded date; this can be used to update either the next recurring date or the retry date of the order.
+
+when
+
+stop_recurring_next_success
+
+"1" for on or "0" for off
+
+when
+
+rma
+
+Numeric, "0" for off, RMA Reason code for on. See RMA Reason Code Section for definition
+
+when
+
+return
+
+Alphanumeric,
+
+See Return Code section for definitions
+
+ 
+
+when
+
+tracking_number
+
+Alphanumeric. Note: will process order as shipped if previous tracking number does not exist.
+
+when
+
+payment_received
+
+Numeric,
+
+“1” for on.
+
+Will process order as paid if payment type is “offline”, will do nothing otherwise.
+
+When
+
+subscription_override
+
+ 
+
+Expects 3 values
+
+When subscription is: Bill By Cycle
+
+Value = Numeric
+
+Bill By Date
+
+Value = Numeric(1-31)
+
+Bill By Day
+
+Value=String(expects two words separated
+
+by a “:”
+
+ i.e: First:Tuesday
+
+First word Choices
+
+First
+
+Second
+
+Third
+
+Fourth
+
+Last
+
+Second word Choices
+
+Sunday
+
+Monday
+
+Tuesday
+
+Wednesday
+
+Thursday
+
+Friday
+
+Saturday
+
+ 
+
+ 
+
+when
+
+afid, affid, or aid
+
+Alphanumeric string
+
+ 
+
+ 
+
+ 
+
+when
+
+sid, c1, c2, c3, or opt
+
+Alphanumeric string
+
+ 
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 301, 340, 341, 342, 343, 320, 344,346,347,348,349 350, 351,353,376,377,378,379,380,386,387,701,907
+
+See Response Code Section for definitions
+
+ 
+
+ 
+
+API Method: subscription_update
+
+ 
+
+The subscription_update method is used to update the subscription status of an order subscription chain using a unique identifier – subscription_id - for the entire chain, rather than an order_id.
+
+ 
+
+This method accepts requests in two formats. The first is the standard HTTP POST with a CSV pairing of values and actions. The second option is to send a JSON encoded string as the “subscription_update” parameter, with the following format:
+
+ 
+
+{“$ACTION” : {“$SUBSCRIPTION_ID_1” : [$ATTRIBUTES]”,”SUBSCRIPTION_ID_2”:[$ATTRIBUTES]}}
+
+$ATTRIBUTES is an empty array, but will be used in the response back.
+
+ 
+
+Example:
+
+ 
+
+{"start":{"8610286a4311c82d5275676a91ce610e" : [],"4b610f992c9b76edaaa2fd76697784a3":[]},"stop":{"c70bef335b6f01a69a141f978ec8ab7f" : []}}
+
+This example would start two subscriptions, and stop the third, if applicable.
+
+ 
+
+The output for this method follows the same JSON format, adding an additional value to the subscription_id attributes array with the response code for the action taken.
+
+ 
+
+Using above example input:
+
+ 
+
+{"start":{"8610286a4311c82d5275676a91ce610e":{"response":"100"},"4b610f992c9b76edaaa2fd76697784a3":{"response":"353"}},"stop":{"c70bef335b6f01a69a141f978ec8ab7f" : {"response":"100"}}}
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+values
+
+Alphanumeric, CSV
+
+Subscription Id from Lime Light
+
+Required. Must be valid and have an even pairing to status.
+
+action
+
+Alphanumeric, CSV
+
+start, stop, reset
+
+Required. Must be valid and have an even pairing to values. Set the status of an order
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 351, 352, 353, 354, 355, 360
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: order_view
+
+ 
+
+The order_view method is used to display critical information regarding the order and its associated data. The call assembles the parent_order_id and children_ids of any orders that have been created from the order. The call also displays certain fields depending on whether or not the product is shippable.
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric, CSV up to 200 orders
+
+Order Id(s) from Lime Light
+
+Required. Must be valid
+
+return_format
+
+String
+
+‘json’ or leave blank for default format
+
+Optional; Can be used with order_find with order_view as the return_type.
+
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350
+
+See Response Codes Section for definitions.
+
+ancestor_id
+
+Numeric
+
+0
+
+The Ancestor Id of this order.
+
+customer_id
+
+Numeric
+
+1,2,3
+
+A Lime Light assigned Customer Id
+
+parent_id
+
+Numeric
+
+5
+
+The Parent Id of this order
+
+child_id
+
+CSV - Numeric
+
+6,7,8,9,13
+
+Children orders spawned from this order, comma separated
+
+order_status
+
+Numeric
+
+2,6,7,8,11
+
+2 = Approved
+
+6 = Void/Refund
+
+7 = Declined
+
+8 = Shipped
+
+11 = Pending
+
+is_recurring
+
+Boolean
+
+0,1
+
+0 = Non-recurring Order
+
+1 = Recurring Order
+
+shipping_first_name
+
+URL encoded Alphanumeric
+
+Joe
+
+Shipping First Name
+
+shipping_last_name
+
+URL encoded Alphanumeric
+
+Smith
+
+Shipping Last Name
+
+shipping_street_address
+
+URL encoded Alphanumeric
+
+123+Main+Street
+
+Street Address
+
+shipping_street_address2
+
+URL encoded Alphanumeric
+
+Apt+201
+
+Street Address2
+
+shipping_city
+
+URL encoded Alphanumeric
+
+New+York+City
+
+City
+
+shipping_state
+
+URL encoded Alphanumeric
+
+NY
+
+State
+
+shipping_state_id
+
+URL encoded Alphanumeric
+
+ TW-NAN
+
+State Code*
+
+shipping_postcode
+
+URL encoded Alphanumeric
+
+12345
+
+Zip Code
+
+shipping_country
+
+Numeric
+
+US
+
+2 Character Country Code*
+
+billing_first_name
+
+URL encoded Alphanumeric
+
+Test
+
+Billing First Name
+
+billing_last_name
+
+URL encoded Alphanumeric
+
+Smith
+
+Billing Last Name
+
+billing_street_address
+
+URL encoded Alphanumeric
+
+123+Main+Street
+
+Street Address
+
+billing_street_address2
+
+URL encoded Alphanumeric
+
+Apt+201
+
+Street Address2
+
+billing_city
+
+URL encoded Alphanumeric
+
+New+York+City
+
+City
+
+billing_state
+
+URL encoded Alphanumeric
+
+NY
+
+State
+
+billing_state_id
+
+URL encoded Alphanumeric
+
+TW-NAN
+
+ 
+
+State Code*
+
+ 
+
+billing_postcode
+
+URL encoded Alphanumeric
+
+12345
+
+Zip Code
+
+billing_country
+
+Numeric
+
+US
+
+2 Character Country Code*
+
+customers_telephone
+
+URL encoded Alphanumeric
+
+123-456-7890
+
+Telephone + Area Code
+
+time_stamp
+
+URL encoded Timestamp
+
+2010-04-01+11%3A25%3A25
+
+Purchase Date/Time
+
+recurring_date
+
+URL encoded
+
+Date
+
+2010-04-01
+
+Original recurring date
+
+retry_date
+
+URL encoded
+
+Date
+
+2010-05-01
+
+ Next retry date
+
+cc_type
+
+URL encoded Alphanumeric
+
+Visa
+
+CC Type
+
+cc_expires
+
+Numeric
+
+1010
+
+MMYY Format
+
+prepaid_match
+
+Alphanumeric
+
+No
+
+Whether or not cc number matches a prepaid BIN Yes, No, or Blank
+
+main_product_id
+
+Numeric
+
+1
+
+Main product Id associated with the order
+
+main_product_quantity
+
+Numeric
+
+1
+
+ 
+
+next_subscription_product
+
+URL encoded Alphanumeric
+
+ 
+
+the name of the next product on the subscription chain.
+
+next_subscription_product_id
+
+Numeric
+
+ 
+
+The next product ID on the subscription chain.
+
+upsell_product_id
+
+CSV-Numeric
+
+4,5,6
+
+Multiple upsell products comma separated
+
+upsell_product_quantity
+
+CSV-Numeric
+
+1,2,4
+
+ 
+
+shipping_method_name
+
+URL encoded Alphanumeric
+
+First+Class+Mail
+
+Shipping method Name associated with the order
+
+shipping_id
+
+Numeric
+
+1
+
+Shipping method Id associated with the order
+
+transaction_id
+
+URL encoded Alphanumeric
+
+1320272646
+
+Transaction ID the payment gateway sends back
+
+auth_id
+
+URL encoded Alphanumeric
+
+000193
+
+Auth ID the payment gateway sends back
+
+tracking_number
+
+URL encoded Alphanumeric
+
+9101010521297833885760
+
+Tracking Number for Shipped orders
+
+on_hold
+
+Numeric
+
+1 or 0
+
+Tells whether the order's subscriptions are on hold
+
+on_hold_by
+
+URL encoded Alphanumeric
+
+Limelight
+
+"Limelight " if put on hold by the system "Username" if recurring stopped by admin
+
+hold_date
+
+Date
+
+2010-12-14
+
+The date the order was placed on hold
+
+email_address
+
+URL encoded Alphanumeric
+
+support%40limelightcrm.com
+
+Email address on the order
+
+gateway_id
+
+URL encoded Alphanumeric
+
+4
+
+The LimeLight CRM gateway assigned to the campaign at the time of the order
+
+preserve_gateway
+
+Numeric
+
+1 or 0
+
+Shows whether the order will bill its rebill subscription to the current gateway, or if 0 will bill to whatever is next in rotation.
+
+amount_refunded_to_date
+
+Float
+
+4.95
+
+Shows the total amount to date that has been put back on the card
+
+order_confirmed
+
+URL encoded Alphanumeric
+
+ CONFIRMED
+
+CONFIRMED
+
+Or
+
+ 
+
+NOT_CONFIRMED
+
+ 
+
+Or
+
+ 
+
+NO_STATUS
+
+order_confirmed_date
+
+Date
+
+2010-12-14
+
+The date the order was confirmed
+
+is_chargeback
+
+Numeric
+
+1 or 0
+
+1 for orders who are flagged
+
+ 
+
+0 for orders who are not flagged
+
+is_fraud
+
+Numeric
+
+1 or 0
+
+1 for orders who are flagged
+
+ 
+
+0 for orders who are not flagged
+
+is_rma
+
+Numeric
+
+0,1, or 2
+
+0 for orders without an RMA
+
+1 for orders with an RMA
+
+2 for orders that are returned
+
+rma_number
+
+URL encoded Alphanumeric
+
+12354212332
+
+The RMA number of the order if RMA is set
+
+rma_reason
+
+URL encoded Alphanumeric
+
+Cannot%20Afford%20Product
+
+The long description RMA reason selected
+
+ip_address
+
+URL encoded Alphanumeric
+
+192.168.0.1
+
+The IP address of the consumer during sale
+
+affiliate
+
+URL encoded Alphanumeric
+
+116430
+
+Primary Affiliate on the order
+
+sub_affiliate
+
+URL encoded Alphanumeric
+
+508706
+
+Primary Sub-Affiliate on the order
+
+products[0][product_id]
+
+products[1][product_id]
+
+products[2][product_id]
+
+products[...][product_id]
+
+URL encoded Alphanumeric
+
+4
+
+A multi-dimensional array of product_id's all attached to the order.
+
+ 
+
+Will increment by 1 starting from 0 for each product attached to the order
+
+products[0][next_subscription_product_id]
+
+products[1][next_subscription_product_id]
+
+products[2][next_subscription_product_id]
+
+products[...][next_subscription_product_id]
+
+Numeric
+
+4
+
+A multi-dimensional array of the next product ID on the subscription chain.
+
+products[0][next_subscription_product]
+
+products[1][next_subscription_product]
+
+products[2][next_subscription_product]
+
+products[...][next_subscription_product]
+
+URL encoded Alphanumeric
+
+Dollar Coffee
+
+A multi-dimensional array of the next product on the subscription chain.
+
+products[0][sku]
+
+products[1][sku]
+
+products[2][sku]
+
+products[...][sku]
+
+URL encoded Alphanumeric
+
+COFFEE1
+
+A multi-dimensional array of sku's attached to the order
+
+products[0][price]
+
+products[1][price]
+
+products[2][price]
+
+products[...][price]
+
+Float
+
+5.95
+
+A multi-dimensional array of prices attached to the order
+
+products[0][name]
+
+products[1][name]
+
+products[2][name]
+
+products[...][name]
+
+URL encoded Alphanumeric
+
+Dollar Coffee
+
+A multi-dimensional array of product names attached to the order
+
+products[0][on_hold]
+
+products[1][on_hold]
+
+products[2][on_hold]
+
+products[...][on_hold]
+
+Numeric
+
+1 or 0
+
+A multi-dimensional array of products that are on hold or not attached to the order
+
+products[0][is_recurring]
+
+products[1][is_recurring]
+
+products[2][is_recurring]
+
+products[...][is_recurring]
+
+Numeric
+
+1 or 0
+
+A multi-dimensional array of products who have a subscription attached to the order
+
+products[0][recurring_date]
+
+products[1][recurring_date]
+
+products[2][recurring_date]
+
+products[...][recurring_date]
+
+Date
+
+2010-12-14
+
+A multi-dimensional array of products' next recurring date attached to the order
+
+products[0][product_qty]
+
+products[1][product_qty]
+
+products[2][product_qty]
+
+products[...][product_qty]
+
+Numeric
+
+[0-9]
+
+ 
+
+products[0][subscription_id]
+
+products[1][subscription_id]
+
+products[2][subscription_id]
+
+products[...][subscription_id]
+
+ Alphanumeric
+
+ md5 hash
+
+Subscription id identifying a products subscription chain.
+
+products[0][subscription_type]
+
+products[1][subscription_ type]
+
+products[2][subscription_ type]
+
+products[...][subscription_ type
+
+ URL encoded Alphanumeric
+
+ Bill+by+cycle
+
+Text identifier for the type of subscription the product is following. Only applies to recurring products.
+
+ 
+
+products[0][subscription_desc]
+
+products[1][subscription_ desc]
+
+products[2][subscription_ desc]
+
+products[...][subscription_ desc]
+
+ URL encoded Alphanumeric
+
+ Bills+every+15+days
+
+Text description for the type of subscription the product is following. Only applies to recurring products.
+
+decline_reason
+
+URL encoded Alphanumeric
+
+Insufficient Funds
+
+If the order was a decline, then it will show the decline reason.  If it is an approved order, will default to "Blank"
+
+campaign_id
+
+Numeric
+
+3
+
+Internal Lime Light Campaign ID for the order
+
+employeeNotes [0]
+
+employeeNotes [1]
+
+employeeNotes […]
+
+URL encoded Alphanumeric
+
+Admin {ADMIN_ID} - {TIMEOFNOTE} - Actual Note From User
+
+An array of all notes for the order
+
+systemNotes[0]
+
+systemNotes[1]
+
+systemNotes[...]
+
+URL encoded Alphanumeric
+
+Admin {ADMIN_ID} - {TIMEOFNOTE} - Actual Note From System
+
+An array of all system generated notes for the order
+
+check_routing_last_4
+
+Numeric
+
+1234
+
+If payment type is checking, then will show last 4 of routing number.  Else will show Blank
+
+check_account_last_4
+
+Numeric
+
+1234
+
+If payment type is checking, then will show last 4 of account number.  Else will show Blank
+
+check_ssn_last_4
+
+Numeric
+
+1234
+
+If and only if payment type is checking AND the provider requires passing of the SSN #. Else will show Blank
+
+order_total
+
+Float
+
+15.95
+
+Main Product Price + Total Upsell Amount + Shipping + Tax
+
+order_sales_tax
+
+Float
+
+00.00
+
+Tax Percent Amount
+
+order_sales_tax_amount
+
+Float
+
+00.00
+
+Tax Dollar Amount
+
+processor_ id
+
+URL encoded Alphanumeric
+
+1
+
+Processor ID, if applicable
+
+created_by_user_name
+
+URL encoded Alphanumeric
+
+jsmith
+
+Creator username of order if applicable
+
+ 
+
+created_by employee_name
+
+ 
+
+URL encoded Alphanumeric
+
+John Smith
+
+Creator of order if applicable
+
+billing_cycle
+
+Numeric
+
+0
+
+Billing cycle
+
+click_id
+
+URL encoded Alphanumeric
+
+12345
+
+Click id, if applicable
+
+cc_first_6
+
+Numeric
+
+123456
+
+First 6 digits of the credit card number
+
+cc_last_4
+
+Numeric
+
+1234
+
+Last 4 digits of the credit card number
+
+credit_card_number
+
+Numeric
+
+123456XXXXXX1234
+
+Masked credit card number
+
+decline_salvage_discount_percent
+
+Numeric
+
+50
+
+The decline salvage discount that is applied to the order in terms of a percentage.
+
+gateway_descriptor
+
+String
+
+DescriptorA
+
+This is the descriptor from the gateway that the order processed through.
+
+coupon_discount_amount
+
+Numeric
+
+5.00
+
+This is the coupon discount that was applied to the order.
+
+is_blacklisted
+
+Numeric
+
+1 or 0
+
+This is a flag that indicates whether or not the customer is blacklisted.
+
+rebill_discount_percent
+
+Numeric
+
+50
+
+The rebill discount that is applied to the order in terms of a percentage.
+
+ 
+
+afid
+
+URL encoded Alphanumeric
+
+116430
+
+The value stored within the AFID affiliate field.
+
+affid
+
+URL encoded Alphanumeric
+
+116430
+
+The value stored within the AFFID affiliate field.
+
+aid
+
+URL encoded Alphanumeric
+
+116430
+
+The value stored within the AID affiliate field.
+
+sid
+
+URL encoded Alphanumeric
+
+508706
+
+The value stored within the SID sub-affiliate field.
+
+c1
+
+URL encoded Alphanumeric
+
+508706
+
+The value stored within the C1 sub-affiliate field.
+
+c2
+
+URL encoded Alphanumeric
+
+508706
+
+The value stored within the C2 sub-affiliate field.
+
+c3
+
+URL encoded Alphanumeric
+
+508706
+
+The value stored within the C3 sub-affiliate field.
+
+opt
+
+URL encoded Alphanumeric
+
+508706
+
+The value stored within the OPT sub-affiliate field.
+
+is_test_cc
+
+Numeric
+
+1 or 0
+
+This is a flag that indicates whether or not the record is a test order.
+
+ 
+
+ 
+
+is_void
+
+Numeric
+
+1 or 0
+
+This is a flag that indicates whether or not the order is voided.
+
+void_amount
+
+Numeric
+
+5.00
+
+This is the amount that the order was voided
+
+void_date
+
+Date/Time
+
+2016-04-15+16%3A14%3A36
+
+This is the date and time that the order was voided
+
+is_refund
+
+Numeric
+
+1 or 0
+
+This is a flag that indicates whether or not the order is refunded or partially refunded.
+
+refund_amount
+
+Numeric
+
+5.00
+
+This is the amount that the order was refunded.
+
+refund_date
+
+Date/Time
+
+2016-04-15+16%3A14%3A36
+
+This is the date and time that the order was refunded.
+
+chargeback_date
+
+Date/Time
+
+2016-04-15+16%3A14%3A36
+
+This is the date and time that the order was refunded.
+
+acquisition_date
+
+Date/Time
+
+2016-04-15+16%3A14%3A36
+
+This is the date and time of the initial order on the subscription chain.
+
+shippable
+
+Numeric
+
+1 or 0
+
+This is a flag that indicates whether or not the order is shippable.
+
+ 
+
+API Method: product_index
+
+ 
+
+The product_index method is used to display information related to several products.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_id
+
+CSV-Numeric
+
+Product Id from Lime Light
+
+Required. Must be valid. Comma separated product Ids
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 600
+
+See Response Codes Section for definitions.
+
+product_name
+
+CSV-URL encoded Alphanumeric
+
+Test+1,Test+2,Test+3
+
+Name
+
+product_description
+
+CSV-URL encoded Alphanumeric
+
+Test+1,Test+2,Test+3
+
+Description
+
+product_sku
+
+CSV-URL encoded Alphanumeric
+
+234234,2352352,234234,234234
+
+SKU
+
+product_price
+
+CSV-URL encoded Float
+
+1.00,20.50,32.35,2.95
+
+Main Price
+
+product_category_name
+
+CSV-URL encoded Alphanumeric
+
+General,Coffee,Food,Electronics
+
+Category Name
+
+product_is_trial
+
+URL encoded Boolean
+
+0,0,1,0
+
+Trial product or not
+
+0 = False
+
+1 = True
+
+product_is_shippable
+
+URL encoded Boolean
+
+1,1,0,1
+
+Shippable product or not
+
+0 = False
+
+1 = True
+
+product_rebill_product
+
+CSV-URL encoded Numeric
+
+1,2,3,4
+
+Lime Light CRM product Id that you have associated as a product to rebill.
+
+ 
+
+If 0 then you have rebills turned off for the product
+
+product_rebill_days
+
+CSV-URL encoded Numeric
+
+1,5,10,15
+
+The number of days that the product is set to recur after the initial transaction.
+
+product_max_quantity
+
+ 
+
+CSV-URL encoded                    Numeric
+
+10,24,55,10
+
+The max possible quantity allowed for a product
+
+preserve_recurring_quantity
+
+Numeric
+
+1 or 0
+
+If a product recurs itself, it may be set to preserve its quantity throughout its recurring process 0=False 1=True
+
+subscription_type
+
+Numeric
+
+0,1,2, or 3
+
+Identifies the subscription type of the product.
+
+0 = Not recurring
+
+1 = Bill by cycle
+
+2 = Billing Date
+
+3 = Billing Day
+
+subscription_week
+
+Alpha
+
+First, Second, Third, Fourth, or Last
+
+Identifies which week of the month the product will bill on. . Requires subscription_type 3
+
+Subscription_day
+
+Alpha
+
+Day of the week (Sunday-Saturday)
+
+Identifies which day of the week the product will bill on. Requires subscription_type 3
+
+ 
+
+ 
+
+API Method: product_attribute_index
+
+ 
+
+The product_attribute_index method is used to display attribute information related to several products.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_id
+
+CSV-Numeric
+
+Product Id from Lime Light
+
+Required. Must be valid. Comma separated product Ids
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100,  600
+
+See Response Codes Section for definitions.
+
+data
+
+JSON encoded string
+
+See example* below
+
+Mapping of product attributes and options relating to the products.
+
+ 
+
+JSON encoded example (formatted for readability, comments added):
+
+ 
+
+{"1":{ --Product id
+
+            "123":{                                                 -- First attribute id
+
+                        "id":"123",                                -- Attribute id again
+
+                        "name":"Color",                       -- Attribute name
+
+                        "children":{
+
+                                    "124":"Red",                -- First option, id : name
+
+                                    "125":"White",              -- Second option, id : name
+
+                                    "126":"Blue"                 -- Third option, id : name
+
+                        }
+
+            },
+
+            "127":{                                                 -- Second attribute id
+
+                        "id":"127",                                -- Attribute id again
+
+                        "name":"Size",                         -- Attribute name
+
+                        "children":{
+
+                                    "128":"Small",              -- First option, id : name
+
+                                    "129":"Medium",          -- Second option, id : name
+
+                                    "130":"Large"               -- Third option, id : name
+
+                        }
+
+            }
+
+}}
+
+ 
+
+API Method: product_copy
+
+The product_copy method is the easiest way to get started taking template products that are existing in your offers and slightly tweaking them through the API.  It could be used for such things as creating products on the fly for membership upgrades.
+
+The newly created copied product will reside in the same product category as the copied template.
+
+ 
+
+You can specify and optional new_name field to use a name of your choice for the newly created product based off an existing template.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_id
+
+Numeric
+
+Product Id from Lime Light
+
+Required. Must be valid
+
+new_name
+
+Numeric
+
+Product Id from Lime Light
+
+Optional.  If not passed, the product name will be "EXISTING_PRODUCT_NAME" (COPY)
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100
+
+See Response Codes Section for definitions.
+
+new_product_id
+
+Numeric
+
+Incremental By 1 Per post
+
+ 
+
+ 
+
+ 
+
+ 
+
+API Method: product_create
+
+The product_create method allows you to create new products within Lime Light through API.
+
+ 
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_name
+
+Alphanumeric
+
+Name of product
+
+Required
+
+category_id
+
+Numeric
+
+Category ID of product
+
+Required. Must be valid category_id.
+
+product_sku
+
+Alphanumeric
+
+SKU of product
+
+Required
+
+product_price
+
+Numeric
+
+Price of product i.e. 89.95
+
+Required
+
+product_description
+
+Alphanumeric
+
+Description of product
+
+Required
+
+customer_purchase_limit
+
+ 
+
+Boolean
+
+Enables singles purchase limit on the product that is created
+
+Optional
+
+digitally_delivered
+
+ 
+
+Boolean
+
+Enables digital delivery on the product that is created
+
+Optional
+
+taxable
+
+Boolean
+
+Enables taxability on the product that is created
+
+Optional
+
+shippable
+
+Boolean
+
+Enables shipping on the product that is created
+
+Optional
+
+signature_confirmation
+
+Boolean
+
+Enables signature confirmation on the product that is created
+
+Optional
+
+delivery_confirmation
+
+Boolean
+
+Enables delivery confirmation on the product that is created
+
+Optional
+
+preserve_quantity
+
+Boolean
+
+Enables quantity preservation on the product that is created
+
+Optional
+
+recurring
+
+Boolean
+
+Enables subscription functionality on the product that is created
+
+Optional
+
+recurring_itself
+
+Boolean
+
+Makes the product self-recurring
+
+Conditional; used when recurring=1.
+
+collections
+
+Boolean
+
+Enables collections on the product that is created
+
+Optional
+
+oco_exclude
+
+Boolean
+
+Excludes the product from your OCO provider
+
+Optional; used with RevGuard OCO integration
+
+ccbill_subscription_id
+
+Boolean
+
+Defines the subscription type ID of the product when using the CCBill gateway integration.
+
+Optional; used with CCBill gateway integration
+
+shipping_declared_value
+
+Numeric
+
+Defines the declared value of the product, i.e. 45.00
+
+Optional
+
+product_restocking_fee
+
+Numeric
+
+Defines the restocking fee that is associated to the product, i.e. 5.00
+
+Optional
+
+shipping_weight
+
+Numeric
+
+Defines the shipping eight of the produuct in ounces, i.e. 1.50
+
+Optional
+
+subscription_type
+
+Numeric
+
+Defines the subscription type of the product:
+
+1 = Bill By Cycle
+
+2 = Bill By Date
+
+3 = Bill By Day
+
+Conditional; used when recurring=1.
+
+recurring_days
+
+Numeric
+
+Defines the number of days for when using a subscription that bills by cycle or date, i.e. 30.
+
+Conditional; used when subscription_type=1 or 2
+
+subscription_week
+
+Numeric
+
+Defines the day of recurrence for when using a subscription that bills by day:
+
+1 = First
+
+2 = Second
+
+3 = Third
+
+4 = Fourth
+
+5 = Last
+
+Conditional; used when subscription_type=3
+
+subscription_day
+
+Numeric
+
+Defines the day of recurrence for when using a subscription that bills by day:
+
+1 = Sunday
+
+2 = Monday
+
+3 = Tuesday
+
+4 = Wednesday
+
+5 = Thursday
+
+6 = Friday
+
+7 = Saturday
+
+Conditional; used when subscription_type=3
+
+shipping_digital_url
+
+URL
+
+ Defines the digital delivery URL of the product, i.e. https://www.example.com/
+
+Conditional; used when digitally_delivered=1
+
+recurring_discount_max
+
+Numeric
+
+Defines the maximum percentage recurring discount that can be issued on the product, i.e. 25
+
+Optional
+
+events
+
+CSV
+
+Paired CSV list of email trigger events to be added to the product
+
+Optional; must be paired with the CSV list of values for ‘type’
+
+types
+
+CSV
+
+Paired CSV list of email action types to be added to the product
+
+Optional; must be paired with the CSV list of values for ‘events’
+
+ 
+
+ 
+
+Response Parameters:
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+responseCode
+
+Numeric
+
+100, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: product_delete
+
+ 
+
+Request Parameters:
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_id
+
+Numeric
+
+The product ID that you would like to delete
+
+Required. Must be valid
+
+ 
+
+Response Parameters:
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+responseCode
+
+Numeric
+
+100, 561, 562, 563, 564
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+ 
+
+ 
+
+API Method: product_update
+
+ 
+
+The product_update method is currently used to update the information on a product through the API.
+
+ 
+
+If the value you are passing has one or more commas (,) as part of the value, you must escape this string by surrounding it with double quotes(“).
+
+ 
+
+For example, if the desired product description is :
+
+ 
+
+Coffee beans, mug, and filters
+
+Then the value should be sent as :
+
+“Coffee beans, mug, and filters”
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+product_ids
+
+Numeric
+
+Product ids from Lime Light
+
+Required. Must be valid and have an even pairing to actions.
+
+actions
+
+Alphanumeric
+
+ 
+
+product_name, product_price, product_description, product_sku, product_weight ,is_shippable, rebill_days, rebill_product, is_free_trial,  signature_confirmation, delivery_confirmation, digital_delivery_url, digital_delivery, declared_value, category
+
+ 
+
+Required. Must be valid and have an even pairing to product_ids.
+
+values
+
+Alphanumeric
+
+Action
+
+Possible Values
+
+Required. Must be valid and have an even pairing to product_ids.
+
+when
+
+product_name
+
+Alphanumeric string (Max 64)                           
+
+when
+
+product_price
+
+A non-negative number as either a whole number or with precision of 2 decimals.
+
+when
+
+product_description
+
+Alphanumeric string (Max 500)                           
+
+when
+
+product_sku
+
+Alphanumeric string (Min 5) (Max 255)         
+
+when
+
+product_weight          
+
+Weight In Ounces. Numeric Only whole numbers                           
+
+when
+
+is_shippable          
+
+"1" for shippable item or "0" for non shippable
+
+when
+
+rebill_days
+
+Any non-negative number of rebill days.
+
+If subscription_type is 2, this value becomes the day of the month that the product will bill on, and must be a value between 1 and 31
+
+ 
+
+You can use the word "off" as the value to turn off recurring rebill_days and turn off the product.
+
+ 
+
+If there isn't a product associated on the rebill_product, you will get a 324 error code.
+
+when
+
+rebill_product          
+
+A valid LimeLight product Id.               
+
+when
+
+is_free_trial          
+
+"1" for is free trial flag ON or "0" for is free trial flag OFF
+
+when
+
+signature_confirmation
+
+"1" for signature confirmation flag ON or "0" for signature confirmation flag OFF
+
+when
+
+delivery_confirmation
+
+"1" for delivery confirmation flag ON or "0" for delivery confirmation flag OFF
+
+when
+
+digital_delivery_url
+
+Alphanumeric string URL validated (Max 255)                          
+
+when
+
+digital_delivery
+
+"1" for digital delivery flag ON or "0" for digital delivery flag OFF.
+
+When "1", must be paired with a digital_delivery_url value for each product_id updated.
+
+when
+
+declared_value
+
+A non-negative number as either a whole number or with precision of 2 decimals.
+
+ 
+
+Typically only used when fulfillment is enabled.
+
+when
+
+max_quantity
+
+The max possible quantity allowed for a product. Defaults to 1.
+
+when
+
+preserve_recurring_quantity
+
+If a product recurs itself, it may be set to preserve its quantity throughout its recurring process 0=False 1=True
+
+When
+
+subscription_type
+
+Identifies the subscription type of the product.
+
+0 = Not recurring
+
+1 = Bill by cycle
+
+2 = Billing Date
+
+3 = Billing Day
+
+When
+
+subscription_week
+
+ 
+
+Identifies which week of the month the product will bill on. . Requires subscription_type 3. Possible values:
+
+1 OR first,
+
+2 OR second
+
+3 OR third
+
+4 OR fourth
+
+5 OR last
+
+ 
+
+When
+
+subscription_day
+
+ 
+
+Identifies which day of the week the product will bill on. Requires subscription_type 3.
+
+Possible values:
+
+1 OR Sunday,
+
+2 OR Monday,
+
+3 OR Tuesday,
+
+4 OR Wednesday,
+
+5 OR Thursday,
+
+6 OR Friday,
+
+7 OR saturday
+
+ 
+
+ 
+
+When
+
+category
+
+ 
+
+The product category ID that you are updating the product to.
+
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 320,321,322, 323, 324, 325, 326, 342, 343, 350, 351
+
+See Response Code Section for definitions.
+
+ 
+
+ 
+
+API Method: upsell_stop_recurring
+
+ 
+
+The upsell_stop_recurring method is used to stop upsells from recurring.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+product_id
+
+Numeric
+
+Product Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 200, 350, 360, 600
+
+See Response Codes Section for definitions.
+
+ 
+
+API Method: prospect_view
+
+ 
+
+The prospect_view method is used view data about a prospect in the Lime Light system.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+prospect_id
+
+Numeric
+
+Prospect Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 601
+
+See Response Codes Section for definitions.
+
+campaign_id
+
+Numeric
+
+1
+
+The Campaign Id of this prospect.
+
+first_name
+
+URL encoded Alphanumeric
+
+Joe
+
+Prospects First Name
+
+last_name
+
+URL encoded Alphanumeric
+
+Smith
+
+Prospects Last
+
+Name
+
+address
+
+ URL encoded Alphanumeric
+
+123+Main+Street
+
+ Street Address
+
+address2
+
+URL encoded Alphanumeric
+
+Apt+201
+
+Street Address2
+
+city
+
+URL encoded Alphanumeric
+
+New+York+City
+
+City
+
+state
+
+URL encoded Alphanumeric
+
+NY
+
+State
+
+state_id
+
+URL encoded Alphanumeric
+
+NY
+
+State Code
+
+zip
+
+URL encoded Alphanumeric
+
+12345
+
+Zip Code
+
+country
+
+Numeric
+
+US
+
+2 Character Country Code
+
+phone
+
+URL encoded Alphanumeric
+
+123-456-7890
+
+Telephone + Area Code
+
+email
+
+URL encoded Alphanumeric
+
+support@40limelightcrm.com
+
+Email address
+
+ip_address
+
+URL encoded Alphanumeric
+
+192.168.0.1
+
+The IP address of the consumer during sale
+
+date_created
+
+Date
+
+2010-12-14
+
+Creation date of the prospect
+
+affiliate
+
+URL encoded Alphanumeric
+
+12345
+
+Affiliate ID
+
+sub_affiliate
+
+URL encoded Alphanumeric
+
+12345
+
+Sub-affiliate ID
+
+ 
+
+ 
+
+API Method: prospect_update
+
+ 
+
+The prospect_update method is currently used to update a range of values on a prospect record.It is similar to the order_update method in that it accepts CSVs of ids, actions, and values.
+
+ 
+
+If the value you are passing has one or more commas(,) as part of the value, you must escape this string by surrounding it with double quotes("). For example, if the desired address is:
+
+123 Main Street, Apt 201
+Then the value should be sent as:
+
+"123 Main Street. Apt 201"
+ 
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+prospect_ids
+
+Numeric
+
+Prospect ids from Lime Light
+
+Required. Must be valid and have an even pairing to actions.
+
+actions
+
+Alphanumeric
+
+ 
+
+first_name, last_name, address, city, state, zip, country, email , phone, notes
+
+ 
+
+Required. Must be valid and have an even pairing to prospect_ids.
+
+values
+
+Alphanumeric
+
+Action
+
+Possible Values
+
+Required. Must be valid and have an even pairing to order_ids. Set the status of an order
+
+when
+
+first_name
+
+Alphanumeric string (Max 50)
+
+when
+
+last_name
+
+Alphanumeric string (Max 50)
+
+when
+
+address
+
+Alphanumeric string (Max 100)
+
+when
+
+address2
+
+Alphanumeric string (Max 100)
+
+when
+
+city
+
+Alphanumeric string (Max 100)           
+
+when
+
+state
+
+Alphanumeric string (Max 100), optional state_id support (see state code  look-up) 
+
+when
+
+zip
+
+Alphanumeric string (Max 8)                           
+
+when
+
+country          
+
+2 character country code
+
+when
+
+email           
+
+Alphanumeric string (Max 100)                          
+
+when
+
+phone          
+
+Alphanumeric string (Max 20)                           
+
+When
+
+notes
+
+Alphanumeric string (Max 512)                          
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 340,342,343, 351,382,383,601
+
+See Response Code Section for definitions.
+
+ 
+
+ 
+
+API Method: prospect_find
+
+ 
+
+The prospect_find method is used to retrieve a list of prospect ids that match a set of criteria. HTTPS is required for this call.
+
+ 
+
+Wildcards may be used when full data is not available.
+
+ 
+
+An optional parameter, return_type, may be passed. If return_type is sent as ”prospect_view”, in addition to the normal return parameters you will also receive a “data” parameter that contains a JSON (http://www.json.org/) encoded object of the data returned by the prospect_view method for each prospect returned by the query.
+
+ 
+
+See the prospect_view definition for return values.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+Numeric
+
+Campaign Id from Lime Light, or the word “all” to pull all campaigns
+
+Required. Must be valid
+
+start_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid. Defaults to 00:00:00 time range for that date.
+
+end_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid.  Defaults to 23:59:59 time range for that date.
+
+start_time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+end_ time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+search_type
+
+"any" or "all"
+
+"any" or "all"
+
+ 
+
+Any to match any one of your criteria.
+
+ 
+
+All to filter only orders that match each criteria passed
+
+If omitted, will default to "any"
+
+return_type
+
+Blank or “prospect_view”
+
+Optional
+
+Prospect_view will add an additional return parameter “data” which will contain a JSON encoded prospect_view object of each prospect found in the query
+
+Optional, if omitted will default to standard view
+
+criteria
+
+Alphanumeric
+
+Criteria key
+
+Possible Values Or Responses
+
+Optional. CSV of zero or more criteria
+
+when
+
+first_name
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+last_name          
+
+Alphanumeric string (Allows wildcard *)  
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+address          
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)          
+
+when
+
+city          
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+state
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+zip          
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+ 
+
+when
+
+country
+
+2 character country code
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+phone
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+email
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+ip_address
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+ 
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+Success - 100
+
+No Data  - 602
+
+Errors - 331,332,334,335,338,340,400
+
+See Response Codes Section for definitions.  602 if no data found.
+
+total_prospects
+
+Numeric
+
+The total number of prospect ids returned
+
+ 
+
+prospect_ids
+
+CSV
+
+A Comma Separated List of prospect ids in the system that match your criteria
+
+ 
+
+data
+
+JSON object
+
+A JSON encoded object of data returned by prospect_view
+
+Optional, only returned if return_type is set to prospect_view
+
+ 
+
+ 
+
+API Method: customer_view
+
+ 
+
+The customer_view method is used view data about a customer in the Lime Light system.
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+customer_id
+
+Numeric
+
+Customer Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 603
+
+See Response Codes Section for definitions.
+
+first_name
+
+URL encoded Alphanumeric
+
+Joe
+
+Customer’s First Name
+
+last_name
+
+URL encoded Alphanumeric
+
+Smith
+
+Customer’s Last Name
+
+phone
+
+URL encoded Alphanumeric
+
+123-456-7890
+
+Telephone + Area Code
+
+email
+
+URL encoded Alphanumeric
+
+support%40limelightcrm.com
+
+Email address
+
+date_created
+
+Date
+
+2010-12-14
+
+Creation date of the customer
+
+order_count
+
+Numeric
+
+3
+
+Number of orders placed by this customer
+
+order_list
+
+Numeric CSV
+
+10001,10002
+
+A CSV of order ids placed by this customer
+
+ 
+
+API Method: customer_find
+
+ 
+
+The customer_find method is used to retrieve a list of customer ids that match a set of criteria. HTTPS is required for this call.
+
+ 
+
+Wildcards may be used when full data is not available.
+
+ 
+
+An optional parameter, return_type, may be passed. If return_type is sent as ”customer_view”, in addition to the normal return parameters you will also receive a “data” parameter that contains a JSON (http://www.json.org/) encoded object of the data returned by the customer_view method for each customer returned by the query.
+
+ 
+
+See the customer_view definition for return values.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+Numeric
+
+Campaign Id from Lime Light, or the word “all” to pull all campaigns
+
+Required. Must be valid
+
+start_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid. Defaults to 00:00:00 time range for that date.
+
+end_date
+
+Date
+
+A valid date in the format MM/DD/YYYY
+
+Required. Must be valid.  Defaults to 23:59:59 time range for that date.
+
+start_time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+end_ time
+
+Military Time
+
+A valid time in the format HH:MM:SS.
+
+ 
+
+From 00:00:00 to 23:59:59
+
+Optional.  Will return 338 if invalid time constraints
+
+search_type
+
+"any" or "all"
+
+"any" or "all"
+
+ 
+
+Any to match any one of your criteria.
+
+ 
+
+All to filter only orders that match each criteria passed
+
+If omitted, will default to "any"
+
+return_type
+
+Blank or “customer_view”
+
+Optional
+
+customer_view will add an additional return parameter “data” which will contain a JSON encoded customer_view object of each customer found in the query
+
+Optional, if omitted will default to standard view
+
+criteria
+
+Alphanumeric
+
+Criteria key
+
+Possible Values Or Responses
+
+Optional. CSV of zero or more criteria
+
+when
+
+first_name
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+last_name
+
+Alphanumeric string (Allows wildcard *)  
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+address
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)          
+
+when
+
+city
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+state
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+zip
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+ 
+
+when
+
+country
+
+ISO 2 character value*
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+phone
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+when
+
+email
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)
+
+ 
+
+ 
+
+ 
+
+            
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+Success - 100
+
+No Data  - 604
+
+Errors - 331,332,334,335,338,340,400
+
+See Response Codes Section for definitions.  604 if no data found.
+
+total_customers
+
+Numeric
+
+The total number of customer ids returned
+
+ 
+
+customer_ids
+
+CSV
+
+A Comma Separated List of customer ids in the system that match your criteria
+
+ 
+
+data
+
+JSON object
+
+A JSON encoded object of data returned by customer_view
+
+Optional, only returned if return_type is set to customer_view
+
+ 
+
+API Method: order_reprocess
+
+ 
+
+The order_reprocess method is used to perform a reprocess on the given order.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+error_found
+
+Numeric
+
+0, 1
+
+If 1, an error has occurred
+
+response_message
+
+Alphanumeric
+
+ 
+
+Response message
+
+response_code
+
+Numeric
+
+100, 200, 350, 374,381,701, 800
+
+See Response Codes Section for definitions.
+
+decline_reason
+
+Alphanumeric
+
+ 
+
+Optional, only posted if response_code is 800
+
+authorization_id
+
+Numeric
+
+ 
+
+Optional, only posted if response_code is 100
+
+transaction_id
+
+Numeric
+
+ 
+
+Optional, only posted if response_code is 100
+
+ 
+
+ 
+
+API Method: get_alternative_provider
+
+The get_alternative_provider method is used to retrieve redirection information for alternative payment providers, such as Paypal Express.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+alt_pay_type
+
+Alphanumeric
+
+'amazon','paypal','icepay'
+
+Required. Must be valid
+
+campaign_id
+
+Numeric
+
+Campaign id
+
+Required. Must be valid
+
+return_url
+
+Alphanumeric
+
+Success endpoint to which the provider will redirect upon customer completion of form.
+
+Required. Must be valid
+
+cancel_url
+
+Alphanumeric
+
+Cancellation endpoint to which the provider will redirect upon customer abandonment
+
+Required. Must be valid
+
+amount
+
+Numeric
+
+Estimated order total
+
+Required. Must be valid
+
+shipping_id
+
+Numeric
+
+Shipping Id
+
+ 
+
+products
+
+CSV-Numeric
+
+List of products to charge,
+
+e.g. 13,14,15
+
+Optional, used for order summary
+
+ 
+
+product_qty
+
+ 
+
+CSV-Numeric
+
+List of product quantities,
+
+e.g. 1,3,1
+
+Optional, required if using product breakdown. Must match count of products parameter.
+
+ 
+
+product_price
+
+ 
+
+CSV-Numeric
+
+List of product custom prices,
+
+e.g. 0,0,2.45
+
+Optional, required if using product breakdown. Must match count of products parameter. If value is 0, base product price will be used.
+
+bill_country
+
+Alphanumeric
+
+i.e. ‘DE’
+
+Required, only if alt_pay_type is ‘icepay’.
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 901,902,903,904,1000
+
+See Response Codes Section for definitions.
+
+redirect_url
+
+Alphanumeric
+
+URL encoded redirection endpoint from which required customer data is retrieved (eg, Paypal Express login page)
+
+Optional, only posted if response_code is 100
+
+ 
+
+ 
+
+API Method: repost_to_fulfillment
+
+ 
+
+The repost_to_fulfillment method is used to send orders to the fulfillment provider that have already been shipped out once before.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+order_Id
+
+Numeric
+
+Order Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 350, 420, 421,422,423,424,425, 800, 907
+
+See Response Codes Section for definitions.
+
+ 
+
+API Method: shipping_method_view
+
+ 
+
+The shipping_method _view method is used view data about a shipping method in the Lime Light system.
+
+ 
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+shipping_id
+
+Numeric
+
+Shipping Id from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100, 907
+
+See Response Codes Section for definitions.
+
+name
+
+URL encoded Alphanumeric
+
+First+Class
+
+Shipping method name
+
+description
+
+URL encoded Alphanumeric
+
+First+Class+Mail
+
+Shipping method description
+
+group_name
+
+URL encoded Alphanumeric
+
+UPS
+
+Shipping method group name
+
+code
+
+URL encoded Alphanumeric
+
+FIRST
+
+Shipping method group code
+
+initial_amount
+
+Numeric
+
+1.00
+
+Shipping method cost for initial orders
+
+subscription_amount
+
+Numeric
+
+2.00
+
+Shipping method cost for subscription orders
+
+ 
+
+API Method: shipping_method_find
+
+ 
+
+The shipping_method_find method is used to retrieve a list of shipping ids that match a set of criteria. HTTPS is required for this call.
+
+ 
+
+Wildcards may be used when full data is not available.
+
+ 
+
+An optional parameter, return_type, may be passed. If return_type is sent as ”shipping_method_view”, in addition to the normal return parameters you will also receive a “data” parameter that contains a JSON (http://www.json.org/) encoded object of the data returned by the shipping_method_view method for each customer returned by the query.
+
+See the shipping_method_view definition for return values.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_id
+
+Alphanumeric
+
+Campaign Id from Lime Light, or the word “all” to pull all campaigns
+
+Required. Must be valid
+
+search_type
+
+"any" or "all"
+
+"any" or "all"
+
+ 
+
+Any to match any one of your criteria.
+
+ 
+
+All to filter only shipping methods that match each criteria passed
+
+If omitted, will default to "any"
+
+return_type
+
+Blank or “shipping_method_view”
+
+Optional
+
+shipping_method_view will add an additional return parameter “data” which will contain a JSON encoded shipping_method_view object of each shipping method found in the query
+
+Optional, if omitted will default to standard view
+
+criteria
+
+Alphanumeric
+
+Criteria key
+
+Possible Values Or Responses
+
+Optional. CSV of zero or more criteria
+
+when
+
+code
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+name
+
+Alphanumeric string (Allows wildcard *)  
+
+ 
+
+(Must be used with "=XXX" your search value)                       
+
+when
+
+group
+
+Alphanumeric string (Allows wildcard *)
+
+ 
+
+(Must be used with "=XXX" your search value)          
+
+ 
+
+                                                  
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+100,909
+
+See Response Codes Section for definitions.
+
+total_customers
+
+Numeric
+
+The total number of shipping ids returned
+
+ 
+
+customer_ids
+
+CSV
+
+A Comma Separated List of shipping ids in the system that match your criteria
+
+ 
+
+data
+
+JSON object
+
+A JSON encoded object of data returned by shipping_method_view
+
+Optional, only returned if return_type is set to shipping_method_view
+
+ 
+
+ 
+
+API Method: coupon_validate
+
+ 
+
+The coupon_validate method is used to check if a promo code that was entered is still valid to apply the discount.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+campaign_Id
+
+Numeric
+
+Campign Id from Lime Light
+
+Required. Must be valid
+
+shipping_id
+
+Numeric
+
+Shipping Id from Limelight
+
+Required
+
+email
+
+URL encoded Alphanumeric
+
+support%40limelightcrm.com
+
+Required
+
+product_ids
+
+Alphanumeric
+
+Max 255 Characters
+
+A list of valid product Ids that this customer has.  This will not include products that have been voided, refunded or put on hold. Example:  1,2,3,6
+
+Required
+
+product_qty_XX
+
+Numeric
+
+Where XX is the product Id, and the value is the quantity. e.g. product_qty_4=1
+
+Required
+
+product_attribute,
+
+product_options
+
+URL array of product attribute => options to be used. Must be of format:
+
+product_attribute[product_id]
+
+[attribute] = option.
+
+See examples** below
+
+Conditional. If the product being purchased has variants assigned, attributes must be provided to match a valid variant. Must not be provided for products that do not have variants.
+
+Required if product has attribtues
+
+promo_code
+
+URL encoded Alphanumeric
+
+Promo code in coupon profile attached to campaign in Lime Light CRM.
+
+i.e.: testpromo1
+
+Required
+
+ 
+
+**Product attributes can be built several ways. HTML bracket syntax for arrays is sampled below as a <select> field. cURL requests can also be simulated to provide the data to LimeLight. IDs can be obtained by calling the product_attribute_index method of the membership API.
+
+ 
+
+Option 1: Text values
+
+<select name=”product_attribute[1][Color]”>
+
+  <option value=”Red”>Red</option>
+
+  <option value=”Blue”>Blue</option>
+
+</select>
+
+Option 2: Numeric ids
+
+<select name=”product_attribute[1][123]”>
+
+  <option value=”124”>Red</option>
+
+  <option value=”125”>Blue</option>
+
+</select>
+
+ 
+
+Option 3: cURL request (in PHP)
+
+// Multiple products with attributes. Showing both text and numeric attribute/option representations
+
+$attr = array(
+
+            ‘1’ = array(
+
+                        ‘Color’ => ‘Red’
+
+            ),
+
+            ‘2’ = array(
+
+                        ‘123’ => ‘124’
+
+            )
+
+);
+
+// Assign to ‘product_attribute’ key
+
+$data[‘product_attribute’] = $attr;
+
+ 
+
+// Important; http_build_query is required for cURL to properly parse the data as an array
+
+curl_setopt($cs, CURLOPT_POSTFIELDS, http_build_query($data));
+
+ 
+
+Response Parameters
+
+ 
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+430,431,432,433,434,435,
+
+436,437,438,439
+
+See Response Codes Section for definitions.
+
+ 
+
+ 
+
+API Method: gateway_view
+
+ 
+
+The gateway_view method is used view the details of a particular or list of gateways from within the CRM.
+
+ 
+
+Request Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+gateway_id
+
+Numeric
+
+Gateway Id(s) from Lime Light
+
+Required. Must be valid
+
+ 
+
+Response Parameters
+
+Field Name
+
+Format
+
+Values
+
+Comments
+
+response_code
+
+Numeric
+
+See Response Codes Section for definitions.
+
+ 
+
+total_gateways
+
+Numeric
+
+Number of gateways found
+
+ 
+
+gateway_ids
+
+Numeric CSV
+
+CSV list of gateway IDs
+
+ 
+
+data
+
+Alphanumeric Array
+
+Field Name
+
+Values
+
+ 
+
+response_code
+
+See Response Codes Section for definitions.
+
+gateway_id
+
+Specific Gateway ID
+
+gateway_type
+
+I.e. credit card
+
+gateway_provider
+
+Provider of gateway service
+
+gateway_alias
+
+Alias of gateway profile
+
+gateway_created
+
+Date created, i.e. ‘2016-05-10+16%3A08%3A12’
+
+gateway_active
+
+1 = active
+
+2 = inactive
+
+global_monthly_cap
+
+Monthly cap from gateway profile
+
+monthly_sales
+
+Current monthly sales of gateway
+
+processing_percent
+
+Processing percent from gateway profile
+
+reserve_percent
+
+Reserve percent from gateway profile
+
+transaction_fee
+
+Transaction fee from gateway profile
+
+chargeback_fee
+
+Chargeback fee from gateway profile
+
+gateway_descriptor
+
+Descriptor from gateway profile
+
+customer_service_number
+
+Customer service phone number from gateway profile
+
+gateway_currency
+
+ISO 4217 Currency Codes, i.e. ‘USD’
+
+                                                  
+
+ 
+
+RMA Reason Codes
+
+ 
+
+0 – Remove RMA reason
+
+1 – Cannot Afford Product
+
+2 – Selected Wrong Product
+
+3 – Unauthorized Charge
+
+4 – Not Statisfied
+
+5 – Product Doesnt Work
+
+6 – Received Product Twice
+
+7 – Received Wrong Product
+
+8 – Not Approved By Physican
+
+9 – Product Damaged
+
+10 – Non Deliverable Address
+
+11 – Refused
+
+12 – Forwarded Address
+
+13 – Did Not Order
+
+14 – Not interested in continuity
+
+15 – Issue Check Refund
+
+16 – Too Time Consuming
+
+17 – No Confirmation Email
+
+18 – Too Complicated
+
+19 – No Tech Support
+
+20 – No Return Emails
+
+21 – Too Many Hidden Fees
+
+22 – Other
+
+ 
+
+ 
+
+Return Reason Codes
+
+1- Refused / RTS
+
+2- Undeliverable
+
+3- Customer Returned
+
+4- Other
+
+ 
+
+ 
+
+Response Codes
+
+100 - Success
+
+200 - Invalid login credentials
+
+300 - Update failed due to third party rejection
+
+301 - Error updating affiliate data
+
+320 - Invalid Product Id
+
+321 - Existing Product Category Id Not Found
+
+322 - Invalid Category Id
+
+323 - Digital Delivery and Digital URL must be paired together and digital URL must be a valid URL
+
+324 - Invalid rebill_product or rebill_days value
+
+325 - Length Does Not Meet Minimum
+
+326 - URL is invalid
+
+327 - Payment Type Invalid
+
+328 - Expiration Date Invalid (Must be in the format of MMYY with no special characters)
+
+329 - Credit card must be either 15 or 16 digits numeric only
+
+330 - No Status Passed
+
+331 - Invalid Criteria
+
+332 - Start and end date are required
+
+333 - No Orders Found
+
+334 - Invalid Start Date format
+
+335 - Invalid End Date format
+
+336 - Wild Card Unsupported for this search criteria
+
+337 - Last 4 or First 4 must be 4 characters exactly
+
+338 - Timestamp invalid
+
+339 - Total Amount must be numeric and non-negative
+
+340 - Invalid country code
+
+341 - Invalid state code
+
+342 - Invalid Email Address
+
+343 - Data Element Has Same Value As Value Passed No Update done (Information ONLY, but still a success)
+
+344 - Invalid Number Format
+
+345 - Must be a 1 or 0.  "1" being "On" or true. "0" being "Off" or false.
+
+346 – Invalid date format. Use mm/dd/yyyy
+
+347 - Invalid RMA reason
+
+348 - Order is already flagged as RMA
+
+349 - Order is not flagged as RMA
+
+350 – Invalid order Id supplied
+
+351 – Invalid status or action supplied
+
+352 – Uneven Order/Status/Action Pairing
+
+353 – Cannot stop recurring
+
+354 – Cannot reset recurring
+
+355 – Cannot start recurring
+
+356 - Credit card has expired
+
+357 – Exceeded number of batch orders to view
+
+360 – Cannot stop upsell recurring
+
+370 – Invalid amount supplied
+
+371 – Invalid keep recurring flag supplied
+
+372 - Refund amount exceeds current order total
+
+373 - Cannot void a fully refunded order
+
+374-  Cannot reprocess non-declined orders
+
+375- Cannot blacklist test payment method
+
+376- Invalid tracking number
+
+377- Cannot ship pending orders
+
+378- Order already shipped
+
+379- Order is fully refunded/voided
+
+380 – Order is not valid for force bill
+
+381 – Customer is blacklisted
+
+382-   Invalid US state
+
+383-  All military states must have a city of either "APO", "FPO". or "DPO"
+
+384 - Invalid date mode
+
+385 - Invalid billing cycle filter
+
+386 - Order has already been returned
+
+387 - Invalid return reason
+
+388 – Rebill discount exceeds maximum for product
+
+389 –Refund  amount must be greater than 0
+
+390 – Invalid number of days supplied
+
+400 – Invalid campaign Id supplied
+
+401 – Invalid subscription type
+
+402 – Subscription type 3 requires subscription week and subscription day values
+
+403 – Invalid subscription week value
+
+404 – Invalid subscription day value
+
+405 – Subscription type 3 required for subscription week and subscription day values
+
+406 – Rebill days must be a value between 1 and 31 for subscription type 2
+
+407 – Rebill days must be greater than 0 if subscription type is 1 or 2
+
+408 – Rebill days is invalid unless type is 1 or 2
+
+409 – Subscription type 0, other subscription fields invalid
+
+410-  API user: (api_username) has reached the limit of requests per minute: (limit) for method: (method_name)
+
+411 – Invalid subscription field
+
+412 – Missing subscription field
+
+413 – Product is not subscription based
+
+415 – Invalid subscription value
+
+420 – Campaign does not have fulfillment provider attached
+
+421 – This order was placed on hold
+
+422 – This order has not been sent to fulfillment yet
+
+423 – Invalid SKU
+
+424 – Fulfillment Error, provider did not specify
+
+425  – This order has been sent to fulfillment but has not been shipped
+
+426 – This order not eligible for offline payment  approval (incorrect status & payment type)
+
+430 – Coupon Error: Invalid Promo Code
+
+431 – Coupon Error: This promo code has expired
+
+432 – Coupon Error: Product does not meet minimum purchase amount
+
+433 – Coupon Error: Maximum use count has exceeded
+
+434 – Coupon Error: Customer use count has exceeded its limit
+
+435 – Invalid attribute found on product
+
+436 – Invalid option found on attribute
+
+437 – Invalid attribute combination; no variants matched for product
+
+438 – Invalid attribute(s). Product does not have variants
+
+439 – Product has variants; product attributes must be provided.
+
+500 – Invalid customer Id supplied
+
+550 - Required field [<FIELD>] invalid or missing
+
+551 - Invalid subscription values supplied
+
+552 - Current products max quantity cannot be greater than next recurring products quantity next recurring products max quantiy
+
+553 - Current Products Max Quantity cannot be lowered since other products are using this product as recurring with Preserved Quantity on
+
+554 - A product without variants may not recur to a product with variants
+
+555 - Failed to create product record
+
+556 - Failed to store product description
+
+557 - Failed to update product recurring date
+
+558 - Failed to create product event configuration
+
+559 - Failed to store product category
+
+560 - Product ID not found
+
+561 - Error deleting product
+
+562 - This product can not be deleted because one or more orders are related to it
+
+563 - This product can not be deleted because it is subscribed to one or more products
+
+564 - This product can not be deleted because it is currently related to one or more campaigns
+
+565 - Events supplied without event types
+
+566 - Event types supplied without events
+
+567 - Number of events must match number of event types
+
+568 - Invalid event type [<TYPE>] supplied
+
+569 - Invalid event [<EVENT>] supplied
+
+570 - Invalid flag supplied: [<MSG>]
+
+571 - Next recurring product not supplied
+
+572 - Subscription type not supplied
+
+573 - Subscription type invalid
+
+574 - Subscription type [<TYPE>] require field(s) [<FIELD>]
+
+575 - Shippable flag is required when passing shipping fields
+
+576 - Field [<DEPEND>] is required when passing [<FIELD>]
+
+577 - Category ID is invalid
+
+600 – Invalid product Id supplied
+
+601- Invalid prospect Id supplied
+
+602 - No prospects found
+
+603 – Invalid customer Id supplied
+
+604 – No customers found
+
+666- User does not have permission to use this method
+
+667- This user account is currently disabled
+
+668 - ip address is invalid
+
+700 – Invalid method supplied
+
+701 - Action not permitted by gateway
+
+702 - Invalid gateway Id
+
+800 – Transaction was declined
+
+901 – Invalid return URL
+
+902 – Invalid cancel URL
+
+903 – Error retrieving alternative provider data
+
+904 – Campaign does not support an alternative payment provider
+
+905- Product quantity/dynamic price does not match
+
+906- Invalid quantity
+
+907- Invalid shipping Id
+
+908 – Payment was already approved
+
+1000 -- SSL is required'
+
+ 
+
+*Country and State Codes can be found here:
+
+ 
+
+Was this article helpful?   0 out of 0 found this helpful Facebook Twitter LinkedIn Google+
+Have more questions? Submit a request
+0 Comments
+Please sign in to leave a comment.
+ 
+Related articles
+
+Transaction API Documentation
+Cloud Migration Instructions
+API Toolkit
+Creating Your Email Notifications
+Overview of Subscription Management

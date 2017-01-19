@@ -179,8 +179,8 @@ nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
 nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
-nnoremap <Leader>eref :e ~/.vim/michaelSoft/references<CR>
-nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/**/
+nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
+nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 " swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
