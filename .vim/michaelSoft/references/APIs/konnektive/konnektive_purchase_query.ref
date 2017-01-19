@@ -1,0 +1,186 @@
+https://api.konnektive.com/docs/purchase_query/
+,./konnektive
+,./query purchases
+--------------------------------------
+Query Purchases
+
+The Konnektive Query Order API returns information about existing orders. No wildcard characters need to be used as the api will insert wildcards automatically when necessary.
+
+Field Type  Description Required
+loginId string (max 32 chars) Api Login Id provided by Konnektive Y
+password  string (max 32 chars) Api password provided by Konnektive Y
+orderId string (max 30 chars) orderId of which the purchase was a part  N
+purchaseId  string (max 30 chars) purchaseId returned by the query purchases API  N
+customerId  integer customerId returned by customer query Y
+firstName String (max: 30 chars)  customer's first name N
+lastName  String (max: 30 chars)  customer's last name  N
+emailAddress  must be a valid email address format  customers email address N
+phoneNumber may contain numeric digits and hyphens  customers phone number  N
+showExternal  Boolean includes purchases imported from an external source N
+dateRangeType ENUM - dateCreated or dateUpdated defaults to dateCreated N
+startDate String (mm/dd/yyyy) only purchases created on or after this date  Y - if customerId, purchaseId or orderId is not passed
+endDate String (mm/dd/yyyy) only purchases created on or before this date Y - if customerId, purchaseId or orderId is not passed
+resultsPerPage  Integer (max:200) Number of results to return (defaults to 25)  N
+page  Integer which page of the query results to return N
+Examples
+
+Request:
+
+https://api.konnektive.com/purchase/query/?startDate=02/14/14&endDate=09/20/14&loginId=######&password=#######
+
+Successful Response:
+
+{
+    "result": "SUCCESS",
+    "message": {
+        "totalResults": 3,
+        "resultsPerPage": null,
+        "page": 1,
+        "data": [
+            {
+                "firstName": "Jared",
+                "lastName": "Test",
+                "emailAddress": "test@konnektive.com",
+                "phoneNumber": "123123123",
+                "address1": "123 noship",
+                "address2": null,
+                "city": "Atlanta",
+                "state": "AL",
+                "country": "US",
+                "postalCode": "12333",
+                "shipFirstName": "Jared",
+                "shipLastName": "Test",
+                "shipCity": "Atlanta",
+                "shipState": "AL",
+                "shipCountry": "US",
+                "shipPostalCode": "12333",
+                "purchaseId": "2536295D39",
+                "campaignId": 33,
+                "affId": null,
+                "productId": 85,
+                "productSku": "SKU-1",
+                "clientProductId": "csku1",
+                "customerId": 299,
+                "status": "ACTIVE",
+                "cancelReason": null,
+                "price": "13.00",
+                "shippingPrice": "5.00",
+                "lastCancellationDate": null,
+                "lastActivationDate": null,
+                "billingCycleType": "RECURRING",
+                "billingIntervalDays": 30,
+                "billingCycleNumber": 3,
+                "nextBillDate": "2015-08-01",
+                "finalBillingCycle": 0,
+                "fulfillmentCycleNumber": 0,
+                "recycleBillingNumber": 0,
+                "trialType": "DELAYED",
+                "trialPeriodDays": 14,
+                "trialPrice": null,
+                "trialShippingPrice": null,
+                "productQty": 1,
+                "memberId": null,
+                "dateUpdated": "2015-07-01 21:05:39",
+                "dateCreated": "2015-07-01 20:42:24",
+                "cardLast4": "1111",
+                "productName": "Delayed Trial",
+                "totalBilled": "36.00",
+                "totalRefunded": "5.00",
+                "orderId": "EFCFEA5314",
+                "clubName": null,
+                "transactions": [
+                    {
+                        "transactionId": "499",
+                        "txnDate": "2015-07-01 20:42:24",
+                        "totalAmount": "5.00",
+                        "responseType": "SUCCESS",
+                        "responseText": "Dummy Approval",
+                        "merchantTxnId": "DummyID:49129",
+                        "paySource": "CREDITCARD",
+                        "merchantId": "7",
+                        "merchant": "Dummy Gateway",
+                        "amountRefunded": "5.00",
+                        "isChargedback": "0",
+                        "chargebackDate": "",
+                        "chargebackReasonCode": ""
+                    },
+                    {
+                        "transactionId": "501",
+                        "txnDate": "2015-07-01 20:59:11",
+                        "totalAmount": "13.00",
+                        "responseType": "SUCCESS",
+                        "responseText": "Dummy Approval",
+                        "merchantTxnId": "DummyID:72080",
+                        "paySource": "CREDITCARD",
+                        "merchantId": "7",
+                        "merchant": "Dummy Gateway",
+                        "amountRefunded": "0.00",
+                        "isChargedback": "1",
+                        "chargebackDate": "2015-07-01 00:00:00",
+                        "chargebackReasonCode": "222"
+                    },
+                    {
+                        "transactionId": "503",
+                        "txnDate": "2015-07-01 21:05:39",
+                        "totalAmount": "18.00",
+                        "responseType": "SUCCESS",
+                        "responseText": "Dummy Approval",
+                        "merchantTxnId": "DummyID:65398",
+                        "paySource": "CREDITCARD",
+                        "merchantId": "7",
+                        "merchant": "Dummy Gateway",
+                        "amountRefunded": "0.00",
+                        "isChargedback": "0",
+                        "chargebackDate": "",
+                        "chargebackReasonCode": ""
+                    }
+                ],
+                "fulfillments": [
+                    {
+                        "fulfillmentId": 4529,
+                        "fulfillmentHouseId": null,
+                        "company": "System Fulfillment",
+                        "clientFulfillmentId": "983FD6DF4C",
+                        "trackingNumber": null,
+                        "dateShipped": null,
+                        "dateDelivered": null,
+                        "shipCarrier": null,
+                        "shipMethod": null,
+                        "responseText": null,
+                        "status": "HOLD",
+                        "dateReturned": null,
+                        "rmaNumber": null,
+                        "dateCreated": "2015-07-01 20:42:24"
+                    },
+                    {
+                        "fulfillmentId": 4531,
+                        "fulfillmentHouseId": null,
+                        "company": "System Fulfillment",
+                        "clientFulfillmentId": "C939C93C2D",
+                        "trackingNumber": "12312313123",
+                        "dateShipped": "2015-07-01",
+                        "dateDelivered": null,
+                        "shipCarrier": null,
+                        "shipMethod": null,
+                        "responseText": null,
+                        "status": "SHIPPED",
+                        "dateReturned": null,
+                        "rmaNumber": null,
+                        "dateCreated": "2015-07-01 21:05:39"
+                    }
+                ]
+            }
+        ],
+        "params": null,
+        "errors": null,
+        "sortBy": "dateCreated",
+        "sortDir": 0,
+        "queryArgs": {
+            "page": 1,
+            "sortDir": 0,
+            "resultsPerPage": null,
+            "sortBy": "dateCreated",
+            "dateRangeType": "dateCreated"
+        }
+    }
+}
