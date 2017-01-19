@@ -110,15 +110,18 @@ set shiftwidth=2
 set expandtab
 " enables auto complete on php
 " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
-" gui configuration
-colorscheme sand
 "Netrw override to allow relative numbers
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 " status line config
 set laststatus=2
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
-" F7 opens documentation for php/perl function under cursor
+" gui configuration
+colorscheme sand
+" Line number colors
+highlight LineNr ctermfg=red
+highlight CursorLineNr ctermbg=magenta
+highlight CursorLineNr ctermfg=green
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
 " show numbers only on focused pane
