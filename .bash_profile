@@ -243,8 +243,7 @@ alias .....='cd ../../../../'
 ##########################################################################config
 alias dirs="dirs -v"
 set -o vi
-cd /var/www/html/repos
-set completion-ignore-case on | sudo tee -a /etc/inputrc
+# cd /var/www/html/repos
 
 alias la='ls -lah $LS_COLOR'
 function cl(){ cd "$@" && la; }
