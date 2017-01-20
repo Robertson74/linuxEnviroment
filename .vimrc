@@ -8,7 +8,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
+"let Vundle manage Vundle, required
+Plugin 'wellle/targets.vim'
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 " Fuzzy file finder
@@ -25,13 +26,10 @@ Plugin 'tpope/vim-surround'
 Plugin 'evidens/vim-twig'
 " Makes Async available
 Plugin 'Shougo/vimproc.vim'
-" Star wars goodness
-Plugin 'shinokada/SWTC.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
 " extended tag matching with ^
@@ -74,7 +72,9 @@ Plugin 'sidorares/node-vim-debugger'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" Netrw list style to long tree form
+let g:netrw_liststyle= 3
 "cursor underlining
 set cursorline
 let mapleader="\<Space>"
@@ -112,30 +112,27 @@ set shiftwidth=2
 set expandtab
 " enables auto complete on php
 " autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
-" gui configuration
-colorscheme sand
 "Netrw override to allow relative numbers
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 " status line config
 set laststatus=2
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
-" F7 opens documentation for php/perl function under cursor
-function! BrowseDoc()
-    if b:current_syntax == "php"
-        ! open "http://php.net/manual-lookup.php?pattern=<cword>&scope=quickref"
-    elseif b:current_syntax == "perl"
-        ! open http://perldoc.perl.org/search.html?q=<cword>
-    elseif b:current_syntax == "cpp"
-        let cname = tolower(cword);
-        ! open file:///opt/qt-4.3.4/doc/html/<cname>
-    else
-        return
-    endif
-endfunction
+" gui configuration
+colorscheme sand
+" Line number colors
+highlight LineNr ctermfg=red
+highlight CursorLineNr ctermbg=magenta
+highlight CursorLineNr ctermfg=green
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
+" show numbers only on focused pane
+autocmd WinEnter * set number
+autocmd WinEnter * set relativenumber
+autocmd WinLeave * set nonumber
+autocmd WinLeave * set norelativenumber
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*plugin configuration
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
 " php extended config 
 let g:phpcomplete_index_composer_command = "composer"
 " Syntastic typescript linter
@@ -149,12 +146,14 @@ command! E Explore
 
 " vdebug with xdebug options
 let g:vdebug_options = {}
+let g:vdebug_options["debug_file"] = "~/vdebug.log"
+let g:vdebug_options["debug_file_level"] = 2
 let g:vdebug_options["port"] = 9000
 let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 " let g:vdebug_options['server'] = ""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*plugin calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
 nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
@@ -163,19 +162,25 @@ nnoremap <Leader>U :GundoToggle<CR>
 " gitgutter  mapping
 nnoremap <Leader>GG :GitGutterToggle<CR>
 " git status
-nnoremap <Leader>GS :Gstatus<CR><C-W>T
+nnoremap <Leader>GS :Gstatus<CR>
 " git commit
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
-" toggle sytax checking
+" toggle syntax checking
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*file short cuts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-file short cuts
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*quick commands
-" swap coments quickly
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+"Obscure/UnObscure doc
+nnoremap <Leader>hid :normal! mmggg?G`m<CR>
+" Search/edit/find reference files
+nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
+nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
+" swap comments quickly
 nnoremap <Leader>sco :+1Commentary<CR>:Commentary<CR>
 nnoremap <Leader>cl :set cursorcolumn!<CR>
 nnoremap <Leader>ul :set cursorline!<CR>
@@ -198,15 +203,14 @@ nnoremap <Leader>t /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
+nnoremap <Leader>vup :!cd ~;git add .vimrc;git add .vim/michaelSoft/*;git commit -m "updating";git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
-" update vimrc to github
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
 " Reload vimrc
-nnoremap <Leader>vs :source $MYVIMRC<CR>
-" Install vim plugins
-nnoremap <Leader>vp :PluginInstall<CR>
+nnoremap <Leader>vso :source $MYVIMRC<CR>
+" Install/Updating vim plugins
+nnoremap <Leader>PI :PluginInstall<CR>
+nnoremap <Leader>PU :PluginUpdate<CR>
 " toggle spelling
 nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
@@ -226,7 +230,7 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*script calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
 nnoremap <Leader>nav :call NavigationBarToggle()<CR>
@@ -244,12 +248,13 @@ nnoremap <Leader>sp :set spell!<CR>
 nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*scripts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
 " Zooming
 let g:zoomedStatus = "false"
 function! ToggleZoom()
   if(g:zoomedStatus == "false")
     :mark b|:tabnew %|normal! 'bzz
+    call ZoomContext()
     let g:zoomedStatus = "true"
   else
     :mark v|:tabprevious|:normal! 'vzz
@@ -295,20 +300,8 @@ endfunction
 """"""" (param(2), param(1), param[3])
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
 nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
-""""""" Add change inside parenths from cursor outside parenths
-nnoremap ci( %ci)
-nnoremap ci) F(ci)
-"this is a test (test 123) anothere test (here);
-nnoremap ci[ %ci[
-nnoremap ci] F[ci[
-"this is a test [test 123] anothere test [here];
-nnoremap ci{ %ci{
-nnoremap ci} F{ci}
-"this is a test {test 123} another test {here};
-nnoremap ci< f<ci>
-nnoremap ci> F<ci>
+""""""" open doc in code
 nnoremap <Leader>!c :!code %<CR>
-"this is a test <test 123> this is a test <test 123>;
 """"""" flip true false
 function! FlipBoolean()
     if expand('<cword>') == 'true'
@@ -388,7 +381,8 @@ function! NavigationBarToggle()
     :let t:navBuffer = bufnr('%')
     :let t:navActive = 1
     :normal! n
-    :exec "normal! :noh <CR>"
+    :.
+    :exec "normal! :noh \<CR>"
     :set wfw
   elseif t:navActive==1
     :let t:navActive = 0
@@ -455,13 +449,46 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
   endwhile
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""*TESTING AREA
+function! ZoomContext()
+  :sp
+  :e ~/.vim/michaelSoft/zoomwindows/topbar
+  :execute "normal! \<C-W>k"
+  :resize 1
+  :set nornu nonu
+  :set wfh
+  :execute "normal!\<C-W>p"
+  " :sp
+  " :execute "normal! \<C-W>j"
+  " :e ~/.vim/michaelSoft/zoomwindows/topbar
+  " :resize 1
+  " :set nornu nonu
+  " :set wfh
+  " :execute "normal!\<C-W>p"
+  :vsp
+  :execute "normal! \<C-W>h"
+  :e ~/.vim/michaelSoft/zoomwindows/sidebar
+  :vertical resize 3
+  :set nornu nonu
+  :set wfw
+  :execute "normal!\<C-W>p"
+  :vsp
+  :execute "normal! \<C-W>l"
+  :e ~/.vim/michaelSoft/zoomwindows/sidebar
+  :vertical resize 3
+  :set nornu nonu
+  :set wfw
+  :execute "normal!\<C-W>p"
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%120v.\+/
 
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* set up latest vim plus vundle
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
 "sudo apt-install git
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
@@ -479,7 +506,7 @@ endfunction
 " # Reload bash_profile so the changes take effect in this window
 " source ~/.bash_profile
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""* You complete me install
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-You complete me install
 " # install youcompleteme
 " cd ~
 " mkdir ycm_build
