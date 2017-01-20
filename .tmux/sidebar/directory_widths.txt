@@ -1,0 +1,5 @@
+/Users/mroberston	40
+/Users/mroberston/vms/dev/repos/agentportal	40
+/Users/mroberston/vms/dev/repos/test	40
+/Users/mroberston/vms/dev	40
+/Users/mroberston/vms/dev/repos/ccp_be	40
