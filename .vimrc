@@ -180,6 +180,14 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" pane/tab navigatoin
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-l> <C-w>l
+nnoremap zh gT
+nnoremap zl gt
 "Obscure/UnObscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
