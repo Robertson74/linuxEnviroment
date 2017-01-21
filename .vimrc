@@ -75,7 +75,7 @@ filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
 " Netrw top level tree set to dir where vim was opened
-execute "normal! :silent Ntree" $PWD
+" execute "normal! :silent Ntree" $PWD
 " Netrw list style to long tree form
 let g:netrw_liststyle= 3
 "cursor underlining
