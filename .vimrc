@@ -258,6 +258,8 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
+nnoremap <Leader>tem :call PlaceTempArea()<CR>
+nnoremap <Leader>rtem :call RemoveTempArea()<CR>
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
 nnoremap <Leader>nav :call NavigationBarToggle()<CR>
@@ -276,6 +278,19 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! RemoveTempArea()
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+endfunction
+function! PlaceTempArea()
+  :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
+  :Commentary
+  :execute "normal! o\<esc>a#\<esc>30.\<esc>AEND TEMP\<esc>"
+  :Commentary
+endfunction
 " Zooming
 let g:zoomedStatus = "false"
 function! ToggleZoom()
