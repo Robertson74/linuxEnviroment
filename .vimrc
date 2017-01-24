@@ -258,16 +258,22 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
+" extend screen to another split
+nnoremap <Leader>ext :call ExtendScreenDown()<CR>
+" Temp areas
 nnoremap <Leader>tem :call PlaceTempArea()<CR>
 nnoremap <Leader>rtem :call RemoveTempArea()<CR>
+" Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
+"nav bar
 nnoremap <Leader>nav :call NavigationBarToggle()<CR>
+" temporary line highlights
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
 nnoremap <Leader>z :call ToggleZoom()<CR>
-" Turn on off numbers
+" copying/moving from a distance
 nnoremap <Leader>ma :call DeleteAboveAndPaste()<CR>
 nnoremap <Leader>mma :call DeleteMultipleAboveAndPaste()<CR>
 nnoremap <Leader>mb :call DeleteBelowAndPaste()<CR>
@@ -276,14 +282,23 @@ nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
 nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
 nnoremap <Leader>yb :call YankBelowAndPaste()<CR>
 nnoremap <Leader>ymb :call YankMultipleBelowAndPaste()<CR>
+" Spelling
 nnoremap <Leader>sp :set spell!<CR>
 " go to thirds of line
 nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+nnoremap<Leader>cext :call CloseScreenExtend()<CR>
 function! ExtendScreenDown()
   :execute "normal! \<C-W>v\<C-w>lLjzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlepane"
+  :execute "set wfw"
+  :execute "normal! \<C-w>h"
+endfunction!
+function! CloseScreenExtend()
+  :execute "normal! \<C-w>l\<C-w>q"
+  :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
 endfunction!
 function! RemoveTempArea()
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
@@ -569,6 +584,7 @@ endfunction
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 "---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
+"---update screen extend to put center pane with obvious marker (^) for screen extention
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 " highlight OverLength ctermbg=red ctermfg=white guibg=#592929
