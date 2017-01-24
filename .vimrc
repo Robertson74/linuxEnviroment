@@ -282,6 +282,9 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! ExtendScreenDown()
+  :execute "normal! \<C-W>v\<C-w>lLjzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+endfunction!
 function! RemoveTempArea()
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
