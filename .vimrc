@@ -75,6 +75,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+set breakindent
 " Netrw top level tree set to dir where vim was opened
 " execute "normal! :silent Ntree" $PWD
 " Netrw list style to long tree form
@@ -189,6 +190,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-l> <C-w>l
+nnoremap <C-t> <C-w>t
+nnoremap <C-b> <C-w>b
+nnoremap <C-x> :q<CR>
 nnoremap zh gT
 nnoremap zl gt
 "Obscure/UnObscure doc
@@ -258,6 +262,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
+" nav bar
+nnoremap <Leader>tn :call ToggleNav()<CR>
+nnoremap <Leader>fn :call NewFocusNavBar()<CR>
 " extend screen to another split
 nnoremap <Leader>ext :call ExtendScreenDown()<CR>
 " Temp areas
@@ -266,8 +273,6 @@ nnoremap <Leader>rtem :call RemoveTempArea()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
-"nav bar
-nnoremap <Leader>nav :call NavigationBarToggle()<CR>
 " temporary line highlights
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
@@ -289,12 +294,62 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" nav bar 
+let g:defautlNavWidth = 40
+function! ToggleNav()
+  if(!exists("t:navBarActive"))  
+    :let t:navBarActive=0
+  endif
+  if(t:navBarActive==0)
+    :call NewNav()
+    :let t:navBarActive=1
+  else
+    :call CloseNav()
+  endif
+endfunction!
+function! CloseNav()
+      :call win_gotoid(t:navBarWin)
+      if(win_getid() == t:navBarWin)
+        :execute "bwipe "bufnr('%')
+        :let t:navBarActive=0
+      else 
+        :call NewNav()
+      endif
+endfunction
+function! NewNav()
+  :let t:navDir = expand('%:h') 
+  :let t:navFile = expand('%:t') 
+  :let t:navDir = split(t:navDir, '/')
+  :execute "normal! \<C-w>n\<C-w>H"
+  :exe "vertical resize ".g:defautlNavWidth
+  :set wfw
+  :let t:navBarWin = win_getid()
+  :e.
+  :normal gg
+  :for dir in t:navDir
+    :echo dir
+    :execute "normal! /".dir."\<CR>"
+    :call netrw#LocalBrowseCheck(<SNR>94_NetrwBrowseChgDir(1,<SNR>94_NetrwGetWord()))
+    :redraw!
+  :endfor
+  :let @/ = t:navFile
+  :normal! n
+endfunction
+function! NewFocusNavBar()
+  if(exists("t:navBarWin"))
+    :call win_gotoid(t:navBarWin)
+  else
+    :echo "No active nav bar"
+  endif
+endfunction
 nnoremap<Leader>cext :call CloseScreenExtend()<CR>
 function! ExtendScreenDown()
-  :execute "normal! \<C-W>v\<C-w>lLjzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  :execute "set splitright" 
   :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlepane"
   :execute "set wfw"
   :execute "normal! \<C-w>h"
+  :execute "set splitright!"
 endfunction!
 function! CloseScreenExtend()
   :execute "normal! \<C-w>l\<C-w>q"
@@ -461,45 +516,6 @@ function! PlaceTempSign()
 endfunction
 function! RemoveTempSign()
   :exec "sign unplace"
-endfunction
-
-""""""" Nav bar
-:let g:defautlNavWidth = 40
-function! NavigationBarToggle()
-  if exists("t:navActive") == 0
-    :let t:navActive=0
-  endif
-  if exists("t:navBuffer") == 0
-    :let t:navBuffer=0
-  endif
-  if t:navActive==0
-    :let @/ = " ".expand('%:t')."\\?.$"
-    :let g:netrw_liststyle = 3
-    :Vex
-    :exec "normal! \<C-W>H"
-    :exe "vertical resize ".g:defautlNavWidth
-    :let t:navBuffer = bufnr('%')
-    :let t:navActive = 1
-    :normal! n
-    :.
-    :exec "normal! :noh \<CR>"
-    :set wfw
-  elseif t:navActive==1
-    :let t:navActive = 0
-    :silent windo :call CheckIfBufferIsNav()
-    if t:navActive==1
-      :exe "silent bd ".t:navBuffer
-      :let t:navActive = 0
-    else
-      :call NavigationBarToggle()
-    endif
-  endif
-endfunction
-
-function! CheckIfBufferIsNav()
-  if bufnr('%') == t:navBuffer 
-    :let t:navActive=1 
-  endif
 endfunction
 
 """"""" Context Searching
