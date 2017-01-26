@@ -261,7 +261,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" auto cammel case
+nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
 nnoremap <Leader>tn :call ToggleNav()<CR>
 nnoremap <Leader>fn :call NewFocusNavBar()<CR>
@@ -294,6 +296,16 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" auto cammel case
+function! CammelCaseVisual()
+  :let s:numOfWordsToCammel = input('number of words to cammel: ')
+  :let s:numPointer = 0
+  :execute "normal! viw".s:numOfWordsToCammel."Egu"
+  :while(s:numPointer < s:numOfWordsToCammel)
+    :normal wgUlX
+    :let s:numPointer+=1
+  :endwhile
+endfunction
 " nav bar 
 let g:defautlNavWidth = 40
 function! ToggleNav()
@@ -355,11 +367,13 @@ function! CloseScreenExtend()
   :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
 endfunction!
 function! RemoveTempArea()
+  :normal! mv
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
   :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :normal! `v
 endfunction
 function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
@@ -609,10 +623,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---NextCapitalWord
 "---easy windwo resize
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%120v.\+/
-
-
+"make a visually selected string cammel case
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
 "sudo apt-install git
