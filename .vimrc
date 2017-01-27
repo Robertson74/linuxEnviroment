@@ -209,6 +209,7 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
 nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>hl :tab help 
+nnoremap <Leader>hg :tab helpgrep 
 nnoremap <Leader>f. :find ./**/
 nnoremap <Leader>fs :find ./src/**/
 nnoremap <Leader>fm :find ./server/**/
@@ -263,22 +264,23 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
-nnoremap <Leader>mfl :call GetFromAdjacentLine('l', 1, 'dd')<CR>
-nnoremap <Leader>mfh :call GetFromAdjacentLine('h', 1, 'dd')<CR>
-nnoremap <Leader>mfk :call GetFromAdjacentLine('k', 1, 'dd')<CR>
-nnoremap <Leader>mfj :call GetFromAdjacentLine('j', 1, 'dd')<CR>
-nnoremap <Leader>yfl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
-nnoremap <Leader>yfh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
-nnoremap <Leader>yfk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
-nnoremap <Leader>yfj :call GetFromAdjacentLine('j', 1, 'Y')<CR>
-nnoremap <Leader>ymfh :call GetMultipleFromAdjacentLine('h', 1, 'y')<CR>
-nnoremap <Leader>ymfj :call GetMultipleFromAdjacentLine('j', 1, 'y')<CR>
-nnoremap <Leader>ymfk :call GetMultipleFromAdjacentLine('k', 1, 'y')<CR>
-nnoremap <Leader>ymfl :call GetMultipleFromAdjacentLine('l', 1, 'y')<CR>
-nnoremap <Leader>mmfh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
-nnoremap <Leader>mmfj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
-nnoremap <Leader>mmfk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
-nnoremap <Leader>mmfl :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
+" Yank from adjacent buffers
+nnoremap <Leader>yl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
+nnoremap <Leader>yh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
+nnoremap <Leader>yk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
+nnoremap <Leader>yj :call GetFromAdjacentLine('j', 1, 'Y')<CR>
+nnoremap <Leader>ml :call GetFromAdjacentLine('l', 1, 'dd')<CR>
+nnoremap <Leader>mh :call GetFromAdjacentLine('h', 1, 'dd')<CR>
+nnoremap <Leader>mk :call GetFromAdjacentLine('k', 1, 'dd')<CR>
+nnoremap <Leader>mj :call GetFromAdjacentLine('j', 1, 'dd')<CR>
+nnoremap <Leader>ymh :call GetMultipleFromAdjacentLine('h', 1, 'y')<CR>
+nnoremap <Leader>ymj :call GetMultipleFromAdjacentLine('j', 1, 'y')<CR>
+nnoremap <Leader>ymk :call GetMultipleFromAdjacentLine('k', 1, 'y')<CR>
+nnoremap <Leader>yml :call GetMultipleFromAdjacentLine('l', 1, 'y')<CR>
+nnoremap <Leader>mmh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
+nnoremap <Leader>mmj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
+nnoremap <Leader>mmk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
+nnoremap <Leader>mml :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
 " auto cammel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
@@ -318,14 +320,14 @@ function! ResizeWindow()
   :let s:resizeDirection = -1
   while(s:resizeDirection != 120 && s:resizeDirection != 13 && s:resizeDirection != 27)
     :let s:resizeDirection = getchar()
-    :if (s:resizeDirection == 106)
-      :resize -3
-    :elseif (s:resizeDirection == 107)
-      :resize +3
-    :elseif (s:resizeDirection == 108)
-      :vertical resize +5
-    :elseif (s:resizeDirection == 104)
-      :vertical resize -5
+    :if (s:resizeDirection == 115)
+      :resize -5
+    :elseif (s:resizeDirection == 116)
+      :resize +5
+    :elseif (s:resizeDirection == 119)
+      :vertical resize +8
+    :elseif (s:resizeDirection == 110)
+      :vertical resize -8
     :endif
     :redraw!
   endwhile
@@ -342,13 +344,22 @@ function! GetMultipleFromAdjacentLine(direction, distance, operation)
   :set nu nornu
   :redraw!
   :let s:yankLineStart = input('Line to start '.s:promptOperation.' :')
-  :let s:yankLineEnd = input('Line to stop '.s:promptOperation.' :') + 1
-  :execute "normal! ".s:yankLineStart."G".a:operation.s:yankLineEnd."G"
-  :call win_gotoid(s:returnWindow)
-  :put
-  :redraw!
+  if(s:yankLineStart)
+    :let s:yankLineEnd = input('Line to stop '.s:promptOperation.' :')
+    if(s:yankLineEnd)
+      :execute "normal! ".s:yankLineStart."G".a:operation.s:yankLineEnd."G"
+      :call win_gotoid(s:returnWindow)
+      :put
+      :redraw!
+    else
+      :call win_gotoid(s:returnWindow)
+    endif
+  else
+    :call win_gotoid(s:returnWindow)
+  endif
 endfunction
 function! GetFromAdjacentLine(direction, distance, operation)
+  :let s:yankLine = -1
   if(a:operation == 'dd')
     :let s:promptOperation = "delete"
   else
@@ -359,9 +370,13 @@ function! GetFromAdjacentLine(direction, distance, operation)
   :set nu nornu
   :redraw!
   :let s:yankLine = input('Line to '.s:promptOperation.' :')
-  :execute "normal! ".s:yankLine."G".a:operation
-  :call win_gotoid(s:returnWindow)
-  :put
+  if(s:yankLine)
+    :execute "normal! ".s:yankLine."G".a:operation
+    :call win_gotoid(s:returnWindow)
+    :put
+  else
+    :call win_gotoid(s:returnWindow)
+  :endif
 endfunction
 " auto cammel case
 function! CammelCaseVisual()
