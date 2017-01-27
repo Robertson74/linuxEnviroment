@@ -262,6 +262,22 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>mfl :call GetFromAdjacentLine('l', 1, 'dd')<CR>
+nnoremap <Leader>mfh :call GetFromAdjacentLine('h', 1, 'dd')<CR>
+nnoremap <Leader>mfk :call GetFromAdjacentLine('k', 1, 'dd')<CR>
+nnoremap <Leader>mfj :call GetFromAdjacentLine('j', 1, 'dd')<CR>
+nnoremap <Leader>yfl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
+nnoremap <Leader>yfh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
+nnoremap <Leader>yfk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
+nnoremap <Leader>yfj :call GetFromAdjacentLine('j', 1, 'Y')<CR>
+nnoremap <Leader>ymfh :call GetMultipleFromAdjacentLine('h', 1, 'y')<CR>
+nnoremap <Leader>ymfj :call GetMultipleFromAdjacentLine('j', 1, 'y')<CR>
+nnoremap <Leader>ymfk :call GetMultipleFromAdjacentLine('k', 1, 'y')<CR>
+nnoremap <Leader>ymfl :call GetMultipleFromAdjacentLine('l', 1, 'y')<CR>
+nnoremap <Leader>mmfh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
+nnoremap <Leader>mmfj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
+nnoremap <Leader>mmfk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
+nnoremap <Leader>mmfl :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
 " auto cammel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
@@ -296,6 +312,39 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" move or copy files from adjacent buffers
+function! GetMultipleFromAdjacentLine(direction, distance, operation)
+  if(a:operation == 'd')
+    :let s:promptOperation = "deletion"
+  else
+    :let s:promptOperation = "yanking"
+  endif
+  :let s:returnWindow = win_getid()
+  :execute "normal! \<C-w>".a:direction
+  :set nu nornu
+  :redraw!
+  :let s:yankLineStart = input('Line to start '.s:promptOperation.' :')
+  :let s:yankLineEnd = input('Line to stop '.s:promptOperation.' :') + 1
+  :execute "normal! ".s:yankLineStart."G".a:operation.s:yankLineEnd."G"
+  :call win_gotoid(s:returnWindow)
+  :put
+  :redraw!
+endfunction
+function! GetFromAdjacentLine(direction, distance, operation)
+  if(a:operation == 'dd')
+    :let s:promptOperation = "delete"
+  else
+    :let s:promptOperation = "yank"
+  endif
+  :let s:returnWindow = win_getid()
+  :execute "normal! \<C-w>".a:direction
+  :set nu nornu
+  :redraw!
+  :let s:yankLine = input('Line to '.s:promptOperation.' :')
+  :execute "normal! ".s:yankLine."G".a:operation
+  :call win_gotoid(s:returnWindow)
+  :put
+endfunction
 " auto cammel case
 function! CammelCaseVisual()
   :let s:numOfWordsToCammel = input('number of words to cammel: ')
@@ -612,17 +661,20 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"---easy windwo resize
+"---captial letters as text objects
 "---overload enter on nav bar to open in previous window
 "---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
-"---yank from ajacent screen
 "---merge tabs
 "---join pane (tmux style)
-"---auto camel case(This should be cammel -> (This should be 
 "---snippets
 "---document links
 "---NextCapitalWord
-"---easy windwo resize
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+" vnoremap af :<C-U>silent! normal! /[A-Z]<CR>
+" omap af :normal Vaf<CR>
+" vnoremap af :<C-U>silent! normal! [zV]z<CR>
+" omap af :normal Vaf<CR>
 "make a visually selected string cammel case
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
