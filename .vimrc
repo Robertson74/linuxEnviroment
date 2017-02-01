@@ -267,6 +267,22 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " Yank from adjacent buffers
+nnoremap <Leader>y2l :call GetFromAdjacentLine('l', 2, 'Y')<CR>
+nnoremap <Leader>y2h :call GetFromAdjacentLine('h', 2, 'Y')<CR>
+nnoremap <Leader>y2k :call GetFromAdjacentLine('k', 2, 'Y')<CR>
+nnoremap <Leader>y2j :call GetFromAdjacentLine('j', 2, 'Y')<CR>
+nnoremap <Leader>m2l :call GetFromAdjacentLine('l', 2, 'dd')<CR>
+nnoremap <Leader>m2h :call GetFromAdjacentLine('h', 2, 'dd')<CR>
+nnoremap <Leader>m2k :call GetFromAdjacentLine('k', 2, 'dd')<CR>
+nnoremap <Leader>m2j :call GetFromAdjacentLine('j', 2, 'dd')<CR>
+nnoremap <Leader>ym2h :call GetMultipleFromAdjacentLine('h', 2, 'y')<CR>
+nnoremap <Leader>ym2j :call GetMultipleFromAdjacentLine('j', 2, 'y')<CR>
+nnoremap <Leader>ym2k :call GetMultipleFromAdjacentLine('k', 2, 'y')<CR>
+nnoremap <Leader>ym2l :call GetMultipleFromAdjacentLine('l', 2, 'y')<CR>
+nnoremap <Leader>mm2h :call GetMultipleFromAdjacentLine('h', 2, 'd')<CR>
+nnoremap <Leader>mm2j :call GetMultipleFromAdjacentLine('j', 2, 'd')<CR>
+nnoremap <Leader>mm2k :call GetMultipleFromAdjacentLine('k', 2, 'd')<CR>
+nnoremap <Leader>mm2l :call GetMultipleFromAdjacentLine('l', 2, 'd')<CR>
 nnoremap <Leader>yl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
 nnoremap <Leader>yh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
 nnoremap <Leader>yk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
@@ -300,7 +316,7 @@ nnoremap <Leader>csg :call SearchContextually("global")<CR>
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
-nnoremap <Leader>z :call ToggleZoom()<CR>
+nnoremap <Leader>z :silent call ToggleZoom()<CR>
 " copying/moving from a distance
 nnoremap <Leader>ma :call DeleteAboveAndPaste()<CR>
 nnoremap <Leader>mma :call DeleteMultipleAboveAndPaste()<CR>
@@ -342,7 +358,7 @@ function! GetMultipleFromAdjacentLine(direction, distance, operation)
     :let s:promptOperation = "yanking"
   endif
   :let s:returnWindow = win_getid()
-  :execute "normal! \<C-w>".a:direction
+  :execute "normal! ".a:distance."\<C-w>".a:direction
   :set nu nornu
   :redraw!
   :let s:yankLineStart = input('Line to start '.s:promptOperation.' :')
@@ -368,7 +384,7 @@ function! GetFromAdjacentLine(direction, distance, operation)
     :let s:promptOperation = "yank"
   endif
   :let s:returnWindow = win_getid()
-  :execute "normal! \<C-w>".a:direction
+  :execute "normal! ".a:distance."\<C-w>".a:direction
   :set nu nornu
   :redraw!
   :let s:yankLine = input('Line to '.s:promptOperation.' :')
@@ -696,6 +712,7 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"--- delete forward back to multiple char combo
 "--- easy renaming tabs to group thoughts and work spaces
 "--- repetitive text gereator (eg paste in "no mid submitted" and have cursor "jump back to 'mid' so a difference word can be specified
 "---captial letters as text objects
@@ -707,6 +724,39 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---document links
 "---NextCapitalWord
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+func! HandlePrint(channel, msg)
+  let @j = a:msg
+  execute ':normal! "jpo'
+  " echo 'Received: ' . a:msg
+endfunc
+
+func! HandleClear(channel, msg)
+  echo 'Received: ' . a:msg
+endfunc
+
+nnoremap <Leader>dn :call DebugerNext()<CR>
+function! DebugerNext()
+ call ch_sendraw(g:channel, "n\n", {'callback' : 'HandleClear'})
+endfunction
+
+
+nnoremap <Leader>dr :call DebugerRefresh()<CR>
+function! DebugerRefresh()
+ normal! ggdG  
+ call ch_sendraw(g:channel, "list(99)\n", {"callback": "HandlePrint"}) 
+endfunction
+" func! Handler(channel)
+"   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
+"     echomsg ch_read(a:channel)
+"   endwhile
+" endfunc
+" let job = job_start("./jobscript.sh", {'close_cb': 'Handler'})
+" let job = job_start("node servers/interfaceServer.js")
+" let channel = job_getchannel(job)
+" call ch_sendraw(channel, "list(99)")
+" echo ch_read(channel)
+" call ch_sendraw(channel, "1", {'callback': 'Handler'})
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
 "sudo apt-install git
 "git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
