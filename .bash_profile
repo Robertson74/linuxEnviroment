@@ -241,12 +241,15 @@ alias .....='cd ../../../../'
 # ====================================
 
 ##########################################################################config
+export VISUAL=vim
+export EDITOR="$VISUAL"
 alias dirs="dirs -v"
 set -o vi
 # cd /var/www/html/repos
 
 alias la='ls -lah $LS_COLOR'
 function cl(){ cd "$@" && la; }
+function mcd(){ mkdir "$@" && cd $_; }
 alias copypath='pwd|pbcopy'
 
 ########################################################################## Quick Directories

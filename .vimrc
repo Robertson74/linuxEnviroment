@@ -9,6 +9,7 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" Better text objects
 Plugin 'wellle/targets.vim'
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -74,6 +75,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+set breakindent
 " Netrw top level tree set to dir where vim was opened
 " execute "normal! :silent Ntree" $PWD
 " Netrw list style to long tree form
@@ -139,6 +141,8 @@ highlight CursorLineNr ctermfg=green
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" control p async
+let g:user_command_async=1
 " php extended config 
 let g:phpcomplete_index_composer_command = "composer"
 " Syntastic typescript linter
@@ -180,12 +184,17 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" toggle format pasting
+nnoremap <Leader>pas :set paste!<CR>
 " pane/tab navigatoin
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-l> <C-w>l
+nnoremap <C-t> <C-w>t
+nnoremap <C-b> <C-w>b
+nnoremap <C-x> :q<CR>
 nnoremap zh gT
 nnoremap zl gt
 "Obscure/UnObscure doc
@@ -202,8 +211,9 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>com :windo set diff!<CR>:windo set diffopt=iwhite<CR>:windo set scrollbind!<CR>
 nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>hl :tab help 
-nnoremap <Leader>f. :find ./**/
-nnoremap <Leader>fs :find ./src/**/
+nnoremap <Leader>hg :tab helpgrep 
+nnoremap <Leader>f. :find ./**/*
+nnoremap <Leader>fs :find ./src/**/*
 nnoremap <Leader>fm :find ./server/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
 nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
@@ -254,25 +264,226 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-script calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>res :silent call ResizeWindow()<CR>
+" Yank from adjacent buffers
+nnoremap <Leader>y2l :call GetFromAdjacentLine('l', 2, 'Y')<CR>
+nnoremap <Leader>y2h :call GetFromAdjacentLine('h', 2, 'Y')<CR>
+nnoremap <Leader>y2k :call GetFromAdjacentLine('k', 2, 'Y')<CR>
+nnoremap <Leader>y2j :call GetFromAdjacentLine('j', 2, 'Y')<CR>
+nnoremap <Leader>m2l :call GetFromAdjacentLine('l', 2, 'dd')<CR>
+nnoremap <Leader>m2h :call GetFromAdjacentLine('h', 2, 'dd')<CR>
+nnoremap <Leader>m2k :call GetFromAdjacentLine('k', 2, 'dd')<CR>
+nnoremap <Leader>m2j :call GetFromAdjacentLine('j', 2, 'dd')<CR>
+nnoremap <Leader>ym2h :call GetMultipleFromAdjacentLine('h', 2, 'y')<CR>
+nnoremap <Leader>ym2j :call GetMultipleFromAdjacentLine('j', 2, 'y')<CR>
+nnoremap <Leader>ym2k :call GetMultipleFromAdjacentLine('k', 2, 'y')<CR>
+nnoremap <Leader>ym2l :call GetMultipleFromAdjacentLine('l', 2, 'y')<CR>
+nnoremap <Leader>mm2h :call GetMultipleFromAdjacentLine('h', 2, 'd')<CR>
+nnoremap <Leader>mm2j :call GetMultipleFromAdjacentLine('j', 2, 'd')<CR>
+nnoremap <Leader>mm2k :call GetMultipleFromAdjacentLine('k', 2, 'd')<CR>
+nnoremap <Leader>mm2l :call GetMultipleFromAdjacentLine('l', 2, 'd')<CR>
+nnoremap <Leader>yl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
+nnoremap <Leader>yh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
+nnoremap <Leader>yk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
+nnoremap <Leader>yj :call GetFromAdjacentLine('j', 1, 'Y')<CR>
+nnoremap <Leader>ml :call GetFromAdjacentLine('l', 1, 'dd')<CR>
+nnoremap <Leader>mh :call GetFromAdjacentLine('h', 1, 'dd')<CR>
+nnoremap <Leader>mk :call GetFromAdjacentLine('k', 1, 'dd')<CR>
+nnoremap <Leader>mj :call GetFromAdjacentLine('j', 1, 'dd')<CR>
+nnoremap <Leader>ymh :call GetMultipleFromAdjacentLine('h', 1, 'y')<CR>
+nnoremap <Leader>ymj :call GetMultipleFromAdjacentLine('j', 1, 'y')<CR>
+nnoremap <Leader>ymk :call GetMultipleFromAdjacentLine('k', 1, 'y')<CR>
+nnoremap <Leader>yml :call GetMultipleFromAdjacentLine('l', 1, 'y')<CR>
+nnoremap <Leader>mmh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
+nnoremap <Leader>mmj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
+nnoremap <Leader>mmk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
+nnoremap <Leader>mml :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
+" auto cammel case
+nnoremap <Leader>cam :call CammelCaseVisual()<CR>
+" nav bar
+nnoremap <Leader>tn :call ToggleNav()<CR>
+nnoremap <Leader>fn :call NewFocusNavBar()<CR>
+" extend screen to another split
+nnoremap <Leader>ext :call ExtendScreenDown()<CR>
+" Temp areas
+nnoremap <Leader>tem :call PlaceTempArea()<CR>
+nnoremap <Leader>rtem :call RemoveTempArea()<CR>
+" Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
-nnoremap <Leader>nav :call NavigationBarToggle()<CR>
+" temporary line highlights
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
 nnoremap <Leader>z :silent! call ToggleZoom()<CR>
 " Turn on off numbers
+nnoremap <Leader>z :silent call ToggleZoom()<CR>
+" copying/moving from a distance
+nnoremap <Leader>ma :call DeleteAboveAndPaste()<CR>
+nnoremap <Leader>mma :call DeleteMultipleAboveAndPaste()<CR>
+nnoremap <Leader>mb :call DeleteBelowAndPaste()<CR>
+nnoremap <Leader>mmb :call DeleteMultipleBelowAndPaste()<CR>
+>>>>>>> ad63b4bfabee7f2f660cc60f12733b179e5596aa
 nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
 nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
 nnoremap <Leader>yb :call YankBelowAndPaste()<CR>
 nnoremap <Leader>ymb :call YankMultipleBelowAndPaste()<CR>
+" Spelling
 nnoremap <Leader>sp :set spell!<CR>
 " go to thirds of line
 nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" Easier window resizing
+function! ResizeWindow()
+  :let s:resizeDirection = -1
+  while(s:resizeDirection != 120 && s:resizeDirection != 13 && s:resizeDirection != 27)
+    :let s:resizeDirection = getchar()
+    :if (s:resizeDirection == 115)
+      :resize -5
+    :elseif (s:resizeDirection == 116)
+      :resize +5
+    :elseif (s:resizeDirection == 119)
+      :vertical resize +8
+    :elseif (s:resizeDirection == 110)
+      :vertical resize -8
+    :endif
+    :redraw!
+  endwhile
+endfunction
+" move or copy files from adjacent buffers
+function! GetMultipleFromAdjacentLine(direction, distance, operation)
+  if(a:operation == 'd')
+    :let s:promptOperation = "deletion"
+  else
+    :let s:promptOperation = "yanking"
+  endif
+  :let s:returnWindow = win_getid()
+  :execute "normal! ".a:distance."\<C-w>".a:direction
+  :set nu nornu
+  :redraw!
+  :let s:yankLineStart = input('Line to start '.s:promptOperation.' :')
+  if(s:yankLineStart)
+    :let s:yankLineEnd = input('Line to stop '.s:promptOperation.' :')
+    if(s:yankLineEnd)
+      :execute "normal! ".s:yankLineStart."G".a:operation.s:yankLineEnd."G"
+      :call win_gotoid(s:returnWindow)
+      :put
+      :redraw!
+    else
+      :call win_gotoid(s:returnWindow)
+    endif
+  else
+    :call win_gotoid(s:returnWindow)
+  endif
+endfunction
+function! GetFromAdjacentLine(direction, distance, operation)
+  :let s:yankLine = -1
+  if(a:operation == 'dd')
+    :let s:promptOperation = "delete"
+  else
+    :let s:promptOperation = "yank"
+  endif
+  :let s:returnWindow = win_getid()
+  :execute "normal! ".a:distance."\<C-w>".a:direction
+  :set nu nornu
+  :redraw!
+  :let s:yankLine = input('Line to '.s:promptOperation.' :')
+  if(s:yankLine)
+    :execute "normal! ".s:yankLine."G".a:operation
+    :call win_gotoid(s:returnWindow)
+    :put
+  else
+    :call win_gotoid(s:returnWindow)
+  :endif
+endfunction
+" auto cammel case
+function! CammelCaseVisual()
+  :let s:numOfWordsToCammel = input('number of words to cammel: ')
+  :let s:numPointer = 0
+  :execute "normal! viw".s:numOfWordsToCammel."Egu"
+  :while(s:numPointer < s:numOfWordsToCammel)
+    :normal wgUlX
+    :let s:numPointer+=1
+  :endwhile
+endfunction
+" nav bar 
+let g:defautlNavWidth = 40
+function! ToggleNav()
+  if(!exists("t:navBarActive"))  
+    :let t:navBarActive=0
+  endif
+  if(t:navBarActive==0)
+    :silent call NewNav()
+    :let t:navBarActive=1
+  else
+    :call CloseNav()
+  endif
+endfunction!
+function! CloseNav()
+      :call win_gotoid(t:navBarWin)
+      if(win_getid() == t:navBarWin)
+        :execute "bwipe "bufnr('%')
+        :let t:navBarActive=0
+      else 
+        :silent call NewNav()
+      endif
+endfunction
+function! NewNav()
+  :let t:navDir = expand('%:h') 
+  :let t:navFile = expand('%:t') 
+  :let t:navDir = split(t:navDir, '/')
+  :execute "normal! \<C-w>n\<C-w>H"
+  :exe "vertical resize ".g:defautlNavWidth
+  :set wfw
+  :let t:navBarWin = win_getid()
+  :e.
+  :normal gg
+  :for dir in t:navDir
+    :execute "normal! /".dir."\<CR>"
+    :call netrw#LocalBrowseCheck(<SNR>94_NetrwBrowseChgDir(1,<SNR>94_NetrwGetWord()))
+    " :redraw!
+  :endfor
+  :let @/ = t:navFile
+  :normal! n
+endfunction
+function! NewFocusNavBar()
+  if(exists("t:navBarWin"))
+    :call win_gotoid(t:navBarWin)
+  else
+    :echo "No active nav bar"
+  endif
+endfunction
+nnoremap<Leader>cext :call CloseScreenExtend()<CR>
+function! ExtendScreenDown()
+  :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  :execute "set splitright" 
+  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlepane"
+  :execute "set wfw"
+  :execute "normal! \<C-w>h"
+  :execute "set splitright!"
+endfunction!
+function! CloseScreenExtend()
+  :execute "normal! \<C-w>l\<C-w>q"
+  :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
+endfunction!
+function! RemoveTempArea()
+  :normal! mv
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
+  :normal! `v
+endfunction
+function! PlaceTempArea()
+  :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
+  :Commentary
+  :execute "normal! o\<esc>a#\<esc>30.\<esc>AEND TEMP\<esc>"
+  :Commentary
+endfunction
 " Zooming
 let g:zoomedStatus = "false"
 function! ToggleZoom()
@@ -285,6 +496,28 @@ function! ToggleZoom()
     :+tabclose
     let g:zoomedStatus = "false"
   endif
+endfunction
+" delete a line below or above and paste below
+function! DeleteAboveAndPaste()
+    :execute ":let g:yankLine = input('Line below to move: ')"
+    :execute "normal! ".g:yankLine."kdd".g:yankLine."jp"
+endfunction
+" delete multipl lines below or above and paste below
+function! DeleteMultipleAboveAndPaste()
+    :execute ":let g:yankLineStart = input('Line below to start moving: ')"
+    :execute ":let g:yankLineEnd = input('Line below to end moving: ')"
+    :execute "normal! :-".g:yankLineStart.",-".g:yankLineEnd."d\<CR>\<C-o>p" 
+endfunction
+" delete a line below or above and paste below
+function! DeleteBelowAndPaste()
+    :execute ":let g:yankLine = input('Line below to move: ')"
+    :execute "normal! ".g:yankLine."jdd".g:yankLine."kp"
+endfunction
+" delte multiple lines below or above and paste below
+function! DeleteMultipleBelowAndPaste()
+    :execute ":let g:yankLineStart = input('Line below to start moving: ')"
+    :execute ":let g:yankLineEnd = input('Line below to end moving: ')"
+    :execute "normal! :+".g:yankLineStart.",+".g:yankLineEnd."d\<CR>\<C-o>p" 
 endfunction
 " yank a line below or above and paste below
 function! YankAboveAndPaste()
@@ -401,45 +634,6 @@ function! RemoveTempSign()
   :exec "sign unplace"
 endfunction
 
-""""""" Nav bar
-:let g:defautlNavWidth = 40
-function! NavigationBarToggle()
-  if exists("t:navActive") == 0
-    :let t:navActive=0
-  endif
-  if exists("t:navBuffer") == 0
-    :let t:navBuffer=0
-  endif
-  if t:navActive==0
-    :let @/ = " ".expand('%:t')."\\?.$"
-    :let g:netrw_liststyle = 3
-    :Vex
-    :exec "normal! \<C-W>H"
-    :exe "vertical resize ".g:defautlNavWidth
-    :let t:navBuffer = bufnr('%')
-    :let t:navActive = 1
-    :normal! n
-    :.
-    :exec "normal! :noh \<CR>"
-    :set wfw
-  elseif t:navActive==1
-    :let t:navActive = 0
-    :silent windo :call CheckIfBufferIsNav()
-    if t:navActive==1
-      :exe "silent bd ".t:navBuffer
-      :let t:navActive = 0
-    else
-      :call NavigationBarToggle()
-    endif
-  endif
-endfunction
-
-function! CheckIfBufferIsNav()
-  if bufnr('%') == t:navBuffer 
-    :let t:navActive=1 
-  endif
-endfunction
-
 """"""" Context Searching
 :let g:searchContextDefault = 0
 function! SearchContextually(searchType)
@@ -517,16 +711,54 @@ function! ZoomContext()
   :set wfw
   :execute "normal!\<C-W>p"
 endfunction
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"--- delete forward back to multiple char combo
+"--- easy renaming tabs to group thoughts and work spaces
+"--- repetitive text gereator (eg paste in "no mid submitted" and have cursor "jump back to 'mid' so a difference word can be specified
+"---captial letters as text objects
+"---overload enter on nav bar to open in previous window
+"---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
+"---merge tabs
+"---join pane (tmux style)
+"---snippets
+"---document links
+"---NextCapitalWord
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+func! HandlePrint(channel, msg)
+  let @j = a:msg
+  execute ':normal! "jpo'
+  " echo 'Received: ' . a:msg
+endfunc
 
-" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-" match OverLength /\%120v.\+/
+func! HandleClear(channel, msg)
+  echo 'Received: ' . a:msg
+endfunc
+
+nnoremap <Leader>dn :call DebugerNext()<CR>
+function! DebugerNext()
+ call ch_sendraw(g:channel, "n\n", {'callback' : 'HandleClear'})
+endfunction
 
 
+nnoremap <Leader>dr :call DebugerRefresh()<CR>
+function! DebugerRefresh()
+ normal! ggdG  
+ call ch_sendraw(g:channel, "list(99)\n", {"callback": "HandlePrint"}) 
+endfunction
+" func! Handler(channel)
+"   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
+"     echomsg ch_read(a:channel)
+"   endwhile
+" endfunc
+" let job = job_start("./jobscript.sh", {'close_cb': 'Handler'})
+" let job = job_start("node servers/interfaceServer.js")
+" let channel = job_getchannel(job)
+" call ch_sendraw(channel, "list(99)")
+" echo ch_read(channel)
+" call ch_sendraw(channel, "1", {'callback': 'Handler'})
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
 "sudo apt-install git
