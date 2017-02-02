@@ -227,7 +227,7 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
+nnoremap <Leader>vup :!cd ~;git add .vimrc && git commit -m "updating" && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
 " update vimrc to github
@@ -265,6 +265,13 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>rst :call RepetitiveLine()<CR>
+nnoremap Q :silent call MoveToPreviousCap()<CR>
+nnoremap <BAR> :silent call MoveToNextCap()<CR>
+nnoremap dic :call DeleteInsideCaps()<CR>
+nnoremap cic :call ChangeInsideCaps()<CR>
+nnoremap dc :call DeleteToCap()<CR>
+nnoremap cc :call ChangeToCap()<CR>
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " Yank from adjacent buffers
 nnoremap <Leader>y2l :call GetFromAdjacentLine('l', 2, 'Y')<CR>
@@ -333,6 +340,71 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" repetitve lines with replaceable variables
+function! RepetitiveLine()
+let s:template = input('Line template (",./" changes): ')
+if(empty(s:template))
+  return
+endif
+let s:repeatCount = input('Number of repetitions (c for continous): ')
+if(empty(s:repeatCount))
+  return
+endif
+let s:iteration = 0
+let s:startLine=line('.')
+while (s:iteration < s:repeatCount)
+  :put =s:template
+  let s:iteration+=1
+endwhile
+let s:endLine=line('.')
+try
+  let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+catch
+  return
+endtry
+:execute ":"s:startLine - 1
+:normal $
+:let @/= ",./"
+:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+let s:iteration2 = 0
+while (s:iteration2 < s:substituteCount)
+  :redraw!
+  :let s:replaceTerm = input("Replace with: ")
+  :execute "normal! c9l".s:replaceTerm."\<ESC>"
+  if(s:iteration2 != s:substituteCount -1)
+    :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+  endif
+  :let s:iteration2+=1
+endwhile
+:execute ":"s:startLine
+endfunction
+" Moving/Editing around capitals for cammel case stuff
+func! MoveToPreviousCap()
+  execute "normal! ?[A-Z]\<CR>"
+  :noh
+endfunc
+func! MoveToNextCap()
+  execute "normal! /[A-Z]\<CR>"
+  :noh
+endfunc
+func! DeleteInsideCaps()
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :noh
+endfunc
+func! ChangeInsideCaps()
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
+endfunc
+func! ChangeToCap()
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
+endfunc
+func! DeleteToCap()
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :noh
+endfunc
 " Easier window resizing
 function! ResizeWindow()
   :let s:resizeDirection = -1
@@ -722,8 +794,23 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---join pane (tmux style)
 "---snippets
 "---document links
-"---NextCapitalWord
+"---NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+
+" testing a sent
+" testing a sent
+" testing a sent
+" testing a sent
+" nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
+" echo split(v)[0]
+" this is ccc test
+" this is ccc test ccc
+" ccc this is ccc test
+" augroup insertmode
+" au!
+" autocmd InsertEnter * silent! set cursorcolumn
+" autocmd InsertLeave * silent! set nocursorcolumn
+" augroup END
 func! HandlePrint(channel, msg)
   let @j = a:msg
   execute ':normal! "jpo'
