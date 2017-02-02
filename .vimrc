@@ -164,7 +164,6 @@ let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options['server'] = ""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
-nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
 " grundo mapping
@@ -554,16 +553,18 @@ function! PlaceTempArea()
   :Commentary
 endfunction
 " Zooming
-let g:zoomedStatus = "false"
 function! ToggleZoom()
-  if(g:zoomedStatus == "false")
+  if(!exists("b:zoomedStatus"))
+    :let b:zoomedStatus = "false"
+  endif
+  if(b:zoomedStatus == "false")
     :mark b|:tabnew %|normal! 'bzz
     call ZoomContext()
-    let g:zoomedStatus = "true"
+    let b:zoomedStatus = "true"
   else
     :mark v|:tabprevious|:normal! 'vzz
     :+tabclose
-    let g:zoomedStatus = "false"
+    let b:zoomedStatus = "false"
   endif
 endfunction
 " delete a line below or above and paste below
@@ -786,8 +787,6 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 "--- delete forward back to multiple char combo
 "--- easy renaming tabs to group thoughts and work spaces
-"--- repetitive text gereator (eg paste in "no mid submitted" and have cursor "jump back to 'mid' so a difference word can be specified
-"---captial letters as text objects
 "---overload enter on nav bar to open in previous window
 "---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
 "---merge tabs
