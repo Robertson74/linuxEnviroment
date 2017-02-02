@@ -261,7 +261,7 @@ nnoremap <Leader>nav :call NavigationBarToggle()<CR>
 nnoremap <Leader>st :call PlaceTempSign()<CR>
 nnoremap <Leader>sr :call RemoveTempSign()<CR>
 " Zooming
-nnoremap <Leader>z :call ToggleZoom()<CR>
+nnoremap <Leader>z :silent! call ToggleZoom()<CR>
 " Turn on off numbers
 nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
 nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
