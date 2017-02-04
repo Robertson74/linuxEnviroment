@@ -264,6 +264,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>mw :call MarkWindow()<CR>
+nnoremap <Leader>mr :call UnMarkWindow()<CR>
+nnoremap <Leader>mm :call MoveWindowToTab()<CR>
 nnoremap <Leader>rst :call RepetitiveLine()<CR>
 nnoremap Q :silent call MoveToPreviousCap()<CR>
 nnoremap <BAR> :silent call MoveToNextCap()<CR>
@@ -313,8 +316,8 @@ nnoremap <Leader>fn :call NewFocusNavBar()<CR>
 " extend screen to another split
 nnoremap <Leader>ext :call ExtendScreenDown()<CR>
 " Temp areas
-nnoremap <Leader>tem :call PlaceTempArea()<CR>
-nnoremap <Leader>rtem :call RemoveTempArea()<CR>
+nnoremap <Leader>temp :call PlaceTempArea()<CR>
+nnoremap <Leader>temr :call RemoveTempArea()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
@@ -339,6 +342,57 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! MarkWindow()
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute "normal! L:call PlaceTempSign()\<CR>"
+  :let g:markLowLine = line('.')
+  :execute "normal! H:call PlaceTempSign()\<CR>"
+  :let g:markHighLine = line('.')
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :let g:markWindow = win_getid()
+  :let g:markBuffer = bufnr('%')
+  :let g:markTab = tabpagenr()
+endfunction
+function! MoveWindowToTab()
+  if(!exists("g:markWindow"))
+    :let g:markWindow = -1
+  endif
+  if(g:markWindow == -1)
+    :echom "No marked window"
+    return
+  endif
+  if(win_getid() == g:markWindow)
+    :echom "This is the marked window... can't move..."
+    return
+  endif
+  if(tabpagenr() == g:markTab)
+    :echom "Window is already on target tab"
+    return
+  endif
+  :vsp
+  :execute "buffer" g:markBuffer
+  :let s:targetWindow = win_getid()
+  :execute "call win_gotoid('".g:markWindow."')"
+  :close
+  :execute "call win_gotoid('".s:targetWindow."')"
+  :call UnMarkWindow()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+endfunction
+function! UnMarkWindow()
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute ":"g:markLowLine
+  :call RemoveTempSign()
+  :execute ":"g:markHighLine
+  :call RemoveTempSign()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :redraw!
+  :let g:markWindow = -1
+endfunction
 " repetitve lines with replaceable variables
 function! RepetitiveLine()
 let s:template = input('Line template (",./" changes): ')
@@ -538,13 +592,9 @@ function! CloseScreenExtend()
   :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
 endfunction!
 function! RemoveTempArea()
-  :normal! mv
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :normal! `v
+  :normal! mb
+  g/###TEMP AREA/execute "normal! d/END TEMP */\<CR>dd"
+  :normal! `b
 endfunction
 function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
