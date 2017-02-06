@@ -193,6 +193,7 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
+nnoremap <C-n> <C-w>p
 nnoremap <C-x> :q<CR>
 nnoremap zh gT
 nnoremap zl gt
@@ -266,7 +267,7 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 nnoremap <Leader>mw :call MarkWindow()<CR>
 nnoremap <Leader>mr :call UnMarkWindow()<CR>
-nnoremap <Leader>mm :call MoveWindowToTab()<CR>
+nnoremap <Leader>mmo :call MoveWindowToTab()<CR>
 nnoremap <Leader>rst :call RepetitiveLine()<CR>
 nnoremap Q :silent call MoveToPreviousCap()<CR>
 nnoremap <BAR> :silent call MoveToNextCap()<CR>
@@ -356,9 +357,9 @@ function! MarkWindow()
   :let g:markTab = tabpagenr()
 endfunction
 function! MoveWindowToTab()
-  if(!exists("g:markWindow"))
-    :let g:markWindow = -1
-  endif
+  " if(!exists("g:markWindow"))
+  "   :let g:markWindow = -1
+  " endif
   if(g:markWindow == -1)
     :echom "No marked window"
     return
@@ -541,7 +542,9 @@ function! ToggleNav()
     :silent call NewNav()
     :let t:navBarActive=1
   else
+    :let s:homeWindow = win_getid()
     :call CloseNav()
+    :call win_gotoid(s:homeWindow)
   endif
 endfunction!
 function! CloseNav()
