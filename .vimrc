@@ -267,11 +267,12 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>rli :call RepetitiveLines()<CR>
+nnoremap <Leader>rst :call RepetitiveString()<CR>
 nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
 nnoremap <Leader>mw :call MarkWindow()<CR>
 nnoremap <Leader>mr :call UnMarkWindow()<CR>
-nnoremap <Leader>mmo :call MoveWindowToTab()<CR>
-nnoremap <Leader>rst :call RepetitiveLine()<CR>
+nnoremap <Leader>mmw :call MoveWindowToTab()<CR>
 nnoremap Q :silent call MoveToPreviousCap()<CR>
 nnoremap <BAR> :silent call MoveToNextCap()<CR>
 nnoremap dic :call DeleteInsideCaps()<CR>
@@ -346,6 +347,49 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+
+function! RepetitiveString() 
+let s:template = input('Line template (",./" changes): ')
+if(empty(s:template))
+  return
+endif
+let s:repeatCount = input('Number of repetitions (c for continous): ')
+if(empty(s:repeatCount))
+  return
+endif
+let s:iteration = 0
+let s:startLine=line('.')
+let @b = s:template
+while (s:iteration < s:repeatCount)
+  :execute "normal! a\<C-r>b\<ESC>"
+  let s:iteration+=1
+endwhile
+let s:endLine=line('.')
+let s:endPosition=col('.')
+try
+  let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+catch
+  return
+endtry
+:execute ":"s:startLine - 1
+:normal $
+:let @/= ",./"
+:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+let s:iteration2 = 0
+while (s:iteration2 < s:substituteCount)
+  :redraw!
+  :let s:replaceTerm = input("Replace with: ")
+  if (s:replaceTerm == "")
+    return
+  endif
+  :execute "normal! c9l".s:replaceTerm."\<ESC>"
+  if(s:iteration2 != s:substituteCount -1)
+    :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+  endif
+  :let s:iteration2+=1
+endwhile
+:execute "normal! ".s:endPosition."|"
+endfunction
 function! FindAndReplaceRange()
   :let s:find = input('find: ')
   if (s:find == "")
@@ -413,7 +457,7 @@ function! UnMarkWindow()
   :let g:markWindow = -1
 endfunction
 " repetitve lines with replaceable variables
-function! RepetitiveLine()
+function! RepetitiveLines()
 let s:template = input('Line template (",./" changes): ')
 if(empty(s:template))
   return
@@ -442,6 +486,9 @@ let s:iteration2 = 0
 while (s:iteration2 < s:substituteCount)
   :redraw!
   :let s:replaceTerm = input("Replace with: ")
+  if (s:replaceTerm == "")
+    return
+  endif
   :execute "normal! c9l".s:replaceTerm."\<ESC>"
   if(s:iteration2 != s:substituteCount -1)
     :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
@@ -865,7 +912,6 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---document links
 "---NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>tes :call FindAndReplaceRange()<CR>
 " augroup insertmode
 " au!
 " autocmd InsertEnter * silent! set cursorcolumn
