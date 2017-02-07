@@ -267,6 +267,7 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
 nnoremap <Leader>mw :call MarkWindow()<CR>
 nnoremap <Leader>mr :call UnMarkWindow()<CR>
 nnoremap <Leader>mmo :call MoveWindowToTab()<CR>
@@ -345,6 +346,21 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! FindAndReplaceRange()
+  :let s:find = input('find: ')
+  if (s:find == "")
+    return
+  endif
+  :let s:replace = input('and replace with: ')
+  if (s:replace == "")
+    return
+  endif
+  :let s:range = input('from here to: ')
+  if (s:range == "")
+    return
+  endif
+  :execute ".,".s:range."s/".s:find."/".s:replace."/gc"
+endfunction
 function! MarkWindow()
   :let g:markStartLine = line('.')
   :let g:markStartCol = col('.')
@@ -849,6 +865,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---document links
 "---NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+nnoremap <Leader>tes :call FindAndReplaceRange()<CR>
 " augroup insertmode
 " au!
 " autocmd InsertEnter * silent! set cursorcolumn
