@@ -183,9 +183,11 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" toggle modifiable 
+nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
 nnoremap <Leader>pas :set paste!<CR>
-" pane/tab navigatoin
+" pane/tab navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -197,7 +199,7 @@ nnoremap <C-n> <C-w>p
 nnoremap <C-x> :q<CR>
 nnoremap zh gT
 nnoremap zl gt
-"Obscure/UnObscure doc
+"Obscure/UN Obscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
 nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
