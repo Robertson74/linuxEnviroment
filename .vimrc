@@ -267,6 +267,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" Peek all script calls
+nnoremap <Leader>psc :call PeekScriptCalls()<CR>
+"repetitive strings 
 nnoremap <Leader>rli :call RepetitiveLines()<CR>
 nnoremap <Leader>rst :call RepetitiveString()<CR>
 nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
@@ -313,7 +316,7 @@ nnoremap <Leader>mmh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
 nnoremap <Leader>mmj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
 nnoremap <Leader>mmk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
 nnoremap <Leader>mml :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
-" auto cammel case
+" auto camel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
 nnoremap <Leader>tn :call ToggleNav()<CR>
@@ -347,6 +350,12 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! PeekScriptCalls()
+  :vsp +e $MYVIMRC
+  :normal! gg
+  :/-call/,/-scripts/g/./echo getline('.')
+  :execute "normal! \<C-w>q"
+endfunction
 
 function! RepetitiveString() 
 let s:template = input('Line template (",./" changes): ')
@@ -907,7 +916,6 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- easy renaming tabs to group thoughts and work spaces
 "---overload enter on nav bar to open in previous window
 "---merge tabs
-"---join pane (tmux style)
 "---snippets
 "---document links
 "---NextCapitalWord improve
