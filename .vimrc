@@ -324,7 +324,6 @@ nnoremap <Leader>ma :call DeleteAboveAndPaste()<CR>
 nnoremap <Leader>mma :call DeleteMultipleAboveAndPaste()<CR>
 nnoremap <Leader>mb :call DeleteBelowAndPaste()<CR>
 nnoremap <Leader>mmb :call DeleteMultipleBelowAndPaste()<CR>
->>>>>>> ad63b4bfabee7f2f660cc60f12733b179e5596aa
 nnoremap <Leader>ya :call YankAboveAndPaste()<CR>
 nnoremap <Leader>yma :call YankMultipleAboveAndPaste()<CR>
 nnoremap <Leader>yb :call YankBelowAndPaste()<CR>
