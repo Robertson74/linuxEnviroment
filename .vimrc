@@ -164,7 +164,6 @@ let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options['server'] = ""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
-nnoremap <Leader>H :call BrowseDoc()
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
 " grundo mapping
@@ -184,9 +183,11 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" toggle modifiable 
+nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
 nnoremap <Leader>pas :set paste!<CR>
-" pane/tab navigatoin
+" pane/tab navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -194,10 +195,11 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
+nnoremap <C-n> <C-w>p
 nnoremap <C-x> :q<CR>
 nnoremap zh gT
 nnoremap zl gt
-"Obscure/UnObscure doc
+"Obscure/UN Obscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
 nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
@@ -227,7 +229,7 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vup :!cd ~;git add .vimrc;git commit -m "updating";git push github master;<CR>
+nnoremap <Leader>vup :!cd ~;git add .vimrc && git commit -m "updating" && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
 " update vimrc to github
@@ -250,12 +252,12 @@ nnoremap <Leader>sp :set spell!<CR>
 " rerun ctags
 nnoremap <Leader>ct :!ctags -R --exclude=.git<CR>
 " location list commands
-nnoremap <Leader>lo :lopen<CR>
+nnoremap <Leader>lo :lopen<CR><C-w>J
 nnoremap <Leader>lc :lcl<CR>
 nnoremap <Leader>ln :lnext<CR>
 nnoremap <Leader>lp :lprevious<CR>
 " quick fix commands
-nnoremap <Leader>co :copen<CR>
+nnoremap <Leader>co  :copen<CR><C-w>J
 nnoremap <Leader>cc :ccl<CR>
 nnoremap <Leader>cn :cnext<CR>
 nnoremap <Leader>cp :cprevious<CR>
@@ -265,6 +267,21 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" Peek all script calls
+nnoremap <Leader>psc :call PeekScriptCalls()<CR>
+"repetitive strings 
+nnoremap <Leader>rli :call RepetitiveLines()<CR>
+nnoremap <Leader>rst :call RepetitiveString()<CR>
+nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
+nnoremap <Leader>mw :call MarkWindow()<CR>
+nnoremap <Leader>mr :call UnMarkWindow()<CR>
+nnoremap <Leader>mmw :call MoveWindowToTab()<CR>
+nnoremap Q :silent call MoveToPreviousCap()<CR>
+nnoremap <BAR> :silent call MoveToNextCap()<CR>
+nnoremap dic :call DeleteInsideCaps()<CR>
+nnoremap cic :call ChangeInsideCaps()<CR>
+nnoremap dc :call DeleteToCap()<CR>
+nnoremap cc :call ChangeToCap()<CR>
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " Yank from adjacent buffers
 nnoremap <Leader>y2l :call GetFromAdjacentLine('l', 2, 'Y')<CR>
@@ -299,7 +316,7 @@ nnoremap <Leader>mmh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
 nnoremap <Leader>mmj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
 nnoremap <Leader>mmk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
 nnoremap <Leader>mml :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
-" auto cammel case
+" auto camel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
 nnoremap <Leader>tn :call ToggleNav()<CR>
@@ -307,8 +324,8 @@ nnoremap <Leader>fn :call NewFocusNavBar()<CR>
 " extend screen to another split
 nnoremap <Leader>ext :call ExtendScreenDown()<CR>
 " Temp areas
-nnoremap <Leader>tem :call PlaceTempArea()<CR>
-nnoremap <Leader>rtem :call RemoveTempArea()<CR>
+nnoremap <Leader>temp :call PlaceTempArea()<CR>
+nnoremap <Leader>temr :call RemoveTempArea()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
@@ -335,6 +352,189 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! PeekScriptCalls()
+  :vsp +e $MYVIMRC
+  :normal! gg
+  :/-call/,/-scripts/g/./echo getline('.')
+  :execute "normal! \<C-w>q"
+endfunction
+
+function! RepetitiveString() 
+let s:template = input('Line template (",./" changes): ')
+if(empty(s:template))
+  return
+endif
+let s:repeatCount = input('Number of repetitions (c for continous): ')
+if(empty(s:repeatCount))
+  return
+endif
+let s:iteration = 0
+let s:startLine=line('.')
+let @b = s:template
+while (s:iteration < s:repeatCount)
+  :execute "normal! a\<C-r>b\<ESC>"
+  let s:iteration+=1
+endwhile
+let s:endLine=line('.')
+let s:endPosition=col('.')
+try
+  let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+catch
+  return
+endtry
+:execute ":"s:startLine - 1
+:normal $
+:let @/= ",./"
+:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+let s:iteration2 = 0
+while (s:iteration2 < s:substituteCount)
+  :redraw!
+  :let s:replaceTerm = input("Replace with: ")
+  if (s:replaceTerm == "")
+    return
+  endif
+  :execute "normal! c9l".s:replaceTerm."\<ESC>"
+  if(s:iteration2 != s:substituteCount -1)
+    :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+  endif
+  :let s:iteration2+=1
+endwhile
+:execute "normal! ".s:endPosition."|"
+endfunction
+function! FindAndReplaceRange()
+  :let s:find = input('find: ')
+  if (s:find == "")
+    return
+  endif
+  :let s:replace = input('and replace with: ')
+  if (s:replace == "")
+    return
+  endif
+  :let s:range = input('from here to: ')
+  if (s:range == "")
+    return
+  endif
+  :execute ".,".s:range."s/".s:find."/".s:replace."/gc"
+endfunction
+function! MarkWindow()
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute "normal! L:call PlaceTempSign()\<CR>"
+  :let g:markLowLine = line('.')
+  :execute "normal! H:call PlaceTempSign()\<CR>"
+  :let g:markHighLine = line('.')
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :let g:markWindow = win_getid()
+  :let g:markBuffer = bufnr('%')
+  :let g:markTab = tabpagenr()
+endfunction
+function! MoveWindowToTab()
+  " if(!exists("g:markWindow"))
+  "   :let g:markWindow = -1
+  " endif
+  if(g:markWindow == -1)
+    :echom "No marked window"
+    return
+  endif
+  if(win_getid() == g:markWindow)
+    :echom "This is the marked window... can't move..."
+    return
+  endif
+  if(tabpagenr() == g:markTab)
+    :echom "Window is already on target tab"
+    return
+  endif
+  :vsp
+  :execute "buffer" g:markBuffer
+  :let s:targetWindow = win_getid()
+  :execute "call win_gotoid('".g:markWindow."')"
+  :close
+  :execute "call win_gotoid('".s:targetWindow."')"
+  :call UnMarkWindow()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+endfunction
+function! UnMarkWindow()
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute ":"g:markLowLine
+  :call RemoveTempSign()
+  :execute ":"g:markHighLine
+  :call RemoveTempSign()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :redraw!
+  :let g:markWindow = -1
+endfunction
+" repetitve lines with replaceable variables
+function! RepetitiveLines()
+let s:template = input('Line template (",./" changes): ')
+if(empty(s:template))
+  return
+endif
+let s:repeatCount = input('Number of repetitions (c for continous): ')
+if(empty(s:repeatCount))
+  return
+endif
+let s:iteration = 0
+let s:startLine=line('.')
+while (s:iteration < s:repeatCount)
+  :put =s:template
+  let s:iteration+=1
+endwhile
+let s:endLine=line('.')
+try
+  let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+catch
+  return
+endtry
+:execute ":"s:startLine - 1
+:normal $
+:let @/= ",./"
+:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+let s:iteration2 = 0
+while (s:iteration2 < s:substituteCount)
+  :redraw!
+  :let s:replaceTerm = input("Replace with: ")
+  if (s:replaceTerm == "")
+    return
+  endif
+  :execute "normal! c9l".s:replaceTerm."\<ESC>"
+  if(s:iteration2 != s:substituteCount -1)
+    :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+  endif
+  :let s:iteration2+=1
+endwhile
+:execute ":"s:startLine
+endfunction
+" Moving/Editing around capitals for cammel case stuff
+func! MoveToPreviousCap()
+  execute "normal! ?[A-Z]\<CR>"
+  :noh
+endfunc
+func! MoveToNextCap()
+  execute "normal! /[A-Z]\<CR>"
+  :noh
+endfunc
+func! DeleteInsideCaps()
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :noh
+endfunc
+func! ChangeInsideCaps()
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
+endfunc
+func! ChangeToCap()
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
+endfunc
+func! DeleteToCap()
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :noh
+endfunc
 " Easier window resizing
 function! ResizeWindow()
   :let s:resizeDirection = -1
@@ -418,7 +618,9 @@ function! ToggleNav()
     :silent call NewNav()
     :let t:navBarActive=1
   else
+    :let s:homeWindow = win_getid()
     :call CloseNav()
+    :call win_gotoid(s:homeWindow)
   endif
 endfunction!
 function! CloseNav()
@@ -469,13 +671,9 @@ function! CloseScreenExtend()
   :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
 endfunction!
 function! RemoveTempArea()
-  :normal! mv
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :execute "silent normal! gg/#TEMP AREA\<CR>V/#END TEMP\<CR>x"
-  :normal! `v
+  :normal! mb
+  g/###TEMP AREA/execute "normal! d/END TEMP */\<CR>dd"
+  :normal! `b
 endfunction
 function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
@@ -484,16 +682,18 @@ function! PlaceTempArea()
   :Commentary
 endfunction
 " Zooming
-let g:zoomedStatus = "false"
 function! ToggleZoom()
-  if(g:zoomedStatus == "false")
+  if(!exists("b:zoomedStatus"))
+    :let b:zoomedStatus = "false"
+  endif
+  if(b:zoomedStatus == "false")
     :mark b|:tabnew %|normal! 'bzz
     call ZoomContext()
-    let g:zoomedStatus = "true"
+    let b:zoomedStatus = "true"
   else
     :mark v|:tabprevious|:normal! 'vzz
     :+tabclose
-    let g:zoomedStatus = "false"
+    let b:zoomedStatus = "false"
   endif
 endfunction
 " delete a line below or above and paste below
@@ -714,18 +914,19 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"--- delete forward back to multiple char combo
+"--- quick view for script/Plugin calls
 "--- easy renaming tabs to group thoughts and work spaces
-"--- repetitive text gereator (eg paste in "no mid submitted" and have cursor "jump back to 'mid' so a difference word can be specified
-"---captial letters as text objects
 "---overload enter on nav bar to open in previous window
-"---update zoom funciton to allow multile zoom instances with a b:zoom variable instead of a g:zoom variable
 "---merge tabs
-"---join pane (tmux style)
 "---snippets
 "---document links
-"---NextCapitalWord
+"---NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+" augroup insertmode
+" au!
+" autocmd InsertEnter * silent! set cursorcolumn
+" autocmd InsertLeave * silent! set nocursorcolumn
+" augroup END
 func! HandlePrint(channel, msg)
   let @j = a:msg
   execute ':normal! "jpo'
