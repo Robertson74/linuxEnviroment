@@ -268,7 +268,7 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 "remote manipulation of lines
-nnoremap <Leader>rm :silent call NewYankAboveAndPaste("adjacent", "single", "y")<CR>
+nnoremap <Leader>rm :call RemoteManipulate()<CR>
 " snippet for var dump
 nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
@@ -325,7 +325,6 @@ nnoremap gl :call GoToSecondThirdOfLine()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
 " delete, move, or copy a line remotely(without using the cursor)
 function! RemoteManipulate()
-    :let s:cursorStartLine = line('.')
     :let s:startWindow = win_getid()
     :let s:moveCommand = 'y'
     :let s:putCommand = 'put'
@@ -353,13 +352,15 @@ function! RemoteManipulate()
     :execute s:targetString.''.s:moveCommand
     :execute 'call win_gotoid('.s:startWindow.')'
     :echo s:targetString.''.s:moveCommand
+    :normal! `b
+    :redraw!
     if (s:putCommand == 'put')
       :let s:targetLine = input('Line to move to: ')
       if (s:targetLine == '')
-        :let s:targetLine = s:cursorStartLine
+        :let s:targetLine = line('.')
       endif
-      :execute s:targetLine
-      :execute s:putCommand
+      :execute s:targetLine.'|'.s:putCommand
+      :echom s:targetLine
     endif
     :normal! `b
     :set nu rnu
