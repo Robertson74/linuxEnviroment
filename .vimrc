@@ -267,6 +267,12 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+"remote manipulation of lines
+nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
+" snippet for var dump
+nnoremap <Leader>svd :call SnipVarDump()<CR>
+" set a new top line
+nnoremap<Leader>nt :call MakeTop()<CR>
 " Peek all script calls
 nnoremap <Leader>psc :call PeekScriptCalls()<CR>
 "repetitive strings 
@@ -283,49 +289,14 @@ nnoremap cic :call ChangeInsideCaps()<CR>
 nnoremap dc :call DeleteToCap()<CR>
 nnoremap cc :call ChangeToCap()<CR>
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
-" Yank from adjacent buffers
-nnoremap <Leader>y2l :call GetFromAdjacentLine('l', 2, 'Y')<CR>
-nnoremap <Leader>y2h :call GetFromAdjacentLine('h', 2, 'Y')<CR>
-nnoremap <Leader>y2k :call GetFromAdjacentLine('k', 2, 'Y')<CR>
-nnoremap <Leader>y2j :call GetFromAdjacentLine('j', 2, 'Y')<CR>
-nnoremap <Leader>m2l :call GetFromAdjacentLine('l', 2, 'dd')<CR>
-nnoremap <Leader>m2h :call GetFromAdjacentLine('h', 2, 'dd')<CR>
-nnoremap <Leader>m2k :call GetFromAdjacentLine('k', 2, 'dd')<CR>
-nnoremap <Leader>m2j :call GetFromAdjacentLine('j', 2, 'dd')<CR>
-nnoremap <Leader>ym2h :call GetMultipleFromAdjacentLine('h', 2, 'y')<CR>
-nnoremap <Leader>ym2j :call GetMultipleFromAdjacentLine('j', 2, 'y')<CR>
-nnoremap <Leader>ym2k :call GetMultipleFromAdjacentLine('k', 2, 'y')<CR>
-nnoremap <Leader>ym2l :call GetMultipleFromAdjacentLine('l', 2, 'y')<CR>
-nnoremap <Leader>mm2h :call GetMultipleFromAdjacentLine('h', 2, 'd')<CR>
-nnoremap <Leader>mm2j :call GetMultipleFromAdjacentLine('j', 2, 'd')<CR>
-nnoremap <Leader>mm2k :call GetMultipleFromAdjacentLine('k', 2, 'd')<CR>
-nnoremap <Leader>mm2l :call GetMultipleFromAdjacentLine('l', 2, 'd')<CR>
-nnoremap <Leader>yl :call GetFromAdjacentLine('l', 1, 'Y')<CR>
-nnoremap <Leader>yh :call GetFromAdjacentLine('h', 1, 'Y')<CR>
-nnoremap <Leader>yk :call GetFromAdjacentLine('k', 1, 'Y')<CR>
-nnoremap <Leader>yj :call GetFromAdjacentLine('j', 1, 'Y')<CR>
-nnoremap <Leader>ml :call GetFromAdjacentLine('l', 1, 'dd')<CR>
-nnoremap <Leader>mh :call GetFromAdjacentLine('h', 1, 'dd')<CR>
-nnoremap <Leader>mk :call GetFromAdjacentLine('k', 1, 'dd')<CR>
-nnoremap <Leader>mj :call GetFromAdjacentLine('j', 1, 'dd')<CR>
-nnoremap <Leader>ymh :call GetMultipleFromAdjacentLine('h', 1, 'y')<CR>
-nnoremap <Leader>ymj :call GetMultipleFromAdjacentLine('j', 1, 'y')<CR>
-nnoremap <Leader>ymk :call GetMultipleFromAdjacentLine('k', 1, 'y')<CR>
-nnoremap <Leader>yml :call GetMultipleFromAdjacentLine('l', 1, 'y')<CR>
-nnoremap <Leader>mmh :call GetMultipleFromAdjacentLine('h', 1, 'd')<CR>
-nnoremap <Leader>mmj :call GetMultipleFromAdjacentLine('j', 1, 'd')<CR>
-nnoremap <Leader>mmk :call GetMultipleFromAdjacentLine('k', 1, 'd')<CR>
-nnoremap <Leader>mml :call GetMultipleFromAdjacentLine('l', 1, 'd')<CR>
 " auto camel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
 nnoremap <Leader>tn :call ToggleNav()<CR>
 nnoremap <Leader>fn :call NewFocusNavBar()<CR>
-" extend screen to another split
-nnoremap <Leader>ext :call ExtendScreenDown()<CR>
 " Temp areas
-nnoremap <Leader>temp :call PlaceTempArea()<CR>
-nnoremap <Leader>temr :call RemoveTempArea()<CR>
+nnoremap <Leader>tap :call PlaceTempArea()<CR>
+nnoremap <Leader>tar :call RemoveTempArea()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
@@ -352,6 +323,60 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" delete, move, or copy a line remotely(without using the cursor)
+function! RemoteManipulate()
+    :let s:startWindow = win_getid()
+    :let s:moveCommand = 'y'
+    :let s:putCommand = 'put'
+    :execute "normal! mb"
+    :set nu nornu
+    :redraw!
+    :let s:targetString = input('Move target: ')
+    let s:testVar = match(s:targetString,'\d\?[h,j,k,l]')
+    if (match(s:targetString,'\d\?[h,j,k,l]') == 0) 
+      :noautocmd execute "normal! \<C-w>".s:targetString."\<CR>"
+      :set nu nornu
+      :redraw!
+      :let s:targetString = input('Adjacent move target: ')
+    endif
+    if (match(s:targetString,'m') > -1)
+      :let s:moveCommand = 'd'
+      :let s:targetString = split(s:targetString, 'm')[0]
+    elseif (match(s:targetString, 'd') > -1)
+      :let s:putCommand = ''
+      :let s:moveCommand = 'd'
+      :let s:targetString = split(s:targetString, 'd')[0]
+    endif
+    :execute s:targetString.''.s:moveCommand
+    :execute 'call win_gotoid('.s:startWindow.')'
+    :normal! `b
+    :redraw!
+    if (s:putCommand == 'put')
+      :let s:targetLine = input('Line to move to: ')
+      if (s:targetLine == '')
+        :let s:targetLine = line('.')
+      endif
+      :execute s:targetLine.'|'.s:putCommand
+    endif
+    :normal! `b
+    :set nu rnu
+endfunction
+" sets a new top line for the window
+function! MakeTop()
+  :let s:currentLine = line('.')
+  :let s:newTop = input('New top line: ')
+  :execute 'normal! mb'
+  :execute s:newTop
+  :let s:newTop = line('.')
+  :execute 'normal! zt'
+  if (s:currentLine > s:newTop)
+    :execute 'normal! `b'
+  endif
+endfunction
+function! SnipVarDump()
+  :execute "normal! avar_dump();\<left>"
+  :startinsert
+endfunction
 function! PeekScriptCalls()
   :vsp +e $MYVIMRC
   :normal! gg
@@ -552,52 +577,6 @@ function! ResizeWindow()
     :redraw!
   endwhile
 endfunction
-" move or copy files from adjacent buffers
-function! GetMultipleFromAdjacentLine(direction, distance, operation)
-  if(a:operation == 'd')
-    :let s:promptOperation = "deletion"
-  else
-    :let s:promptOperation = "yanking"
-  endif
-  :let s:returnWindow = win_getid()
-  :execute "normal! ".a:distance."\<C-w>".a:direction
-  :set nu nornu
-  :redraw!
-  :let s:yankLineStart = input('Line to start '.s:promptOperation.' :')
-  if(s:yankLineStart)
-    :let s:yankLineEnd = input('Line to stop '.s:promptOperation.' :')
-    if(s:yankLineEnd)
-      :execute "normal! ".s:yankLineStart."G".a:operation.s:yankLineEnd."G"
-      :call win_gotoid(s:returnWindow)
-      :put
-      :redraw!
-    else
-      :call win_gotoid(s:returnWindow)
-    endif
-  else
-    :call win_gotoid(s:returnWindow)
-  endif
-endfunction
-function! GetFromAdjacentLine(direction, distance, operation)
-  :let s:yankLine = -1
-  if(a:operation == 'dd')
-    :let s:promptOperation = "delete"
-  else
-    :let s:promptOperation = "yank"
-  endif
-  :let s:returnWindow = win_getid()
-  :execute "normal! ".a:distance."\<C-w>".a:direction
-  :set nu nornu
-  :redraw!
-  :let s:yankLine = input('Line to '.s:promptOperation.' :')
-  if(s:yankLine)
-    :execute "normal! ".s:yankLine."G".a:operation
-    :call win_gotoid(s:returnWindow)
-    :put
-  else
-    :call win_gotoid(s:returnWindow)
-  :endif
-endfunction
 " auto cammel case
 function! CammelCaseVisual()
   :let s:numOfWordsToCammel = input('number of words to cammel: ')
@@ -657,14 +636,38 @@ function! NewFocusNavBar()
     :echo "No active nav bar"
   endif
 endfunction
-nnoremap<Leader>cext :call CloseScreenExtend()<CR>
-function! ExtendScreenDown()
+" extend screen to another split
+nnoremap<Leader>exd :call ExtendScreenDown()<CR>
+nnoremap<Leader>exc :call CloseScreenExtend()<CR>
+function! ExtendScreenUp()
   :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
   :execute "set splitright" 
-  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlepane"
+  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp"
   :execute "set wfw"
   :execute "normal! \<C-w>h"
   :execute "set splitright!"
+  :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
+endfunction!
+function! ExtendScreenDown()
+  if (!exists('extendedDownList'))
+    :let b:extendedDownList = [] 
+  endif
+  :let s:startWindow = win_getid()
+  :normal! mb
+  :execute "set splitright" 
+  :vsp
+  :normal! jzt
+  :let s:
+  :execute "set nosplitright" 
+  :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown
+  :set wfw
+  :execute "normal! \<C-w>h"
+  " :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  " :execute "set splitright" 
+  " :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown"
+  " :execute "normal! \<C-w>h"
+  " :execute "set splitright!"
+  " :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
 endfunction!
 function! CloseScreenExtend()
   :execute "normal! \<C-w>l\<C-w>q"
@@ -695,50 +698,6 @@ function! ToggleZoom()
     :+tabclose
     let b:zoomedStatus = "false"
   endif
-endfunction
-" delete a line below or above and paste below
-function! DeleteAboveAndPaste()
-    :execute ":let g:yankLine = input('Line below to move: ')"
-    :execute "normal! ".g:yankLine."kdd".g:yankLine."jp"
-endfunction
-" delete multipl lines below or above and paste below
-function! DeleteMultipleAboveAndPaste()
-    :execute ":let g:yankLineStart = input('Line below to start moving: ')"
-    :execute ":let g:yankLineEnd = input('Line below to end moving: ')"
-    :execute "normal! :-".g:yankLineStart.",-".g:yankLineEnd."d\<CR>\<C-o>p" 
-endfunction
-" delete a line below or above and paste below
-function! DeleteBelowAndPaste()
-    :execute ":let g:yankLine = input('Line below to move: ')"
-    :execute "normal! ".g:yankLine."jdd".g:yankLine."kp"
-endfunction
-" delte multiple lines below or above and paste below
-function! DeleteMultipleBelowAndPaste()
-    :execute ":let g:yankLineStart = input('Line below to start moving: ')"
-    :execute ":let g:yankLineEnd = input('Line below to end moving: ')"
-    :execute "normal! :+".g:yankLineStart.",+".g:yankLineEnd."d\<CR>\<C-o>p" 
-endfunction
-" yank a line below or above and paste below
-function! YankAboveAndPaste()
-    :execute ":let g:yankLine = input('Line below to yank: ')"
-    :execute "-".g:yankLine."y|normal!p"
-endfunction
-" yank multipl lines below or above and paste below
-function! YankMultipleAboveAndPaste()
-    :execute ":let g:yankLineStart = input('Line below to start yanking: ')"
-    :execute ":let g:yankLineEnd = input('Line below to end yanking: ')"
-    :execute "-".g:yankLineStart.",-".g:yankLineEnd."y|normal!p"
-endfunction
-" yank a line below or above and paste below
-function! YankBelowAndPaste()
-    :execute ":let g:yankLine = input('Line below to yank: ')"
-    :execute "+".g:yankLine."y|normal!p"
-endfunction
-" yank multipl lines below or above and paste below
-function! YankMultipleBelowAndPaste()
-    :execute ":let g:yankLineStart = input('Line below to start yanking: ')"
-    :execute ":let g:yankLineEnd = input('Line below to end yanking: ')"
-    :execute "+".g:yankLineStart.",+".g:yankLineEnd."y|normal!p"
 endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 function! GoToFirstThirdOfLine()
@@ -914,7 +873,7 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"--- quick view for script/Plugin calls
+"---modify remote move lines to allow lines to be moved other places than cursor
 "--- easy renaming tabs to group thoughts and work spaces
 "---overload enter on nav bar to open in previous window
 "---merge tabs
@@ -922,32 +881,54 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "---document links
 "---NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+" function RemoteMoveLine(a:remoteZone)
+"   :set nu nornu
+"   if(a:remoteZone == "currentBuffer")
+"     :execute ":let s:remoteWindow = input('Which window to pull from: ')"
+"     :noautocmd execute "normal! \<C-w>".a:adjacentWindow."\<CR>"
+"   endif
+"   :set nu nornu
+"   :execute ":let s:startMove = input('Line below to move: ')"
+"   :execute ":let s:startMove = input('Line below to move: ')"
+"   :s:startMove.",".s:endMoves." ".s:remoteCommand."|".s:pasteLines." ".s:pasteCommand
+" endfunction
+nnoremap <Leader>tes :call Test()<CR>
+function! Test()
+  :let s:inputVar = input('input :')
+  if (match(s:inputVar, '\d[h,j,k,l]') == 0) 
+    echo 'TRUE!!!!'
+  elseif
+    echo 'not true'
+  endif
+endfunction
+
+
 " augroup insertmode
 " au!
 " autocmd InsertEnter * silent! set cursorcolumn
 " autocmd InsertLeave * silent! set nocursorcolumn
 " augroup END
-func! HandlePrint(channel, msg)
-  let @j = a:msg
-  execute ':normal! "jpo'
-  " echo 'Received: ' . a:msg
-endfunc
+" func! HandlePrint(channel, msg)
+"   let @j = a:msg
+"   execute ':normal! "jpo'
+"   " echo 'Received: ' . a:msg
+" endfunc
 
-func! HandleClear(channel, msg)
-  echo 'Received: ' . a:msg
-endfunc
+" func! HandleClear(channel, msg)
+"   echo 'Received: ' . a:msg
+" endfunc
 
-nnoremap <Leader>dn :call DebugerNext()<CR>
-function! DebugerNext()
- call ch_sendraw(g:channel, "n\n", {'callback' : 'HandleClear'})
-endfunction
+" nnoremap <Leader>dn :call DebugerNext()<CR>
+" function! DebugerNext()
+"  call ch_sendraw(g:channel, "n\n", {'callback' : 'HandleClear'})
+" endfunction
 
 
-nnoremap <Leader>dr :call DebugerRefresh()<CR>
-function! DebugerRefresh()
- normal! ggdG  
- call ch_sendraw(g:channel, "list(99)\n", {"callback": "HandlePrint"}) 
-endfunction
+" nnoremap <Leader>dr :call DebugerRefresh()<CR>
+" function! DebugerRefresh()
+"  normal! ggdG  
+"  call ch_sendraw(g:channel, "list(99)\n", {"callback": "HandlePrint"}) 
+" endfunction
 " func! Handler(channel)
 "   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
 "     echomsg ch_read(a:channel)
