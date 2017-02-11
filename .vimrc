@@ -268,7 +268,7 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 "remote manipulation of lines
-nnoremap <Leader>rm :call RemoteManipulate()<CR>
+nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
 " snippet for var dump
 nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
@@ -294,11 +294,9 @@ nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
 nnoremap <Leader>tn :call ToggleNav()<CR>
 nnoremap <Leader>fn :call NewFocusNavBar()<CR>
-" extend screen to another split
-nnoremap <Leader>ext :call ExtendScreenDown()<CR>
 " Temp areas
-nnoremap <Leader>temp :call PlaceTempArea()<CR>
-nnoremap <Leader>temr :call RemoveTempArea()<CR>
+nnoremap <Leader>tap :call PlaceTempArea()<CR>
+nnoremap <Leader>tar :call RemoveTempArea()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
@@ -333,7 +331,6 @@ function! RemoteManipulate()
     :redraw!
     :let s:targetString = input('Move target: ')
     let s:testVar = match(s:targetString,'\d\?[h,j,k,l]')
-    echo s:testVar." testVar"
     if (match(s:targetString,'\d\?[h,j,k,l]') == 0) 
       :noautocmd execute "normal! \<C-w>".s:targetString."\<CR>"
       :set nu nornu
@@ -348,10 +345,8 @@ function! RemoteManipulate()
       :let s:moveCommand = 'd'
       :let s:targetString = split(s:targetString, 'd')[0]
     endif
-    :echo s:targetString
     :execute s:targetString.''.s:moveCommand
     :execute 'call win_gotoid('.s:startWindow.')'
-    :echo s:targetString.''.s:moveCommand
     :normal! `b
     :redraw!
     if (s:putCommand == 'put')
@@ -360,11 +355,11 @@ function! RemoteManipulate()
         :let s:targetLine = line('.')
       endif
       :execute s:targetLine.'|'.s:putCommand
-      :echom s:targetLine
     endif
     :normal! `b
     :set nu rnu
 endfunction
+" sets a new top line for the window
 function! MakeTop()
   :let s:currentLine = line('.')
   :let s:newTop = input('New top line: ')
@@ -639,15 +634,38 @@ function! NewFocusNavBar()
     :echo "No active nav bar"
   endif
 endfunction
-nnoremap<Leader>cext :call CloseScreenExtend()<CR>
-function! ExtendScreenDown()
+" extend screen to another split
+nnoremap<Leader>exd :call ExtendScreenDown()<CR>
+nnoremap<Leader>exc :call CloseScreenExtend()<CR>
+function! ExtendScreenUp()
   :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
   :execute "set splitright" 
-  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlepane"
+  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp"
   :execute "set wfw"
   :execute "normal! \<C-w>h"
   :execute "set splitright!"
   :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
+endfunction!
+function! ExtendScreenDown()
+  if (!exists('extendedDownList'))
+    :let b:extendedDownList = [] 
+  endif
+  :let s:startWindow = win_getid()
+  :normal! mb
+  :execute "set splitright" 
+  :vsp
+  :normal! jzt
+  :let s:
+  :execute "set nosplitright" 
+  :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown
+  :set wfw
+  :execute "normal! \<C-w>h"
+  " :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
+  " :execute "set splitright" 
+  " :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown"
+  " :execute "normal! \<C-w>h"
+  " :execute "set splitright!"
+  " :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
 endfunction!
 function! CloseScreenExtend()
   :execute "normal! \<C-w>l\<C-w>q"
