@@ -268,7 +268,8 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 "remote manipulation of lines
-nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
+" noremap <Leader>rm :silent call RemoteManipulate()<CR>
+nnoremap <Leader>rm :call RemoteManipulate()<CR>
 " snippet for var dump
 nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
@@ -325,6 +326,7 @@ nnoremap gl :call GoToSecondThirdOfLine()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
 " delete, move, or copy a line remotely(without using the cursor)
 function! RemoteManipulate()
+    :echom 'test123456'
     :let s:startWindow = win_getid()
     :let s:moveCommand = 'y'
     :let s:putCommand = 'put'
@@ -332,8 +334,8 @@ function! RemoteManipulate()
     :set nu nornu
     :redraw!
     :let s:targetString = input('Move target: ')
-    let s:testVar = match(s:targetString,'\d\?[h,j,k,l]')
-    if (match(s:targetString,'\d\?[h,j,k,l]') == 0) 
+    let s:testVar = match(s:targetString,'\d\?[hjkl]')
+    if (match(s:targetString,'\d\?[hjkl]') == 0) 
       :noautocmd execute "normal! \<C-w>".s:targetString."\<CR>"
       :set nu nornu
       :redraw!
@@ -377,6 +379,7 @@ function! SnipVarDump()
   :execute "normal! avar_dump();\<left>"
   :startinsert
 endfunction
+" quick view of script available to call
 function! PeekScriptCalls()
   :vsp +e $MYVIMRC
   :normal! gg
@@ -818,7 +821,6 @@ function! SearchContextually(searchType)
     if a:searchType == "local"
       :lopen
     elseif a:searchType == "global"
-      :echom a:searchType
       :copen
     endif
     :resize 30
