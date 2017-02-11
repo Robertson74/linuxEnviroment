@@ -269,7 +269,7 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 "remote manipulation of lines
 " noremap <Leader>rm :silent call RemoteManipulate()<CR>
-nnoremap <Leader>rm :call RemoteManipulate()<CR>
+nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
 " snippet for var dump
 nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
