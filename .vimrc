@@ -635,41 +635,68 @@ function! NewFocusNavBar()
   endif
 endfunction
 " extend screen to another split
-nnoremap<Leader>exd :call ExtendScreenDown()<CR>
-nnoremap<Leader>exc :call CloseScreenExtend()<CR>
+nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
+nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 function! ExtendScreenUp()
-  :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
-  :execute "set splitright" 
-  :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp"
-  :execute "set wfw"
-  :execute "normal! \<C-w>h"
-  :execute "set splitright!"
-  :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
 endfunction!
 function! ExtendScreenDown()
-  if (!exists('extendedDownList'))
+  if (!exists('b:extendedDownList'))
     :let b:extendedDownList = [] 
   endif
+  if(!exists('b:extendedDownWindow'))
+    let b:extendedDownWindow = win_getid()
+  endif
+  if (!exists('b:extendedViewsDown'))
+    :let b:extendedViewsDown = [] 
+    :call add(b:extendedViewsDown, win_getid())
+  endif
   :let s:startWindow = win_getid()
-  :normal! mb
+  for window in b:extendedViewsDown
+    :call win_gotoid(window)
+    :set noscrollbind
+  endfor
+  :call win_gotoid(b:extendedDownWindow)
   :execute "set splitright" 
-  :vsp
-  :normal! jzt
-  :let s:
+  :noautocmd vsp
   :execute "set nosplitright" 
   :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown
   :set wfw
-  :execute "normal! \<C-w>h"
-  " :execute "normal! \<C-W>v\<C-w>lLzt:set scrollbind\<CR>\<C-w>h:set scrollbind\<CR>"
-  " :execute "set splitright" 
-  " :execute "2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown"
-  " :execute "normal! \<C-w>h"
-  " :execute "set splitright!"
-  " :noautocmd execute "normal! \<C-w>l\<C-w>l:set nu\<CR>\<C-w>h\<C-w>h"
+  :let s:divider = win_getid()
+  :let b:baseWindow = s:startWindow
+  :noautocmd execute "normal! \<C-w>l"
+  :let b:baseWindow = s:startWindow
+  :let s:newExtendedDownWindow = win_getid()
+  :normal! ztLzt
+  :call win_gotoid(s:startWindow)
+  :call add(b:extendedDownList, s:divider)
+  :call add(b:extendedDownList, s:newExtendedDownWindow)
+  :call add(b:extendedViewsDown, s:newExtendedDownWindow)
+  :let b:extendedDownWindow = s:newExtendedDownWindow
+  for window in b:extendedViewsDown
+    :call win_gotoid(window)
+    :set scrollbind
+  endfor
+  :call win_gotoid(s:startWindow)
 endfunction!
 function! CloseScreenExtend()
-  :execute "normal! \<C-w>l\<C-w>q"
-  :execute "normal! \<C-w>l:set noscrollbind\<CR>\<C-w>q:set noscrollbind\<CR>"
+  if (exists('b:baseWindow'))
+    :call win_gotoid(b:baseWindow)
+  endif
+  if (!exists('b:extendedDownList'))
+    :let b:extendedDownList = [] 
+  endif
+  :let s:startWindow = win_getid()
+  for window in b:extendedDownList
+    :call win_gotoid(window)
+    if(window == win_getid())
+      :close
+    endif
+  endfor
+  :call win_gotoid(s:startWindow)
+  :set noscrollbind
+  :let b:extendedDownWindow = win_getid()
+  :let b:extendedDownList = [] 
+  :let b:extendedViewsDown = [win_getid()] 
 endfunction!
 function! RemoveTempArea()
   :normal! mb
