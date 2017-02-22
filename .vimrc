@@ -662,14 +662,14 @@ for window in b:extendedViews
   :set noscrollbind
 endfor
 :call win_gotoid(b:extendedUpWindow)
-:noautocmd vsp
+:vsp
 :execute "set splitright" 
 :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp
 :execute "set nosplitright" 
 :set wfw
 :let s:divider = win_getid()
 :let b:baseWindow = s:startWindow
-:noautocmd execute "normal! \<C-w>h"
+:execute "normal! \<C-w>h"
 :let b:baseWindow = s:startWindow
 :let s:newExtendedUpWindow = win_getid()
 :normal! Hzb
@@ -686,31 +686,32 @@ endfor
 :call win_gotoid(s:startWindow)
 :set nowrap
 endfunction!
+""""""" Extending screen down
 function! ExtendScreenDown()
-if (!exists('b:extendedDownList'))
-  :let b:extendedDownList = [] 
-endif
-if(!exists('b:extendedDownWindow'))
-  let b:extendedDownWindow = win_getid()
-endif
-if (!exists('b:extendedViews'))
-  :let b:extendedViews= [] 
-  :call add(b:extendedViews, win_getid())
-endif
-:let s:startWindow = win_getid()
-for window in b:extendedViews
-  :call win_gotoid(window)
-  :set noscrollbind
-endfor
-:call win_gotoid(b:extendedDownWindow)
-:execute "set splitright" 
-:noautocmd vsp
-:execute "set nosplitright" 
-:2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown
-:set wfw
+  if (!exists('b:extendedDownList'))
+    :let b:extendedDownList = [] 
+  endif
+  if(!exists('b:extendedDownWindow'))
+    let b:extendedDownWindow = win_getid()
+  endif
+  if (!exists('b:extendedViews'))
+    :let b:extendedViews= [] 
+    :call add(b:extendedViews, win_getid())
+  endif
+  :let s:startWindow = win_getid()
+  for window in b:extendedViews
+    :call win_gotoid(window)
+    :set noscrollbind
+  endfor
+  :call win_gotoid(b:extendedDownWindow)
+  :execute "set splitright" 
+  :vsp
+  :execute "set nosplitright" 
+  :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneDown
+  :set wfw
   :let s:divider = win_getid()
   :let b:baseWindow = s:startWindow
-  :noautocmd execute "normal! \<C-w>l"
+  :execute "normal! \<C-w>l"
   :let b:baseWindow = s:startWindow
   :let s:newExtendedDownWindow = win_getid()
   :normal! Lzt
@@ -727,6 +728,7 @@ endfor
   :call win_gotoid(s:startWindow)
   :set nowrap
 endfunction!
+""""""" close screen extend
 function! CloseScreenExtend()
   if (exists('b:baseWindow'))
     :call win_gotoid(b:baseWindow)
@@ -735,7 +737,7 @@ function! CloseScreenExtend()
     :let b:extendedDownList = [] 
   endif
   if (!exists('b:extendedUpList'))
-    :let b:extendedDownList = [] 
+    :let b:extendedUpList = [] 
   endif
   :let s:startWindow = win_getid()
   for window in b:extendedDownList
@@ -757,6 +759,7 @@ function! CloseScreenExtend()
   :let b:extendedDownList = [] 
   :let b:extendedViews = [win_getid()] 
 endfunction!
+""""""" Temporary areas
 function! RemoveTempArea()
   :normal! mb
   g/###TEMP AREA/execute "normal! d/END TEMP */\<CR>dd"
@@ -956,6 +959,8 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"--- add swap to remote manipulation
+"--- add yank to remote manipualtion
 "--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once) 
 "--- easy renaming tabs to group thoughts and work spaces
 "---overload enter on nav bar to open in previous window
