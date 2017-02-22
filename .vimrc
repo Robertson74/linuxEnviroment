@@ -282,9 +282,9 @@ nnoremap <Leader>psc :call PeekScriptCalls()<CR>
 nnoremap <Leader>rli :call RepetitiveLines()<CR>
 nnoremap <Leader>rst :call RepetitiveString()<CR>
 nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
-nnoremap <Leader>mw :call MarkWindow()<CR>
-nnoremap <Leader>mr :call UnMarkWindow()<CR>
-nnoremap <Leader>mmw :call MoveWindowToTab()<CR>
+nnoremap <Leader>mwp :call MarkWindow()<CR>
+nnoremap <Leader>mwr :call UnMarkWindow()<CR>
+nnoremap <Leader>mwm :call MoveWindowToTab()<CR>
 nnoremap Q :silent call MoveToPreviousCap()<CR>
 nnoremap <BAR> :silent call MoveToNextCap()<CR>
 nnoremap dic :call DeleteInsideCaps()<CR>
@@ -304,8 +304,8 @@ nnoremap <Leader>tar :call RemoveTempArea()<CR>
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
 " temporary line highlights
-nnoremap <Leader>st :call PlaceTempSign()<CR>
-nnoremap <Leader>sr :call RemoveTempSign()<CR>
+nnoremap <Leader>tsp :call PlaceTempSign()<CR>
+nnoremap <Leader>tsr :call RemoveTempSign()<CR>
 " Zooming
 nnoremap <Leader>z :silent! call ToggleZoom()<CR>
 " Turn on off numbers
