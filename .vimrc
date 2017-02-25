@@ -344,6 +344,9 @@ function! RemoteManipulate()
     :redraw!
     :let s:targetString = input('Adjacent move target: ')
   endif
+  if (match(s:targetString, '-') > -1)
+    :let s:targetString = substitute(s:targetString, '-', ',', '')
+  endif
   if (match(s:targetString,'m') > -1)
     :let s:moveCommand = 'd'
     :let s:targetString = split(s:targetString, 'm')[0]
