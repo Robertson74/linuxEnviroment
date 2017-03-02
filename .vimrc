@@ -993,14 +993,204 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once) 
+"--- curl integration component
+"--- mysql integration component
+"--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once)
 "--- easy renaming tabs to group thoughts and work spaces
-"---overload enter on nav bar to open in previous window
-"---merge tabs
-"---snippets
-"---document links
-"---NextCapitalWord improve
+"--- overload enter on nav bar to open in previous window
+"--- merge tabs
+"--- snippets
+"--- document links
+"--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+:let g:visqlHost = '127.0.0.1'
+:let g:visqlUser = 'root'
+:let g:visqlPass = 'devdb'
+:let g:visqlDB = ''
+:let g:visqlTableName = ''
+nnoremap <Leader>tes :call VIsqlLogin()<CR>
+function! VIsqlLogin()
+  :setlocal nowrap
+  :let s:visqlHost = input('Mysql host: ', g:visqlHost)
+  :let s:visqlUser = input('Mysql user: ', g:visqlUser)
+  :let s:visqlPass = input('Mysql password: ', g:visqlPass)
+  if (s:visqlHost == '' || s:visqlUser == '' || s:visqlPass == '')
+    return
+  else
+    :tabnew
+    :let g:visqlHost = s:visqlHost
+    :let g:visqlUser = s:visqlUser
+    :let g:visqlPass = s:visqlPass
+    :let w:visqlHost = s:visqlHost
+    :let w:visqlUser = s:visqlUser
+    :let w:visqlPass = s:visqlPass
+  endif
+  :silent call VIsqlDatabasesView()
+endfunction
+
+function! BindVIsqlCloseViewer()
+  :nnoremap <buffer> x :call VIsqlClose()<CR>
+endfunction
+
+function! VIsqlDatabasesView()
+  :let w:VIsqlHelp = 'false'
+  :set modifiable
+  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  -e 'show databases;'"
+  :execute "normal! ggISelect database:\<CR>---------------\<CR>\<ESC>dddd"
+  if (g:visqlDB != '')
+    :execute "normal! /".g:visqlDB."\<CR>"
+  endif
+  :nnoremap <buffer> <CR> :silent call VIsqlTablesView(expand('<cWORD>'))<CR>
+  :silent call BindVIsqlCloseViewer()
+  :set nomodifiable
+endfunction
+
+function! VIsqlTablesView(visqlDatabase)
+  :let g:visqlDB = a:visqlDatabase
+  :let w:visqlDatabase = a:visqlDatabase
+  :set modifiable
+  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase."  -e 'show tables;'"
+  :execute "normal! ggddYpVr-"
+  if (g:visqlTableName != '')
+    :execute "normal! /".g:visqlTableName."\<CR>"
+  endif
+  :nnoremap <buffer> <CR> :silent call VIsqlTableDataView(expand('<cWORD>'))<CR>
+  :nnoremap <buffer> - :silent call VIsqlDatabasesView()<CR>
+  :setlocal nowrap
+  :set nomodifiable
+endfunction
+
+function! VIsqlEditData(editType)
+  :set modifiable
+  :let s:startingCursorPos = getpos('.')
+  if (expand('<cWORD>') == '|')
+    :normal! w
+    :let s:startingCursorPos = getpos('.')
+  endif
+  " yank the existing data into variable
+  if (a:editType == 'change')
+    :execute "normal! F|wyt|"
+    :let s:existingData = split(@0, '\s.*$')[0]
+  endif
+  :normal! ^w
+  :let s:recordId = expand('<cWORD>')
+  :normal! 3Gw
+  :let s:primaryKeyName = expand('<cWORD>')
+  :call setpos('.', [0,3,s:startingCursorPos[2],0])
+  :normal! F|w
+  :let s:columnName = expand('<cWORD>')
+  if (a:editType == 'change')
+    :let s:newValue = input('New value for record "'.s:recordId.'" column "'.s:columnName.'": ', s:existingData)
+  else
+    :let s:newValue = input('New value for record "'.s:recordId.'" column "'.s:columnName.'": ')
+  endif
+  if (s:newValue == '')
+    :call setpos('.', s:startingCursorPos)
+    return
+  endif
+  :let s:updateResult = system("! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'update ".w:visqlTableName." set ".s:columnName."=\"".s:newValue."\" where ".s:primaryKeyName."=\"".s:recordId."\";'")
+  if (match(s:updateResult, 'ERROR') > -1)
+    :execute "normal! :%d\<CR>IError updating record:\<CR>\<ESC>:put=s:updateResult\<CR>oPress enter to continue..."
+  else
+    :execute "normal! :%d\<CR>IUpdate Successful! Press enter to coninute..."
+  endif
+  :redraw!
+  :call input('')
+  :call VIsqlRefreshTableDataView()
+  :call setpos('.', s:startingCursorPos)
+  :set nomodifiable
+  :normal! f|vF|
+endfunction
+
+function! VIsqlClose()
+  if (w:VIsqlHelp == 'true')
+    :execute "normal! \<C-W>j"
+    :bd!
+  endif
+  :bd!
+endfunction!
+
+function! VIsqlSetTableDataBinds()
+  :nnoremap <buffer> - :silent call VIsqlTablesView(w:visqlDatabase)<CR>
+  :vnoremap <buffer> - v:silent call VIsqlTablesView(w:visqlDatabase)<CR>
+  :nnoremap <buffer> q :silent call VIsqlWriteTableDataHelp()<CR>
+  :nnoremap <buffer> t :silent call VIsqlDescribeTable()<CR>
+  :nnoremap <buffer> <CR> :silent call VIsqlEditData('new')<CR>
+  :vnoremap <buffer> <CR> v:silent call VIsqlEditData('new')<CR>
+  :nnoremap <buffer> e :silent call VIsqlEditData('change')<CR>
+  :vnoremap <buffer> e v:silent call VIsqlEditData('change')<CR>
+  :nnoremap <buffer> r :silent call VIsqlRefreshTableDataView()<CR>
+  :nnoremap <buffer> <right> :normal! f\|<CR>vf\|o
+  :vnoremap <buffer> <right> f\|f\|o
+  :nnoremap <buffer> <left> :normal! F\|F\|<CR>vf\|o
+  :vnoremap <buffer> <left> F\|oF\|o
+  :nnoremap <buffer> <up> :normal! kf\|vF\|<CR>
+  :vnoremap <buffer> <up> koko
+  :nnoremap <buffer> <down> :normal! jf\|vF\|<CR>
+  :vnoremap <buffer> <down> jojo
+  :vnoremap <buffer> x :call VIsqlClose()<CR>
+endfunction
+
+function! VIsqlTableDataView(visqlTableName)
+  :let g:visqlTableName = a:visqlTableName
+  :let w:visqlTableName = a:visqlTableName
+  :set modifiable
+  :call VIsqlRefreshTableDataView()
+  :normal! 5G
+  :call VIsqlSetTableDataBinds()
+  :setlocal nowrap
+  :set nomodifiable
+endfunction
+
+function! VIsqlDescribeTable()
+  :set modifiable
+  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'describe ".w:visqlTableName.";'"
+  :execute "normal! ggSTable Description for ".w:visqlTableName
+  :nnoremap <buffer> - :silent call VIsqlTablesView(w:visqlDatabase)<CR>
+  :nnoremap <buffer> t :silent call VIsqlTableDataView(w:visqlTableName)<CR>
+  :set nomodifiable
+endfunction
+
+function! VIsqlRefreshTableDataView()
+  :set modifiable
+  :let s:startPos = getpos('.')
+  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'select * from ".w:visqlTableName.";'"
+  :execute "normal! ggITable view for: ".w:visqlTableName."\<ESC>"
+  :call setpos('.', s:startPos)
+  :set nomodifiable
+endfunction
+
+function! VIsqlWriteTableDataHelp()
+  if (w:VIsqlHelp == 'false')
+    :set splitbelow
+    :execute "normal! \<C-W>n"
+    :execute "normal! \<C-W>j"
+    :set modifiable
+    :%d
+    :setlocal nocursorline
+    :execute "normal! I Key     |   Description\<CR>"
+    :execute "normal! I -----------------------\<CR>"
+    :execute "normal! I -       |   Go back to tables view\<CR>"
+    :execute "normal! I Enter   |   Edit record with new data (not implemented)\<CR>"
+    :execute "normal! I e       |   Edit record with changed data (not implemented)\<CR>"
+    :execute "normal! I q       |   Toggle help\<CR>"
+    :execute "normal! I n       |   Next record\<CR>"
+    :execute "normal! I p       |   Previous Record\<CR>"
+    :execute "normal! I r       |   Refresh Table (not implemented)\<CR>"
+    :execute "normal! I t       |   Show table description/structure\<CR>"
+    :execute "normal! I x       |   Quit"
+    :normal gg
+    :resize 11
+    :execute "normal! \<C-W>k"
+    :let w:VIsqlHelp = 'true'
+    :set nomodifiable
+    :set nosplitbelow
+  else
+    :execute "normal! \<C-W>j"
+    :execute ":q!"
+    :let w:VIsqlHelp = 'false'
+  end
+endfunction
 " function RemoteMoveLine(a:remoteZone)
 "   :set nu nornu
 "   if(a:remoteZone == "currentBuffer")
