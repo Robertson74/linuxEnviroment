@@ -269,8 +269,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+"VI SQL
+nnoremap <Leader>dbs :call VIsqlLogin()<CR>
 "remote manipulation of lines
-" noremap <Leader>rm :silent call RemoteManipulate()<CR>
 nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
 " snippet for var dump
 nnoremap <Leader>svd :call SnipVarDump()<CR>
@@ -992,23 +993,12 @@ endfunction
 
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"--- curl integration component
-"--- mysql integration component
-"--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once)
-"--- easy renaming tabs to group thoughts and work spaces
-"--- overload enter on nav bar to open in previous window
-"--- merge tabs
-"--- snippets
-"--- document links
-"--- NextCapitalWord improve
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+""" VI SQL
 :let g:visqlHost = '127.0.0.1'
 :let g:visqlUser = 'root'
 :let g:visqlPass = 'devdb'
 :let g:visqlDB = ''
 :let g:visqlTableName = ''
-nnoremap <Leader>dbs :call VIsqlLogin()<CR>
 function! VIsqlLogin()
   :setlocal nowrap
   :let s:visqlHost = input('Mysql host: ', g:visqlHost)
@@ -1078,7 +1068,7 @@ function! VIsqlEditData(editType)
   :set modifiable
   :let s:startingCursorPos = getpos('.')
   if (expand('<cWORD>') == '|')
-    :normal! w
+    :normal! l
     :let s:startingCursorPos = getpos('.')
   endif
   " yank the existing data into variable
@@ -1182,6 +1172,7 @@ function! VIsqlSetTableDataBinds()
   :nnoremap <buffer> e :silent call VIsqlEditData('change')<CR>
   :vnoremap <buffer> e v:silent call VIsqlEditData('change')<CR>
   :nnoremap <buffer> r :silent call VIsqlRefreshTableDataView()<CR>
+  :vnoremap <buffer> r v:silent call VIsqlRefreshTableDataView()<CR>
   :nnoremap <buffer> <right> :normal! f\|<CR>vf\|o
   :vnoremap <buffer> <right> f\|f\|o
   :nnoremap <buffer> <left> :normal! F\|F\|<CR>vf\|o
@@ -1193,11 +1184,14 @@ function! VIsqlSetTableDataBinds()
   :vnoremap <buffer> x :call VIsqlClose()<CR>
   :nnoremap <buffer> p :call VIsqlPreviousTableView()<CR>
   :nnoremap <buffer> q :call VIsqlCustomQuery()<CR>
+  :nnoremap <buffer> s :call VIsqlTableDataViewSorted()<CR>
+  :vnoremap <buffer> s v:call VIsqlTableDataViewSorted()<CR>
 endfunction
 
 function! VIsqlTableDataView(visqlTableName)
   :let g:visqlTableName = a:visqlTableName
   :let w:visqlTableName = a:visqlTableName
+  :let w:visqlSortOrder = 'none'
   :set modifiable
   :call VIsqlRefreshTableDataView()
   :normal! 5G
@@ -1222,6 +1216,7 @@ function! VIsqlRefreshTableDataView()
   :execute "normal! ggITable view for: ".w:visqlTableName."\<ESC>"
   :call BindVIsqlCloseViewer()
   :call setpos('.', s:startPos)
+  :let w:visqlSortOrder = 'none'
   :set nomodifiable
 endfunction
 
@@ -1256,6 +1251,41 @@ function! VIsqlWriteTableDataHelp()
     :let w:VIsqlHelp = 'false'
   end
 endfunction
+
+function! VIsqlTableDataViewSorted()
+  :set modifiable
+  if (w:visqlSortOrder == "DESC")
+    :let w:visqlSortOrder = "ASC"
+  else
+    :let w:visqlSortOrder = "DESC"
+  endif
+  :let s:headerCol = getpos('.')[2]
+  :execute "normal! gg/+\<CR>j"
+  :let s:headerLine = line('.')
+  :call setpos('.', [0,s:headerLine,s:headerCol,0])
+  if (expand('<cword>') == '|')
+    :normal! w
+  else
+    :normal! F|w
+  endif
+  :let w:visqlSortColumn = expand('<cWORD>')
+  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'select * from ".w:visqlTableName." order by ".w:visqlSortColumn." ".w:visqlSortOrder.";'"
+  :execute "normal! ggITable view for: ".w:visqlTableName." sorted by ".w:visqlSortColumn." ".w:visqlSortOrder."\<ESC>"
+  :call setpos('.', [0,s:headerLine,s:headerCol,0])
+  :normal! f|vF|
+  :set nomodifiable
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"--- curl integration component
+"--- mysql integration component
+"--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once)
+"--- easy renaming tabs to group thoughts and work spaces
+"--- overload enter on nav bar to open in previous window
+"--- merge tabs
+"--- snippets
+"--- document links
+"--- NextCapitalWord improve
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 " function RemoteMoveLine(a:remoteZone)
 "   :set nu nornu
 "   if(a:remoteZone == "currentBuffer")
