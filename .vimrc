@@ -1008,7 +1008,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 :let g:visqlPass = 'devdb'
 :let g:visqlDB = ''
 :let g:visqlTableName = ''
-nnoremap <Leader>tes :call VIsqlLogin()<CR>
+nnoremap <Leader>dbs :call VIsqlLogin()<CR>
 function! VIsqlLogin()
   :setlocal nowrap
   :let s:visqlHost = input('Mysql host: ', g:visqlHost)
@@ -1024,6 +1024,7 @@ function! VIsqlLogin()
     :let w:visqlHost = s:visqlHost
     :let w:visqlUser = s:visqlUser
     :let w:visqlPass = s:visqlPass
+    :let w:visqlPreviousPos = -1
   endif
   :silent call VIsqlDatabasesView()
 endfunction
@@ -1035,13 +1036,26 @@ endfunction
 function! VIsqlDatabasesView()
   :let w:VIsqlHelp = 'false'
   :set modifiable
-  :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  -e 'show databases;'"
+  :%d
+  :let s:connectResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  -e 'show databases;'")
+  if (match(s:connectResult, 'ERROR') > -1)
+    :execute "normal! iError connecting, credentials or host are not correct\<CR>"
+    :put=s:connectResult
+    :execute "normal! o\<CR>Press enter to exit..."
+    :redraw!
+    :call input('')
+    :call VIsqlClose()
+    :return
+  else
+    :put=s:connectResult
+  endif
   :execute "normal! ggISelect database:\<CR>---------------\<CR>\<ESC>dddd"
   if (g:visqlDB != '')
     :execute "normal! /".g:visqlDB."\<CR>"
   endif
-  :nnoremap <buffer> <CR> :silent call VIsqlTablesView(expand('<cWORD>'))<CR>
-  :silent call BindVIsqlCloseViewer()
+  :nnoremap <buffer> <CR> :let w:visqlPreviousView='databases'<CR>:let visqlPreviousPos=getpos('.')<CR>:silent call VIsqlTablesView(expand('<cWORD>'))<CR>
+  :call BindVIsqlCloseViewer()
+  :nnoremap <buffer> p :call VIsqlPreviousTableView()<CR>
   :set nomodifiable
 endfunction
 
@@ -1054,8 +1068,8 @@ function! VIsqlTablesView(visqlDatabase)
   if (g:visqlTableName != '')
     :execute "normal! /".g:visqlTableName."\<CR>"
   endif
-  :nnoremap <buffer> <CR> :silent call VIsqlTableDataView(expand('<cWORD>'))<CR>
-  :nnoremap <buffer> - :silent call VIsqlDatabasesView()<CR>
+  :nnoremap <buffer> <CR> :let w:visqlPreviousView='tables'<CR>:let visqlPreviousPos=getpos('.')<CR>:silent call VIsqlTableDataView(expand('<cWORD>'))<CR>
+  :nnoremap <buffer> - :let w:visqlPreviousView='tables'<CR>:let visqlPreviousPos=getpos('.')<CR>:silent call VIsqlDatabasesView()<CR>
   :setlocal nowrap
   :set nomodifiable
 endfunction
@@ -1076,7 +1090,9 @@ function! VIsqlEditData(editType)
   :let s:recordId = expand('<cWORD>')
   :normal! 3Gw
   :let s:primaryKeyName = expand('<cWORD>')
-  :call setpos('.', [0,3,s:startingCursorPos[2],0])
+  :execute "normal! gg/+\<CR>j"
+  :let s:headerLine = line('.')
+  :call setpos('.', [0,s:headerLine,s:startingCursorPos[2],0])
   :normal! F|w
   :let s:columnName = expand('<cWORD>')
   if (a:editType == 'change')
@@ -1092,7 +1108,7 @@ function! VIsqlEditData(editType)
   if (match(s:updateResult, 'ERROR') > -1)
     :execute "normal! :%d\<CR>IError updating record:\<CR>\<ESC>:put=s:updateResult\<CR>oPress enter to continue..."
   else
-    :execute "normal! :%d\<CR>IUpdate Successful! Press enter to coninute..."
+    :execute "normal! :%d\<CR>IUpdate Successful! \<CR>\<CR>Press enter to coninute..."
   endif
   :redraw!
   :call input('')
@@ -1100,6 +1116,52 @@ function! VIsqlEditData(editType)
   :call setpos('.', s:startingCursorPos)
   :set nomodifiable
   :normal! f|vF|
+endfunction
+
+function! VIsqlPreviousTableView()
+  if (w:visqlPreviousView == 'tableData')
+    :call VIsqlRefreshTableDataView()
+    :call setpos('.', w:visqlPreviousPos)
+  elseif (w:visqlPreviousView == 'tables')
+    :call VIsqlTablesView(w:visqlDatabase)
+    :call setpos('.', w:visqlPreviousPos)
+  elseif (w:visqlPreviousView == 'databases')
+    :call VIsqlDatabasesView()
+    :call setpos('.', w:visqlPreviousPos)
+  else
+    echom 'No previous table to go to'
+  endif
+endfunction
+
+function! VIsqlCustomQuery()
+  let s:query = input('query to run: ')
+  if (s:query == '')
+    return
+  else
+    :let w:visqlPreviousPos = getpos('.')
+    :call VIsqlRunQuery(s:query)
+  endif
+endfunction
+
+function! VIsqlRunQuery(query)
+  :let s:cursorStart = getpos('.')
+  :let s:queryResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".a:query."'")
+  :set modifiable
+  :%d
+  if (match(s:queryResult, 'ERROR') > -1)
+    :execute "normal! iError in query...\<CR>"
+    :put=s:queryResult
+    :execute "normal! o\<CR>Press enter to exit..."
+    :redraw!
+    :call input('')
+    :call VIsqlRefreshTableDataView()
+    :call setpos('.', s:cursorStart)
+  else
+    :execute "normal! iQuery results\<CR>"
+    :put=s:queryResult
+    :normal! gg
+  endif
+  :set nomodifiable
 endfunction
 
 function! VIsqlClose()
@@ -1113,7 +1175,7 @@ endfunction!
 function! VIsqlSetTableDataBinds()
   :nnoremap <buffer> - :silent call VIsqlTablesView(w:visqlDatabase)<CR>
   :vnoremap <buffer> - v:silent call VIsqlTablesView(w:visqlDatabase)<CR>
-  :nnoremap <buffer> q :silent call VIsqlWriteTableDataHelp()<CR>
+  :nnoremap <buffer> i silent call VIsqlWriteTableDataHelp()<CR>
   :nnoremap <buffer> t :silent call VIsqlDescribeTable()<CR>
   :nnoremap <buffer> <CR> :silent call VIsqlEditData('new')<CR>
   :vnoremap <buffer> <CR> v:silent call VIsqlEditData('new')<CR>
@@ -1129,6 +1191,8 @@ function! VIsqlSetTableDataBinds()
   :nnoremap <buffer> <down> :normal! jf\|vF\|<CR>
   :vnoremap <buffer> <down> jojo
   :vnoremap <buffer> x :call VIsqlClose()<CR>
+  :nnoremap <buffer> p :call VIsqlPreviousTableView()<CR>
+  :nnoremap <buffer> q :call VIsqlCustomQuery()<CR>
 endfunction
 
 function! VIsqlTableDataView(visqlTableName)
@@ -1146,7 +1210,7 @@ function! VIsqlDescribeTable()
   :set modifiable
   :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'describe ".w:visqlTableName.";'"
   :execute "normal! ggSTable Description for ".w:visqlTableName
-  :nnoremap <buffer> - :silent call VIsqlTablesView(w:visqlDatabase)<CR>
+  :nnoremap <buffer> - :let w:visqlPreviousView='tableData'<CR>:let visqlPreviousPos=getpos('.')<CR>:silent call VIsqlTablesView(w:visqlDatabase)<CR>
   :nnoremap <buffer> t :silent call VIsqlTableDataView(w:visqlTableName)<CR>
   :set nomodifiable
 endfunction
@@ -1156,6 +1220,7 @@ function! VIsqlRefreshTableDataView()
   :let s:startPos = getpos('.')
   :execute "%d|r! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e 'select * from ".w:visqlTableName.";'"
   :execute "normal! ggITable view for: ".w:visqlTableName."\<ESC>"
+  :call BindVIsqlCloseViewer()
   :call setpos('.', s:startPos)
   :set nomodifiable
 endfunction
@@ -1170,15 +1235,15 @@ function! VIsqlWriteTableDataHelp()
     :setlocal nocursorline
     :execute "normal! I Key     |   Description\<CR>"
     :execute "normal! I -----------------------\<CR>"
-    :execute "normal! I -       |   Go back to tables view\<CR>"
-    :execute "normal! I Enter   |   Edit record with new data (not implemented)\<CR>"
-    :execute "normal! I e       |   Edit record with changed data (not implemented)\<CR>"
-    :execute "normal! I q       |   Toggle help\<CR>"
-    :execute "normal! I n       |   Next record\<CR>"
-    :execute "normal! I p       |   Previous Record\<CR>"
-    :execute "normal! I r       |   Refresh Table (not implemented)\<CR>"
-    :execute "normal! I t       |   Show table description/structure\<CR>"
-    :execute "normal! I x       |   Quit"
+    :execute "normal! I Arrow Keys   |   Move around\<CR>"
+    :execute "normal! I -            |   Go back to tables view\<CR>"
+    :execute "normal! I Enter        |   Edit record with new data\<CR>"
+    :execute "normal! I e            |   Edit record with changed data\<CR>"
+    :execute "normal! I i            |   Toggle help\<CR>"
+    :execute "normal! I r            |   Refresh Table\<CR>"
+    :execute "normal! I t            |   Show table description/structure\<CR>"
+    :execute "normal! I q            |   Custom Query"
+    :execute "normal! I x            |   Quit"
     :normal gg
     :resize 11
     :execute "normal! \<C-W>k"
