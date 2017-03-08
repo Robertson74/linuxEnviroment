@@ -9,6 +9,8 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" easy motions
+Plugin 'easymotion/vim-easymotion'
 " Better text objects
 Plugin 'wellle/targets.vim'
 "let Vundle manage Vundle, required
@@ -185,6 +187,10 @@ nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " scrap buffer
 nnoremap <Leader>jun :e ~/temp/junk<CR>
+nnoremap <Leader>jun2 :e ~/temp/junk2<CR>
+nnoremap <Leader>jun3 :e ~/temp/junk3<CR>
+nnoremap <Leader>jun4 :e ~/temp/junk4<CR>
+nnoremap <Leader>jun5 :e ~/temp/junk5<CR>
 " toggle modifiable 
 nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
@@ -231,7 +237,7 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 "turn off highlighting
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vup :!cd ~;git add .vimrc && git commit -m "updating" && git push github master;<CR>
+nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
 " update vimrc to github
@@ -1286,6 +1292,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "   :set nomodifiable
 " endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+"--- php command line based debugger
 "--- modularize vimrc
 "--- find and replace quick command
 "--- mysql integration
@@ -1310,7 +1317,8 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
 nnoremap <Leader>dbn :call NewVISqlInterface('new')<CR> 
-nnoremap <Leader>dbl :call NewVISqlInterface('last')<CR> 
+nnoremap <Leader>dbp :call NewVISqlInterface('last')<CR> 
+nnoremap <Leader>dbl :call ViSqlListSavedDBs()<CR> 
 " function RemoteMoveLine(a:remoteZone)
 "   :set nu nornu
 "   if(a:remoteZone == "currentBuffer")
