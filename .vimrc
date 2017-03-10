@@ -9,6 +9,12 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" game of life
+Plugin 'vim-scripts/vim-game-of-life'
+" tetris
+Plugin 'vim-scripts/TeTrIs.vim'
+" snake
+Plugin 'zyedidia/vim-snake'
 " easy motions
 Plugin 'easymotion/vim-easymotion'
 " Better text objects
@@ -1298,12 +1304,11 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- mysql integration
 "    todo
 "      multiple tabs
-"      delete record
-"      previous database view, so things like updating don't reset the table sort
+"      view data on a subset of columns
+"      view range of databased on column eg between id values or date ranges
 "      pagination
 "      edit table structure
 "    BUGS
-"      editing a data field with a space in it (like a datetime stamp) only pulls in a partial entry
 "      running a query with no output back (deleteing a record) will cause a blank screen, with enter attempting to edit a non existant record. It should refresh the table view
 "--- curl integration component
 "--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once)
@@ -1318,6 +1323,7 @@ source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
 nnoremap <Leader>dbn :call NewVISqlInterface('new')<CR> 
 nnoremap <Leader>dbp :call NewVISqlInterface('last')<CR> 
+nnoremap <Leader>dbtp :call NewVISqlInterface('lastTable')<CR> 
 nnoremap <Leader>dbl :call ViSqlListSavedDBs()<CR> 
 " function RemoteMoveLine(a:remoteZone)
 "   :set nu nornu
