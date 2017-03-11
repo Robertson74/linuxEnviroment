@@ -15,7 +15,12 @@ function! NewVISqlInterface(instance)
     endif
   elseif (a:instance == 'last')
     if (g:visqlHost == '' || g:visqlUser == '')
-      echom "No credentials stored"
+      :echom "No credentials stored"
+      return
+    endif
+  elseif (a:instance ==# 'lastTable')
+    if (!exists('g:visqlTable') || g:visqlTable == '')
+      :echom "No last table to retun to..."
       return
     endif
   endif
@@ -37,6 +42,15 @@ function! NewVISqlInterface(instance)
   :call ViSqlSetGlobalVariables()
   " go to the tables view
   :call ViSqlDatabaseListGoToView()
+  if (a:instance ==# 'lastTable')
+    :call ViSqlDatabaseListLeaveCleanup()
+    :call ViSqlTablesListGoToView(g:visqlDatabase)
+    :call ViSqlTablesListLeaveCleanup()
+    :call ViSqlTableDataGoToView(g:visqlTable)
+  elseif (a:instance ==# 'last')
+    :call ViSqlDatabaseListLeaveCleanup()
+    :call ViSqlTablesListGoToView(g:visqlDatabase)
+  endif
 endfunction
 
 
@@ -163,10 +177,9 @@ endfunction
 
 " don't allow cursosr to go to header line
 function! ViSqlSavedDBsNoUp()
-  if (line('.') != 2)
+  if (line('.') != 3)
     normal! k
   endif
-  :echom '123'
 endfunction
 
 " load a databse from the saved DB file
@@ -278,7 +291,8 @@ endfunction
 " draw header for database list view
 function! ViSqlDatabaseListDrawHeader()
   :let w:visqlDatabaseCount = ViSqlCountDatabases()
-  :execute "normal! ggIVI SQL\<CR>Choose a database...\<CR>\<CR>"
+  :execute "normal! ggIVI SQL : ".w:visqlHost."\<CR>"
+  :execute "normal! IChoose a database...\<CR>\<CR>"
   :execute "normal! IResults: ".w:visqlDatabaseCount."\<CR>"
   :execute "normal! ISorted by ".w:visqldatabaseListSortOrder
 endfunction
@@ -286,8 +300,8 @@ endfunction
 " content for database list view
 function! ViSqlDatabaseListDrawContent()
   :let s:query = "show databases;"
-  :let w:visqlCurrentQuery = "mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  --table -e '".s:query."'"
-  :let s:connectResult = system(w:visqlCurrentQuery)
+  :let w:visqlCurrentDatabaseListQuery = "mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  --table -e '".s:query."'"
+  :let s:connectResult = system(w:visqlCurrentDatabaseListQuery)
   :put=s:connectResult
 endfunction
 
@@ -347,6 +361,7 @@ endfunction
 function! ViSqlTablesListGoToView(database)
   :let w:visqlTablesListHelpIsOpen = 'false'
   :let w:visqlDatabase = a:database
+  :let g:visqlDatabase = a:database
   " set binds
   :call ViSqlTablesListSetBinds()
   " draw view
@@ -448,7 +463,7 @@ endfunction
 "draw header for tables list view
 function! ViSqlTablesListDrawHeader()
   :let w:visqlTableCount = ViSqlCountTables(w:visqlDatabase)
-  :execute "normal! ggIVI SQL\<CR>Choose a table...\<CR>\<CR>"
+  :execute "normal! ggIVI SQL : ".w:visqlHost." > ".w:visqlDatabase."\<CR>"
   :execute "normal! IResults: ".w:visqlTableCount."\<CR>"
   :execute "normal! ISorted by ".w:visqldatabaseListSortOrder
 endfunction
@@ -504,20 +519,31 @@ function! ViSqlTableDataGoToView(table)
   if (w:visqlTable == a:table)
     :let s:revistTable = 'true'
   else
+    :let w:visqlCurrentDataViewQuery = ''
     :let s:revistTable = 'false'
     :let w:visqlTable = a:table
+    :let g:visqlTable = a:table
   endif
-  " " set binds
+  " set binds
   :call ViSqlTableDataSetBinds()
-  " " draw view
+  " draw view
   :call ViSqlTableDataDrawView()
-  :let w:visqlHeaderLine = ViSqlGetHeaderLine()
+  if (w:visqlTableDataCount > 0)
+    :let w:visqlHeaderLine = ViSqlGetHeaderLine()
+  endif
   " set cursor to last known position or new position if different table
   if (s:revistTable == 'true')
     " get last cursor position
     :call setpos('.', w:lastTableDataPos)
+    if (getline('.')[col('.') - 1] == '|')
+      normal! vf|o
+    else
+      normal! f|vF|
+    endif
   else
-    :silent execute "normal! gg/+\<CR>jjj^w"
+    if (w:visqlTableDataCount > 0)
+      :silent execute "normal! gg/+\<CR>jjjf|vF|"
+    endif
   endif
 endfunction
 
@@ -538,16 +564,52 @@ function! ViSqlTableDataSetBinds()
   " custom query
   :nnoremap <buffer> cq :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlSaveState('tableData')<CR>:call ViSqlCustomQuery()<CR>
   :vnoremap <buffer> cq :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlSaveState('tableData')<CR>:call ViSqlCustomQuery()<CR>
+  " sort the table
+  :nnoremap <buffer> s :call ViSqlTableDataSortByColumn()<CR>
+  :vnoremap <buffer> s v:call ViSqlTableDataSortByColumn()<CR>
+  " refresh table
+  :nnoremap <buffer> r :call ViSqlTableDataRefreshView()<CR>
+  :vnoremap <buffer> r v:call ViSqlTableDataRefreshView()<CR>
+  " refresh table
+  :nnoremap <buffer> d :call ViSqlTableDataDeleteRecord()<CR>
+  :vnoremap <buffer> d v:call ViSqlTableDataDeleteRecord()<CR>
+  " describe the table
+  :nnoremap <buffer> t :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlTableDescribeGoTo(w:visqlTable)<CR>
+  :vnoremap <buffer> t v:call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlTableDescribeGoTo(w:visqlTable)<CR>
+  " insert record
+  :nnoremap <buffer> i :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlAddViewGoTo(w:visqlTable, [])<CR>
+  :vnoremap <buffer> i v:call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlAddViewGoTo(w:visqlTable, [])<CR>
 endfunction
 
 " clean up table data view
 function! ViSqlTableDataLeaveCleanup()
+  :let visqlTableDataHelpIsOpen = 'false'
   :let w:lastTableDataPos = getpos('.')
   :call ViSqlTableDataUnbinds()
 endfunction
 
-" Open table list help
+"Toggle table data help
 function! ViSqlTableDataToggleHelp()
+  if (!exists('w:visqlTableDataHelpIsOpen'))
+    :let w:visqlTableDataHelpIsOpen = 'false'
+  endif
+  if (w:visqlTableDataHelpIsOpen == 'true')
+    :call ViSqlTableDataCloseHelp()
+  else
+    :call ViSqlTableDataOpenHelp()
+  endif
+endfunction
+
+function! ViSqlTableDataCloseHelp()
+  if (w:visqlTableDataHelpIsOpen == 'true')
+    :call win_gotoid(w:visqlTableDataHelpId)
+    :bd!
+  endif
+  :let w:visqlTableDataHelpIsOpen = 'false'
+endfunction
+
+" Open table list help
+function! ViSqlTableDataOpenHelp()
   :set splitbelow
   :execute "normal! \<C-W>n"
   :execute "normal! \<C-W>j"
@@ -562,18 +624,29 @@ function! ViSqlTableDataToggleHelp()
   :execute "normal! I Enter        |   Edit Data (new record) (not implemented)\<CR>"
   :execute "normal! I a            |   Alert Data (edit existing record) (not implemented)\<CR>"
   :execute "normal! I cq           |   Custom Query\<CR>"
+  :execute "normal! I s            |   Sort table by selected column\<CR>"
+  :execute "normal! I d            |   Delete a record\<CR>"
+  :execute "normal! I i            |   Insert a new record\<CR>"
+  :execute "normal! I r            |   Insert a new record\<CR>"
   :normal gg
   :resize 11
   :let s:helpId = win_getid()
   :call win_gotoid(g:visqlWindow)
-  :let w:visqlTablesListHelpId = s:helpId
-  :let w:visqlTablesListHelpIsOpen = 'true'
+  :let w:visqlTableDataHelpId = s:helpId
+  :let w:visqlTableDataHelpIsOpen = 'true'
 endfunction
 
 " Unbinds for table data view
 function! ViSqlTableDataUnbinds()
   :unmap <buffer> -
+  :unmap <buffer> zz
+  :unmap <buffer> <CR>
+  :unmap <buffer> a
   :unmap <buffer> cq
+  :unmap <buffer> s
+  :unmap <buffer> d
+  :unmap <buffer> i
+  :unmap <buffer> r
 endfunction
 
 " Main set and draw view for table data
@@ -587,7 +660,7 @@ endfunction
 
 "Draw the table data header
 function! ViSqlTableDataDrawHeader()
-  :execute "normal! ggITable view for ".w:visqlTable."\<CR>"
+  :execute "normal! ggIVI SQL : ".w:visqlHost." > ".w:visqlDatabase." > ".w:visqlTable."\<CR>"
   :let w:visqlTableDataCount = ViSqlCountTableDataRows(w:visqlTable)
   :execute "normal! ITotal Results: ".w:visqlTableDataCount."\<CR>"
   " :execute "normal! ISorted by ".w:visqlTableDataSortColumn." ".w:visqlTableDataSortOrder
@@ -595,8 +668,12 @@ endfunction
 
 " Draw the table data content
 function! ViSqlTableDataDrawContent()
-  :let s:query = "select * from ".w:visqlTable.";"
-  :let w:visqlCurrentDataViewQuery = s:query
+  if (w:visqlCurrentDataViewQuery == '')
+    :let s:query = "select * from ".w:visqlTable.";"
+    :let w:visqlCurrentDataViewQuery = s:query
+  else
+    :let s:query = w:visqlCurrentDataViewQuery
+  endif
   :let s:tableDataResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".s:query."'")
   :put=s:tableDataResult
 endfunction
@@ -610,7 +687,6 @@ function! ViSqlCountTableDataRows(table)
 endfunction
 
 function! ViSqlEditData(editType)
-  :echom '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
   :let s:startingCursorPos = getpos('.')
   if (a:editType == 'alter')
     :let s:editData = ViSqlGetData()
@@ -625,7 +701,6 @@ function! ViSqlEditData(editType)
     return
   endif
   :let s:query = "update ".w:visqlTable." set ".s:dataColumnName."=\"".s:newData."\" where ".s:idColumnName." = ".s:dataId.";"
-  :echom s:query
   :let s:updateResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." -e '".s:query."'")
   :set modifiable
   if (match(s:updateResult, 'ERROR') > -1)
@@ -639,6 +714,7 @@ function! ViSqlEditData(editType)
   :set nomodifiable
   :call setpos('.', s:startingCursorPos)
   :call ViSqlSelectData()
+  :redraw!
 endfunction
 
 function! ViSqlSelectData()
@@ -720,6 +796,7 @@ function! ViSqlGetNewData(editData, dataColumnName, dataId)
   return s:newDataFromUser
 endfunction
 
+"return the line number of the header line
 function! ViSqlGetHeaderLine()
   :let s:headerLineStartPos = getpos('.')
   :execute "normal! gg/+\<CR>j"
@@ -727,52 +804,159 @@ function! ViSqlGetHeaderLine()
   :call setpos('.', s:headerLineStartPos)
   return s:headerLine
 endfunction
-" function! ViSqlEditData(editType)
-"   :echom '!!!!!!!!'
-"   :set modifiable
-"   :let s:startingCursorPos = getpos('.')
-"   :let w:lastTableDataPos = s:startingCursorPos
-"   if (expand('<cWORD>') == '|')
-"     :normal! l
-"     :let s:startingCursorPos = getpos('.')
-"   endif
-"   " yank the existing data into variable
-"   if (a:editType == 'change')
-"     :execute "normal! F|wyt|"
-"     :let s:existingData = split(@0, '\s.*$')[0]
-"   endif
-"   :normal! ^w
-"   :let s:recordId = expand('<cWORD>')
-"   :normal! 3Gw
-"   :let s:primaryKeyName = expand('<cWORD>')
-"   :execute "normal! gg/+\<CR>j"
-"   :let s:headerLine = line('.')
-"   :call setpos('.', [0,s:headerLine,s:startingCursorPos[2],0])
-"   :normal! F|w
-"   :let s:columnName = expand('<cWORD>')
-"   if (a:editType == 'change')
-"     :let s:newValue = input('New value for record "'.s:recordId.'" column "'.s:columnName.'": ', s:existingData)
-"   else
-"     :let s:newValue = input('New value for record "'.s:recordId.'" column "'.s:columnName.'": ')
-"   endif
-"   if (s:newValue == '')
-"     :call setpos('.', s:startingCursorPos)
-"     return
-"   endif
-"   :let s:query = 'update '.w:visqlTable.' set '.s:columnName.' = "'.s:newValue.'" where '.s:primaryKeyName.' = "'.s:recordId.'";'
-"   :echom s:query
-"   :let s:updateResult = system("! mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." --table -e '".s:query."'")
-"   if (match(s:updateResult, 'ERROR') > -1)
-"     :execute "normal! :%d\<CR>IError updating record:\<CR>\<ESC>:put=s:updateResult\<CR>oPress enter to continue..."
-"   else
-"     :execute "normal! :%d\<CR>IUpdate Successful! \<CR>\<CR>Press enter to coninute..."
-"   endif
-"   :redraw!
-"   :call input('')
-"   :call ViSqlTableDataGoToView(w:visqlTable)
-"   :set nomodifiable
-"   :normal! f|vF|
-" endfunction
+
+"Sort data by column
+function! ViSqlTableDataSortByColumn()
+  if (!exists('w:visqlTableDataSortOrder') || w:visqlTableDataSortOrder == 'ASC')
+    :let w:visqlTableDataSortOrder = 'DESC'
+  else
+    :let w:visqlTableDataSortOrder = 'ASC'
+  endif
+  :let w:visqlTableDataSortColumn = ViSqlGetDataColumnName(w:visqlHeaderLine)
+  :let w:visqlCurrentDataViewQuery = "select * from ".w:visqlTable." order by ".w:visqlTableDataSortColumn." ".w:visqlTableDataSortOrder.";"
+  :call ViSqlTableDataRefreshView()
+  :execute "normal! gg/".w:visqlTableDataSortColumn."\<CR>hljjF|vf|o"
+endfunction
+
+" delete a record
+function! ViSqlTableDataDeleteRecord()
+  " save cursor position
+  :let s:deleteCurPos = getpos('.')
+  " get record id
+  :let s:recordId = ViSqlGetDataId()
+  :let s:idColumnName = ViSqlGetIdColumnName(w:visqlHeaderLine)
+  " confirm deletion of record
+  :let s:confirmDelete = input("Are you sure you want to delete record ".s:recordId." (y/n): ")
+  if (s:confirmDelete != 'y')
+    :echo ' '
+    :echo 'aborting...'
+    return
+  endif
+  " prep query
+  :let s:deleteQuery = "delete from ".w:visqlTable." where ".s:idColumnName." = ".s:recordId.";"
+  " execute query
+  :let s:queryResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".s:deleteQuery."'")
+  " handle errors
+  :set modifiable
+  :%d
+  if (match(s:queryResult, 'ERROR') > -1)
+    :normal! IError executing delete...
+  else
+    :normal! ISuccessful delete...
+  endif
+  :put=s:queryResult
+  :normal! GoPress enter to continue...
+  :redraw!
+  :call input('')
+  " refresh tableview
+  :call ViSqlTableDataRefreshView()
+  :set nomodifiable
+  :call setpos('.', s:deleteCurPos)
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" Add data funciton
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" draw insert interface
+function! ViSqlAddViewGoTo(table, values)
+  :set modifiable
+  :call ViSqlGoToAddViewSetBinds()
+  :call ViSqlGoToAddViewDrawView(a:table)
+  if (a:values != [])
+    :call ViSqlGoToAddViewPopulateFields(a:values)
+  endif
+endfunction
+
+" set binds for add view
+function! ViSqlGoToAddViewSetBinds()
+  " go back to tables list view 
+  :nnoremap <buffer> - :call ViSqlAddViewLeaveCleanup()<CR>:call ViSqlTableDataGoToView(w:visqlTable)<CR>
+  :vnoremap <buffer> - :call ViSqlAddViewLeaveCleanup()<CR>:call ViSqlTableDataGoToView(w:visqlTable)<CR>
+  :inoremap <buffer> <CR> <C-o>:call ViSqlAddViewNextField()<CR>
+endfunction
+
+" unset binds  for add view
+function! ViSqlGoToAddViewUnSetBinds()
+  :unmap <buffer> -
+  :unmap <buffer> <CR>
+endfunction
+
+function! ViSqlAddViewLeaveCleanup()
+  :call ViSqlGoToAddViewUnSetBinds()
+endfunction
+
+" Draw main view for add view
+function! ViSqlGoToAddViewDrawView(table)
+  :%d
+  :let s:query = "describe ".a:table.";"
+  :let s:queryResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".s:query."'")
+  :put=s:queryResult
+  :%s/\(^.*|\) \(NO\|YES\)\@=.*/\1/
+  :normal! Gdd
+  :execute "normal! ggddddddf+;lv$r-"
+  :execute "normal! ggOVI SQL : ".w:visqlHost." > ".w:visqlDatabase." > ".w:visqlTable." > Add record\<CR>"
+  :normal! j
+  :execute "normal! IAdd fields for new record below:\<CR>"
+  :normal! jj$a 
+  :startinsert
+endfunction
+
+" go to next record or submit
+function! ViSqlAddViewNextField()
+  :echom 'nextField'
+  if (line('.') == line('$'))
+    :call ViSqlAddViewAddRecord()
+  else
+    :normal! j$a 
+    :startinsert
+ endif
+endfunction
+
+" add a record
+function! ViSqlAddViewAddRecord()
+  :echom "addming record..."
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""Table description funciton
+" go to table description
+function! ViSqlTableDescribeGoTo(table)
+  " set binds
+  :call ViSqlTableDescribeSetBinds()
+  " draw view
+  :call ViSqlTableDescribeDrawView()
+endfunction
+
+"set binds for table description view
+function! ViSqlTableDescribeSetBinds()
+  " go back to tables list view 
+  :nnoremap <buffer> - :call ViSqlTableDescribeLeaveCleanup()<CR>:call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
+  :vnoremap <buffer> - :call ViSqlTableDescribeLeaveCleanup()<CR>:call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
+  " go back to tables list view 
+  :nnoremap <buffer> t :call ViSqlTableDescribeLeaveCleanup()<CR>:call ViSqlTableDataGoToView(w:visqlTable)<CR>
+  :vnoremap <buffer> t :call ViSqlTableDescribeLeaveCleanup()<CR>:call ViSqlTableDataGoToView(w:visqlTable)<CR>
+endfunction
+
+function! ViSqlTableDescribeLeaveCleanup()
+  :call ViSqlTableDescribeUnbinds()
+endfunction
+
+function! ViSqlTableDescribeUnbinds()
+  :unmap <buffer> -
+  :unmap <buffer> t
+endfunction 
+
+" Draw table description
+function! ViSqlTableDescribeDrawView()
+  :set modifiable
+  :%d
+  :let s:describeQuery = "describe ".w:visqlTable.";"
+  :let s:describeResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".s:describeQuery."'")
+  :put=s:describeResult
+  :execute "normal! ggIVI SQL : ".w:visqlHost." > ".w:visqlDatabase." > ".w:visqlTable." > Table structure\<CR>"
+  :execute "normal! /+\<CR>jjjf|vF|"
+  :set nomodifiable
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""Custom Query functions 
 " Main Custom Query
@@ -799,7 +983,7 @@ function! ViSqlRunQuery(query)
     :execute "normal! o\<CR>Press enter to exit..."
     :redraw!
     :call input('')
-    :call ViSqlRefreshTableDataView()
+    :call ViSqlTableDataRefreshView()
     :call setpos('.', s:cursorStart)
   else
     if (match(s:queryResult, 'ERROR') > -1)
