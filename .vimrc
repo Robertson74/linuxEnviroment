@@ -269,6 +269,8 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" format json
+vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
 source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
@@ -332,6 +334,10 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! FormatJSON()
+  :execute "'<,'>!python -m json.tool"
+  :normal! gv
+endfunction
 " delete, move, or copy a line remotely(without using the cursor)
 function! RemoteManipulate()
   :let s:startWindow = win_getid()
@@ -993,12 +999,6 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-
-vnoremap <Leader>fj v:call FormatJSON()<CR>
-function! FormatJSON()
-  :execute "'<,'>!python -m json.tool"
-  :normal! gv
-endfunction
 " augroup insertmode
 " au!
 autocmd InsertEnter * silent! set cursorcolumn
