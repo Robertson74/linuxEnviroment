@@ -999,6 +999,29 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+nnoremap <Leader>te :call CurlManager()<CR>
+function! CurlManager()
+  :let s:url = GetURL()
+  :let s:method = GetMethod()
+  :let s:header = GetHeader()
+  :call FireCurlCall(s:url, s:method, s:header)
+endfunction
+function! FireCurlCall(url, method, header)
+  :let s:curlCommand = "r!curl '".a:url."' -X '".a:method."' -H '".a:header."' -D -"
+  :put=s:curlCommand
+  :execute s:curlCommand
+  :execute "normal! ?------------\<CR>jjd2jO"
+  :execute "normal! ?-------------\<CR>"
+endfunction
+function! GetURL()
+  return 'http://localhost:80/repos/ccp_be/web/app_dev.php/api/testing'
+endfunction
+function! GetMethod()
+  return 'GET'
+endfunction
+function! GetHeader()
+  return 'apikey:kuRmnPl59gUZVQdVCvdiUmV/mNfOp6A/Q9LqTP6Lw18='
+endfunction
 " augroup insertmode
 " au!
 autocmd InsertEnter * silent! set cursorcolumn

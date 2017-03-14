@@ -228,7 +228,7 @@ function! ViSqlDatabaseListGoToView()
   " set cursor to last known position
   :call ViSqlLastCursorPositionByTerm(w:visqlDatabase)
   :redraw!
-  :echom "zz for help"
+  :echom "<Leader>? for help"
 endfunction
 
 " set binds for database list view
@@ -240,8 +240,8 @@ function! ViSqlDatabaseListSetBinds()
   :nnoremap <buffer> r :call ViSqlDatabaseListGoToView()<CR>
   :vnoremap <buffer> r :call ViSqlDatabaseListGoToView()<CR>
   " toggle help
-  :nnoremap <buffer> zz :call ViSqlDatabaseListToggleHelp()<CR>
-  :vnoremap <buffer> zz :call ViSqlDatabaseListToggleHelp()<CR>
+  :nnoremap <buffer> <Leader>? :call ViSqlDatabaseListToggleHelp()<CR>
+  :vnoremap <buffer> <Leader>? :call ViSqlDatabaseListToggleHelp()<CR>
   " Change the sort order
   :nnoremap <buffer> s :call ViSqlDatabaseListToggleSort()<CR>
   :vnoremap <buffer> s :call ViSqlDatabaseListToggleSort()<CR>
@@ -251,7 +251,7 @@ endfunction
 function! ViSqlDatabaseListUnbinds()
   :unmap <buffer> <CR>
   :unmap <buffer> r
-  :unmap <buffer> zz
+  :unmap <buffer> <Leader>?
   :unmap <buffer> s
 endfunction
 
@@ -270,7 +270,7 @@ function! ViSqlDatabaseListOpenHelp()
   :execute "normal! I Enter        |   Select Database\<CR>"
   :execute "normal! I r            |   Refresh Databases\<CR>"
   :execute "normal! I s            |   Sort alphabetically\<CR>"
-  :execute "normal! I zz           |   Toggle Help"
+  :execute "normal! I <Leader>?           |   Toggle Help"
   :normal gg
   :resize 11
   :let s:helpId = win_getid()
@@ -390,8 +390,8 @@ function! ViSqlTablesListSetBinds()
   :nnoremap <buffer> r :call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
   :vnoremap <buffer> r :call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
   " Open help
-  :nnoremap <buffer> zz :call ViSqlTablesListToggleHelp()<CR>
-  :vnoremap <buffer> zz :call ViSqlTablesListToggleHelp()<CR>
+  :nnoremap <buffer> <Leader>? :call ViSqlTablesListToggleHelp()<CR>
+  :vnoremap <buffer> <Leader>? :call ViSqlTablesListToggleHelp()<CR>
   " Go to tables dataview
   :nnoremap <buffer> <CR> :call ViSqlTablesListLeaveCleanup()<CR>:call ViSqlTableDataGoToView(expand('<cword>'))<CR>
   :vnoremap <buffer> <CR> :call ViSqlTablesListLeaveCleanup()<CR>:call ViSqlTableDataGoToView(expand('<cword>'))<CR>
@@ -407,7 +407,7 @@ endfunction
 function! ViSqlTablesListUnbinds()
   :unmap <buffer> -
   :unmap <buffer> r
-  :unmap <buffer> zz
+  :unmap <buffer> <Leader>?
   :unmap <buffer> <CR>
   :unmap <buffer> s
   :unmap <buffer> cq
@@ -430,7 +430,7 @@ function! ViSqlTablesListOpenHelp()
   :execute "normal! I r            |   Refresh Tables List\<CR>"
   :execute "normal! I s            |   Sort Tables List(Togglable)\<CR>"
   :execute "normal! I cq           |   Custom Query\<CR>"
-  :execute "normal! I zz           |   Toggle Help"
+  :execute "normal! I <Leader>?           |   Toggle Help"
   :normal gg
   :resize 11
   :let s:helpId = win_getid()
@@ -555,8 +555,8 @@ function! ViSqlTableDataSetBinds()
   :nnoremap <buffer> - :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
   :vnoremap <buffer> - :call ViSqlTableDataLeaveCleanup()<CR>:call ViSqlTablesListGoToView(w:visqlDatabase)<CR>
   " Toggle help
-  :nnoremap <buffer> zz :call ViSqlTableDataToggleHelp()<CR>
-  :vnoremap <buffer> zz :call ViSqlTableDataToggleHelp()<CR>
+  :nnoremap <buffer> <Leader>? :call ViSqlTableDataToggleHelp()<CR>
+  :vnoremap <buffer> <Leader>? :call ViSqlTableDataToggleHelp()<CR>
   " Replace record
   :nnoremap <buffer> <CR> :call ViSqlEditData('new')<CR>
   :vnoremap <buffer> <CR> v:call ViSqlEditData('new')<CR>
@@ -642,7 +642,7 @@ endfunction
 " Unbinds for table data view
 function! ViSqlTableDataUnbinds()
   :unmap <buffer> -
-  :unmap <buffer> zz
+  :unmap <buffer> <Leader>?
   :unmap <buffer> <CR>
   :unmap <buffer> a
   :unmap <buffer> cq
@@ -811,6 +811,7 @@ endfunction
 
 "Sort data by column
 function! ViSqlTableDataSortByColumn()
+  :let s:sortStartCol = getpos('.')[2]
   if (!exists('w:visqlTableDataSortOrder') || w:visqlTableDataSortOrder == 'ASC')
     :let w:visqlTableDataSortOrder = 'DESC'
   else
@@ -819,7 +820,8 @@ function! ViSqlTableDataSortByColumn()
   :let w:visqlTableDataSortColumn = ViSqlGetDataColumnName(w:visqlHeaderLine)
   :let w:visqlCurrentDataViewQuery = "select * from ".w:visqlTable." order by ".w:visqlTableDataSortColumn." ".w:visqlTableDataSortOrder.";"
   :call ViSqlTableDataRefreshView()
-  :execute "normal! gg/".w:visqlTableDataSortColumn."\<CR>hljjF|vf|o"
+  :call setpos('.', [0, w:visqlHeaderLine, s:sortStartCol, 0])
+  :execute "normal! f|vF|"
 endfunction
 
 " delete a record
@@ -981,7 +983,6 @@ function! ViSqlAddViewAddRecord()
     return
   endif
   :let s:addQuery = ViSqlAddDataComposeAddQuery(s:newData)
-  :call input('')
   :let s:addResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass."  ".w:visqlDatabase." --table -e '".s:addQuery."'")
   :%d
   if (match(s:addResult, 'ERROR') > -1)
