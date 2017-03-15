@@ -7,7 +7,9 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""Start up functions
 " start up a new interface
-function! NewVISqlInterface(instance)
+function! NewVISqlInterface(instance, window)
+  " instance can be last, new, or lastTable
+  " window can be this, side or tab
   " collect credentials or use previous ones depending on instance
   if (a:instance == 'new')
     if (ViSqlCollectCredentials() == 'false')
@@ -29,7 +31,14 @@ function! NewVISqlInterface(instance)
     echom 'Invalid Credentials...'
     return
   endif
-  :tabnew
+  if(a:window == 'tab')
+    :tabnew
+  elseif(a:window == 'side')
+    :vertical split
+    :enew!
+  elseif(a:window == 'this')
+    :enew!
+  endif
   "set window id variable
   :let g:visqlWindow = win_getid()
   "initialize credentials
@@ -80,9 +89,14 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-Saved Databases
 " List saved Databases
-function! ViSqlListSavedDBs()
+function! ViSqlListSavedDBs(window)
   :set modifiable
-  :tabnew
+  if (a:window == 'tab')
+    :tabnew
+  elseif (a:window == 'side')
+    :vertical split
+    :enew!
+  endif
   :execute "r! cat ".g:visqlSavedDatabasesFile
   :call ViSqlSetSavedDBsBinds()
   :normal! ggSDBName Host User Pass
@@ -193,12 +207,7 @@ function! ViSqlLoadDatabase(dbFileLine)
   :let g:visqlHost = s:dbLineList[1]
   :let g:visqlUser = s:dbLineList[2]
   :let g:visqlPass = s:dbLineList[3]
-  :let s:currentWindow = win_getid()
-  :call NewVISqlInterface('last')
-  :let s:newWindow = win_getid()
-  :call win_gotoid(s:currentWindow)
-  :bd!
-  :call win_gotoid(s:newWindow)
+  :call NewVISqlInterface('last', 'this')
 endfunction
 
 " Save a database
@@ -703,8 +712,10 @@ function! ViSqlEditData(editType)
   :let s:newData = ViSqlGetNewData(s:editData, s:dataColumnName, s:dataId)
   if (s:newData == '')
     return
+  elseif (s:newData != 'NULL')
+    :let s:newData = substitute(s:newData, '\(.*\)', '\"\1\"', '')
   endif
-  :let s:query = "update ".w:visqlTable." set ".s:dataColumnName."=\"".s:newData."\" where ".s:idColumnName." = ".s:dataId.";"
+  :let s:query = "update ".w:visqlTable." set ".s:dataColumnName."=".s:newData." where ".s:idColumnName." = ".s:dataId.";"
   :let s:updateResult = system("mysql -h ".w:visqlHost." -u ".w:visqlUser." -p".w:visqlPass." ".w:visqlDatabase." -e '".s:query."'")
   :set modifiable
   if (match(s:updateResult, 'ERROR') > -1)
@@ -1193,8 +1204,8 @@ endfunction
 function! ViSqlSetGlobalBinds()
   " Autocommand to delete buffer upon closing window
   " Exit command
-  :nnoremap <buffer> qq :windo bd!<CR>
-  :vnoremap <buffer> qq :windo bd!<CR>
+  :nnoremap <buffer> qq :bd!<CR>
+  :vnoremap <buffer> qq :bd!<CR>
   " arrow movement keys
   :nnoremap <buffer> <right> :normal! f\|<CR>vf\|o
   :vnoremap <buffer> <right> f\|f\|o

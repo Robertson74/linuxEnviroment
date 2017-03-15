@@ -274,10 +274,14 @@ vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
 source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
-nnoremap <Leader>dbn :call NewVISqlInterface('new')<CR> 
-nnoremap <Leader>dbp :call NewVISqlInterface('last')<CR> 
-nnoremap <Leader>dbtp :call NewVISqlInterface('lastTable')<CR> 
-nnoremap <Leader>dbl :call ViSqlListSavedDBs()<CR> 
+nnoremap <Leader>dbn :call NewVISqlInterface('new', 'tab')<CR> 
+nnoremap <Leader>dbp :call NewVISqlInterface('last', 'tab')<CR> 
+nnoremap <Leader>dbtp :call NewVISqlInterface('lastTable', 'tab')<CR> 
+nnoremap <Leader>dbvn :call NewVISqlInterface('new', 'side')<CR> 
+nnoremap <Leader>dbvp :call NewVISqlInterface('last', 'side')<CR> 
+nnoremap <Leader>dbvtp :call NewVISqlInterface('lastsidele', 'side')<CR> 
+nnoremap <Leader>dbl :call ViSqlListSavedDBs('tab')<CR> 
+nnoremap <Leader>dbvl :call ViSqlListSavedDBs('side')<CR> 
 "node debugger
 nnoremap <Leader>df :call SetDebugLaunchFile()<CR>
 nnoremap <Leader>dw :call SetDebugWord()<CR>
