@@ -81,6 +81,11 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" no swap files
+set noswapfile
+" name lower n always search down
+noremap <expr> n 'Nn'[v:searchforward]
+noremap <expr> N 'nN'[v:searchforward]
 set breakindent
 " Netrw top level tree set to dir where vim was opened
 " execute "normal! :silent Ntree" $PWD
@@ -269,6 +274,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" games
+nnoremap <Leader>gte :cal <SNR>15_Main()<CR>
+nnoremap <Leader>gsn :call Snake()<CR>
 " format json
 vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
@@ -1003,7 +1011,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>te :call CurlManager()<CR>
+" nnoremap <Leader>te :call CurlManager()<CR>
 function! CurlManager()
   :let s:url = GetURL()
   :let s:method = GetMethod()

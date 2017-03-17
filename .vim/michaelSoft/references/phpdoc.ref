@@ -1,0 +1,15 @@
+http://stackoverflow.com/questions/34958319/phpdocumentor-2-and-php-7-with-opcache-issues-in-doctrine
+,/.phpdoc
+-----------------------------------------------------------------------------------------------------
+Installing phpdoc with php 7.0
+
+sudo apt-get install php7.0-mbstring
+wget https://github.com/phpDocumentor/phpDocumentor2/releases/download/v2.9.0/phpDocumentor.phar
+chmod +x phpDocumentor.phar
+sudo mv phpDocumentor.phar /usr/local/bin/phpDocumentor-2.9.phar
+sudo ln -s /usr/local/bin/phpDocumentor-2.9.phar /usr/local/bin/phpdoc
+
+
+If you installed phpDocumentor from pear, use the following to remove it:
+
+sudo pear uninstall phpdoc/phpDocumentor
