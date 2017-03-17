@@ -426,324 +426,325 @@ function! RemoteManipulate()
 endfunction
 " sets a new top line for the window
 function! MakeTop()
-:let s:currentLine = line('.')
-:let s:newTop = input('New top line: ')
-:execute 'normal! mb'
-:execute s:newTop
-:let s:newTop = line('.')
-:execute 'normal! zt'
-if (s:currentLine > s:newTop)
-  :execute 'normal! `b'
-endif
+  :let s:currentLine = line('.')
+  :let s:newTop = input('New top line: ')
+  :execute 'normal! mb'
+  :execute s:newTop
+  :let s:newTop = line('.')
+  :execute 'normal! zt'
+  if (s:currentLine > s:newTop)
+    :execute 'normal! `b'
+  endif
 endfunction
 function! SnipVarDump()
-:execute "normal! avar_dump();\<left>"
-:startinsert
+  :execute "normal! ovar_dump();"
+  :normal! ==^f)a
+  :startinsert
 endfunction
 " quick view of script available to call
 function! PeekScriptCalls()
-:vsp +e $MYVIMRC
-:normal! gg
-:/-call/,/-scripts/g/./echo getline('.')
-:execute "normal! \<C-w>q"
+  :vsp +e $MYVIMRC
+  :normal! gg
+  :/-call/,/-scripts/g/./echo getline('.')
+  :execute "normal! \<C-w>q"
 endfunction
 " string with variable repeats
 function! RepetitiveString() 
-let s:template = input('Line template (",./" changes): ')
-if(empty(s:template))
-return
-endif
-let s:repeatCount = input('Number of repetitions (c for continous): ')
-if(empty(s:repeatCount))
-return
-endif
-let s:iteration = 0
-let s:startLine=line('.')
-let @b = s:template
-while (s:iteration < s:repeatCount)
-:execute "normal! a\<C-r>b\<ESC>"
-let s:iteration+=1
-endwhile
-let s:endLine=line('.')
-let s:endPosition=col('.')
-try
-let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
-catch
-return
-endtry
-:execute ":"s:startLine - 1
-:normal $
-:let @/= ",./"
-:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
-let s:iteration2 = 0
-while (s:iteration2 < s:substituteCount)
-:redraw!
-:let s:replaceTerm = input("Replace with: ")
-if (s:replaceTerm == "")
-  return
-endif
-:execute "normal! c9l".s:replaceTerm."\<ESC>"
-if(s:iteration2 != s:substituteCount -1)
+  let s:template = input('Line template (",./" changes): ')
+  if(empty(s:template))
+    return
+  endif
+  let s:repeatCount = input('Number of repetitions (c for continous): ')
+  if(empty(s:repeatCount))
+    return
+  endif
+  let s:iteration = 0
+  let s:startLine=line('.')
+  let @b = s:template
+  while (s:iteration < s:repeatCount)
+    :execute "normal! a\<C-r>b\<ESC>"
+    let s:iteration+=1
+  endwhile
+  let s:endLine=line('.')
+  let s:endPosition=col('.')
+  try
+    let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+  catch
+    return
+  endtry
+  :execute ":"s:startLine - 1
+  :normal $
+  :let @/= ",./"
   :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
-endif
-:let s:iteration2+=1
-endwhile
-:execute "normal! ".s:endPosition."|"
+  let s:iteration2 = 0
+  while (s:iteration2 < s:substituteCount)
+    :redraw!
+    :let s:replaceTerm = input("Replace with: ")
+    if (s:replaceTerm == "")
+      return
+    endif
+    :execute "normal! c9l".s:replaceTerm."\<ESC>"
+    if(s:iteration2 != s:substituteCount -1)
+      :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+    endif
+    :let s:iteration2+=1
+  endwhile
+  :execute "normal! ".s:endPosition."|"
 endfunction
 function! FindAndReplaceRange()
-:let s:find = input('find: ')
-if (s:find == "")
-  return
-endif
-:let s:replace = input('and replace with: ')
-if (s:replace == "")
-  return
-endif
-:let s:range = input('from here to: ')
-if (s:range == "")
-  return
-endif
-:execute ".,".s:range."s/".s:find."/".s:replace."/gc"
+  :let s:find = input('find: ')
+  if (s:find == "")
+    return
+  endif
+  :let s:replace = input('and replace with: ')
+  if (s:replace == "")
+    return
+  endif
+  :let s:range = input('from here to: ')
+  if (s:range == "")
+    return
+  endif
+  :execute ".,".s:range."s/".s:find."/".s:replace."/gc"
 endfunction
 function! MarkWindow()
-:let g:markStartLine = line('.')
-:let g:markStartCol = col('.')
-:execute "normal! L:call PlaceTempSign()\<CR>"
-:let g:markLowLine = line('.')
-:execute "normal! H:call PlaceTempSign()\<CR>"
-:let g:markHighLine = line('.')
-:execute ":"g:markStartLine
-:execute "normal!".g:markStartCol."|"
-:let g:markWindow = win_getid()
-:let g:markBuffer = bufnr('%')
-:let g:markTab = tabpagenr()
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute "normal! L:call PlaceTempSign()\<CR>"
+  :let g:markLowLine = line('.')
+  :execute "normal! H:call PlaceTempSign()\<CR>"
+  :let g:markHighLine = line('.')
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :let g:markWindow = win_getid()
+  :let g:markBuffer = bufnr('%')
+  :let g:markTab = tabpagenr()
 endfunction
 function! MoveWindowToTab()
-" if(!exists("g:markWindow"))
-"   :let g:markWindow = -1
-" endif
-if(g:markWindow == -1)
-  :echom "No marked window"
-  return
-endif
-if(win_getid() == g:markWindow)
-  :echom "This is the marked window... can't move..."
-  return
-endif
-if(tabpagenr() == g:markTab)
-  :echom "Window is already on target tab"
-  return
-endif
-:vsp
-:execute "buffer" g:markBuffer
-:let s:targetWindow = win_getid()
-:execute "call win_gotoid('".g:markWindow."')"
-:close
-:execute "call win_gotoid('".s:targetWindow."')"
-:call UnMarkWindow()
-:execute ":"g:markStartLine
-:execute "normal!".g:markStartCol."|"
+  " if(!exists("g:markWindow"))
+  "   :let g:markWindow = -1
+  " endif
+  if(g:markWindow == -1)
+    :echom "No marked window"
+    return
+  endif
+  if(win_getid() == g:markWindow)
+    :echom "This is the marked window... can't move..."
+    return
+  endif
+  if(tabpagenr() == g:markTab)
+    :echom "Window is already on target tab"
+    return
+  endif
+  :vsp
+  :execute "buffer" g:markBuffer
+  :let s:targetWindow = win_getid()
+  :execute "call win_gotoid('".g:markWindow."')"
+  :close
+  :execute "call win_gotoid('".s:targetWindow."')"
+  :call UnMarkWindow()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
 endfunction
 function! UnMarkWindow()
-:let g:markStartLine = line('.')
-:let g:markStartCol = col('.')
-:execute ":"g:markLowLine
-:call RemoveTempSign()
-:execute ":"g:markHighLine
-:call RemoveTempSign()
-:execute ":"g:markStartLine
-:execute "normal!".g:markStartCol."|"
-:redraw!
-:let g:markWindow = -1
+  :let g:markStartLine = line('.')
+  :let g:markStartCol = col('.')
+  :execute ":"g:markLowLine
+  :call RemoveTempSign()
+  :execute ":"g:markHighLine
+  :call RemoveTempSign()
+  :execute ":"g:markStartLine
+  :execute "normal!".g:markStartCol."|"
+  :redraw!
+  :let g:markWindow = -1
 endfunction
 " repetitve lines with replaceable variables
 function! RepetitiveLines()
-let s:template = input('Line template (",./" changes): ')
-if(empty(s:template))
-return
-endif
-let s:repeatCount = input('Number of repetitions (c for continous): ')
-if(empty(s:repeatCount))
-return
-endif
-let s:iteration = 0
-let s:startLine=line('.')
-while (s:iteration < s:repeatCount)
-:put =s:template
-let s:iteration+=1
-endwhile
-let s:endLine=line('.')
-try
-let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
-catch
-return
-endtry
-:execute ":"s:startLine - 1
-:normal $
-:let @/= ",./"
-:execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
-let s:iteration2 = 0
-while (s:iteration2 < s:substituteCount)
-:redraw!
-:let s:replaceTerm = input("Replace with: ")
-if (s:replaceTerm == "")
-  return
-endif
-:execute "normal! c9l".s:replaceTerm."\<ESC>"
-if(s:iteration2 != s:substituteCount -1)
+  let s:template = input('Line template (",./" changes): ')
+  if(empty(s:template))
+    return
+  endif
+  let s:repeatCount = input('Number of repetitions (c for continous): ')
+  if(empty(s:repeatCount))
+    return
+  endif
+  let s:iteration = 0
+  let s:startLine=line('.')
+  while (s:iteration < s:repeatCount)
+    :put =s:template
+    let s:iteration+=1
+  endwhile
+  let s:endLine=line('.')
+  try
+    let s:substituteCount = split(execute(s:startLine.",".s:endLine."s/,.\\///gn"))[0]
+  catch
+    return
+  endtry
+  :execute ":"s:startLine - 1
+  :normal $
+  :let @/= ",./"
   :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
-endif
-:let s:iteration2+=1
-endwhile
-:execute ":"s:startLine
+  let s:iteration2 = 0
+  while (s:iteration2 < s:substituteCount)
+    :redraw!
+    :let s:replaceTerm = input("Replace with: ")
+    if (s:replaceTerm == "")
+      return
+    endif
+    :execute "normal! c9l".s:replaceTerm."\<ESC>"
+    if(s:iteration2 != s:substituteCount -1)
+      :execute "normal!  ni---\<right>\<right>\<right>---\<left>\<left>\<left>\<left>\<left>\<left>\<left>\<left>"
+    endif
+    :let s:iteration2+=1
+  endwhile
+  :execute ":"s:startLine
 endfunction
 " Moving/Editing around capitals for cammel case stuff
 func! MoveToPreviousCap()
-execute "normal! ?[A-Z]\<CR>"
-:noh
+  execute "normal! ?[A-Z]\<CR>"
+  :noh
 endfunc
 func! MoveToNextCap()
-execute "normal! /[A-Z]\<CR>"
-:noh
+  execute "normal! /[A-Z]\<CR>"
+  :noh
 endfunc
 func! DeleteInsideCaps()
-:execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
-:noh
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :noh
 endfunc
 func! ChangeInsideCaps()
-:execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
-:startinsert
-:noh
+  :execute "normal! ?[A-Z]\<CR>v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
 endfunc
 func! ChangeToCap()
-:execute "normal! v/[A-Z]\<CR>hd"
-:startinsert
-:noh
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :startinsert
+  :noh
 endfunc
 func! DeleteToCap()
-:execute "normal! v/[A-Z]\<CR>hd"
-:noh
+  :execute "normal! v/[A-Z]\<CR>hd"
+  :noh
 endfunc
 " Easier window resizing
 function! ResizeWindow()
-:let s:resizeDirection = -1
-while(s:resizeDirection != 120 && s:resizeDirection != 13 && s:resizeDirection != 27)
-  :let s:resizeDirection = getchar()
-  :if (s:resizeDirection == 115)
+  :let s:resizeDirection = -1
+  while(s:resizeDirection != 120 && s:resizeDirection != 13 && s:resizeDirection != 27)
+    :let s:resizeDirection = getchar()
+    :if (s:resizeDirection == 115)
     :resize -5
-  :elseif (s:resizeDirection == 116)
+    :elseif (s:resizeDirection == 116)
     :resize +5
-  :elseif (s:resizeDirection == 119)
+    :elseif (s:resizeDirection == 119)
     :vertical resize +8
-  :elseif (s:resizeDirection == 110)
+    :elseif (s:resizeDirection == 110)
     :vertical resize -8
-  :endif
-  :redraw!
-endwhile
+    :endif
+    :redraw!
+  endwhile
 endfunction
 " auto cammel case
 function! CammelCaseVisual()
-:let s:numOfWordsToCammel = input('number of words to cammel: ')
-:let s:numPointer = 0
-:execute "normal! viw".s:numOfWordsToCammel."Egu"
-:while(s:numPointer < s:numOfWordsToCammel)
+  :let s:numOfWordsToCammel = input('number of words to cammel: ')
+  :let s:numPointer = 0
+  :execute "normal! viw".s:numOfWordsToCammel."Egu"
+  :while(s:numPointer < s:numOfWordsToCammel)
   :normal wgUlX
   :let s:numPointer+=1
-:endwhile
+  :endwhile
 endfunction
 " nav bar 
 let g:defautlNavWidth = 40
 function! ToggleNav()
-if(!exists("t:navBarActive"))  
-  :let t:navBarActive=0
-endif
-if(t:navBarActive==0)
-  :silent call NewNav()
-  :let t:navBarActive=1
-else
-  :let s:homeWindow = win_getid()
-  :call CloseNav()
-  :call win_gotoid(s:homeWindow)
-endif
+  if(!exists("t:navBarActive"))  
+    :let t:navBarActive=0
+  endif
+  if(t:navBarActive==0)
+    :silent call NewNav()
+    :let t:navBarActive=1
+  else
+    :let s:homeWindow = win_getid()
+    :call CloseNav()
+    :call win_gotoid(s:homeWindow)
+  endif
 endfunction!
 function! CloseNav()
-    :call win_gotoid(t:navBarWin)
-    if(win_getid() == t:navBarWin)
-      :execute "bwipe "bufnr('%')
-      :let t:navBarActive=0
-    else 
-      :silent call NewNav()
-    endif
+  :call win_gotoid(t:navBarWin)
+  if(win_getid() == t:navBarWin)
+    :execute "bwipe "bufnr('%')
+    :let t:navBarActive=0
+  else 
+    :silent call NewNav()
+  endif
 endfunction
 function! NewNav()
-:let t:navDir = expand('%:h') 
-:let t:navFile = expand('%:t') 
-:let t:navDir = split(t:navDir, '/')
-:execute "normal! \<C-w>n\<C-w>H"
-:exe "vertical resize ".g:defautlNavWidth
-:set wfw
-:let t:navBarWin = win_getid()
-:e.
-:normal gg
-:for dir in t:navDir
+  :let t:navDir = expand('%:h') 
+  :let t:navFile = expand('%:t') 
+  :let t:navDir = split(t:navDir, '/')
+  :execute "normal! \<C-w>n\<C-w>H"
+  :exe "vertical resize ".g:defautlNavWidth
+  :set wfw
+  :let t:navBarWin = win_getid()
+  :e.
+  :normal gg
+  :for dir in t:navDir
   :execute "normal! /".dir."\<CR>"
   :call netrw#LocalBrowseCheck(<SNR>94_NetrwBrowseChgDir(1,<SNR>94_NetrwGetWord()))
   " :redraw!
-:endfor
-:let @/ = t:navFile
-:normal! n
+  :endfor
+  :let @/ = t:navFile
+  :normal! n
 endfunction
 function! NewFocusNavBar()
-if(exists("t:navBarWin"))
-  :call win_gotoid(t:navBarWin)
-else
-  :echo "No active nav bar"
-endif
+  if(exists("t:navBarWin"))
+    :call win_gotoid(t:navBarWin)
+  else
+    :echo "No active nav bar"
+  endif
 endfunction
 " extend screen to another split
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 function! ExtendScreenUp()
-if (!exists('b:extendedUpList'))
-  :let b:extendedUpList = [] 
-endif
-if(!exists('b:extendedUpWindow'))
-  let b:extendedUpWindow = win_getid()
-endif
-if (!exists('b:extendedViews'))
-  :let b:extendedViews = [] 
-  :call add(b:extendedViews, win_getid())
-endif
-:let s:startWindow = win_getid()
-for window in b:extendedViews
-  :call win_gotoid(window)
-  :set noscrollbind
-endfor
-:call win_gotoid(b:extendedUpWindow)
-:vsp
-:execute "set splitright" 
-:2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp
-:execute "set nosplitright" 
-:set wfw
-:let s:divider = win_getid()
-:let b:baseWindow = s:startWindow
-:execute "normal! \<C-w>h"
-:let b:baseWindow = s:startWindow
-:let s:newExtendedUpWindow = win_getid()
-:normal! Hzb
-:call win_gotoid(s:startWindow)
-:call add(b:extendedUpList, s:divider)
-:call add(b:extendedUpList, s:newExtendedUpWindow)
-:call add(b:extendedViews, s:newExtendedUpWindow)
-:let b:extendedUpWindow = s:newExtendedUpWindow
-for window in b:extendedViews
-  :call win_gotoid(window)
-  :set scrollbind
+  if (!exists('b:extendedUpList'))
+    :let b:extendedUpList = [] 
+  endif
+  if(!exists('b:extendedUpWindow'))
+    let b:extendedUpWindow = win_getid()
+  endif
+  if (!exists('b:extendedViews'))
+    :let b:extendedViews = [] 
+    :call add(b:extendedViews, win_getid())
+  endif
+  :let s:startWindow = win_getid()
+  for window in b:extendedViews
+    :call win_gotoid(window)
+    :set noscrollbind
+  endfor
+  :call win_gotoid(b:extendedUpWindow)
+  :vsp
+  :execute "set splitright" 
+  :2vsp ~/.vim/michaelSoft/extendwindows/middlePaneUp
+  :execute "set nosplitright" 
+  :set wfw
+  :let s:divider = win_getid()
+  :let b:baseWindow = s:startWindow
+  :execute "normal! \<C-w>h"
+  :let b:baseWindow = s:startWindow
+  :let s:newExtendedUpWindow = win_getid()
+  :normal! Hzb
+  :call win_gotoid(s:startWindow)
+  :call add(b:extendedUpList, s:divider)
+  :call add(b:extendedUpList, s:newExtendedUpWindow)
+  :call add(b:extendedViews, s:newExtendedUpWindow)
+  :let b:extendedUpWindow = s:newExtendedUpWindow
+  for window in b:extendedViews
+    :call win_gotoid(window)
+    :set scrollbind
+    :set nowrap
+  endfor
+  :call win_gotoid(s:startWindow)
   :set nowrap
-endfor
-:call win_gotoid(s:startWindow)
-:set nowrap
 endfunction!
 """"""" Extending screen down
 function! ExtendScreenDown()
@@ -846,15 +847,15 @@ function! ToggleZoom()
 endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 function! GoToFirstThirdOfLine()
-    :execute "normal! $"
-    :let endOfLine = col(".")
-    :cal cursor(line("."), endOfLine/3)
+  :execute "normal! $"
+  :let endOfLine = col(".")
+  :cal cursor(line("."), endOfLine/3)
 endfunction
 
 function! GoToSecondThirdOfLine()
-    :execute "normal! $"
-    :let endOfLine = col(".")
-    :cal cursor(line("."), (endOfLine/3)*2)
+  :execute "normal! $"
+  :let endOfLine = col(".")
+  :cal cursor(line("."), (endOfLine/3)*2)
 endfunction
 " Rotate parameters in parenthesis
 """"""" (param(2), param(1), param[3])
@@ -864,17 +865,17 @@ nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<
 nnoremap <Leader>!c :!code %<CR>
 """"""" flip true false
 function! FlipBoolean()
-    if expand('<cword>') == 'true'
-        :execute "normal! ciwfalse"
-    elseif expand('<cword>') == 'false'
-        :execute "normal! ciwtrue"
-    elseif expand('<cword>') == '1'
-        :execute "normal! ciw0"
-    elseif expand('<cword>') == '0'
-        :execute "normal! ciw1"
-    else
-        :echo "Not a Boolean"
-    endif
+  if expand('<cword>') == 'true'
+    :execute "normal! ciwfalse"
+  elseif expand('<cword>') == 'false'
+    :execute "normal! ciwtrue"
+  elseif expand('<cword>') == '1'
+    :execute "normal! ciw0"
+  elseif expand('<cword>') == '0'
+    :execute "normal! ciw1"
+  else
+    :echo "Not a Boolean"
+  endif
 endfunction
 "my first bind
 nnoremap <Leader>bl :call FlipBoolean()<CR>
@@ -885,26 +886,26 @@ let debugFile = "none"
 let debugWord = "none"
 let debugLine = "none"
 function! SetDebugLaunchFile()
-    :execute ":let g:debugLaunchFile = input('Enter Debug File: ')"
+  :execute ":let g:debugLaunchFile = input('Enter Debug File: ')"
 endfunction
 function! SetDebugWord()
-    :execute ":let g:debugWord = expand('<cword>')"
+  :execute ":let g:debugWord = expand('<cword>')"
 endfunction
 function! SetDebugLine()
-    :execute ":let g:debugLine = line('.')"
+  :execute ":let g:debugLine = line('.')"
 endfunction
 function! SetDebugFile()
-    if match(@%, ".ts") > 0 
-        let g:debugFile = substitute(expand('%:t'), '.ts', '.js', '')
-    else
-        let g:debugFile = expand('%:t')
-    endif
+  if match(@%, ".ts") > 0 
+    let g:debugFile = substitute(expand('%:t'), '.ts', '.js', '')
+  else
+    let g:debugFile = expand('%:t')
+  endif
 endfunction
 function! NodeDebug()
-    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebug.sh ".@%." ".g:debugLine." ".g:debugWord." ".g:debugLaunchFile
+  :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebug.sh ".@%." ".g:debugLine." ".g:debugWord." ".g:debugLaunchFile
 endfunction
 function! NodeDebugMon()
-    :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".g:debugFile." ".g:debugLine." ".g:debugWord
+  :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".g:debugFile." ".g:debugLine." ".g:debugWord
 endfunction
 " nnoremap <Leader>dd :call NodeDebug()<CR>
 """"""" Place and unplace temp signs for reference
@@ -951,7 +952,7 @@ function! SearchContextually(searchType)
     :call PlaceSignAtPatternMatch("contextMarker", "^|| --")
   endif
 endfunction
-  
+
 :sign define contextMarker linehl=Error
 function! PlaceSignAtPatternMatch(signName, contextPattern)
   :let a:lineNumber = 1
@@ -990,6 +991,7 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
+
 "--- php command line based debugger
 "--- modularize vimrc
 "--- find and replace quick command
