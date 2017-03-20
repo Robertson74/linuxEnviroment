@@ -57,16 +57,18 @@ Plugin 'mattn/emmet-vim'
 " html5 autocomplete
 Plugin 'othree/html5.vim'
 " autocomplete for quotes and the like
-" Plugin 'raimondi/delimitmate'
+Plugin 'raimondi/delimitmate'
 " git gutter
 Plugin 'airblade/vim-gitgutter'
 " more readable indents
 Plugin 'nathanaelkane/vim-indent-guides'
 " Snippets
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" Plugin 'honza/vim-snippets'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
@@ -81,6 +83,9 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" column when in insert mode
+autocmd InsertEnter * silent! set cursorcolumn
+autocmd InsertLeave * silent! set nocursorcolumn
 " no swap files
 set noswapfile
 " name lower n always search down
@@ -152,6 +157,12 @@ highlight CursorLineNr ctermfg=green
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+"snippets 
+let g:UltiSnipsExpandTrigger = "<C-S>"
+let g:UltiSnipsListSnippets = "<C-L>"
+let g:UltiSnipsJumpForwardTrigger = "<C-J>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
+inoremap <c-x><c-k> <c-x><c-k>
 " control p async
 let g:user_command_async=1
 " php extended config 
@@ -166,11 +177,11 @@ let g:syntastic_check_on_wq = 0
 command! E Explore
 
 " vdebug with xdebug options
-let g:vdebug_options = {}
-let g:vdebug_options["debug_file"] = "~/vdebug.log"
-let g:vdebug_options["debug_file_level"] = 2
-let g:vdebug_options["port"] = 9000
-let g:vdebug_options["break_on_open"] = 1
+" let g:vdebug_options = {}
+" let g:vdebug_options["debug_file"] = "~/vdebug.log"
+" let g:vdebug_options["debug_file_level"] = 2
+" let g:vdebug_options["port"] = 9000
+" let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 " let g:vdebug_options['server'] = ""
 
@@ -1014,32 +1025,30 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 " nnoremap <Leader>te :call CurlManager()<CR>
-function! CurlManager()
-  :let s:url = GetURL()
-  :let s:method = GetMethod()
-  :let s:header = GetHeader()
-  :call FireCurlCall(s:url, s:method, s:header)
-endfunction
-function! FireCurlCall(url, method, header)
-  :let s:curlCommand = "r!curl '".a:url."' -X '".a:method."' -H '".a:header."' -D -"
-  :put=s:curlCommand
-  :execute s:curlCommand
-  :execute "normal! ?------------\<CR>jjd2jO"
-  :execute "normal! ?-------------\<CR>"
-endfunction
-function! GetURL()
-  return 'http://localhost:80/repos/ccp_be/web/app_dev.php/api/testing'
-endfunction
-function! GetMethod()
-  return 'GET'
-endfunction
-function! GetHeader()
-  return 'apikey:kuRmnPl59gUZVQdVCvdiUmV/mNfOp6A/Q9LqTP6Lw18='
-endfunction
+" function! CurlManager()
+"   :let s:url = GetURL()
+"   :let s:method = GetMethod()
+"   :let s:header = GetHeader()
+"   :call FireCurlCall(s:url, s:method, s:header)
+" endfunction
+" function! FireCurlCall(url, method, header)
+"   :let s:curlCommand = "r!curl '".a:url."' -X '".a:method."' -H '".a:header."' -D -"
+"   :put=s:curlCommand
+"   :execute s:curlCommand
+"   :execute "normal! ?------------\<CR>jjd2jO"
+"   :execute "normal! ?-------------\<CR>"
+" endfunction
+" function! GetURL()
+"   return 'http://localhost:80/repos/ccp_be/web/app_dev.php/api/testing'
+" endfunction
+" function! GetMethod()
+"   return 'GET'
+" endfunction
+" function! GetHeader()
+"   return 'apikey:kuRmnPl59gUZVQdVCvdiUmV/mNfOp6A/Q9LqTP6Lw18='
+" endfunction
 " augroup insertmode
 " au!
-autocmd InsertEnter * silent! set cursorcolumn
-autocmd InsertLeave * silent! set nocursorcolumn
 " augroup END
 " func! HandlePrint(channel, msg)
 "   let @j = a:msg
