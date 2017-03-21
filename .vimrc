@@ -75,7 +75,9 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'sidorares/node-vim-debugger'
 " php autocomplete
 " Plugin 'm2mdas/phpcomplete-extended'
-
+Bundle 'm2mdas/phpcomplete-extended'
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+let g:phpcomplete_index_composer_command = "composer"
 " END OF PLUGINS
 "
 " All of your Plugins must be added before the following line
@@ -83,6 +85,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
+set backspace=indent,eol,start
 " column when in insert mode
 autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
@@ -163,7 +167,8 @@ let g:UltiSnipsListSnippets = "<C-L>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 inoremap <c-x><c-k> <c-x><c-k>
-" control p async
+" control p 
+let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
 " php extended config 
 let g:phpcomplete_index_composer_command = "composer"
@@ -225,6 +230,7 @@ nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
 nnoremap <C-n> <C-w>p
 nnoremap <C-x> :q<CR>
+nnoremap zx :q!<CR>
 nnoremap zh gT
 nnoremap zl gt
 "Obscure/UN Obscure doc
@@ -315,7 +321,9 @@ nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
 nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
 nnoremap<Leader>nt :call MakeTop()<CR>
-" Peek all script calls
+" Peeks 
+nnoremap <Leader>pss :call PeakSymfonySnippets()<CR>
+nnoremap <Leader>psp :call PeakPHPSnippets()<CR>
 nnoremap <Leader>psc :call PeekScriptCalls()<CR>
 "repetitive strings 
 nnoremap <Leader>rli :call RepetitiveLines()<CR>
@@ -1002,7 +1010,8 @@ endfunction
 
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-
+"--- look into Neovim and use Deoplete 
+"
 "--- php command line based debugger
 "--- modularize vimrc
 "--- find and replace quick command
@@ -1020,10 +1029,20 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- easy renaming tabs to group thoughts and work spaces
 "--- overload enter on nav bar to open in previous window
 "--- merge tabs
-"--- snippets
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+function! PeakSymfonySnippets()
+  :split +e $HOME/.vim/bundle/vim-snippets/UltiSnips/php_symfony2.snippets
+  :g/^snippet/p
+  :bd!
+endfunction
+
+function! PeakPHPSnippets()
+  :split +e $HOME/.vim/bundle/vim-snippets/snippets/php.snippets
+  :g/^snippet/p
+  :bd!
+endfunction
 " nnoremap <Leader>te :call CurlManager()<CR>
 " function! CurlManager()
 "   :let s:url = GetURL()
