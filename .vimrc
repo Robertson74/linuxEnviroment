@@ -9,6 +9,9 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" php documenter 
+Plugin 'tobyS/pdv'
+Plugin 'tobyS/vmustache'
 " tetris
 Plugin 'vim-scripts/TeTrIs.vim'
 " snake
@@ -40,7 +43,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
-" extended tag matching with ^
+" extended tag matching with %
 Plugin 'tmhedberg/matchit'
 " undo/redo tree structure
 Plugin 'sjl/gundo.vim'
@@ -65,17 +68,12 @@ Plugin 'nathanaelkane/vim-indent-guides'
 " Snippets
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-" Plugin 'honza/vim-snippets'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 Plugin 'sidorares/node-vim-debugger'
 " php autocomplete
-" Plugin 'm2mdas/phpcomplete-extended'
-Bundle 'm2mdas/phpcomplete-extended'
+" Bundle 'm2mdas/phpcomplete-extended'
 autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
 let g:phpcomplete_index_composer_command = "composer"
 " END OF PLUGINS
@@ -161,12 +159,17 @@ highlight CursorLineNr ctermfg=green
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+"php documentor 
+let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
+nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 "snippets 
-let g:UltiSnipsExpandTrigger = "<C-S>"
+let g:UltiSnipsExpandTrigger = "<C-Z>"
 let g:UltiSnipsListSnippets = "<C-L>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 inoremap <c-x><c-k> <c-x><c-k>
+" dir for custom snips
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', '../michaelSoft']
 " control p 
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
@@ -365,6 +368,16 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! PeakSymfonySnippets()
+  :split +e $HOME/.vim/bundle/vim-snippets/UltiSnips/php_symfony2.snippets
+  :g/^snippet/p
+  :bd!
+endfunction
+function! PeakPHPSnippets()
+  :split +e $HOME/.vim/bundle/vim-snippets/snippets/php.snippets
+  :g/^snippet/p
+  :bd!
+endfunction
 function! FormatJSON()
   :execute "'<,'>!python -m json.tool"
   :normal! gv
@@ -1032,17 +1045,66 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-function! PeakSymfonySnippets()
-  :split +e $HOME/.vim/bundle/vim-snippets/UltiSnips/php_symfony2.snippets
-  :g/^snippet/p
-  :bd!
+nnoremap <Leader>ws :call Wash()<CR>
+nnoremap <Leader>wu :call WashUndo()<CR>
+function! Wash()
+  :let s:end = 'false'
+  while(s:end == 'false')
+    :call WashDirection()
+    :call WashWord()
+  endwhile
 endfunction
 
-function! PeakPHPSnippets()
-  :split +e $HOME/.vim/bundle/vim-snippets/snippets/php.snippets
-  :g/^snippet/p
-  :bd!
+function! WashUndo()
+  :earlier 1f
 endfunction
+
+function! WashDirection()
+  :let s:directions = ['h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'e']
+  :let s:random = GetRandomNumber("0-".len(s:directions))
+  :let s:direction = s:directions[s:random-1]
+  if(s:direction != '$')
+    :let s:range = "1-5"
+    :let s:random = GetRandomNumber(s:range)
+    :let s:direction = s:random.s:direction
+  endif
+  :execute "normal! ".s:direction
+  :call WashTimer('long')
+endfunction
+
+function! GetRandomNumber(range)
+  :let s:random = system('shuf -i '.a:range.' -n 1')
+  :let s:random = substitute(s:random, '\n', '', '')
+  return s:random
+endfunction
+
+function! WashWord()
+  " get a word
+  :let s:words = ['function', 'let MIDsData = array()', 'x < 10', 'return']
+  " for each letter
+  :let s:range = "0-".(len(s:words)-1)
+  :let s:word = s:words[GetRandomNumber(s:range)]
+  " write word
+  for s:letter in split(s:word, '\zs')
+    :execute "normal! a".s:letter
+    :call WashTimer('short')
+  endfor
+  return
+endfunction
+
+function! WashTimer(length)
+  if(a:length == 'short')
+    :let s:range = "5-100"
+  elseif (a:length == 'long')
+    :let s:range = "100-700"
+  endif
+  :let s:random = system('shuf -i '.s:range.' -n 1')
+  :let s:random = substitute(s:random, '\n', '', '')
+  :redraw
+  :echo 'sleep '.s:random.'m'
+  :execute 'sleep '.s:random.'m'
+endfunction
+
 " nnoremap <Leader>te :call CurlManager()<CR>
 " function! CurlManager()
 "   :let s:url = GetURL()
