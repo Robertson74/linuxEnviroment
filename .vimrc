@@ -264,11 +264,9 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
 nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
+nnoremap <Leader>vps :!cd ~ && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
-" Reload vimrc
-nnoremap <Leader>vs :source $MYVIMRC<CR>
-
 " Reload vimrc
 nnoremap <Leader>vso :source $MYVIMRC<CR>
 " Install/Updating vim plugins
