@@ -83,6 +83,10 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" syntax highlighting
+syntax on
+" gui configuration
+colorscheme sand
 " allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
 set backspace=indent,eol,start
 " column when in insert mode
@@ -101,21 +105,14 @@ let g:netrw_liststyle= 3
 "cursor underlining
 set cursorline
 let mapleader="\<Space>"
-"turn off .swp files
-"set backupdir=~/.vim/backup//
-"set directory=~/.vim/swap//
-"set undodir=~/.vim/undo//
 "setting initial fold methods
 set foldmethod=indent
-set foldlevel=1
-set foldnestmax=1
+hi Folded ctermbg=DarkGrey
 "spell checking
 setlocal spelllang=en_us
 " case sensitivity while searching
 set ignorecase
 set smartcase
-" syntax highlighting
-syntax on
 filetype plugin indent on
 "highlight when searching
 set hlsearch incsearch
@@ -141,8 +138,6 @@ let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 set laststatus=2
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
-" gui configuration
-colorscheme sand
 " Line number colors
 highlight LineNr ctermfg=red
 highlight CursorLineNr ctermbg=magenta
@@ -214,8 +209,10 @@ nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " change fold methods
-nnoremap <Leader>sfm :set &foldmethod="manual"<CR>
-nnoremap <Leader>sfi :set &foldmethod="indent"
+nnoremap <Leader>sfm :let &foldmethod="manual"<CR>
+nnoremap <Leader>sfi :let &foldmethod="indent"<CR>:echo "foldlevel = ".&foldlevel<CR>
+nnoremap <Leader>sfu :let &foldnestmax+=1<CR>:echo "foldNestLevel = ".&foldnestmax<CR>
+nnoremap <Leader>sfd :let &foldnestmax-=1<CR>:echo "foldNestLevel = ".&foldnestmax<CR>
 " scrap buffer
 nnoremap <Leader>jun1 :tabnew +e ~/temp/junk<CR>
 nnoremap <Leader>jun2 :tabnew +e ~/temp/junk2<CR>
