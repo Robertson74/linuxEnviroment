@@ -1,0 +1,107 @@
+# Snippets for apidoc
+
+# General guide lines
+# Curly brakets around a parameter denotes the type of parameter (e.g. {String} firstName)
+# Parenthesis around a parameter denotes a group (e.g. (adminGroup))
+# Brakets around a parameter denotes an option parameter (e.g. ["optionalName"])
+# Specify a default value with the equals sign (e.g. firstName="bob")
+
+snippet apidoc "apidoc - define route" 
+/**
+ * @api {${1:get}} /${2:route} ${3:APITitle}
+ *
+ * ${4}
+ */
+endsnippet
+
+snippet apiDefine "apidoc - define apidock statement" 
+/**
+ * @apiDefine ${1:definitionName}
+ * ${2:definition}
+ *
+ */
+endsnippet
+
+snippet apiDepreciated "apidoc - depreciated" 
+@apiDeprecated use now (#Group:Name).
+endsnippet
+
+snippet apiDescription "apidoc - description"
+@apiDescription ${1:description}
+endsnippet
+
+snippet apiError "apidoc - Error"
+@apiError ${1}
+endsnippet
+
+snippet apiErrorEx "apidoc - example of error"
+@apiErrorExample ${1:json} Error-Response:
+HTTP Code: ${2:400 Bad Request}
+${3:errorExample}
+endsnippet
+
+snippet apiExample "apidoc - example call"
+@apiExample {${1:languageType}} Example usage:
+${2:example}
+endsnippet
+
+snippet apiGroup "apidoc - grouping"
+@apiGroup ${1:groupName}
+endsnippet
+
+snippet apiHeader "apidoc - required headers"
+@apiHeader ${1:field} ${2:descriptions}
+endsnippet
+
+snippet apiHeaderEx "apidoc - Header example"
+@apiHeaderExample {${1:String}} Header-Example:
+* '${2:headerKey}': '${3:headerValue}'
+endsnippet
+
+snippet apiIgnore "apidoc - Ignore this comment block"
+@apiIgnore
+endsnippet
+
+snippet apiName "apidoc - API Name"
+@apiName ${1:apiName}
+endsnippet
+
+snippet apiParam "apidoc - Paramater definition"
+@apiParam (${1:JSON_BODY}) {${2:String}} ${3:paramName} ${4:paramDescription}
+endsnippet
+
+snippet apiParamEx "apidoc - Parameter example"
+@apiParamExample ${1:{json}} Request-Example:
+* {
+*  '${2:key}' : ${3:value}
+* }
+endsnippet
+
+snippet apiPermission "apidoc - Permission"
+@apiPermission ${1:permissionName}
+endsnippet
+
+snippet apiSampleRequest "apidoc - Sample request"
+@apiSampleRequest ${1:URL}
+endsnippet
+
+snippet apiSuccess "apidoc - Successfull call data"
+@apiSuccess {${1:String}} ${2:fieldName} ${3:fieldDescription}
+endsnippet
+
+snippet apiSuccessExample "apidoc - Success example"
+@apiSuccessExample {${1:json}} Success-Response:
+*  HTTP Code: ${2:200 OK}
+*  {
+*    ${3:Response}
+*  }
+endsnippet
+
+snippet apiUse "apidoc - Use previously defined"
+@apiUse ${1:useGroup}
+endsnippet
+
+snippet apiVersion "apidoc - Version"
+@apiVersion ${1:version}
+endsnippet
+

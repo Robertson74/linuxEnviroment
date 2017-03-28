@@ -169,7 +169,7 @@ let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 inoremap <c-x><c-k> <c-x><c-k>
 " dir for custom snips
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', '../michaelSoft']
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.vim/michaelSoft/custom_snippets']
 " control p 
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
@@ -232,8 +232,8 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
 nnoremap <C-n> <C-w>p
-nnoremap <C-x> :q<CR>
-nnoremap zx :q!<CR>
+nnoremap ZX :q<CR>
+nnoremap XZ :q!<CR>
 nnoremap zh gT
 nnoremap zl gt
 "Obscure/UN Obscure doc
@@ -1045,6 +1045,35 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+function! ConverSnippetQuoteLines()
+  :normal! ^f[
+  :let s:startLine = line('.')
+  :normal! %
+  :let s:endLine = line('.')
+  :normal! %
+  :let s:quoteLoopLines = (s:endLine - s:startLine) - 1
+  :let s:quoteLoopCount = 0
+  :normal! j
+  while(s:quoteLoopCount < s:quoteLoopLines)
+    normal! I""xA",j
+    :let s:quoteLoopCount += 1
+  endwhile
+  normal! k^f,x
+endfunction
+
+function! ConvertSnippetToVsCode()
+  :let s:loopCount = 0
+  :let s:snippetCount = split(execute('%s/^snippet//gn'))[0]
+  :normal! gg
+  while(s:loopCount < s:snippetCount)
+    :execute 'normal! /^snippetdawi"ea": {}xiO"prefix": k^ya"j$pa,o"body": []xjdd/^endsnippetp0i"description":o},kO],kdd'
+    :execute "normal! ?[\<CR>"
+    :call ConverSnippetQuoteLines()
+    :let s:loopCount += 1
+  endwhile
+  execute "normal! /},\<CR>lx"
+endfunction
+
 nnoremap <Leader>ws :call Wash()<CR>
 nnoremap <Leader>wu :call WashUndo()<CR>
 function! Wash()
@@ -1061,14 +1090,17 @@ endfunction
 
 function! WashDirection()
   :let s:directions = ['h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'e']
+  :let s:finalTweakOptions = ['W', 'B']
   :let s:random = GetRandomNumber("0-".len(s:directions))
   :let s:direction = s:directions[s:random-1]
   if(s:direction != '$')
-    :let s:range = "1-5"
+    :let s:range = "2-5"
     :let s:random = GetRandomNumber(s:range)
     :let s:direction = s:random.s:direction
   endif
   :execute "normal! ".s:direction
+  :let s:finalTweak = s:finalTweakOptions[GetRandomNumber("0-1")]
+  :execute "normal! ".s:finalTweak
   :call WashTimer('long')
 endfunction
 
@@ -1080,7 +1112,7 @@ endfunction
 
 function! WashWord()
   " get a word
-  :let s:words = ['function', 'let MIDsData = array()', 'x < 10', 'return']
+  :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ']
   " for each letter
   :let s:range = "0-".(len(s:words)-1)
   :let s:word = s:words[GetRandomNumber(s:range)]
