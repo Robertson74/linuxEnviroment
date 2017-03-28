@@ -213,12 +213,15 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" change fold methods
+nnoremap <Leader>sfm :set &foldmethod="manual"<CR>
+nnoremap <Leader>sfi :set &foldmethod="indent"
 " scrap buffer
-nnoremap <Leader>jun :e ~/temp/junk<CR>
-nnoremap <Leader>jun2 :e ~/temp/junk2<CR>
-nnoremap <Leader>jun3 :e ~/temp/junk3<CR>
-nnoremap <Leader>jun4 :e ~/temp/junk4<CR>
-nnoremap <Leader>jun5 :e ~/temp/junk5<CR>
+nnoremap <Leader>jun1 :tabnew +e ~/temp/junk<CR>
+nnoremap <Leader>jun2 :tabnew +e ~/temp/junk2<CR>
+nnoremap <Leader>jun3 :tabnew +e ~/temp/junk3<CR>
+nnoremap <Leader>jun4 :tabnew +e ~/temp/junk4<CR>
+nnoremap <Leader>jun5 :tabnew +e ~/temp/junk5<CR>
 " toggle modifiable 
 nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
