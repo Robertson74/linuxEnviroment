@@ -39,7 +39,8 @@ Plugin 'Shougo/vimproc.vim'
 " Syntax error highlighting
 Plugin 'scrooloose/syntastic'
 " auto complete
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'maralla/completor.vim'
+" Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/neocomplete.vim'
 " tag browser
 Plugin 'majutsushi/tagbar'
@@ -73,9 +74,7 @@ Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 Plugin 'sidorares/node-vim-debugger'
 " php autocomplete
-" Bundle 'm2mdas/phpcomplete-extended'
-autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
-let g:phpcomplete_index_composer_command = "composer"
+Plugin 'shawncplus/phpcomplete.vim'
 " END OF PLUGINS
 "
 " All of your Plugins must be added before the following line
@@ -86,7 +85,16 @@ filetype plugin indent on    " required
 " syntax highlighting
 syntax on
 " gui configuration
-colorscheme sand
+" --- sand COLORING
+" colorscheme sand
+" hi Folded ctermfg=Green ctermbg=DarkGrey
+" hi LineNr ctermfg=red
+" hi CursorLineNr ctermbg=magenta
+" hi CursorLineNr ctermfg=green
+" hi Search ctermbg=White ctermfg=Black
+" --- jhdark COLORING
+colorscheme jhdark
+" custom colors
 " allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
 set backspace=indent,eol,start
 " column when in insert mode
@@ -107,7 +115,7 @@ set cursorline
 let mapleader="\<Space>"
 "setting initial fold methods
 set foldmethod=indent
-hi Folded ctermbg=DarkGrey
+let &fdn=2
 "spell checking
 setlocal spelllang=en_us
 " case sensitivity while searching
@@ -139,9 +147,6 @@ set laststatus=2
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
 " Line number colors
-highlight LineNr ctermfg=red
-highlight CursorLineNr ctermbg=magenta
-highlight CursorLineNr ctermfg=green
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
 " show numbers only on focused pane
@@ -1110,7 +1115,7 @@ endfunction
 
 function! WashWord()
   " get a word
-  :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ']
+  :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ', ' undefined ', ' filter.filter(x) ', ' chrisify($this) ', ' if(infinity * infinity = NULL) {', ' object.prototype  ', ' let result = integration.getResult() ']
   " for each letter
   :let s:range = "0-".(len(s:words)-1)
   :let s:word = s:words[GetRandomNumber(s:range)]
