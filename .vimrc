@@ -9,6 +9,10 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" Tern/JS autocomplete
+Plugin 'ternjs/tern_for_vim'
+" NERDTREE
+Plugin 'scrooloose/nerdtreeecho'
 " php documenter 
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'
@@ -115,6 +119,7 @@ set cursorline
 let mapleader="\<Space>"
 "setting initial fold methods
 set foldmethod=indent
+set foldlevel=99
 let &fdn=2
 "spell checking
 setlocal spelllang=en_us
@@ -159,6 +164,8 @@ set timeoutlen=1000 ttimeoutlen=0
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" NERTDTree
+nnoremap <Leader>N :NERDTreeToggle<CR>
 "php documentor 
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
@@ -371,6 +378,15 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+nnoremap <Leader>fl :call ForceFoldLevel()<CR>
+function! ForceFoldLevel()
+  :let s:level = input('Fold level: ')
+  if (s:level == '')
+    return
+  endif
+  :execute "let &foldlevel=".s:level
+  :execute "let &foldnestmax=".(s:level+1)
+endfunction
 function! PeakSymfonySnippets()
   :split +e $HOME/.vim/bundle/vim-snippets/UltiSnips/php_symfony2.snippets
   :g/^snippet/p
