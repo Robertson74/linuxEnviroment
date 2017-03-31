@@ -9,10 +9,12 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" PHP unit testing
+Plugin 'joonty/vim-phpunitqf'
 " Tern/JS autocomplete
 Plugin 'ternjs/tern_for_vim'
 " NERDTREE
-Plugin 'scrooloose/nerdtreeecho'
+Plugin 'scrooloose/nerdtree'
 " php documenter 
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'
@@ -190,15 +192,12 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 command! E Explore
-
 " vdebug with xdebug options
 " let g:vdebug_options = {}
 " let g:vdebug_options["debug_file"] = "~/vdebug.log"
 " let g:vdebug_options["debug_file_level"] = 2
 " let g:vdebug_options["port"] = 9000
-" let g:vdebug_options["break_on_open"] = 1
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
-" let g:vdebug_options['server'] = ""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
 " tagbar settings
@@ -220,6 +219,8 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" Toggle xdebug
+nnoremap <Leader>txd :!bash ~/scripts/toggleXDebug.sh<CR>
 " change fold methods
 nnoremap <Leader>sfm :let &foldmethod="manual"<CR>
 nnoremap <Leader>sfi :let &foldmethod="indent"<CR>:echo "foldlevel = ".&foldlevel<CR>
