@@ -9,78 +9,92 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
-" PHP unit testing
-Plugin 'joonty/vim-phpunitqf'
+Plugin 'VundleVim/Vundle.vim'
+""" JS STUFF --------------------------
+" ANGULAR 2 CLI integration
+Plugin 'bdauria/angular-cli.vim'
+" All sorts of typescript stuff
+Plugin 'Quramy/tsuquyomi'
+" Syntax for template strings
+Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
 Plugin 'ternjs/tern_for_vim'
-" NERDTREE
-Plugin 'scrooloose/nerdtree'
-" php documenter 
-Plugin 'tobyS/pdv'
-Plugin 'tobyS/vmustache'
-" tetris
-Plugin 'vim-scripts/TeTrIs.vim'
-" snake
-Plugin 'zyedidia/vim-snake'
-" easy motions
-Plugin 'easymotion/vim-easymotion'
-" Better text objects
-Plugin 'wellle/targets.vim'
-"let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-" Fuzzy file finder
-Plugin 'ctrlpvim/ctrlp.vim'
-" File information display
-Plugin 'Shougo/unite.vim'
-" PHP Debugger
-Plugin 'joonty/vdebug'
-"Git wrapper
-Plugin 'tpope/vim-fugitive'
-" Adds functionality to change surrounding characters
-Plugin 'tpope/vim-surround'
-" Twig syntax
-Plugin 'evidens/vim-twig'
-" Makes Async available
-Plugin 'Shougo/vimproc.vim'
-" Syntax error highlighting
-Plugin 'scrooloose/syntastic'
-" auto complete
-Plugin 'maralla/completor.vim'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim'
-" tag browser
-Plugin 'majutsushi/tagbar'
-" extended tag matching with %
-Plugin 'tmhedberg/matchit'
-" undo/redo tree structure
-Plugin 'sjl/gundo.vim'
-" easy comments
-Plugin 'tpope/vim-commentary'
-" color schemes
-Plugin 'flazz/vim-colorschemes'
-" status bar plugin
-Plugin 'vim-airline/vim-airline'
-" status bar plugin
-Plugin 'tpope/vim-repeat.git'
-" html quick develop
-Plugin 'mattn/emmet-vim'
-" html5 autocomplete
-Plugin 'othree/html5.vim'
-" autocomplete for quotes and the like
-Plugin 'raimondi/delimitmate'
-" git gutter
-Plugin 'airblade/vim-gitgutter'
-" more readable indents
-Plugin 'nathanaelkane/vim-indent-guides'
-" Snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 Plugin 'sidorares/node-vim-debugger'
+""" HTML STUFF ------------------------
+" html quick develop
+Plugin 'mattn/emmet-vim'
+" html5 autocomplete
+Plugin 'othree/html5.vim'
+""" PHP STUFF -------------------------
 " php autocomplete
 Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'joonty/vim-phpunitqf'
+" Twig syntax
+Plugin 'evidens/vim-twig'
+" PHP Debugger
+Plugin 'joonty/vdebug'
+" php documenter 
+Plugin 'tobyS/pdv'
+Plugin 'tobyS/vmustache'
+" PHP unit testing
+""" TOOLS -----------------------------
+" Snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+" more readable indents
+Plugin 'nathanaelkane/vim-indent-guides'
+" git gutter
+Plugin 'airblade/vim-gitgutter'
+" status bar plugin
+Plugin 'vim-airline/vim-airline'
+" undo/redo tree structure
+Plugin 'sjl/gundo.vim'
+" easy comments
+Plugin 'tpope/vim-commentary'
+" tag browser
+Plugin 'majutsushi/tagbar'
+" auto complete
+Plugin 'maralla/completor.vim'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Shougo/neocomplete.vim'
+" Syntax error highlighting
+Plugin 'scrooloose/syntastic'
+" Fuzzy file finder
+Plugin 'ctrlpvim/ctrlp.vim'
+" File information display
+Plugin 'Shougo/unite.vim'
+"Git wrapper
+Plugin 'tpope/vim-fugitive'
+""" NATIVE UPGRADES -------------------
+" autocomplete for quotes and the like
+Plugin 'raimondi/delimitmate'
+" extended dot functionality
+Plugin 'tpope/vim-repeat.git'
+" extended tag matching with %
+Plugin 'tmhedberg/matchit'
+" Makes Async available
+Plugin 'Shougo/vimproc.vim'
+" Adds functionality to change surrounding characters
+Plugin 'tpope/vim-surround'
+" easy motions
+Plugin 'easymotion/vim-easymotion'
+" Better text objects
+Plugin 'wellle/targets.vim'
+""" MISCELLANEOUS ---------------------
+" NERDTREE
+Plugin 'scrooloose/nerdtree'
+""" AESTHETICS ------------------------
+" color schemes
+Plugin 'flazz/vim-colorschemes'
+""" FUN -------------------------------
+" tetris
+Plugin 'vim-scripts/TeTrIs.vim'
+" snake
+Plugin 'zyedidia/vim-snake'
+"---------------------------------------
 " END OF PLUGINS
 "
 " All of your Plugins must be added before the following line
