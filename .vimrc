@@ -122,7 +122,7 @@ autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
 " no swap files
 set noswapfile
-" name lower n always search down
+" lower n always search down
 noremap <expr> n 'Nn'[v:searchforward]
 noremap <expr> N 'nN'[v:searchforward]
 set breakindent
@@ -180,8 +180,6 @@ set timeoutlen=1000 ttimeoutlen=0
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
-" NERTDTree
-nnoremap <Leader>N :NERDTreeToggle<CR>
 "php documentor 
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
@@ -214,6 +212,9 @@ command! E Explore
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
+" NERTDTree
+nnoremap <Leader>N :NERDTreeToggle<CR>
+nnoremap <Leader>LN :NERDTreeFind<CR>
 " tagbar settings
 nnoremap <Leader>T :TagbarToggle<CR>
 " grundo mapping
@@ -233,6 +234,8 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" edit plugins 
+nnoremap <Leader>epl :vsplit ~/.vim/michaelSoft/<CR>
 " Toggle xdebug
 nnoremap <Leader>txd :!bash ~/scripts/toggleXDebug.sh<CR>
 " change fold methods
@@ -318,14 +321,19 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
+
+source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
+source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" Symfony auto import
+nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
 " games
 nnoremap <Leader>gte :cal <SNR>15_Main()<CR>
 nnoremap <Leader>gsn :call Snake()<CR>
 " format json
 vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
-source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
 nnoremap <Leader>dbn :call NewVISqlInterface('new', 'tab')<CR> 
 nnoremap <Leader>dbp :call NewVISqlInterface('last', 'tab')<CR> 
@@ -1079,6 +1087,56 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+nnoremap <Leader>tes :call SmartComments()<CR>
+let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
+function! SmartComments()
+
+  :let s:keywords = SCGetKeywords()
+  :let s:commentLine = SCFormatCommentLine(getline('.'))
+  if type(s:commentLine) != 3
+    return
+  endif
+
+  for s:word in s:commentLine
+    if index(s:keywords, s:word.".sc") > -1
+      :call SCGetInstructions(s:word.".sc")
+    endif
+  endfor
+endfunction
+
+   " //load the em
+
+function! SCGetInstructions(file)
+  :let s:instructionsRaw = system("sed -n '/^em/,/^\w/p' ".g:SCkeywordsFilePath."/".a:file)
+  :let g:instructionsList = split(s:instructions, '\n')
+  for s:line in g:instructionsList
+    if match(s:line, '^-commentMod') > -1
+      :echo '123'
+      echo s:line
+    elseif match(s:line, '^-insertLine') > -1
+      :echo '456'
+      echo s:line
+    endif
+  endfor
+  echom "999"
+endfunction
+
+function! SCGetKeywords()
+  :let s:keywords = system('ls '.s:SCkeywordsFilePath.' | sed -n "/\.sc/p"')
+  :let s:keywords = split(s:keywords)
+  return s:keywords
+endfunction
+
+function! SCFormatCommentLine(commentLine)
+  if match(a:commentLine, '^\s*\/\/') < 0
+    :echom "not a comment"
+    :return "false"
+  endif
+  :let s:commentLine = split(a:commentLine, "\/\/")[1]
+  :let s:commentLine = split(s:commentLine)
+  return s:commentLine
+endfunction
+
 function! ConverSnippetQuoteLines()
   :normal! ^f[
   :let s:startLine = line('.')
@@ -1108,8 +1166,8 @@ function! ConvertSnippetToVsCode()
   execute "normal! /},\<CR>lx"
 endfunction
 
-nnoremap <Leader>ws :call Wash()<CR>
-nnoremap <Leader>wu :call WashUndo()<CR>
+nnoremap <Leader>aw :call Wash()<CR>
+nnoremap <Leader>awu :call WashUndo()<CR>
 function! Wash()
   :let s:end = 'false'
   while(s:end == 'false')
