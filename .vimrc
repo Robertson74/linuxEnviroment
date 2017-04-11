@@ -180,6 +180,8 @@ set timeoutlen=1000 ttimeoutlen=0
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+"NERD Tree
+let NERDTreeShowLineNumbers=1
 "php documentor 
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
