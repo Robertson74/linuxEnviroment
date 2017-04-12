@@ -255,7 +255,7 @@ nnoremap <Leader>jun5 :tabnew +e ~/temp/junk5<CR>
 nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
 nnoremap <Leader>pas :set paste!<CR>
-" pane/tab navigation
+" panenavigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -265,8 +265,14 @@ nnoremap <C-b> <C-w>b
 nnoremap <C-n> <C-w>p
 nnoremap ZX :q<CR>
 nnoremap XZ :q!<CR>
+" tab navigation 
 nnoremap zl :tabnext<CR>
 nnoremap zh :tabprev<CR>
+nnoremap <Leader>tn :tabnew<CR>
+nnoremap <Leader>tc :tabclose<CR>
+nnoremap <Leader>to :tabonly<CR>
+nnoremap <Leader>tu :tabmove +1<CR>
+nnoremap <Leader>td :tabmove -1<CR>
 "Obscure/UN Obscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
