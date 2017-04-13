@@ -388,8 +388,8 @@ nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " auto camel case
 nnoremap <Leader>cam :call CammelCaseVisual()<CR>
 " nav bar
-nnoremap <Leader>tn :call ToggleNav()<CR>
-nnoremap <Leader>fn :call NewFocusNavBar()<CR>
+" nnoremap <Leader>tn :call ToggleNav()<CR>
+" nnoremap <Leader>fn :call NewFocusNavBar()<CR>
 " Temp areas
 nnoremap <Leader>tap :call PlaceTempArea()<CR>
 nnoremap <Leader>tar :call RemoveTempArea()<CR>
