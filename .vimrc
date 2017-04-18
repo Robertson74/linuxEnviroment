@@ -284,7 +284,7 @@ nnoremap <Leader>td :tabmove -1<CR>
 "Obscure/UN Obscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
-nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references <left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references gn<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
 nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 " swap comments quickly
@@ -306,6 +306,7 @@ nnoremap <Leader>sw :w !sudo tee %<cr>
 " find trailing spaces
 nnoremap <Leader>ts /\S\zs\s\+$<cr>
 "turn off highlighting
+nnoremap <C-_> :noh<CR>
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
 nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
