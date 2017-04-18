@@ -22,7 +22,12 @@ Plugin 'ternjs/tern_for_vim'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
-Plugin 'sidorares/node-vim-debugger'
+" Plugin 'sidorares/node-vim-debugger'
+"auto import
+" Plugin 'Galooshi/vim-import-js'
+" Plugin 'isRuslan/vim-es6'
+" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
 " html quick develop
 Plugin 'mattn/emmet-vim'
@@ -236,6 +241,9 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" yY and yy slight changes
+nnoremap yy y$
+nnoremap yY y0
 " edit plugins 
 nnoremap <Leader>epl :vsplit ~/.vim/michaelSoft/<CR>
 " Toggle xdebug
@@ -303,7 +311,7 @@ nnoremap <Leader>no :noh<CR>
 nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
 nnoremap <Leader>vps :!cd ~ && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
-nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>
+nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>:tabmove $<CR>
 " Reload vimrc
 nnoremap <Leader>vso :source $MYVIMRC<CR>
 " Install/Updating vim plugins
@@ -334,7 +342,11 @@ source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 " Symfony auto import
-nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
+augroup import
+  au!
+  au BufEnter *.php nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
+  au BufEnter *.ts nnoremap <Leader>imp :TsuImport<CR>
+augroup END
 " games
 nnoremap <Leader>gte :cal <SNR>15_Main()<CR>
 nnoremap <Leader>gsn :call Snake()<CR>
@@ -1094,6 +1106,8 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+let g:tern_show_argument_hints='on_hold'
+let g:tern_map_keys=1
 nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()
