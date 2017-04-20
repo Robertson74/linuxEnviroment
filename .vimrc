@@ -45,6 +45,12 @@ Plugin 'joonty/vdebug'
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'
 " PHP unit testing
+" enables auto complete on php
+" Plugin 'm2mdas/phpcomplete-extended'
+" Plugin 'm2mdas/phpcomplete-extended-symfony'
+autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
+" dictionary
+Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
 " Snippets
 Plugin 'SirVer/ultisnips'
@@ -91,6 +97,7 @@ Plugin 'wellle/targets.vim'
 """ MISCELLANEOUS ---------------------
 " NERDTREE
 Plugin 'scrooloose/nerdtree'
+" Plugin 'jceb/vim-orgmode'
 """ AESTHETICS ------------------------
 " color schemes
 Plugin 'flazz/vim-colorschemes'
@@ -164,8 +171,6 @@ set tabstop=2
 set shiftwidth=2
 " On pressing tab, insert spaces
 set expandtab
-" enables auto complete on php
-" autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
 "Netrw override to allow relative numbers
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
 " status line config
@@ -185,14 +190,18 @@ set timeoutlen=1000 ttimeoutlen=0
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" typescript
+let g:tsuquyomi_completion_detail = 1
+" tern
+let g:tern_show_argument_hints='on_hold'
+let g:tern_map_keys=1
 "NERD Tree
 let NERDTreeShowLineNumbers=1
 "php documentor 
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
-nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 "snippets 
 let g:UltiSnipsExpandTrigger = "<C-Z>"
-let g:UltiSnipsListSnippets = "<C-L>"
+let g:UltiSnipsListSnippets = "<C-S>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 inoremap <c-x><c-k> <c-x><c-k>
@@ -219,6 +228,10 @@ command! E Explore
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
+" typescript 
+autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
+" PHPDoc
+nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 " NERTDTree
 nnoremap <Leader>N :NERDTreeToggle<CR>
 nnoremap <Leader>LN :NERDTreeFind<CR>
@@ -241,6 +254,10 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" completion
+inoremap <C-c> <C-x><C-o>
+inoremap <C-l> <C-x><C-l>
+
 " yY and yy slight changes
 nnoremap yy y$
 nnoremap yY y0
@@ -342,6 +359,9 @@ source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
+nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
+nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 " Symfony auto import
 augroup import
   au!
@@ -796,9 +816,6 @@ function! NewFocusNavBar()
   endif
 endfunction
 " extend screen to another split
-nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
-nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
-nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 function! ExtendScreenUp()
   if (!exists('b:extendedUpList'))
     :let b:extendedUpList = [] 
@@ -956,7 +973,7 @@ endfunction
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
 nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
 """"""" open doc in code
-nnoremap <Leader>!c :!code %<CR>
+" nnoremap <Leader>!c :!code %<CR>
 """"""" flip true false
 function! FlipBoolean()
   if expand('<cword>') == 'true'
@@ -1107,8 +1124,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-let g:tern_show_argument_hints='on_hold'
-let g:tern_map_keys=1
+
 nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()
@@ -1188,8 +1204,8 @@ function! ConvertSnippetToVsCode()
   execute "normal! /},\<CR>lx"
 endfunction
 
-nnoremap <Leader>aw :call Wash()<CR>
-nnoremap <Leader>awu :call WashUndo()<CR>
+" nnoremap <Leader>aw :call Wash()<CR>
+" nnoremap <Leader>awu :call WashUndo()<CR>
 function! Wash()
   :let s:end = 'false'
   while(s:end == 'false')
