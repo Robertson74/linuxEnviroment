@@ -11,6 +11,8 @@ call vundle#begin()
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
+" auto import
+Plugin 'galooshi/vim-import-js'
 " ANGULAR 2 CLI integration
 Plugin 'bdauria/angular-cli.vim'
 " All sorts of typescript stuff
@@ -50,6 +52,8 @@ Plugin 'tobyS/vmustache'
 " Plugin 'm2mdas/phpcomplete-extended-symfony'
 autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
 " dictionary
+""" no online help
+let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
 " Snippets
@@ -201,7 +205,7 @@ let NERDTreeShowLineNumbers=1
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 "snippets 
 let g:UltiSnipsExpandTrigger = "<C-Z>"
-let g:UltiSnipsListSnippets = "<C-S>"
+let g:UltiSnipsListSnippets = "<C-l>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 inoremap <c-x><c-k> <c-x><c-k>
@@ -228,6 +232,8 @@ command! E Explore
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
+" tern 
+autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
 " typescript 
 autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
 " PHPDoc
@@ -256,14 +262,15 @@ nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " completion
 inoremap <C-c> <C-x><C-o>
-inoremap <C-l> <C-x><C-l>
+inoremap <C-f> <C-x><C-l>
 
 " yY and yy slight changes
 nnoremap yy y$
 nnoremap yY y0
 " edit plugins 
 nnoremap <Leader>epl :vsplit ~/.vim/michaelSoft/<CR>
-" Toggle xdebug
+" Toggle xdebug/server
+nnoremap <Leader>rs :!sudo service apache2 restart<CR>
 nnoremap <Leader>txd :!bash ~/scripts/toggleXDebug.sh<CR>
 " change fold methods
 nnoremap <Leader>sfm :let &foldmethod="manual"<CR>
