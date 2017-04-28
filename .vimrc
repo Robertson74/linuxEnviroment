@@ -231,7 +231,7 @@ command! E Explore
 " let g:vdebug_options["port"] = 9000
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin calls
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-calls plugin 
 " tern 
 autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
 " typescript 
@@ -269,6 +269,8 @@ nnoremap yy y$
 nnoremap yY y0
 " edit plugins 
 nnoremap <Leader>epl :vsplit ~/.vim/michaelSoft/<CR>
+" edit bundle
+nnoremap <Leader>ebu :vsplit ~/.vim/bundle/<CR>
 " Toggle xdebug/server
 nnoremap <Leader>rs :!sudo service apache2 restart<CR>
 nnoremap <Leader>txd :!bash ~/scripts/toggleXDebug.sh<CR>
@@ -366,13 +368,22 @@ source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+"my first bind
+nnoremap <Leader>bl :call FlipBoolean()<CR>
+" folidng 
+nnoremap <Leader>fl :call ForceFoldLevel()<CR>
+" zooming
+nnoremap <Leader>z :call ToogleZoomSplit()<CR>
+"extending windows
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 " Symfony auto import
+
 augroup import
   au!
   au BufEnter *.php nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
+  au BufEnter *.php nnoremap <Leader>ser :silent! call SetUpSymfonyServices()<CR>
   au BufEnter *.ts nnoremap <Leader>imp :TsuImport<CR>
 augroup END
 " games
@@ -400,8 +411,6 @@ nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDeb
 " nnoremap <Leader>dbs :call VIsqlLogin()<CR>
 "remote manipulation of lines
 nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
-" snippet for var dump
-nnoremap <Leader>svd :call SnipVarDump()<CR>
 " set a new top line
 nnoremap<Leader>nt :call MakeTop()<CR>
 " Peeks 
@@ -439,8 +448,6 @@ nnoremap <Leader>csg :call SearchContextually("global")<CR>
 " temporary line highlights
 nnoremap <Leader>tsp :call PlaceTempSign()<CR>
 nnoremap <Leader>tsr :call RemoveTempSign()<CR>
-" Zooming
-nnoremap <Leader>z :silent! call ToggleZoom()<CR>
 " Spelling
 nnoremap <Leader>sp :set spell!<CR>
 " go to thirds of line
@@ -448,7 +455,52 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
-nnoremap <Leader>fl :call ForceFoldLevel()<CR>
+function! ToogleZoomSplit()
+  if !exists('t:zoomedStatus')
+    let t:zoomedStatus = 'false'
+  endif
+  if t:zoomedStatus == 'true'
+    call UnZoomSplit()
+    echo "un-zoom"
+  elseif t:zoomedStatus == 'false'
+    call ZoomSplit()
+    echo "zoom"
+  endif
+endfunction
+function! ZoomSplit()
+  let s:returnWindow = win_getid()
+  let t:zoomList = []
+
+  windo call add(t:zoomList, [win_getid(), winheight('.'), winwidth('.'), winsaveview()])
+  call win_gotoid(s:returnWindow)
+  vertical res 1000
+  res 1000
+  let t:zoomedStatus = 'true'
+endfunction
+
+function! UnZoomSplit()
+  if exists('t:zoomedStatus') == 0 || t:zoomedStatus == 'false'
+    let t:zoomedList = []
+  endif
+  let s:returnWin = win_getid()
+  for split in t:zoomList
+    call win_gotoid(split[0])
+    exec "res ".split[1]
+    exec "vertical res ".split[2]
+    call winrestview(split[3])
+  endfor
+  let t:zoomList = reverse(t:zoomList)
+  for split in t:zoomList
+    call win_gotoid(split[0])
+    exec "res ".split[1]
+    exec "vertical res ".split[2]
+    call winrestview(split[3])
+  endfor
+  call win_gotoid(s:returnWin)
+  let t:zoomedStatus = 'false'
+  unlet t:zoomList
+endfunction
+
 function! ForceFoldLevel()
   :let s:level = input('Fold level: ')
   if (s:level == '')
@@ -948,21 +1000,6 @@ function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>AEND TEMP\<esc>"
   :Commentary
 endfunction
-" Zooming
-function! ToggleZoom()
-  if(!exists("b:zoomedStatus"))
-    :let b:zoomedStatus = "false"
-  endif
-  if(b:zoomedStatus == "false")
-    :mark b|:tabnew %|normal! 'bzz
-    call ZoomContext()
-    let b:zoomedStatus = "true"
-  else
-    :mark v|:tabprevious|:normal! 'vzz
-    :+tabclose
-    let b:zoomedStatus = "false"
-  endif
-endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 function! GoToFirstThirdOfLine()
   :execute "normal! $"
@@ -995,8 +1032,6 @@ function! FlipBoolean()
     :echo "Not a Boolean"
   endif
 endfunction
-"my first bind
-nnoremap <Leader>bl :call FlipBoolean()<CR>
 "false 0 1 true
 """"""" Call up Node Debugger
 let debugLaunchFile = "build/server.js"
@@ -1082,31 +1117,6 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
   endwhile
 endfunction
 
-function! ZoomContext()
-  :sp
-  :e ~/.vim/michaelSoft/zoomwindows/topbar
-  :execute "normal! \<C-W>k"
-  :resize 1
-  :set nornu nonu
-  :set wfh
-  :execute "normal!\<C-W>p"
-  :vsp
-  :execute "normal! \<C-W>h"
-  :e ~/.vim/michaelSoft/zoomwindows/sidebar
-  :vertical resize 3
-  :set nornu nonu
-  :set wfw
-  :execute "normal!\<C-W>p"
-  :vsp
-  :execute "normal! \<C-W>l"
-  :e ~/.vim/michaelSoft/zoomwindows/sidebar
-  :vertical resize 3
-  :set nornu nonu
-  :set wfw
-  :execute "normal!\<C-W>p"
-endfunction
-
-
 nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 "--- look into Neovim and use Deoplete 
@@ -1149,7 +1159,7 @@ function! SmartComments()
   endfor
 endfunction
 
-   " //load the em
+" //load the em
 
 function! SCGetInstructions(file)
   :let s:instructionsRaw = system("sed -n '/^em/,/^\w/p' ".g:SCkeywordsFilePath."/".a:file)

@@ -40,3 +40,31 @@ function! ImportFile(returnWindow, returnLine)
   :unlet g:importReturnWindow
   :unlet g:importReturnLine
 endfunction
+
+function! SetUpSymfonyServices()
+  let g:serviceReturnFile = win_getid()
+  vsp +enew
+  normal <C-W>H
+  let s:serviceFilesBlob = system('find ./src/ -name "services.yml"')
+  let s:serviceFiles = split(s:serviceFilesBlob)
+  for s:file in s:serviceFiles
+    :put=s:file
+    :s/.*\/\(\w*Bundle\).*/\1:
+    :let s:services = system('grep "^\s\s\s\s\w.*:" '.s:file)
+    :put=s:services
+  endfor
+  :1d
+  :%s/\(^\s\+\w.*\):/\1
+  :0
+  nnoremap <buffer> <CR> :call SymfonyImportService(g:serviceReturnFile)<CR>
+endfunction
+
+function! SymfonyImportService(returnFile)
+  let s:serviceWindow = bufnr('%')
+  normal ^
+  execute "let s:service = expand('<cWORD>')"
+  call win_gotoid(a:returnFile)
+  execute ":bd! ".s:serviceWindow
+  execute "normal! o $var = $this->get('".s:service."');"
+  normal ==^l
+endfunction
