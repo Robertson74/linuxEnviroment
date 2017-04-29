@@ -39,7 +39,7 @@ Plugin 'othree/html5.vim'
 " php autocomplete
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'joonty/vim-phpunitqf'
-" Twig syntax
+" Twig smyntax
 Plugin 'evidens/vim-twig'
 " PHP Debugger
 Plugin 'joonty/vdebug'
@@ -231,7 +231,12 @@ command! E Explore
 " let g:vdebug_options["port"] = 9000
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-calls plugin 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+" PHPUnit
+augroup phpunit
+  au!
+  au BufEnter *.php nnoremap <Leader>tes :Test<CR>
+augroup END
 " tern 
 autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
 " typescript 

@@ -60,6 +60,7 @@ function! SetUpSymfonyServices()
 endfunction
 
 function! SymfonyImportService(returnFile)
+	unmap <buffer> <CR>
   let s:serviceWindow = bufnr('%')
   normal ^
   execute "let s:service = expand('<cWORD>')"
