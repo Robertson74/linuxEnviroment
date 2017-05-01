@@ -199,22 +199,22 @@ let g:tsuquyomi_completion_detail = 1
 " tern
 let g:tern_show_argument_hints='on_hold'
 let g:tern_map_keys=1
-"NERD Tree
+" NERD Tree
 let NERDTreeShowLineNumbers=1
-"php documentor 
+" php documentor 
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
-"snippets 
+" snippets 
 let g:UltiSnipsExpandTrigger = "<C-Z>"
 let g:UltiSnipsListSnippets = "<C-l>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
-inoremap <c-x><c-k> <c-x><c-k>
 " dir for custom snips
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.vim/michaelSoft/custom_snippets']
 " control p 
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
 " php extended config 
+let g:phpcomplete_parse_docblock_comments = 1
 let g:phpcomplete_index_composer_command = "composer"
 " Syntastic typescript linter
 let g:syntastic_typescript_checkers = ['tslint']
