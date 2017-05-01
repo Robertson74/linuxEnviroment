@@ -263,7 +263,7 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-file short cuts
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
-nnoremap <Leader>ete :vsp ./src/APIBundle/Controller/TestingController.php<CR>
+nnoremap <Leader>etc :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " completion
 inoremap <C-c> <C-x><C-o>
@@ -373,6 +373,8 @@ source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" edit php test file
+nnoremap <Leader>ete :call EditPHPTestFile()<CR>
 "my first bind
 nnoremap <Leader>bl :call FlipBoolean()<CR>
 " folidng 
@@ -460,6 +462,30 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! EditPHPTestFile()
+  let s:testDir = './tests/'
+  let s:testFile = expand('%:t:r').'Test.'.expand('%:e')
+  let s:testFilePath = system('find '.s:testDir.' -name "'.s:testFile.'"')
+  let s:testFilePath = split(s:testFilePath)
+  if empty(s:testFilePath)
+    echo 'No test file '.s:testFile.' found. Create it? (y/n)'
+    let s:choice = getchar()
+    if s:choice != 121
+      echo 'Aborting...'
+      return
+    else
+      let s:testFilePath = substitute(expand('%'), '^.*/\(.*Bundle\)', s:testDir.'\1', '')
+      let s:testFilePath = substitute(s:testFilePath, '\w\+\.php', '', '')
+      execute '!mkdir '.s:testFilePath.' -p'
+      execute '!touch '.s:testFilePath.''.s:testFile
+      execute 'vsplit +e '.s:testFilePath.''.s:testFile
+      return
+    endif
+  else
+    let s:testFilePath = s:testFilePath[0]
+    execute "vsplit +e "s:testFilePath
+  endif
+endfunction
 function! ToogleZoomSplit()
   if !exists('t:zoomedStatus')
     let t:zoomedStatus = 'false'
@@ -1146,6 +1172,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+
 
 nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
