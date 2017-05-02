@@ -1188,7 +1188,27 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-
+nnoremap <Leader>cla :call ClassSearch()<CR>
+function! ClassSearch()
+  let g:returnWindow = win_getid()
+  let s:searchTerm = input("Class to serach for: ")
+  if empty(s:searchTerm)
+    return
+  endif
+  let s:searchCommand = 'find ./ -regex ".*\.php" ! -path "./var/*" ! -path "./tests/*" ! -path "./web/*" | xargs grep "^\(abstract\)\?\s*class.*\w*'.s:searchTerm.'\w*"'
+  let s:searchResults = system(s:searchCommand)
+  if match(s:searchResults, 'class') == -1
+    echom "...No results..."
+    return
+  endif
+  tabnew +enew
+  %d
+  put=s:searchResults
+  silent %s/\(^.*\):\(.*\)/\2:\1/g
+  silent %s/\(^class \w\+\).*:/\1:/g
+  silent %!column -s":" -t
+  silent %sort
+endfunction
 " nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()
