@@ -202,6 +202,7 @@ let g:tern_map_keys=1
 " NERD Tree
 let NERDTreeShowLineNumbers=1
 " php documentor 
+let g:snips_author="Michael Robertson"
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 " snippets 
 let g:UltiSnipsExpandTrigger = "<C-Z>"
@@ -462,6 +463,21 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" clear non active buffers
+function! DeleteNonActiveBuffers()
+  redir => s:buffers | ls | redir END
+  let s:buffersArray = split(s:buffers, '\n')
+  " for s:bufferLine in s:buffersArray
+  "   echo split(s:bufferLine)[0]
+  " endfor
+  for s:bufferLine in s:buffersArray
+    if match(s:bufferLine, '^\s*\d\+\s\{,4}\S*a') == -1
+      let s:bufferNumber = split(s:bufferLine)[0]
+      execute "bd ".s:bufferNumber
+    endif
+  endfor
+endfunction
+" find and edit test file (php)
 function! EditPHPTestFile()
   let s:testDir = './tests/'
   let s:testFile = expand('%:t:r').'Test.'.expand('%:e')
@@ -1173,8 +1189,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 
-
-nnoremap <Leader>tes :call SmartComments()<CR>
+" nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()
 
