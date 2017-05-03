@@ -266,6 +266,8 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>etc :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" list functions help
+nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
 inoremap <C-c> <C-x><C-o>
 inoremap <C-f> <C-x><C-l>
@@ -374,6 +376,8 @@ source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+" delete non active buffers
+nnoremap <Leader>dbu :call DeleteNonActiveBuffers()<CR>
 " edit php test file
 nnoremap <Leader>ete :call EditPHPTestFile()<CR>
 "my first bind
@@ -465,6 +469,10 @@ nnoremap gl :call GoToSecondThirdOfLine()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
 " clear non active buffers
 function! DeleteNonActiveBuffers()
+  let s:abortChoice = getchar('Delete non active buffers? (y/n)')
+  if s:abortChoice != 121
+    return
+  endif
   redir => s:buffers | ls | redir END
   let s:buffersArray = split(s:buffers, '\n')
   " for s:bufferLine in s:buffersArray
