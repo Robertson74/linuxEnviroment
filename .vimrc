@@ -264,14 +264,15 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-file short cuts
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
-nnoremap <Leader>etc :vsp ./src/APIBundle/Controller/TestingController.php<CR>
+nnoremap <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " list functions help
 nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
 inoremap <C-c> <C-x><C-o>
 inoremap <C-f> <C-x><C-l>
-
+inoremap <C-p> <C-x><C-p>
+inoremap <C-n> <C-x><C-n>
 " yY and yy slight changes
 nnoremap yy y$
 nnoremap yY y0
@@ -1196,7 +1197,16 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>cla :call ClassSearch()<CR>
+nnoremap <Leader>fse :silent call FindSymfonyServiceFiles()<CR>
+function! FindSymfonyServiceFiles()
+  vsplit +enew
+  normal! <C-W>H
+  execute 'r!find ./src/**/Service -regex ".*\.php"'
+  %s/\(^.*\/\)\(\w\+\.php\)/\2:\1\2
+  %!column -s":" -t
+  %sort
+endfunction
+nnoremap <Leader>fcl :call ClassSearch()<CR>
 function! ClassSearch()
   let g:returnWindow = win_getid()
   let s:searchTerm = input("Class to serach for: ")
