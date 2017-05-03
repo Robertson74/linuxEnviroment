@@ -1205,6 +1205,9 @@ function! FindSymfonyServiceFiles()
   %s/\(^.*\/\)\(\w\+\.php\)/\2:\1\2
   %!column -s":" -t
   %sort
+  :$
+  normal! o
+  r! find ./src/ -name "services.yml"
 endfunction
 nnoremap <Leader>fcl :call ClassSearch()<CR>
 function! ClassSearch()
