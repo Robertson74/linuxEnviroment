@@ -37,8 +37,9 @@ Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 """ PHP STUFF -------------------------
 " php autocomplete
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'joonty/vim-phpunitqf'
+" Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'm2mdas/phpcomplete-extended'
+" Plugin 'm2mdas/phpcomplete-extended-symfony'
 " Twig smyntax
 Plugin 'evidens/vim-twig'
 " PHP Debugger
@@ -47,10 +48,7 @@ Plugin 'joonty/vdebug'
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'
 " PHP unit testing
-" enables auto complete on php
-" Plugin 'm2mdas/phpcomplete-extended'
-" Plugin 'm2mdas/phpcomplete-extended-symfony'
-autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
+Plugin 'joonty/vim-phpunitqf'
 " dictionary
 """ no online help
 let g:php_manual_online_search_shortcut = "<C-q>"
@@ -118,6 +116,14 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+autocmd FileType c setlocal omnifunc=ccomplete#Complete
+autocmd FileType vim setlocal omnifunc=syntaxcomplete#Complete 
 " syntax highlighting
 syntax on
 " gui configuration
@@ -194,6 +200,7 @@ set timeoutlen=1000 ttimeoutlen=0
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" enables auto complete on php
 " typescript
 let g:tsuquyomi_completion_detail = 1
 " tern
@@ -266,6 +273,11 @@ nnoremap <Leader>ST :SyntasticToggleMode<CR>
 nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
 nnoremap <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" help when in vim script
+augroup vimHelp
+  autocmd!
+  autocmd FileType vim nnoremap <buffer> K :execute "help ".expand('<cword>')<CR>
+augroup END
 " list functions help
 nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
@@ -373,8 +385,9 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 nnoremap <Leader>nu :set nu! rnu!<CR>
 
 
+" bring in custom plugins
 source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
-source /home/vagrant/.vim/michaelSoft/SymfonyAutoImport/symfonyAutoLoad.vim
+source /home/vagrant/.vim/michaelSoft/symfony/symfonyTools.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 " delete non active buffers
@@ -391,12 +404,15 @@ nnoremap <Leader>z :call ToogleZoomSplit()<CR>
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
-" Symfony auto import
 
+
+" Symfony tools
 augroup import
   au!
   au BufEnter *.php nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
   au BufEnter *.php nnoremap <Leader>ser :silent! call SetUpSymfonyServices()<CR>
+  au BufEnter *.php nnoremap <Leader>fse :silent call FindSymfonyServiceFiles()<CR>
+  au BufEnter *.php nnoremap <Leader>fcl :call FindSymfonyClass()<CR>
   au BufEnter *.ts nnoremap <Leader>imp :TsuImport<CR>
 augroup END
 " games
@@ -433,7 +449,7 @@ nnoremap <Leader>psc :call PeekScriptCalls()<CR>
 "repetitive strings 
 nnoremap <Leader>rli :call RepetitiveLines()<CR>
 nnoremap <Leader>rst :call RepetitiveString()<CR>
-nnoremap <Leader>frp :call FindAndReplaceRange()<CR>
+nnoremap <Leader>fr :call FindAndReplaceRange()<CR>
 " Mark and move windows
 nnoremap <Leader>mwp :call MarkWindow()<CR>
 nnoremap <Leader>mwr :call UnMarkWindow()<CR>
@@ -1197,39 +1213,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>fse :silent call FindSymfonyServiceFiles()<CR>
-function! FindSymfonyServiceFiles()
-  vsplit +enew
-  normal! <C-W>H
-  execute 'r!find ./src/**/Service -regex ".*\.php"'
-  %s/\(^.*\/\)\(\w\+\.php\)/\2:\1\2
-  %!column -s":" -t
-  %sort
-  :$
-  normal! o
-  r! find ./src/ -name "services.yml"
-endfunction
-nnoremap <Leader>fcl :call ClassSearch()<CR>
-function! ClassSearch()
-  let g:returnWindow = win_getid()
-  let s:searchTerm = input("Class to serach for: ")
-  if empty(s:searchTerm)
-    return
-  endif
-  let s:searchCommand = 'find ./ -regex ".*\.php" ! -path "./var/*" ! -path "./tests/*" ! -path "./web/*" | xargs grep "^\(abstract\)\?\s*class.*\w*'.s:searchTerm.'\w*"'
-  let s:searchResults = system(s:searchCommand)
-  if match(s:searchResults, 'class') == -1
-    echom "...No results..."
-    return
-  endif
-  tabnew +enew
-  %d
-  put=s:searchResults
-  silent %s/\(^.*\):\(.*\)/\2:\1/g
-  silent %s/\(^class \w\+\).*:/\1:/g
-  silent %!column -s":" -t
-  silent %sort
-endfunction
+
 " nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()

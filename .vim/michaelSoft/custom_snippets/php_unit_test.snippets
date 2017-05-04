@@ -1,0 +1,17 @@
+# Unit testing
+snippet mockBuilder "Mock Builder"
+${1:$mock} = $this->getMockBuilder('${2:PathToObject}')
+  ->${3:disableOriginalConstructor()}
+  ->${4:setConstructorArgs}(array(${5:constructorArgs}))
+  ->${6:setMethods}(array('${7:methodsToMock}'))
+  ->getMock();
+endsnippet
+
+
+snippet mockMethod "Mock Method"
+$${1:mock}->expects($this->${2:numberOfMethodCallsExpected}())
+   ->method('${3:methodName}')
+   ->will($this->returnValue(${4:returnValue}));
+endsnippet
+
+
