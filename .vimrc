@@ -270,8 +270,12 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-file short cuts
-nnoremap <Leader>epar :vsp ./app/config/parameters.yml<CR>
-nnoremap <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
+" php
+augroup phpShortCuts
+  autocmd!
+  autocmd FileType php nnoremap <buffer> <Leader>epar :vsp ./app/config/parameters.yml<CR>
+  autocmd FileType php nnoremap <buffer> <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
+augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
 " help when in vim script
 augroup vimHelp
@@ -320,7 +324,7 @@ nnoremap <C-b> <C-w>b
 nnoremap <C-n> <C-w>p
 nnoremap ZX :q<CR>
 nnoremap XZ :q!<CR>
-" tab navigation 
+" tab navigation
 nnoremap zl :tabnext<CR>
 nnoremap zh :tabprev<CR>
 nnoremap <Leader>tn :tabnew<CR>
@@ -407,12 +411,16 @@ nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 
 
 " Symfony tools
-augroup import
+augroup symfonyTools
   au!
   au BufEnter *.php nnoremap <Leader>imp :call SetUpSymfonyAutoImport()<CR>
   au BufEnter *.php nnoremap <Leader>ser :silent! call SetUpSymfonyServices()<CR>
   au BufEnter *.php nnoremap <Leader>fse :silent call FindSymfonyServiceFiles()<CR>
   au BufEnter *.php nnoremap <Leader>fcl :call FindSymfonyClass()<CR>
+augroup END
+"typescript tools
+augroup typescriptTools
+  au!
   au BufEnter *.ts nnoremap <Leader>imp :TsuImport<CR>
 augroup END
 " games
