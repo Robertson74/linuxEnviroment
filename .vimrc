@@ -1252,6 +1252,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+source ~/.vim/michaelSoft/mrCompletor/mrCompleterPHP.vim
 
 
 " inoremap <C-A> <C-R>=TestCom()<CR>
