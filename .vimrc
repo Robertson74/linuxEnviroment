@@ -1221,7 +1221,11 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-
+inoremap <C-a> <C-R>=TestCompletor()<CR>
+function! TestCompletor()
+  call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
+  return ''
+endfunction
 " nnoremap <Leader>tes :call SmartComments()<CR>
 let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
 function! SmartComments()
