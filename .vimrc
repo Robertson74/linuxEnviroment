@@ -393,7 +393,7 @@ nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
 nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
 nnoremap <Leader>vps :!cd ~ && git push github master;<CR>
-nnoremap <Leader>vsy :!cd ~;git pull github master;<CR>
+nnoremap <Leader>vsy :!cd ~ && sudo git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>:tabmove $<CR>
 " Reload vimrc
 nnoremap <Leader>vso :source $MYVIMRC<CR>
@@ -418,8 +418,6 @@ nnoremap <Leader>cp :cprevious<CR>
 nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
-
-
 " bring in custom plugins
 source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
 source /home/vagrant/.vim/michaelSoft/symfony/symfonyTools.vim
