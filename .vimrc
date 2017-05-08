@@ -391,7 +391,7 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 nnoremap <C-_> :noh<CR>
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vup :!cd ~;git add .vimrc && sudo git add .vim/michaelSoft/* -f && git commit -m "updating" && git push github master;<CR>
+nnoremap <Leader>vup :!cd ~;sudo git add .vimrc && sudo git add .vim/michaelSoft/* -f && sudo git commit -m "updating" && sudo git push github master;<CR>
 nnoremap <Leader>vps :!cd ~ && git push github master;<CR>
 nnoremap <Leader>vsy :!cd ~ && sudo git pull github master;<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>:tabmove $<CR>
@@ -1250,6 +1250,11 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+inoremap <C-a> <C-R>=TestCompletor()<CR>
+function! TestCompletor()
+  call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
+  return ''
+endfunction
 source ~/.vim/michaelSoft/mrCompletor/mrCompleterPHP.vim
 
 
