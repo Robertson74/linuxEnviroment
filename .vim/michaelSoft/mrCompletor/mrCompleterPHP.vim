@@ -21,7 +21,7 @@ function! IdentifierTest(completionIdentifiers)
   let s:endChar = s:line[s:column-s:columnCounter]
   echom s:searchHint
   echom s:endChar
-  echom s:identifiers[s:endChar]
+  echom index(s:identifiers[s:endChar]
 endfunction
 " $object->mulipl
 " $object::
