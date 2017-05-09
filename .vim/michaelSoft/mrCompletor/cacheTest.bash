@@ -32,8 +32,9 @@ do
   while read line; do
     if [[ "$line" =~ $i ]]
     then
-      echo $line >> $cacheDir"/refreshCache.mr"
-      echo "$classCache" >> $cacheDir"/refreshCache.mr"
+    #   echo $line >> $cacheDir"/refreshCache.mr"
+    #   echo "$classCache" >> $cacheDir"/refreshCache.mr"
+    echo "hi"
     else
       echo $line >> $cacheDir"/refreshCache.mr"
     fi
