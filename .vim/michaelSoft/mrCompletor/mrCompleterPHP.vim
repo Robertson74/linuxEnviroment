@@ -2,27 +2,25 @@ function! RefreshClass(sourceDir, excludeDirs)
 
 endfunction
 
-let completionIdentifiers = [ ['>', [ 'public_methods', 'public_properties' ] ], [':', [ 'status_methods', 'constans' ] ], ['$', [ 'buffer_variables' ] ], [' ', [ 'nothing' ] ] ]
-inoremap <C-A> <ESC>:call IdentifierTest(completionIdentifiers)<CR>
+let g:MRCcompletionIdentifiers = {'>': [ 'public_methods', 'public_properties' ], ':': [ 'status_methods', 'constans' ], '$': [ 'buffer_variables' ], ' ': [ 'nothing' ]} 
+inoremap <C-A> <ESC>:call IdentifierTest(MRCcompletionIdentifiers)<CR>
+
 function! IdentifierTest(completionIdentifiers)
-  let s:identifiers = []
-  for s:completion in a:completionIdentifiers
-   call add(s:identifiers, s:completion[0])
-  endfor
-  let s:identifiers = ['>', ':', '$', ' ']
+  "get identifiers to find
+  let s:identifiers = keys(a:completionIdentifiers)
   let s:column = col('.')
   let s:columnCounter = 1
   let s:line = getline('.')
-  let s:searchHint = ''
+  let s:completionHint = ''
   while count(s:identifiers, s:line[s:column-s:columnCounter]) == 0 && col('.') != s:columnCounter - 1
-    let s:searchHint = s:line[s:column-s:columnCounter].s:searchHint
+    let s:completionHint = s:line[s:column-s:columnCounter].s:completionHint
     let s:columnCounter += 1
   endwhile
   let s:endChar = s:line[s:column-s:columnCounter]
-  echom s:searchHint
-  echom s:endChar
-  echom index(s:identifiers[s:endChar]
+  let s:typeToComplete = get(a:completionIdentifiers, s:endChar)
+  echom string(s:typeToComplete)
+  echom s:completionHint
 endfunction
 " $object->mulipl
-" $object::
+" $object::te
 " $someVar
