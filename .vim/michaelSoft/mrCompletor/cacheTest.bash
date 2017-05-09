@@ -1,7 +1,7 @@
 # find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" 
 # find ./src/ ./vendor/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" 
 # find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" 
-searchDirs="./src/ "
+searchDirs="./"
 searchFilesRegex="-regex \".*\.php\""
 excludeFiles="| grep -v \"\/Resources\/\""
 # classGrep="| xargs grep \"^\s*class\""
@@ -16,18 +16,33 @@ phpClassDefRegex="^\s*class"
 
 phpClassCacheRegex="\($phpClassRegex\|$phpVarRegex\|$phpConstRegex\|$phpClassDefRegex\)"
 
+
+cacheDir=`echo $classCacheFile | sed -e "s/classCache.mr//"`
+mkdir "$cacheDir" -p
+echo "start,./" > $cacheDir"/refreshCache.mr"
+
 eval "find $searchDirs $searchFilesRegex $excludeFiles $formattingSed > $classCacheFile"
 
 
 cache=''
-
 for i in `sed -n '/block/{:a;N;/endBlock/!ba; /file/p}' $classCacheFile | sed -n '/file,.\//p' | sed -e 's/file,.\///'` 
 do
+  echo "$i"
+  classCache=`grep "\($phpClassCacheRegex\)" "$i"`
+  while read line; do
+    if [[ "$line" =~ $i ]]
+    then
+      echo $line >> $cacheDir"/refreshCache.mr"
+      echo "$classCache" >> $cacheDir"/refreshCache.mr"
+    else
+      echo $line >> $cacheDir"/refreshCache.mr"
+    fi
+  done < $classCacheFile
+  # echo hi
   # echo $i
   # classItems=`grep "^\s*public\sfunction" $i`
   # echo $classItems
   # methods=`grep "^\s*public\sfunction" "$i" | sed -e "s/\s*public\s*function\s*\(.*)\).*/method,.\/\1/"`
-  classCache=`grep "\($phpClassCacheRegex\)" "$i" 
   # | sed -e "s/\s*public\s*function\s*\(.*)\).*/method,.\/\1/"`
   # echo "$i" >> testCache.text
   # echo "$classCache" >> testCache.text
@@ -37,8 +52,6 @@ do
   # while read -r line; do
   #    sed -i "s:$i:$i\n$line:" $classCacheFile
   # done <<< "$classCache"
-
-
   # sed -e "s:$i:$i\n$methods:" $classCacheFile
   # echo "sed -e \"s:$i:$i\n$methods:\" $classCacheFile"
   # echo "/$i/a testTEST" 
@@ -57,5 +70,3 @@ do
     # echo "sed \"/$i/a $o\" $classCacheFile"
   # done
 done;
-
-echo "$cache"
