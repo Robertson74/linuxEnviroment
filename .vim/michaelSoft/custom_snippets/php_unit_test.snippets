@@ -3,6 +3,8 @@ snippet mockBuilder "Mock Builder"
 ${1:$mock} = $this->getMockBuilder('${2:PathToObject}')
   ->${3:disableOriginalConstructor()}
   ->${4:setConstructorArgs}(array(${5:constructorArgs}))
+	//() = all return null; array() = all return null
+	//(null) = all return actual code; array('methodName') = 'methodName' actual code, all else null
   ->${6:setMethods}(array('${7:methodsToMock}'))
   ->getMock();
 endsnippet

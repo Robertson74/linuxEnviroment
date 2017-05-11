@@ -1,3 +1,15 @@
 snippet setup_em "Set up the Entity Manager"
+use Doctrine\ORM\EntityManager;
+/* @var EntityManager $em */
 $em = $this->getDoctrine()->getManager();
+endsnippet
+ 
+snippet json_decode "Get json from request"
+$${1:var} = json_decode($request->getContent(), true);
+endsnippet
+ 
+snippet setup_logger "Initialize logger"
+use Monolog\Logger;
+/* @var Logger $logger */
+$logger = $this->get(logger); 
 endsnippet

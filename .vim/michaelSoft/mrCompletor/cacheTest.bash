@@ -6,6 +6,8 @@ excludeFiles="| grep -v \"\/Resources\/\""
 formattingSed="| sed -e \"s/\(.*\)/block,.\/\nfile,.\/\1\nendBlock,.\/\n/\""
 classCacheFile="./.michaelSoft/mrCompleter/classCache.mr"
 classGrep="sed"
+
+# php regexs'
 phpMethodRegex="^\s*public\sfunction\s*\(.*)\).*"
 phpMethodFormatRegex="s/^\s*public\sfunction\s*\(.*)\).*/method,.\/\1/"
 phpVarRegex="^\s*public\s\$"

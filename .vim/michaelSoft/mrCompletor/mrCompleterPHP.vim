@@ -23,10 +23,6 @@ function! MRCgetIdentifiersPHP(identifierMap)
   return [s:typeToComplete, s:completionHint]
 endfunction
 
-function! MRCgetObjectClassPHP(objectFormat)
-  return "object"
-endfunction
-
 function! MRCgetObjectTextPHP(objectFormat)
   if empty(a:objectFormat)
     return false
