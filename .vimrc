@@ -116,6 +116,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" stop the annoyting autojoin line
+set textwidth=0
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
@@ -419,8 +421,8 @@ nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
 " bring in custom plugins
-source /home/vagrant/.vim/michaelSoft/ViSql/ViSql.vim
-source /home/vagrant/.vim/michaelSoft/symfony/symfonyTools.vim
+execute "source ".$HOME."/.vim/michaelSoft/ViSql/ViSql.vim"
+execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 " delete non active buffers
@@ -1261,8 +1263,7 @@ nnoremap <Leader>qa :call PresentClassesForSelection(g:MRCdefinitions, 1)<CR>
 "   call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
 "   return ''
 " endfunction
-source ~/.vim/michaelSoft/mrCompletor/mrCompleter.vim
-
+execute "source ".$HOME."/.vim/michaelSoft/mrCompletor/mrCompleter.vim"
 " func! TestCom()
 "   call complete(col('.'), [{'word': 'testWord', 'menu': 'testMenu', 'info': 'SomeInfo', 'kind': 'v'}])
 "   return ''
