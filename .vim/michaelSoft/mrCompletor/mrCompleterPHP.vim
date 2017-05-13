@@ -1,50 +1,45 @@
-function! MRCgetIdentifiersPHP(identifierMap)
-  " return if no identifer map supplied
-  if empty(a:identifierMap)
-    return false
-  endif
-  "get identifiers to find
-  let s:identifiers = keys(a:identifierMap)
-  let s:column = col('.')
-  let s:columnCounter = 1
-  let s:line = getline('.')
-  let s:completionHint = ''
-  while count(s:identifiers, s:line[s:column-s:columnCounter]) == 0 && col('.') != s:columnCounter - 1
-    let s:completionHint = s:line[s:column-s:columnCounter].s:completionHint
-    let s:columnCounter += 1
-  endwhile
-  let s:endChar = s:line[s:column-s:columnCounter]
-  let s:typeToComplete = get(a:identifierMap, s:endChar)
-  if count(s:identifiers, s:endChar) == 0
-    let s:typeToComplete = [ 'nothing' ]
-  else
-    let s:typeToComplete = get(a:identifierMap, s:endChar)
-  endif
-  return [s:typeToComplete, s:completionHint]
-endfunction
+" MAIN mrComplete definitions
+let g:MRCdefinitionsPHP = {}
 
-function! MRCgetObjectTextPHP(objectFormat)
-  if empty(a:objectFormat)
-    return false
-  endif
-  let s:beginObjectSymbols = a:objectFormat[0]
-  let s:endObjSymbols = a:objectFormat[1]
-  let s:cursorColumn = col('.')
-  let s:columnCounter = 1
-  let s:line = getline('.')
-  let s:objectText = ''
+" paths and file names for completer related files
+let g:MRCfilePaths = { 'filePaths': { 'MRCDIR': '.michaelSoft/mrCompleter/', 'varCacheFile': 'varCache.mr' } }
+call extend(g:MRCdefinitionsPHP, g:MRCfilePaths)
 
-  " iterate back till found object start symbol
-  while count(s:beginObjectSymbols, s:line[s:cursorColumn-s:columnCounter]) == 0 && col('.') != s:columnCounter - 1
-    let s:columnCounter += 1
-  endwhile
+" defines symbols MRC should look for to indicate a completion, and assosicates completion types with that symbol eg the > of $object->method
+let g:MRCidentifierMapPHP = { 'identifierMap': {'>': [ 'method', 'var' ], ':': [ 'const' ], '$': [ 'nothing' ], ' ': [ 'nothing' ]} }
+call extend(g:MRCdefinitionsPHP, g:MRCidentifierMapPHP)
 
-  let s:objStartCol = s:cursorColumn-s:columnCounter
-  let s:columnCounter = 1
-  " iterate forward saving symbols till found object end
-  while count(s:endObjSymbols, s:line[s:objStartCol+s:columnCounter]) == 0 && s:columnCounter != col('$')
-    let s:objectText = s:objectText.s:line[s:objStartCol+s:columnCounter]
-    let s:columnCounter += 1
-  endwhile
-  return s:objectText
-endfunction
+" defines what the start of a variable/object looks like eg $variable
+let g:MRCObjectFormatPHP = { 'objectFormat': { 'objectBeginning': ['$', ' '], 'objectEnd': ['-', ' ', ':', '['] } }
+call extend(g:MRCdefinitionsPHP, g:MRCObjectFormatPHP)
+
+" file searching parameters
+" searchFilesRegex - files to search for when presenting classes to user
+" searchClassesRegex - format of classes in the files
+" restrictedFileSearchDir - DIR of the first search when presenting classes for the user to pick from, should be user written code
+" globalFileSearchDir - DIR or the more loose search when presenting classes to user, usually vendor files or libraries
+" classIgnoreRegex - When presenting classes, ignore classes matching the following regex
+let g:MRCfileSearchingParamsPHP = { 'fileSearchingParams': { 'searchFilesRegex': '.*\.php', 'searchClassesRegex': '^\s*class\s', 'targetedFileSearchDir': './src/', 'globalFileSearchDir': './', 'classIgnoreRegex': '^\S\s' } }
+call extend(g:MRCdefinitionsPHP, g:MRCfileSearchingParamsPHP)
+
+" main find instruction list
+" find instructions should be regexes the mrComplete will use to find that completion type
+let g:MRCfindInstructionsPHP = {}
+" method instructions for how to find methods
+let g:MRCmethodFindInstructionsPHP = { 'method': [ { 'grepFindCommand': '^\s*public function', 'sedFormatCommand': 's/.*function\s\(.*)\)/\1/' } ] }
+call extend(g:MRCfindInstructionsPHP, g:MRCmethodFindInstructionsPHP)
+" add find instructions to definitions
+call extend(g:MRCdefinitionsPHP, { 'findInstructions': g:MRCfindInstructionsPHP })
+
+" map completion types to vim's omni complete type
+let g:MRCcompletionTypesToOmniCompleteType = { 'method': 'f' }
+call extend(g:MRCdefinitionsPHP, { 'completionTypesToOmni': g:MRCcompletionTypesToOmniCompleteType })
+
+
+" trigger php config to load on php files
+augroup mrCompletor
+  au!
+  " au BufEnter *.php let g:MRCidentifierMap = g:MRCidentifierMapPHP
+  au BufEnter *.php let g:MRCdefinitions = g:MRCdefinitionsPHP
+  au BufEnter *.php inoremap <buffer> <C-_> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
+augroup END

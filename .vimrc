@@ -318,7 +318,7 @@ augroup END
 " list functions help
 nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
-inoremap <C-c> <C-x><C-o>
+inoremap <C-v> <C-x><C-o>
 inoremap <C-f> <C-x><C-l>
 inoremap <C-p> <C-x><C-p>
 inoremap <C-n> <C-x><C-n>
