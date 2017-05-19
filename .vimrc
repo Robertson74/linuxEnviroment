@@ -105,9 +105,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'flazz/vim-colorschemes'
 """ FUN -------------------------------
 " tetris
-Plugin 'vim-scripts/TeTrIs.vim'
+" Plugin 'vim-scripts/TeTrIs.vim'
 " snake
-Plugin 'zyedidia/vim-snake'
+" Plugin 'zyedidia/vim-snake'
 "---------------------------------------
 " END OF PLUGINS
 "
@@ -318,6 +318,7 @@ augroup END
 " list functions help
 nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
+ inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
 inoremap <C-v> <C-x><C-o>
 inoremap <C-f> <C-x><C-l>
 inoremap <C-p> <C-x><C-p>
@@ -1263,7 +1264,7 @@ nnoremap <Leader>qa :call PresentClassesForSelection(g:MRCdefinitions, 1)<CR>
 "   call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
 "   return ''
 " endfunction
-execute "source ".$HOME."/.vim/michaelSoft/mrCompletor/mrCompleter.vim"
+execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 " func! TestCom()
 "   call complete(col('.'), [{'word': 'testWord', 'menu': 'testMenu', 'info': 'SomeInfo', 'kind': 'v'}])
 "   return ''
