@@ -424,6 +424,7 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 " bring in custom plugins
 execute "source ".$HOME."/.vim/michaelSoft/ViSql/ViSql.vim"
 execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
+execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 " delete non active buffers
@@ -1264,7 +1265,6 @@ nnoremap <Leader>qa :call PresentClassesForSelection(g:MRCdefinitions, 1)<CR>
 "   call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
 "   return ''
 " endfunction
-execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 " func! TestCom()
 "   call complete(col('.'), [{'word': 'testWord', 'menu': 'testMenu', 'info': 'SomeInfo', 'kind': 'v'}])
 "   return ''
@@ -1277,146 +1277,146 @@ execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 " get consts and vars for class
 " echo system('grep "\(const\s\|public.*\$\)" '.expand("%").' | grep -v "\sfunction\s"') 
 " nnoremap <Leader>tes :call SmartComments()<CR>
-let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
-function! SmartComments()
+" let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
+" function! SmartComments()
 
-  :let s:keywords = SCGetKeywords()
-  :let s:commentLine = SCFormatCommentLine(getline('.'))
-  if type(s:commentLine) != 3
-    return
-  endif
+"   :let s:keywords = SCGetKeywords()
+"   :let s:commentLine = SCFormatCommentLine(getline('.'))
+"   if type(s:commentLine) != 3
+"     return
+"   endif
 
-  for s:word in s:commentLine
-    if index(s:keywords, s:word.".sc") > -1
-      :call SCGetInstructions(s:word.".sc")
-    endif
-  endfor
-endfunction
+"   for s:word in s:commentLine
+"     if index(s:keywords, s:word.".sc") > -1
+"       :call SCGetInstructions(s:word.".sc")
+"     endif
+"   endfor
+" endfunction
 
-" //load the em
+" " //load the em
 
-function! SCGetInstructions(file)
-  :let s:instructionsRaw = system("sed -n '/^em/,/^\w/p' ".g:SCkeywordsFilePath."/".a:file)
-  :let g:instructionsList = split(s:instructions, '\n')
-  for s:line in g:instructionsList
-    if match(s:line, '^-commentMod') > -1
-      :echo '123'
-      echo s:line
-    elseif match(s:line, '^-insertLine') > -1
-      :echo '456'
-      echo s:line
-    endif
-  endfor
-  echom "999"
-endfunction
+" function! SCGetInstructions(file)
+"   :let s:instructionsRaw = system("sed -n '/^em/,/^\w/p' ".g:SCkeywordsFilePath."/".a:file)
+"   :let g:instructionsList = split(s:instructions, '\n')
+"   for s:line in g:instructionsList
+"     if match(s:line, '^-commentMod') > -1
+"       :echo '123'
+"       echo s:line
+"     elseif match(s:line, '^-insertLine') > -1
+"       :echo '456'
+"       echo s:line
+"     endif
+"   endfor
+"   echom "999"
+" endfunction
 
-function! SCGetKeywords()
-  :let s:keywords = system('ls '.s:SCkeywordsFilePath.' | sed -n "/\.sc/p"')
-  :let s:keywords = split(s:keywords)
-  return s:keywords
-endfunction
+" function! SCGetKeywords()
+"   :let s:keywords = system('ls '.s:SCkeywordsFilePath.' | sed -n "/\.sc/p"')
+"   :let s:keywords = split(s:keywords)
+"   return s:keywords
+" endfunction
 
-function! SCFormatCommentLine(commentLine)
-  if match(a:commentLine, '^\s*\/\/') < 0
-    :echom "not a comment"
-    :return "false"
-  endif
-  :let s:commentLine = split(a:commentLine, "\/\/")[1]
-  :let s:commentLine = split(s:commentLine)
-  return s:commentLine
-endfunction
+" function! SCFormatCommentLine(commentLine)
+"   if match(a:commentLine, '^\s*\/\/') < 0
+"     :echom "not a comment"
+"     :return "false"
+"   endif
+"   :let s:commentLine = split(a:commentLine, "\/\/")[1]
+"   :let s:commentLine = split(s:commentLine)
+"   return s:commentLine
+" endfunction
 
-function! ConverSnippetQuoteLines()
-  :normal! ^f[
-  :let s:startLine = line('.')
-  :normal! %
-  :let s:endLine = line('.')
-  :normal! %
-  :let s:quoteLoopLines = (s:endLine - s:startLine) - 1
-  :let s:quoteLoopCount = 0
-  :normal! j
-  while(s:quoteLoopCount < s:quoteLoopLines)
-    normal! I""xA",j
-    :let s:quoteLoopCount += 1
-  endwhile
-  normal! k^f,x
-endfunction
+" function! ConverSnippetQuoteLines()
+"   :normal! ^f[
+"   :let s:startLine = line('.')
+"   :normal! %
+"   :let s:endLine = line('.')
+"   :normal! %
+"   :let s:quoteLoopLines = (s:endLine - s:startLine) - 1
+"   :let s:quoteLoopCount = 0
+"   :normal! j
+"   while(s:quoteLoopCount < s:quoteLoopLines)
+"     normal! I""xA",j
+"     :let s:quoteLoopCount += 1
+"   endwhile
+"   normal! k^f,x
+" endfunction
 
-function! ConvertSnippetToVsCode()
-  :let s:loopCount = 0
-  :let s:snippetCount = split(execute('%s/^snippet//gn'))[0]
-  :normal! gg
-  while(s:loopCount < s:snippetCount)
-    :execute 'normal! /^snippetdawi"ea": {}xiO"prefix": k^ya"j$pa,o"body": []xjdd/^endsnippetp0i"description":o},kO],kdd'
-    :execute "normal! ?[\<CR>"
-    :call ConverSnippetQuoteLines()
-    :let s:loopCount += 1
-  endwhile
-  execute "normal! /},\<CR>lx"
-endfunction
+" function! ConvertSnippetToVsCode()
+"   :let s:loopCount = 0
+"   :let s:snippetCount = split(execute('%s/^snippet//gn'))[0]
+"   :normal! gg
+"   while(s:loopCount < s:snippetCount)
+"     :execute 'normal! /^snippetdawi"ea": {}xiO"prefix": k^ya"j$pa,o"body": []xjdd/^endsnippetp0i"description":o},kO],kdd'
+"     :execute "normal! ?[\<CR>"
+"     :call ConverSnippetQuoteLines()
+"     :let s:loopCount += 1
+"   endwhile
+"   execute "normal! /},\<CR>lx"
+" endfunction
 
 " nnoremap <Leader>aw :call Wash()<CR>
 " nnoremap <Leader>awu :call WashUndo()<CR>
-function! Wash()
-  :let s:end = 'false'
-  while(s:end == 'false')
-    :call WashDirection()
-    :call WashWord()
-  endwhile
-endfunction
+" function! Wash()
+"   :let s:end = 'false'
+"   while(s:end == 'false')
+"     :call WashDirection()
+"     :call WashWord()
+"   endwhile
+" endfunction
 
-function! WashUndo()
-  :earlier 1f
-endfunction
+" function! WashUndo()
+"   :earlier 1f
+" endfunction
 
-function! WashDirection()
-  :let s:directions = ['h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'e']
-  :let s:finalTweakOptions = ['W', 'B']
-  :let s:random = GetRandomNumber("0-".len(s:directions))
-  :let s:direction = s:directions[s:random-1]
-  if(s:direction != '$')
-    :let s:range = "2-5"
-    :let s:random = GetRandomNumber(s:range)
-    :let s:direction = s:random.s:direction
-  endif
-  :execute "normal! ".s:direction
-  :let s:finalTweak = s:finalTweakOptions[GetRandomNumber("0-1")]
-  :execute "normal! ".s:finalTweak
-  :call WashTimer('long')
-endfunction
+" function! WashDirection()
+"   :let s:directions = ['h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'e']
+"   :let s:finalTweakOptions = ['W', 'B']
+"   :let s:random = GetRandomNumber("0-".len(s:directions))
+"   :let s:direction = s:directions[s:random-1]
+"   if(s:direction != '$')
+"     :let s:range = "2-5"
+"     :let s:random = GetRandomNumber(s:range)
+"     :let s:direction = s:random.s:direction
+"   endif
+"   :execute "normal! ".s:direction
+"   :let s:finalTweak = s:finalTweakOptions[GetRandomNumber("0-1")]
+"   :execute "normal! ".s:finalTweak
+"   :call WashTimer('long')
+" endfunction
 
-function! GetRandomNumber(range)
-  :let s:random = system('shuf -i '.a:range.' -n 1')
-  :let s:random = substitute(s:random, '\n', '', '')
-  return s:random
-endfunction
+" function! GetRandomNumber(range)
+"   :let s:random = system('shuf -i '.a:range.' -n 1')
+"   :let s:random = substitute(s:random, '\n', '', '')
+"   return s:random
+" endfunction
 
-function! WashWord()
-  " get a word
-  :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ', ' undefined ', ' filter.filter(x) ', ' chrisify($this) ', ' if(infinity * infinity = NULL) {', ' object.prototype  ', ' let result = integration.getResult() ']
-  " for each letter
-  :let s:range = "0-".(len(s:words)-1)
-  :let s:word = s:words[GetRandomNumber(s:range)]
-  " write word
-  for s:letter in split(s:word, '\zs')
-    :execute "normal! a".s:letter
-    :call WashTimer('short')
-  endfor
-  return
-endfunction
+" function! WashWord()
+"   " get a word
+"   :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ', ' undefined ', ' filter.filter(x) ', ' chrisify($this) ', ' if(infinity * infinity = NULL) {', ' object.prototype  ', ' let result = integration.getResult() ']
+"   " for each letter
+"   :let s:range = "0-".(len(s:words)-1)
+"   :let s:word = s:words[GetRandomNumber(s:range)]
+"   " write word
+"   for s:letter in split(s:word, '\zs')
+"     :execute "normal! a".s:letter
+"     :call WashTimer('short')
+"   endfor
+"   return
+" endfunction
 
-function! WashTimer(length)
-  if(a:length == 'short')
-    :let s:range = "5-100"
-  elseif (a:length == 'long')
-    :let s:range = "100-700"
-  endif
-  :let s:random = system('shuf -i '.s:range.' -n 1')
-  :let s:random = substitute(s:random, '\n', '', '')
-  :redraw
-  :echo 'sleep '.s:random.'m'
-  :execute 'sleep '.s:random.'m'
-endfunction
+" function! WashTimer(length)
+"   if(a:length == 'short')
+"     :let s:range = "5-100"
+"   elseif (a:length == 'long')
+"     :let s:range = "100-700"
+"   endif
+"   :let s:random = system('shuf -i '.s:range.' -n 1')
+"   :let s:random = substitute(s:random, '\n', '', '')
+"   :redraw
+"   :echo 'sleep '.s:random.'m'
+"   :execute 'sleep '.s:random.'m'
+" endfunction
 
 " nnoremap <Leader>te :call CurlManager()<CR>
 " function! CurlManager()

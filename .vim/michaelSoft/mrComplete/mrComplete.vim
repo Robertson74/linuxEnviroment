@@ -1,3 +1,6 @@
+nnoremap <Leader>cd :call MRCremoveObjectCacheEntry()<CR>
+"cache files
+let g:MRCfilePaths = { 'filePaths': { 'MRCDIR': '.michaelSoft/mrCompleter/', 'varCacheFile': 'varCache.mr' } }
 " php completer config and logic
 source ~/.vim/michaelSoft/mrComplete/mrCompletePHP.vim
 
@@ -339,7 +342,7 @@ function! MRCaddVarCache(class, classFile, objectText)
   let s:cacheLine = s:line.',./file:'.s:editFile.',./fileMethod:'.s:editMethod.',./varText:'.s:varText.',./objectFile:'.s:objectFile.',./class:'.s:objectClass.',./'
   " line,./file:.michaelSoft/mrCompleter/varCache.mr,./fileMethod:unknown,./varText:objectTest2,./objectFile:./src/APIBundle/Entity/APIRequest.php,./class:APIRequest,./
   execute "silent !echo ".s:cacheLine." >> ".s:completerCacheDir."".s:completerVarFile
-  call confirm(a:objectText." added to variable cache.")
+  echom a:objectText." added to variable cache."
   set nocursorcolumn
   nohlsearch
   return
@@ -393,4 +396,30 @@ function! MRCgetClassFromVarCache(objectText, filePaths)
     call add(s:formattedCacheInfo, s:cacheDic)
   endfor
   return s:formattedCacheInfo
+endfunction
+
+function! MRCremoveObjectCacheEntry()
+  "cache
+  let s:filePaths = get(g:MRCfilePaths, 'filePaths')
+  let s:cacheFile = get(s:filePaths, 'MRCDIR').''.get(s:filePaths, 'varCacheFile')
+  "get the word under cursor
+  let s:word = expand('<cword>')
+  "get the method name
+  let s:method = MRCfindCurrentMethod()
+  "get the file name
+  let s:file = @%
+  "confirm cache line is found
+  " echom 'grep ",.\/file:'.s:file.',.\/fileMethod:'.s:method.',.\/varText:'.s:word.'" '.s:cacheFile
+  let s:grepLine = 'grep ",./file:'.s:file.',./fileMethod:'.s:method.',./varText:'.s:word.',./" '.s:cacheFile
+  let s:cacheLine = system(s:grepLine)
+  if len(s:cacheLine) > 1
+    let s:sedLine = s:file.'.*'.s:method.'.*'.s:word
+    let s:sedLine = escape(s:sedLine, '/')
+    let s:sedCommand = 'sed -i "/'.s:sedLine.'/d"'
+    let s:deleteResult = system(s:sedCommand.' '.s:cacheFile)
+    let g:debug = s:sedCommand.' '.s:cacheFile
+    call confirm('Cache line deleted for variable '.s:word)
+  else 
+    call confirm('Could not find cache line to delete.')
+  endif
 endfunction
