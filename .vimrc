@@ -427,6 +427,8 @@ execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
 execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>reg :call SaveToRegister()<CR>
+
 " delete non active buffers
 nnoremap <Leader>dbu :call DeleteNonActiveBuffers()<CR>
 " edit php test file
@@ -525,6 +527,14 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" move a register from common to a saved register
+function! SaveToRegister()
+  echom 'Register: '
+  let s:charNum = getchar()
+  let s:reg = nr2char(s:charNum)
+  execute 'let @'.s:reg.'=@"'
+  echo "Saved to register @".s:reg
+endfunction
 " clear non active buffers
 function! DeleteNonActiveBuffers()
   let s:abortChoice = getchar('Delete non active buffers? (y/n)')
@@ -1254,7 +1264,6 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>qa :call PresentClassesForSelection(g:MRCdefinitions, 1)<CR>
 " find classes and format
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/:/\n/" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
