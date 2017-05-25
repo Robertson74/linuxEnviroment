@@ -41,7 +41,7 @@ Plugin 'othree/html5.vim'
 " Plugin 'm2mdas/phpcomplete-extended'
 " Plugin 'm2mdas/phpcomplete-extended-symfony'
 " Twig smyntax
-Plugin 'evidens/vim-twig'
+Plugin 'lumiliet/vim-twig'
 " PHP Debugger
 Plugin 'joonty/vdebug'
 " php documenter 
