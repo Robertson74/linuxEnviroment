@@ -3,6 +3,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" plugins to checkout
+" checkout https://github.com/w0rp/ale for a sync linting
+" https://github.com/skywind3000/asyncrun.vim for async console commands
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -54,6 +57,8 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" better join
+Plugin 'sk1418/Join'
 " Snippets
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
