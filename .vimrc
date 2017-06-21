@@ -196,6 +196,31 @@ set laststatus=2
 set timeoutlen=1000 ttimeoutlen=0
 " Line number colors
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-language specific
+" typescript 
+augroup typescriptConfig
+  au!
+  autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
+  autocmd FileType typescript nnoremap <Leader>imp :TsuImport<CR>
+  autocmd FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
+  autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
+  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>run :!tsc && node ./build/app.js<CR><CR>
+
+augroup END
+
+" PHP
+augroup phpConfig
+  au!
+  au BufEnter *.php nnoremap <Leader>tes :Test<CR>
+augroup END
+
+" JS 
+augroup jsConfig
+  au!
+  autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
+augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
 " show numbers only on focused pane
 :augroup numberFocus
@@ -278,15 +303,6 @@ command! E Explore
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
 " quick add snippets
 vnoremap <C-Z> y:call AddQuickSnippet()<CR>
-" PHPUnit
-augroup phpunit
-  au!
-  au BufEnter *.php nnoremap <Leader>tes :Test<CR>
-augroup END
-" tern 
-autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
-" typescript 
-autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
 " PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 " NERTDTree
@@ -1269,6 +1285,29 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
+nnoremap <Leader>sim :call SortImportStatements()<CR>
+function! SortImportStatements()
+  execute "normal! gg"
+  let s:line = getline('.')
+  if match(s:line, 'import') > -1
+    let s:startLine =  line('.')
+  else
+    silent execute "normal! /import\<CR>"
+    let s:startLine =  line('.')
+  endif
+  while match(getline('.'), '\(import\|^\s*$\)') > -1
+    normal! j
+  endwhile
+  execute "normal! ?^\s\*import\<CR>"
+  let s:endLine = line('.')
+  " echom ":".s:startLine.",".s:endLine." sort\<CR>"
+  execute ":".s:startLine.",".s:endLine."sort"
+endfunction
+
+nnoremap <Leader>fa :call ConvertFunctionToFatArrow()<CR>
+function! ConvertFunctionToFatArrow()
+  execute "normal $?function\<CR>dt(%a\<Space>=>"
+endfunction
 " find classes and format
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/:/\n/" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
