@@ -1287,6 +1287,7 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
 nnoremap <Leader>sim :call SortImportStatements()<CR>
 function! SortImportStatements()
+  let save_cursor = getcurpos()
   execute "normal! gg"
   let s:line = getline('.')
   if match(s:line, 'import') > -1
@@ -1302,6 +1303,7 @@ function! SortImportStatements()
   let s:endLine = line('.')
   " echom ":".s:startLine.",".s:endLine." sort\<CR>"
   execute ":".s:startLine.",".s:endLine."sort"
+  call setpos('.', save_cursor)
 endfunction
 
 nnoremap <Leader>fa :call ConvertFunctionToFatArrow()<CR>
