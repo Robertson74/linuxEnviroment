@@ -205,7 +205,8 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   autocmd FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
-  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>run :!tsc && node ./build/app.js<CR><CR>
+  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>run :!tsc && node ./build/app.js<CR>
+  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>san :!tsc && node ./build/sandbox.js<CR>
 
 augroup END
 
