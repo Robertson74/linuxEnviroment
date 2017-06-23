@@ -200,14 +200,17 @@ set timeoutlen=1000 ttimeoutlen=0
 " typescript 
 augroup typescriptConfig
   au!
+  " config
   autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript :set makeprg=tsc
+  " commands
   autocmd FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
   autocmd FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   autocmd FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
-  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>run :!tsc && node ./build/app.js<CR>
-  autocmd FileType typescript nnoremap <Leader>run :nnoremap <Leader>san :!tsc && node ./build/sandbox.js<CR>
-
+  autocmd FileType typescript nnoremap <Leader>run :!tsc && node ./build/src/app.js<CR>
+  autocmd FileType typescript nnoremap <Leader>san :!tsc && node ./build/src/sandbox.js<CR>
+  autocmd FileType typescript nnoremap <Leader>mk :make<CR>
 augroup END
 
 " PHP
@@ -332,6 +335,10 @@ augroup phpShortCuts
   autocmd FileType php nnoremap <buffer> <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+nnoremap <Leader>er :call RepositionErrors()<CR>
+function! RepositionErrors()
+  :execute "normal! \<C-W>b\<C-W>J"
+endfunction
 " help when in vim script
 augroup vimHelp
   autocmd!
