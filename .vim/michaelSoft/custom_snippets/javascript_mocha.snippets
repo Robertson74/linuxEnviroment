@@ -1,0 +1,45 @@
+# describe
+snippet mocha.describe
+	describe('${1:Description}', function() {
+	});
+endsnippet
+
+# before
+snippet mocha.before
+	before(function() {
+		${1:/* code in here */}
+	});
+endsnippet
+
+# after
+snippet mocha.after
+	after(function() {
+		${1:/* code in here */}
+	});
+endsnippet
+
+# beforeEach
+snippet mocha.beforeEach
+	beforeEach(function() {
+		${1:/* code in here */}
+	});
+endsnippet
+
+# afterEach
+snippet mocha.afterEach
+	afterEach(function() {
+		${1:/* code in here */}
+	});
+endsnippet
+
+# it
+snippet mocha.it
+	it('${1:should}', function() {
+		${2:/* code in here */}
+	});
+endsnippet
+
+# it pending
+snippet mocha.itp
+	it('${1:should}');
+endsnippet

@@ -14,18 +14,22 @@ call vundle#begin()
 "let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
+""" Typescript ----
+" All sorts of typescript stuff
+Plugin 'Quramy/tsuquyomi'
+" type script syntax highlighting
+Plugin 'leafgarland/typescript-vim'
+" snips and syntax
+Plugin 'HerringtonDarkholme/yats.vim'
+" --------
 " auto import
 Plugin 'galooshi/vim-import-js'
 " ANGULAR 2 CLI integration
 Plugin 'bdauria/angular-cli.vim'
-" All sorts of typescript stuff
-Plugin 'Quramy/tsuquyomi'
 " Syntax for template strings
 Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
 Plugin 'ternjs/tern_for_vim'
-" type script syntax highlighting
-Plugin 'leafgarland/typescript-vim'
 " javascript debuggin
 " Plugin 'sidorares/node-vim-debugger'
 "auto import
@@ -204,25 +208,31 @@ augroup typescriptConfig
   autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
   autocmd FileType typescript :set makeprg=tsc
   " commands
+  autocmd FileType typescript nnoremap <Leader>' :s/'/"/g"<CR>
+  autocmd FileType typescript nnoremap <Leader>" :%s/'/"/g"<CR>
   autocmd FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
   autocmd FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   autocmd FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
   autocmd FileType typescript nnoremap <Leader>run :!tsc && node ./build/src/app.js<CR>
-  autocmd FileType typescript nnoremap <Leader>san :!tsc && node ./build/src/sandbox.js<CR>
+  autocmd FileType typescript nnoremap <Leader>san :!tsc && node ./build/sandbox.js<CR>
   autocmd FileType typescript nnoremap <Leader>mk :make<CR>
+  autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
 augroup END
 
 " PHP
 augroup phpConfig
   au!
   au BufEnter *.php nnoremap <Leader>tes :Test<CR>
+  au BufEnter *.php nnoremap <Leader>ete :call EditPHPTestFile()<CR>
 augroup END
 
 " JS 
 augroup jsConfig
   au!
   autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
+  autocmd FileType javascript nnoremap <Leader>tes :!mocha<CR>
+  autocmd FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
@@ -335,9 +345,13 @@ augroup phpShortCuts
   autocmd FileType php nnoremap <buffer> <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
-nnoremap <Leader>er :call RepositionErrors()<CR>
+nnoremap <Leader>err :call RepositionErrors()<CR>
 function! RepositionErrors()
+  let save_cursor = getcurpos()
+  let save_window = win_getid()
   :execute "normal! \<C-W>b\<C-W>J"
+  call win_gotoid(save_window)
+  call setpos('.', save_cursor)
 endfunction
 " help when in vim script
 augroup vimHelp
@@ -456,12 +470,12 @@ execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
 execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>ete :call EditJSTestFile()<CR>
+nnoremap <Leader>sim :call SortImportStatements()<CR>
 nnoremap <Leader>reg :call SaveToRegister()<CR>
 
 " delete non active buffers
 nnoremap <Leader>dbu :call DeleteNonActiveBuffers()<CR>
-" edit php test file
-nnoremap <Leader>ete :call EditPHPTestFile()<CR>
 "my first bind
 nnoremap <Leader>bl :call FlipBoolean()<CR>
 " folidng 
@@ -556,6 +570,51 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! EditJSTestFile()
+  " config
+  let s:testSuffix = '_spec'
+  let s:sourceDir = 'src'
+  let s:testDir = 'test'
+  """"""""""""""""""""
+  let s:filePath = expand('%:h')
+  let s:file = expand('%:t:r')
+  let s:extention = expand('%:e')
+  let s:rootDir = split(s:filePath, '/')[0]
+  if s:rootDir == s:testDir
+    let s:switchPath = substitute(s:filePath, s:rootDir, s:sourceDir, '')
+    let s:switchFile = substitute(s:file, s:testSuffix, '', '')
+    silent! execute '!mkdir -p '.s:switchPath
+    silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
+    silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
+    redraw!
+  else
+    let s:switchPath = substitute(s:filePath, s:rootDir, s:testDir, '')
+    let s:switchFile = substitute(s:file, '\(.*\)', '\1'.s:testSuffix, '')
+    silent! execute '!mkdir -p '.s:switchPath
+    silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
+    silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
+    redraw!
+  end
+endfunction
+function! SortImportStatements()
+  let save_cursor = getcurpos()
+  execute "normal! gg"
+  let s:line = getline('.')
+  if match(s:line, 'import') > -1
+    let s:startLine =  line('.')
+  else
+    silent execute "normal! /import\<CR>"
+    let s:startLine =  line('.')
+  endif
+  while match(getline('.'), '\(import\|^\s*$\)') > -1
+    normal! j
+  endwhile
+  execute "normal! ?^\s\*import\<CR>"
+  let s:endLine = line('.')
+  " echom ":".s:startLine.",".s:endLine." sort\<CR>"
+  execute ":".s:startLine.",".s:endLine."sort"
+  call setpos('.', save_cursor)
+endfunction
 " move a register from common to a saved register
 function! SaveToRegister()
   echom 'Register: '
@@ -1293,26 +1352,8 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-nnoremap <Leader>sim :call SortImportStatements()<CR>
-function! SortImportStatements()
-  let save_cursor = getcurpos()
-  execute "normal! gg"
-  let s:line = getline('.')
-  if match(s:line, 'import') > -1
-    let s:startLine =  line('.')
-  else
-    silent execute "normal! /import\<CR>"
-    let s:startLine =  line('.')
-  endif
-  while match(getline('.'), '\(import\|^\s*$\)') > -1
-    normal! j
-  endwhile
-  execute "normal! ?^\s\*import\<CR>"
-  let s:endLine = line('.')
-  " echom ":".s:startLine.",".s:endLine." sort\<CR>"
-  execute ":".s:startLine.",".s:endLine."sort"
-  call setpos('.', save_cursor)
-endfunction
+" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
+set wildignore+=*/build/*,*/node_modules/*,*/test/*
 
 nnoremap <Leader>fa :call ConvertFunctionToFatArrow()<CR>
 function! ConvertFunctionToFatArrow()
