@@ -218,7 +218,7 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
   autocmd FileType typescript nnoremap <Leader>mk :make<CR>
   autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
-  autocmd FileType typescript nnoremap <Leader>cl :call ToggleWrapInConsoleLog()<CR>
+  autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
 augroup END
 
 " PHP
@@ -231,7 +231,7 @@ augroup END
 " JS 
 augroup jsConfig
   au!
-  autocmd FileType typescript nnoremap <Leader>cl :call ToggleWrapInConsoleLog()<CR>
+  autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
   autocmd FileType javascript nnoremap <buffer> K :TernDoc<CR>
   autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   autocmd FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
