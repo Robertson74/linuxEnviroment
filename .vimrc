@@ -214,10 +214,11 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   autocmd FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
-  autocmd FileType typescript nnoremap <Leader>run :!tsc && node ./build/src/app.js<CR>
-  autocmd FileType typescript nnoremap <Leader>san :!tsc && node ./build/sandbox.js<CR>
+  autocmd FileType typescript nnoremap <Leader>run :!npm run start<CR>
+  autocmd FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
   autocmd FileType typescript nnoremap <Leader>mk :make<CR>
   autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
+  autocmd FileType typescript nnoremap <Leader>cl :call ToggleWrapInConsoleLog()<CR>
 augroup END
 
 " PHP
@@ -230,8 +231,9 @@ augroup END
 " JS 
 augroup jsConfig
   au!
-  autocmd FileType javascript nmap <buffer> K :TernDoc<CR>
-  autocmd FileType javascript nnoremap <Leader>tes :!mocha<CR>
+  autocmd FileType typescript nnoremap <Leader>cl :call ToggleWrapInConsoleLog()<CR>
+  autocmd FileType javascript nnoremap <buffer> K :TernDoc<CR>
+  autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   autocmd FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
 augroup END
 
@@ -246,6 +248,8 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" control-p ignore folders
+set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*
 " quick adding snippets
 function! AddQuickSnippet() 
   let s:snipDir = '~/.vim/michaelSoft/custom_snippets/'
@@ -315,6 +319,8 @@ command! E Explore
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+" convert JS function to fat arrow function
+nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
 " quick add snippets
 vnoremap <C-Z> y:call AddQuickSnippet()<CR>
 " PHPDoc
@@ -570,6 +576,21 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+function! ToggleWrapInConsoleLog()
+  if match(getline('.'), "console\.log") > -1
+    echom "truth"
+    execute "normal! 0df($F)DA;\<ESC>=="
+  else
+    if match(getline('.'), ";") > -1
+      s/;//g
+    endif
+    execute "normal! Iconsole.log(\<ESC>A);\<ESC>=="
+  endif
+endfunction
+function! ConvertFunctionToFatArrow()
+  execute "normal $?function\<CR>dt(%a\<Space>=>"
+endfunction
+
 function! EditJSTestFile()
   " config
   let s:testSuffix = '_spec'
@@ -1352,13 +1373,8 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Linux/MacOSX
-set wildignore+=*/build/*,*/node_modules/*,*/test/*
-
-nnoremap <Leader>fa :call ConvertFunctionToFatArrow()<CR>
-function! ConvertFunctionToFatArrow()
-  execute "normal $?function\<CR>dt(%a\<Space>=>"
-endfunction
+" Some stuff;
+" console.log(someStuff)
 " find classes and format
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
 " let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/:/\n/" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
