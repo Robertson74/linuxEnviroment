@@ -37,3 +37,13 @@ endsnippet
 snippet chai.beun
 	expect(${1:""}).to.be.a("undefined");${2}
 endsnippet
+snippet chai.error
+let err: Error = new Error();
+try {
+	${1:obj}.${2:method}(${3:param});
+} catch (e) {
+	err = e;
+}
+expect(err).to.be.a("Error");
+expect(err.message).to.equal("${4:error message}");
+endsnippet

@@ -132,6 +132,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" filetypes
+  au BufRead,BufNewFile *.apidoc    set filetype=apidoc
 " stop the annoyting autojoin line
 set textwidth=0
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -225,6 +227,7 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
   autocmd FileType typescript nnoremap <Leader>run :!npm run start<CR>
   autocmd FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
+  autocmd FileType typescript nnoremap <Leader>esan :vsp +e ./src/sandbox.ts<CR>
   autocmd FileType typescript nnoremap <Leader>mk :make<CR>
   autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
@@ -492,10 +495,11 @@ nnoremap <Leader>cp :cprevious<CR>
 nnoremap <Leader>sc :exe '%s/'.@/.'//gn'<CR>
 " Turn on off numbers
 nnoremap <Leader>nu :set nu! rnu!<CR>
-" bring in custom plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-source custom plugins
 execute "source ".$HOME."/.vim/michaelSoft/ViSql/ViSql.vim"
 execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
 execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
+execute "source ".$HOME."/.vim/michaelSoft/fun/ish.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 nnoremap <Leader>ete :call EditJSTestFile()<CR>
@@ -603,6 +607,8 @@ fun! ToggleConstLet()
     execute 's/let/const/'
   elseif match(getline('.'), '\s*const') > -1
     execute 's/const/let'
+  elseif match(getline('.'), '\s*var') > -1
+    execute 's/var/let'
   else
     echom "No let or const"
   endif
@@ -1381,7 +1387,6 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
   endwhile
 endfunction
 
-nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|silent sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|sleep 80m\|+1\|:q!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 "--- look into Neovim and use Deoplete 
 "
@@ -1404,254 +1409,4 @@ nnoremap <Leader>ish :tabnew ~/.vim/michaelSoft/ish/ish.txt\|set nornu nonu\|sil
 "--- merge tabs
 "--- document links
 "--- NextCapitalWord improve
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING AREA
-" Some stuff;
-" console.log(someStuff)
-" find classes and format
-" let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/\(.*\):\(.*\)/block,.\/\nfile,.\/\1\n\2\nendBlock,.\//" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
-" let testCacheCmd = 'find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/:/\n/" | sed -e "s/^\s*class\s*\(\S\+\).*/class,.\/\1/" > .michaelSoft/mrCompleter/classCache.mr'
-" find ./src/ -regex ".*\.php" | grep -v "\/Resources\/" | xargs grep "^\s*class" | sed -e "s/:/\n/" > .michaelSoft/mrCompleter/classCache.mr
-
-" inoremap <C-Z> <C-R>=TestCom()<CR>
-" function! TestCompletor()
-"   call complete(col('.'), ['testOne', 'testTwo', 'testThree'])
-"   return ''
-" endfunction
-" func! TestCom()
-"   call complete(col('.'), [{'word': 'testWord', 'menu': 'testMenu', 'info': 'SomeInfo', 'kind': 'v'}])
-"   return ''
-" endfunc
-
-" get the public functions for a class file
-" echo system('grep "\(.*public.*function\|^\s*function\)" '.expand('<cWORD>').' | grep -v "__construct"') | 
-" get consts for class
-" echo system('grep "const\s" '.expand('<cWORD>'))
-" get consts and vars for class
-" echo system('grep "\(const\s\|public.*\$\)" '.expand("%").' | grep -v "\sfunction\s"') 
-" nnoremap <Leader>tes :call SmartComments()<CR>
-" let g:SCkeywordsFilePath = "~/.vim/michaelSoft/SmartComments/"
-" function! SmartComments()
-
-"   :let s:keywords = SCGetKeywords()
-"   :let s:commentLine = SCFormatCommentLine(getline('.'))
-"   if type(s:commentLine) != 3
-"     return
-"   endif
-
-"   for s:word in s:commentLine
-"     if index(s:keywords, s:word.".sc") > -1
-"       :call SCGetInstructions(s:word.".sc")
-"     endif
-"   endfor
-" endfunction
-
-" " //load the em
-
-" function! SCGetInstructions(file)
-"   :let s:instructionsRaw = system("sed -n '/^em/,/^\w/p' ".g:SCkeywordsFilePath."/".a:file)
-"   :let g:instructionsList = split(s:instructions, '\n')
-"   for s:line in g:instructionsList
-"     if match(s:line, '^-commentMod') > -1
-"       :echo '123'
-"       echo s:line
-"     elseif match(s:line, '^-insertLine') > -1
-"       :echo '456'
-"       echo s:line
-"     endif
-"   endfor
-"   echom "999"
-" endfunction
-
-" function! SCGetKeywords()
-"   :let s:keywords = system('ls '.s:SCkeywordsFilePath.' | sed -n "/\.sc/p"')
-"   :let s:keywords = split(s:keywords)
-"   return s:keywords
-" endfunction
-
-" function! SCFormatCommentLine(commentLine)
-"   if match(a:commentLine, '^\s*\/\/') < 0
-"     :echom "not a comment"
-"     :return "false"
-"   endif
-"   :let s:commentLine = split(a:commentLine, "\/\/")[1]
-"   :let s:commentLine = split(s:commentLine)
-"   return s:commentLine
-" endfunction
-
-" function! ConverSnippetQuoteLines()
-"   :normal! ^f[
-"   :let s:startLine = line('.')
-"   :normal! %
-"   :let s:endLine = line('.')
-"   :normal! %
-"   :let s:quoteLoopLines = (s:endLine - s:startLine) - 1
-"   :let s:quoteLoopCount = 0
-"   :normal! j
-"   while(s:quoteLoopCount < s:quoteLoopLines)
-"     normal! I""xA",j
-"     :let s:quoteLoopCount += 1
-"   endwhile
-"   normal! k^f,x
-" endfunction
-
-" function! ConvertSnippetToVsCode()
-"   :let s:loopCount = 0
-"   :let s:snippetCount = split(execute('%s/^snippet//gn'))[0]
-"   :normal! gg
-"   while(s:loopCount < s:snippetCount)
-"     :execute 'normal! /^snippetdawi"ea": {}xiO"prefix": k^ya"j$pa,o"body": []xjdd/^endsnippetp0i"description":o},kO],kdd'
-"     :execute "normal! ?[\<CR>"
-"     :call ConverSnippetQuoteLines()
-"     :let s:loopCount += 1
-"   endwhile
-"   execute "normal! /},\<CR>lx"
-" endfunction
-
-" nnoremap <Leader>aw :call Wash()<CR>
-" nnoremap <Leader>awu :call WashUndo()<CR>
-" function! Wash()
-"   :let s:end = 'false'
-"   while(s:end == 'false')
-"     :call WashDirection()
-"     :call WashWord()
-"   endwhile
-" endfunction
-
-" function! WashUndo()
-"   :earlier 1f
-" endfunction
-
-" function! WashDirection()
-"   :let s:directions = ['h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'e']
-"   :let s:finalTweakOptions = ['W', 'B']
-"   :let s:random = GetRandomNumber("0-".len(s:directions))
-"   :let s:direction = s:directions[s:random-1]
-"   if(s:direction != '$')
-"     :let s:range = "2-5"
-"     :let s:random = GetRandomNumber(s:range)
-"     :let s:direction = s:random.s:direction
-"   endif
-"   :execute "normal! ".s:direction
-"   :let s:finalTweak = s:finalTweakOptions[GetRandomNumber("0-1")]
-"   :execute "normal! ".s:finalTweak
-"   :call WashTimer('long')
-" endfunction
-
-" function! GetRandomNumber(range)
-"   :let s:random = system('shuf -i '.a:range.' -n 1')
-"   :let s:random = substitute(s:random, '\n', '', '')
-"   return s:random
-" endfunction
-
-" function! WashWord()
-"   " get a word
-"   :let s:words = [' function ', ' let MIDsData = array() ', ' x < 10 ', ' return ', ' undefined ', ' filter.filter(x) ', ' chrisify($this) ', ' if(infinity * infinity = NULL) {', ' object.prototype  ', ' let result = integration.getResult() ']
-"   " for each letter
-"   :let s:range = "0-".(len(s:words)-1)
-"   :let s:word = s:words[GetRandomNumber(s:range)]
-"   " write word
-"   for s:letter in split(s:word, '\zs')
-"     :execute "normal! a".s:letter
-"     :call WashTimer('short')
-"   endfor
-"   return
-" endfunction
-
-" function! WashTimer(length)
-"   if(a:length == 'short')
-"     :let s:range = "5-100"
-"   elseif (a:length == 'long')
-"     :let s:range = "100-700"
-"   endif
-"   :let s:random = system('shuf -i '.s:range.' -n 1')
-"   :let s:random = substitute(s:random, '\n', '', '')
-"   :redraw
-"   :echo 'sleep '.s:random.'m'
-"   :execute 'sleep '.s:random.'m'
-" endfunction
-
-" nnoremap <Leader>te :call CurlManager()<CR>
-" function! CurlManager()
-"   :let s:url = GetURL()
-"   :let s:method = GetMethod()
-"   :let s:header = GetHeader()
-"   :call FireCurlCall(s:url, s:method, s:header)
-" endfunction
-" function! FireCurlCall(url, method, header)
-"   :let s:curlCommand = "r!curl '".a:url."' -X '".a:method."' -H '".a:header."' -D -"
-"   :put=s:curlCommand
-"   :execute s:curlCommand
-"   :execute "normal! ?------------\<CR>jjd2jO"
-"   :execute "normal! ?-------------\<CR>"
-" endfunction
-" function! GetURL()
-"   return 'http://localhost:80/repos/ccp_be/web/app_dev.php/api/testing'
-" endfunction
-" function! GetMethod()
-"   return 'GET'
-" endfunction
-" function! GetHeader()
-"   return 'apikey:kuRmnPl59gUZVQdVCvdiUmV/mNfOp6A/Q9LqTP6Lw18='
-" endfunction
-" augroup insertmode
-" au!
-" augroup END
-" func! HandlePrint(channel, msg)
-"   let @j = a:msg
-"   execute ':normal! "jpo'
-"   " echo 'Received: ' . a:msg
-" endfunc
-
-" func! HandleClear(channel, msg)
-"   echo 'Received: ' . a:msg
-" endfunc
-
-" nnoremap <Leader>dn :call DebugerNext()<CR>
-" function! DebugerNext()
-"  call ch_sendraw(g:channel, "n\n", {'callback' : 'HandleClear'})
-" endfunction
-
-
-" nnoremap <Leader>dr :call DebugerRefresh()<CR>
-" function! DebugerRefresh()
-"  normal! ggdG  
-"  call ch_sendraw(g:channel, "list(99)\n", {"callback": "HandlePrint"}) 
-" endfunction
-" func! Handler(channel)
-"   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
-"     echomsg ch_read(a:channel)
-"   endwhile
-" endfunc
-" let job = job_start("./jobscript.sh", {'close_cb': 'Handler'})
-" let job = job_start("node servers/interfaceServer.js")
-" let channel = job_getchannel(job)
-" call ch_sendraw(channel, "list(99)")
-" echo ch_read(channel)
-" call ch_sendraw(channel, "1", {'callback': 'Handler'})
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-set up latest vim plus vundle
-"sudo apt-install git
-"git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-" # Create the directories you need
-" sudo mkdir -p /opt/local/bin
-" # Download, compile, and install the latest Vim
-" cd ~
-" git clone https://github.com/vim/vim.git
-" cd vim
-" ./configure --prefix=/opt/local --with-features=huge --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu
-" make
-" sudo make install
-" # Add the binary to your path, ahead of /usr/bin
-" echo 'PATH=/opt/local/bin:$PATH' >> ~/.bash_profile
-" # Reload bash_profile so the changes take effect in this window
-" source ~/.bash_profile
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-You complete me install
-" # install youcompleteme
-" cd ~
-" mkdir ycm_build
-" cd ycm_build
-" cmake -G "Unix Makefiles" . /home/vagrant/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-" cmake --build . --target ycm_core --config Release
-" cd ~/.vim/bundle/YouCompleteMe/third_party/ycmd/third_party/tern_runtime/
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
