@@ -214,8 +214,9 @@ augroup typescriptConfig
   " config
   autocmd FileType typescript :set makeprg=tsc
   " commands
-  autocmd FileType typescript nmap <buffer> KK :<C-u>echo tsuquyomi#hint()<CR>
-  autocmd FileType typescript nmap <buffer> KL :TsuquyomiSignatureHelp<CR>
+  autocmd FileType typescript nnoremap <Leader>let :call ToggleConstLet()<CR>
+  autocmd FileType typescript nnoremap KK :<C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript nnoremap KL :TsuquyomiSignatureHelp<CR>
   autocmd FileType typescript nnoremap <Leader>' :s/'/"/g"<CR>
   autocmd FileType typescript nnoremap <Leader>" :%s/'/"/g"<CR>
   autocmd FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
@@ -597,6 +598,16 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+fun! ToggleConstLet()
+  if match(getline('.'), '\s*let') > -1
+    execute 's/let/const/'
+  elseif match(getline('.'), '\s*const') > -1
+    execute 's/const/let'
+  else
+    echom "No let or const"
+  endif
+endf
+
 function! ToggleWrapInConsoleLog()
   if match(getline('.'), "console\.log") > -1
     echom "truth"
