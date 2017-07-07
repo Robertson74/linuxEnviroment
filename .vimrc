@@ -22,6 +22,9 @@ Plugin 'leafgarland/typescript-vim'
 " snips and syntax
 Plugin 'HerringtonDarkholme/yats.vim'
 " --------
+" JS Doc
+Plugin 'othree/jsdoc-syntax.vim'
+Plugin 'heavenshell/vim-jsdoc'
 " auto import
 Plugin 'galooshi/vim-import-js'
 " ANGULAR 2 CLI integration
@@ -61,6 +64,10 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" sorting 
+Plugin 'christoomey/vim-sort-motion'
+" JSON tools
+Plugin 'elzr/vim-json'
 " better join
 Plugin 'sk1418/Join'
 " Snippets
@@ -205,9 +212,10 @@ set timeoutlen=1000 ttimeoutlen=0
 augroup typescriptConfig
   au!
   " config
-  autocmd FileType typescript nmap <buffer> K : <C-u>echo tsuquyomi#hint()<CR>
   autocmd FileType typescript :set makeprg=tsc
   " commands
+  autocmd FileType typescript nmap <buffer> KK :<C-u>echo tsuquyomi#hint()<CR>
+  autocmd FileType typescript nmap <buffer> KL :TsuquyomiSignatureHelp<CR>
   autocmd FileType typescript nnoremap <Leader>' :s/'/"/g"<CR>
   autocmd FileType typescript nnoremap <Leader>" :%s/'/"/g"<CR>
   autocmd FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
@@ -219,6 +227,8 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>mk :make<CR>
   autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
+  autocmd FileType typescript nnoremap <Leader>doc :JsDoc<CR>
+  autocmd FileType typescript nnoremap <Leader>ete :call EditJSTestFile()<CR>
 augroup END
 
 " PHP
@@ -231,10 +241,11 @@ augroup END
 " JS 
 augroup jsConfig
   au!
-  autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
+  autocmd FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
   autocmd FileType javascript nnoremap <buffer> K :TernDoc<CR>
-  autocmd FileType typescript nnoremap <Leader>tes :!npm run test<CR>
+  autocmd FileType javascript nnoremap <Leader>tes :!npm run test<CR>
   autocmd FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  autocmd FileType javascript nnoremap <Leader>doc :JsDoc<CR>
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-autocommands
@@ -248,6 +259,16 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" JsDoc
+let g:jsdoc_additional_descriptions = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_allow_input_prompt = 0
+let g:jsdoc_underscore_private = 1
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_user_defined_tags = {
+      \ '@author': 'Michael Robertson',
+      \ '@date': strftime('%Y-%m-%d'),
+      \}
 " control-p ignore folders
 set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*
 " quick adding snippets
@@ -418,7 +439,7 @@ nnoremap <Leader>td :tabmove -1<CR>
 "Obscure/UN Obscure doc
 nnoremap <Leader>hid :normal! mmggg?G`m<CR>
 " Search/edit/find reference files
-nnoremap <Leader>gref :grep -R "" ~/.vim/michaelSoft/references gn<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
+nnoremap <Leader>gref :grep -R ",./" ~/.vim/michaelSoft/references<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
 nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 " swap comments quickly
