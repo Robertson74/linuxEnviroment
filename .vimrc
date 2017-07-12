@@ -317,7 +317,7 @@ let g:snips_author="Michael Robertson"
 let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 " snippets 
 let g:UltiSnipsExpandTrigger = "<C-Z>"
-let g:UltiSnipsListSnippets = "<C-l>"
+let g:UltiSnipsListSnippets = "<C-L>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 " dir for custom snips
