@@ -210,7 +210,7 @@ set timeoutlen=1000 ttimeoutlen=0
 " Line number colors
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-language specific
-" typescript 
+" -typescript 
 augroup typescriptConfig
   au!
   " config
@@ -233,6 +233,7 @@ augroup typescriptConfig
   autocmd FileType typescript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
   autocmd FileType typescript nnoremap <Leader>doc :JsDoc<CR>
   autocmd FileType typescript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  autocmd FileType typescript nnoremap <Leader>npmi :!npm i -s 
 augroup END
 
 " PHP
