@@ -1,0 +1,4 @@
+delete duplicate lines
+g/^\(.*\)\(\n\1\)\+/d
+delete all duplicate sets
+s/^\(.*\)\(\n\1\)\+//
