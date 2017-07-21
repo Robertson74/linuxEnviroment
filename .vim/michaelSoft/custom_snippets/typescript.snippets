@@ -30,15 +30,15 @@ snippet arr "array"
 ${4:let} ${1:varName}: ${2:type}[] = [${3:val, val}];
 endsnippet
 
-snippet propGS "Property w/ getter setter" b
+snippet propGS "Property w/ getter setter" bm
 private _${1:propName}: ${2:propType};
 
 get $1(): $2 {
 	return this._$1;
-};
+}
 
 set $1($1: $2) {
 	this._$1 = $1;
-};
+}
 
 endsnippet
