@@ -337,6 +337,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 command! E Explore
+let g:syntastic_loc_list_height = 5
 " vdebug with xdebug options
 " let g:vdebug_options = {}
 " let g:vdebug_options["debug_file"] = "~/vdebug.log"
