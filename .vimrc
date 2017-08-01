@@ -382,7 +382,12 @@ nnoremap <Leader>err :call RepositionErrors()<CR>
 function! RepositionErrors()
   let save_cursor = getcurpos()
   let save_window = win_getid()
-  :execute "normal! \<C-W>b\<C-W>J"
+  execute "normal! \<C-W>b\<C-W>J"
+  if line('$') > 10
+    resize 10
+  else
+    execute "resize ".line('$')
+  endif
   call win_gotoid(save_window)
   call setpos('.', save_cursor)
 endfunction
@@ -431,7 +436,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
-nnoremap <C-n> <C-w>p
+nnoremap <C-n> :set number! relativenumber!<CR>
 nnoremap ZX :q<CR>
 nnoremap XZ :q!<CR>
 " tab navigation

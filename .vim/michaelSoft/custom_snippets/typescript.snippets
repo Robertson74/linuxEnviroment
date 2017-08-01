@@ -44,5 +44,10 @@ get $1(): $2 {
 set $1($1: $2) {
 	this._$1 = $1;
 }
+endsnippet
 
+snippet qm "quick mock"
+const mock${1:MOCK}: ${2:mockType} = mock(${3:Object});
+when(mock$1.${4:}).thenReturn(${5:mockReturn});
+const stub$1: $2 = instance(mock$1);
 endsnippet
