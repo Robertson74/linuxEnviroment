@@ -374,8 +374,8 @@ function! MRCgetClassFromVarCache(objectText, filePaths)
   let s:escapedSearchText = substitute(s:grepSearchText, '/', '\\/', 'g')
   " create cache if needed
   if empty(glob(s:cachePath))
-    silent execute "mkdir -p ".s:cacheDir
-    silent execute "touch ".s:cachePath
+    silent execute "!mkdir -p ".s:cacheDir
+    silent execute "!touch ".s:cachePath
   endif
   " grep the cache file by file:method:variableText
   let s:cacheInfo = system('grep ",.\/file:'.@%.',.\/fileMethod:'.s:editMethod.',.\/varText:'.a:objectText.'" '.s:cachePath)

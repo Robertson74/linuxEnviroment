@@ -64,6 +64,8 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" visual representation of cursor in document
+Plugin 'gcavallanti/vim-noscrollbar'
 " sorting 
 Plugin 'christoomey/vim-sort-motion'
 " JSON tools
