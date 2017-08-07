@@ -135,7 +135,7 @@ filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
 " filetypes
-  au BufRead,BufNewFile *.apidoc    set filetype=apidoc
+au BufRead,BufNewFile *.apidoc    set filetype=apidoc
 " stop the annoyting autojoin line
 set textwidth=0
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
@@ -401,7 +401,7 @@ augroup END
 " list functions help
 nnoremap <Leader>lf :execute "help list-functions"<CR><C-W>H
 " completion
- inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
+inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
 inoremap <C-v> <C-x><C-o>
 inoremap <C-f> <C-x><C-l>
 inoremap <C-p> <C-x><C-p>
@@ -511,6 +511,7 @@ execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 execute "source ".$HOME."/.vim/michaelSoft/fun/ish.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>for :call FormatPage()<CR>
 nnoremap <Leader>ete :call EditJSTestFile()<CR>
 nnoremap <Leader>sim :call SortImportStatements()<CR>
 nnoremap <Leader>reg :call SaveToRegister()<CR>
@@ -611,6 +612,12 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" quick format the page
+function! FormatPage()
+  let save_cursor = getcurpos()
+  execute "normal! gg=G"
+  call setpos('.', save_cursor)
+endfunction
 fun! ToggleConstLet()
   if match(getline('.'), '\s*let') > -1
     execute 's/let/const/'
