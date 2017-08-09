@@ -687,7 +687,10 @@ function! SortImportStatements()
   execute "normal! ?^\s\*import\<CR>"
   let s:endLine = line('.')
   " echom ":".s:startLine.",".s:endLine." sort\<CR>"
-  execute ":".s:startLine.",".s:endLine."sort"
+  let quote = '"'
+  execute s:startLine.",".s:endLine."sort '".quote."'"
+  execute s:startLine.','.s:endLine.'g/"\.\//m'.s:endLine
+  execute s:startLine.','.s:endLine.'g/"\.\.\//m'.s:endLine
   call setpos('.', save_cursor)
 endfunction
 " move a register from common to a saved register
