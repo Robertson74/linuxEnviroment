@@ -509,6 +509,9 @@ execute "source ".$HOME."/.vim/michaelSoft/ViSql/ViSql.vim"
 execute "source ".$HOME."/.vim/michaelSoft/symfony/symfonyTools.vim"
 execute "source ".$HOME."/.vim/michaelSoft/mrComplete/mrComplete.vim"
 execute "source ".$HOME."/.vim/michaelSoft/fun/ish.vim"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-source project specific
+execute "source ".$HOME."/.vim/michaelSoft/projectSpecific/nodeCCP/nodeCCP.vim"
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
 nnoremap <Leader>for :call FormatPage()<CR>
@@ -1405,7 +1408,9 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
     :let a:lineNumber = a:lineNumber + 1
   endwhile
 endfunction
-
+function! ConvertToSnakeCase()
+  s/\([A-Z]\)/_\l\1/g
+endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 "--- look into Neovim and use Deoplete 
 "
