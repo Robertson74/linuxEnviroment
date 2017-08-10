@@ -6,7 +6,7 @@ import { instance, mock, verify, when } from "ts-mockito/lib/ts-mockito";
 getStub
 getStubThatThrows
 
-describe("${2:Object}", () => {
+describe("${1:Object}", () => {
 
   before(() => {
     chai.should();
@@ -20,15 +20,16 @@ describe("${2:Object}", () => {
   // dependency mocks
   const mockRepo: TestRepo = mock(TestRepo);
 
+  afterEach(() => {
+    // reset the mock here
+  });
 
-	afterEach(() => {
-			// reset the mock here
-	});
+  describe("method", () => {
 
-  describe("${2:method}", () => {
+    it("${3:should do a thing}", () => {
+      // do the test
+    });
 
-    it("should do a thing", () => {
-	});
-
+  });
 });
 endsnippet
