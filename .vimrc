@@ -1434,70 +1434,29 @@ endfunction
 "--- document links
 "--- NextCapitalWord improve
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
-nnoremap <Leader>tes :call StartDebug()<CR>
+source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+nnoremap <Leader>dbs :call StartDebug()<CR>
 nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
+nnoremap <Leader>dbc :call CloseDebugSession()<CR>
 
-function! DebugSendCommand(cmd)
-  call ch_sendraw(g:debug_channel, a:cmd."\r")
-  call DebugDisplayFullFile()
+nnoremap <Leader>qq :call TESTING()<CR>
+function! TESTING()
+  let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "json"})
+  " let testj = job_start("node debug ./build/src/sandbox.js", {"callback": "TestHandler"})
+  " let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "raw", "callback": "TestHandler"})
+  let testc = job_getchannel(testj)
+  """"
+  " call ch_sendraw(testc, "list(100)\r", {"callback": "TestHandler"})
+  call ch_sendexpr(testc, "list(100)\r", {'callback': "TestHandler"})
+  " call ch_sendraw(testc, "list(100)\r")
+  sleep 1
+
+  echom ch_log(testc)
+  " echom ch_readraw(testc)
+  call job_stop(testj)
 endfunction
 
-function! GoToDebugWindow()
-  if g:debug_window > 0 
-    call win_gotoid(g:debug_window) 
-  else 
-    echom "no debug window" 
-  endif
+function! TestHandler(channel, msg)
+  echom a:msg
+  echom "end message"
 endfunction
-
-function! DebugDisplayOutput(channel, msg)
-  put=a:msg
-  call DebugFormatOutput()
-endfunction
-
-function! DebugDisplayFullFile()
-  call win_gotoid(g:debug_window)
-  %d
-  call ch_sendraw(g:debug_channel, "list(1000)\r", {"callback": "DebugDisplayOutput"})
-  set syntax=typescript
-endfunction!
-
-function! StartDebug()
-  if exists("g:debug_window")
-    if win_gotoid(g:debug_window) > 0
-      :q!
-    endif
-  else
-    let g:debug_window = -1
-  endif
-  if exists("g:debug_channel")
-    if ch_status(g:debug_channel) != "closed"
-      call ch_close(g:debug_channel)
-    endif
-  endif
-  tabnew +enew
-  let g:debug_window = win_getid()
-  let g:debug_job = job_start("node debug build/src/sandbox.js", {"callback": "DebugDisplayOutput"})
-  let g:debug_channel = job_getchannel(g:debug_job)
-  call DebugDisplayFullFile()
-endfunction
-
-sign define debugLine text=>> linehl=Error
-function! DebugFormatOutput()
-  g/^.\s*\d\+\s/s///
-  g/^.\?>/execute "sign place 857 line=".line('.')." name=debugLine buffer=".bufnr('%')
-  silent! %s/^.\?>\s*\d\+\s//
-  g/debug>/d
-  g/^.\?break in /d
-endfunction
-
-func! CloseHandler(channel, msg)
-  let g:output = "test"
-  call win_gotoid(g:debug_window)
-  %d
-  while ch_status(a:channel, {'part': 'out'}) == 'buffered'
-    echom a:msg
-    let g:output = ch_read(a:channel)
-  endwhile
-  put=g:output
-endfunc
