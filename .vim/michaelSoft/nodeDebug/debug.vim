@@ -7,11 +7,13 @@ let g:debugLine = -1
 function! StartDebug()
   call DebugStartUpChecks()
   tabnew +enew
+  call DebugSetBinds()
   let g:debug_window = win_getid()
-  " let g:debug_job = job_start("node debug build/src/sandbox.js", {'in_mode': 'raw', 'out_mode': 'raw'})
+  " let g:debug_job = job_start("node debug build/src/sandbox.js", {"mode": "raw", "callback": "DebugDisplayOutput"})
   let g:debug_job = job_start("node debug build/src/sandbox.js", {"mode": "raw"})
   let g:debug_channel = job_getchannel(g:debug_job)
-  " call DebugDisplayFullFile()
+  sleep 1
+  call DebugDisplayFullFile()
 endfunction
 
 " close the debug window and connection
@@ -50,6 +52,7 @@ endfunction
 " send a command to the debugger
 function! DebugSendCommand(cmd)
   call ch_sendraw(g:debug_channel, a:cmd."\r")
+  sleep 500m
   call DebugDisplayFullFile()
 endfunction
 
@@ -64,27 +67,27 @@ endfunction
 
 " format the debugging window
 function! DebugFormatOutput()
-  " g/^.\s*\d\+\s/s///
-  if match(line('.'), '^.\?>')
-    execute "sign place ".g:debugSign." line=".line('.')." name=debugLine buffer=".bufnr('%') 
-    let g:debugLine = line('.')
-  endif
-  " silent! %s/^.\?>\s*\d\+\s//
-  " call setpos('.', [0, g:debugLine, 0, 0])
+  %s/.\(.*\)/\1/
+  silent! g/bug>/d
+  " g/^\.\?>/execute "sign place ".g:debugSign." line=".line('.')." name=debugLine buffer=".bufnr('%') 
+  set syntax=typescript
+  set nonu nornu
 endfunction
 
 " dumps output to the file
 function! DebugDisplayOutput(channel, msg)
-  let g:test = a:msg
-  echom a:msg
+  %d
   put=a:msg
-  " call DebugFormatOutput()
+  call DebugFormatOutput()
 endfunction
 
 " display debugging file
 function! DebugDisplayFullFile()
   call win_gotoid(g:debug_window)
-  %d
   call ch_sendraw(g:debug_channel, "list(1000)\r", {"callback": "DebugDisplayOutput"})
-  set syntax=typescript
 endfunction!
+
+function! DebugSetBinds()
+  nnoremap <buffer> r :call DebugDisplayFullFile()<CR>
+  nnoremap <buffer> n :call DebugSendCommand("n")<CR>
+endfunction

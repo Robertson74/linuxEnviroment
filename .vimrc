@@ -1441,22 +1441,21 @@ nnoremap <Leader>dbc :call CloseDebugSession()<CR>
 
 nnoremap <Leader>qq :call TESTING()<CR>
 function! TESTING()
-  let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "json"})
+  echom "start testing"
+  let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "raw", "callback": "DebugDisplayOutput"})
   " let testj = job_start("node debug ./build/src/sandbox.js", {"callback": "TestHandler"})
   " let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "raw", "callback": "TestHandler"})
   let testc = job_getchannel(testj)
   """"
-  " call ch_sendraw(testc, "list(100)\r", {"callback": "TestHandler"})
-  call ch_sendexpr(testc, "list(100)\r", {'callback': "TestHandler"})
-  " call ch_sendraw(testc, "list(100)\r")
-  sleep 1
-
-  echom ch_log(testc)
-  " echom ch_readraw(testc)
+  echom string(ch_info(testc))
+  call ch_sendraw(testj, "list(100)\n", {'callback': 'TestHandler'})
   call job_stop(testj)
+  echom "done with testing"
 endfunction
 
 function! TestHandler(channel, msg)
-  echom a:msg
+  put=a:msg
+  " let g:debug_contents = a:msg
+  call confirm('')
   echom "end message"
 endfunction
