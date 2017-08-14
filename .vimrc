@@ -89,10 +89,9 @@ Plugin 'tpope/vim-commentary'
 Plugin 'majutsushi/tagbar'
 " auto complete
 Plugin 'maralla/completor.vim'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'Shougo/neocomplete.vim'
 " Syntax error highlighting
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
 " Fuzzy file finder
 Plugin 'ctrlpvim/ctrlp.vim'
 " File information display
@@ -266,6 +265,9 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" ale
+" --- typescript
+ let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
 " JsDoc
 let g:jsdoc_additional_descriptions = 1
 let g:jsdoc_input_description = 1
@@ -332,12 +334,12 @@ let g:user_command_async=1
 let g:phpcomplete_parse_docblock_comments = 1
 let g:phpcomplete_index_composer_command = "composer"
 " Syntastic typescript linter
-let g:syntastic_typescript_checkers = ['tslint']
+" let g:syntastic_typescript_checkers = ['tslint']
 " Syntastic recommended default settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 command! E Explore
 let g:syntastic_loc_list_height = 5
 " vdebug with xdebug options
@@ -1412,30 +1414,10 @@ function! ConvertToSnakeCase()
   s/\([A-Z]\)/_\l\1/g
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-"--- look into Neovim and use Deoplete 
-"
-"--- php command line based debugger
-"--- modularize vimrc
-"--- find and replace quick command
-"--- mysql integration
-"    todo
-"      multiple tabs
-"      view data on a subset of columns
-"      view range of databased on column eg between id values or date ranges
-"      pagination
-"      edit table structure
-"    BUGS
-"      running a query with no output back (deleteing a record) will cause a blank screen, with enter attempting to edit a non existant record. It should refresh the table view
-"--- curl integration component
-"--- link variables together (eg x = 10 y = 10 z = 10 can all be changed at once)
-"--- easy renaming tabs to group thoughts and work spaces
-"--- overload enter on nav bar to open in previous window
-"--- merge tabs
-"--- document links
-"--- NextCapitalWord improve
+" -- plugin watch - ale
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
-nnoremap <Leader>dbs :call StartDebug()<CR>
+nnoremap <Leader>dbs :call StartDebugSession()<CR>
 nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
 nnoremap <Leader>dbc :call CloseDebugSession()<CR>
 

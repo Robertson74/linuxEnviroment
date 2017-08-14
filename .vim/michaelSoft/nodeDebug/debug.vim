@@ -4,7 +4,7 @@ let g:debugSign = 857
 let g:debugLine = -1
 
 " start up the debugging process
-function! StartDebug()
+function! StartDebugSession()
   call DebugStartUpChecks()
   tabnew +enew
   call DebugSetBinds()
@@ -19,13 +19,14 @@ endfunction
 " close the debug window and connection
 function! CloseDebugSession()
   let s:currentWindow = -1
-  if win_getid() == g:debug_window
+  if win_getid() != g:debug_window
     let s:currentWindow = win_getid()
   endif
   if g:debug_window > 0
-    call win_gotoid(g:debug_window)
-    q!
-    let g:debug_window = -1
+    if win_gotoid(g:debug_window) == 1
+      q!
+      let g:debug_window = -1
+    endif
   endif
   call job_stop(g:debug_job)
   if s:currentWindow > 0
