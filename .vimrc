@@ -350,6 +350,7 @@ let g:syntastic_loc_list_height = 5
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+nnoremap <Leader>mas :call MakeAsync()<CR>
 " convert JS function to fat arrow function
 nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
 " quick add snippets
@@ -617,6 +618,13 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" quickly make a funciton async
+function! MakeAsync()
+  let save_cursor = getcurpos()
+  execute "normal! ?() =\<CR>iasync "
+  call setpos('.', save_cursor)
+endfunction
+
 " quick format the page
 function! FormatPage()
   let save_cursor = getcurpos()
@@ -1422,22 +1430,3 @@ nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
 nnoremap <Leader>dbc :call CloseDebugSession()<CR>
 
 nnoremap <Leader>qq :call TESTING()<CR>
-function! TESTING()
-  echom "start testing"
-  let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "raw", "callback": "DebugDisplayOutput"})
-  " let testj = job_start("node debug ./build/src/sandbox.js", {"callback": "TestHandler"})
-  " let testj = job_start("node debug ./build/src/sandbox.js", {"mode": "raw", "callback": "TestHandler"})
-  let testc = job_getchannel(testj)
-  """"
-  echom string(ch_info(testc))
-  call ch_sendraw(testj, "list(100)\n", {'callback': 'TestHandler'})
-  call job_stop(testj)
-  echom "done with testing"
-endfunction
-
-function! TestHandler(channel, msg)
-  put=a:msg
-  " let g:debug_contents = a:msg
-  call confirm('')
-  echom "end message"
-endfunction
