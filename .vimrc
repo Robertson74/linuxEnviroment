@@ -373,7 +373,7 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 " toggle syntax checking
-nnoremap <Leader>ST :SyntasticToggleMode<CR>
+" nnoremap <Leader>ST :SyntasticToggleMode<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-file short cuts
 " php
@@ -1430,3 +1430,13 @@ nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
 nnoremap <Leader>dbc :call CloseDebugSession()<CR>
 
 nnoremap <Leader>qq :call TESTING()<CR>
+nnoremap <Leader>ST :call ToggleAle()<CR>
+function! ToggleAle()
+  if g:ale_enabled == 1
+    let g:ale_enabled = 0
+    echom "ALE off"
+  else 
+    let g:ale_enabled = 1
+    echom "ALE on"
+  endif
+endfunction
