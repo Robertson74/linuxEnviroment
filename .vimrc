@@ -122,7 +122,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'flazz/vim-colorschemes'
 """ FUN -------------------------------
 " tetris
-" Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'vim-scripts/TeTrIs.vim'
 " snake
 " Plugin 'zyedidia/vim-snake'
 "---------------------------------------
@@ -701,7 +701,7 @@ function! SortImportStatements()
   let s:endLine = line('.')
   " echom ":".s:startLine.",".s:endLine." sort\<CR>"
   let quote = '"'
-  execute s:startLine.",".s:endLine."sort '".quote."'"
+  execute s:startLine.",".s:endLine."sort i'".quote."'"
   execute s:startLine.','.s:endLine.'g/"\.\//m'.s:endLine
   execute s:startLine.','.s:endLine.'g/"\.\.\//m'.s:endLine
   call setpos('.', save_cursor)
@@ -1422,7 +1422,6 @@ function! ConvertToSnakeCase()
   s/\([A-Z]\)/_\l\1/g
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
-" -- plugin watch - ale
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>dbs :call StartDebugSession()<CR>

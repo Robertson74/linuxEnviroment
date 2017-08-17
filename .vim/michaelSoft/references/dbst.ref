@@ -1,0 +1,120 @@
+2017 Aug 16 03:41:28 PM
+<db_server_port>
+http://mrobertson@bitbucket.nma:7990/scm/dbst/dbst.git
+,./dbst ,./database
+------------------------------------
+
+// bring in dbst as a subtree
+git subtree push --prefix=dbst/updates/development schemas master
+
+
+
+
+---- doc from Chris Baily
+DBST - Database Schema Tool
+
+Overview
+DBST is used to manage data definition language scripts.  DBST creates simple text files that have three sections: #dbst.description, #dbst.UPDATESQL, #dbst.UNDOSQL.  DBST uses command line instructions to perform a handful of tasks against the databases configured in the databases.yml file.
+
+Dependencies
+•  Java 1.8
+•  MySQL tools (needed to use the dump feature)
+
+How it works
+DBST needs a specific folder structure and files to perform it’s tasks.  It is most common to have the /dbst root folder in the project root but can really live anywhere.  To run dbst commands you must be in the folder that contains /dbst.
+
+•  Create dbst folder structure and config file: 
+
+$ mkdir -p dbst/config
+$ touch dbst/config/databases.yml
+
+•  Populate config file with the text below…replace all <text> with appropriate values and the last line if --- is mandatory and used to separate mutiple configuartions
+
+!dbschema.ErikPlusPlus$SchemaConf
+db_ref_name: <your_connection_name>
+server: <ip_address_of_db_server>
+port: <db_server_port>
+db: <datbase_name>
+user: <username>
+password: <password>
+---
+
+•  Initialize DBST against a database.  The following command will create a db_schema table on the target database.  This will tell DBST which migrations or update scripts have been run.
+
+$ dbst -i <your_connection_name>
+
+•  Create a properly formed blank update file.  
+
+$ dbst -g <your_connection_name> "<describe_what_the_migration_step_is_doing>"
+•  Run the updates against the database
+
+$ dbst –u <your_connection_name>
+
+CLI Help Output
+
+$ dbst –h
+
+usage:  [-help, -h]
+        dbst -h
+            Displays this help information
+
+        [-init, -i]
+        dbst -i <db_ref_name>
+            Initializes the db_schema table
+
+        [-generate, -g]
+        dbst -g <db_ref_name> <description>
+            Generates and registers a blank schema file in updates/
+
+        [-list, -l]
+        dbst -l <db_ref_name>
+            Lists a formatted table for the specified db_ref_name
+
+        [-update, -u]
+        dbst -u <db_ref_name>
+            Runs all pending schema updates for db_ref_name
+        dbst -u <db_ref_name> <hashKey>
+            Runs a specified schema update for db_ref_name
+
+        [-revert, -r]
+        dbst -r <db_ref_name> <hashKey>
+            Reverts a schema change manually
+
+        [-dump, -d]
+        dbst -d <db_ref_name>
+            Dumps a database's schema into a file. Not fully implemented.
+
+dbst-seed
+A simple command line tool that will take json configuration files from dbst/seed folder and add records to the database.  Orignally designed as a separate project, later it was decided to leverage the dbst configuration to avoid duplication.
+
+•  Json seed file shape:
+
+{
+  "tables": [
+    {
+      "name": "table_name",
+      "quantity": 1,
+      "columns": [
+        { "name": "column_name1", "value": "value to insert into column" },
+        { "name": "column_name2", "value": "value to insert into column" }
+      ]
+    }
+  ]
+}
+
+•  $ dbst-seed env=development // will seed the designated db with config file like above
+
+
+Using git subtrees with DBST
+•  Create repo in bitbucket and add a single file to it
+•  Create a second repo that will be your project
+•  Do not add schema updates yet
+•  
+
+Resources
+
+•  DBST Repo (has good readme): http://bitbucket.nma:7990/projects/DBST/repos/dbst/browse
+•  Schemas repo:  http://bitbucket.nma:7990/projects/NS 
+•  DBST Seed (has good readme): http://bitbucket.nma:7990/projects/DBST/repos/dbst-seed/browse 
+•  Git Subtrees:  http://confluence.nationalmerchants.com:8090/display/SE/Git+Submodules+and+Subtrees
+

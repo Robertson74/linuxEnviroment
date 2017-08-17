@@ -8,21 +8,22 @@ getStubThatThrows
 
 describe("${1:Object}", () => {
 
+	// enables "chai-as-promised"
   before(() => {
     chai.should();
     chai.use(chaiAsPromised);
   });
 
   // test return objects
-  const testObj1: ITestType = {id: 1};
-  const testObj2: ITestType = {id: 2};
+  // const testObj1: ITestType = {id: 1};
+  // const testObj2: ITestType = {id: 2};
 
   // dependency mocks
-  const mockRepo: TestRepo = mock(TestRepo);
+  // const mockRepo: TestRepo = mock(TestRepo);
 
-  afterEach(() => {
-    // reset the mock here
-  });
+  // afterEach(() => {
+  //   reset the mock here
+  // });
 
   describe("method", () => {
 
