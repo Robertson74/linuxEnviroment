@@ -51,3 +51,11 @@ const mock${1:MOCK}: ${2:mockType} = mock(${3:Object});
 when(mock$1.${4:}).thenReturn(${5:mockReturn});
 const stub$1: $2 = instance(mock$1);
 endsnippet
+
+snippet res "quick resolve a promise"
+${2:}Promise.resolve(${1:});
+endsnippet
+	
+snippet rej "quick reject a promise"
+${2:}Promise.reject(${1:});
+endsnippet

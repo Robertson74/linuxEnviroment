@@ -133,6 +133,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
+" omni complete 
+set completeopt+=longest
 " filetypes
 au BufRead,BufNewFile *.apidoc    set filetype=apidoc
 " stop the annoyting autojoin line
@@ -548,10 +550,11 @@ augroup END
 augroup typescriptTools
   au!
   au BufEnter *.ts nnoremap <Leader>imp :TsuImport<CR>
+  au BufEnter *.ts nnoremap <Leader>fix :TsuQuickFix<CR>
 augroup END
 " games
-nnoremap <Leader>gte :cal <SNR>15_Main()<CR>
-nnoremap <Leader>gsn :call Snake()<CR>
+" nnoremap <Leader>gte :cal <SNR>15_Main()<CR>
+" nnoremap <Leader>gsn :call Snake()<CR>
 " format json
 vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
@@ -1423,6 +1426,26 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
+
+source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
+function! TSRelativePathComplete()
+  let s:tsconfig = system("cat ./tsconfig.json")
+  let s:jsonTsconfig = json_decode(s:tsconfig)
+  let s:paths = get(get(s:jsonTsconfig, "compilerOptions"), "paths")
+  " echom string(s:paths)
+  let s:listPaths = values(s:paths)
+  for s:path in s:listPaths
+    echom string(s:path)
+    let s:tsFiles = systemlist("ls -R ".s:path[0]." | grep .ts")
+    for s:file in s:tsFiles
+      " echom "cat ".s:path."".s:file
+      " echom system("cat ".s:path."".s:file)
+    endof
+    echom string(s:tsFiles)
+  endfor
+endfunction
+
 source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>dbs :call StartDebugSession()<CR>
 nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
