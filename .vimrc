@@ -1446,7 +1446,7 @@ function! TSRelativePathComplete()
   endfor
 endfunction
 
-source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>dbs :call StartDebugSession()<CR>
 nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
 nnoremap <Leader>dbc :call CloseDebugSession()<CR>
