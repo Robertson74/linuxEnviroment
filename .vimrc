@@ -41,6 +41,8 @@ Plugin 'ternjs/tern_for_vim'
 " Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
+" jade syntax
+Plugin 'digitaltoad/vim-pug'
 " html quick develop
 Plugin 'mattn/emmet-vim'
 " html5 autocomplete
@@ -268,6 +270,8 @@ augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
 " ale
+" don't lint on every word change
+let alt_lint_on_text_changed = 0
 " --- typescript
  let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
 " JsDoc
