@@ -169,9 +169,6 @@ autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
 " no swap files
 set noswapfile
-" lower n always search down
-noremap <expr> n 'Nn'[v:searchforward]
-noremap <expr> N 'nN'[v:searchforward]
 set breakindent
 " Netrw top level tree set to dir where vim was opened
 " execute "normal! :silent Ntree" $PWD
