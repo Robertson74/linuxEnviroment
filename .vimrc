@@ -1427,7 +1427,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 
-source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
 function! TSRelativePathComplete()
   let s:tsconfig = system("cat ./tsconfig.json")
