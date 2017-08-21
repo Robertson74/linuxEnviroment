@@ -482,11 +482,11 @@ nnoremap <Leader>ts /\S\zs\s\+$<cr>
 nnoremap <C-_> :noh<CR>
 nnoremap <Leader>no :noh<CR>
 " vim edit rc and resource
-nnoremap <Leader>vcom :!cd ~;sudo git add .vimrc && sudo git add .vim/michaelSoft/* -f && sudo git commit -m "updating"
-nnoremap <Leader>vup :!cd ~;sudo git add .vimrc && sudo git add .vim/michaelSoft/* -f && sudo git commit -m "updating" && sudo git push github master;<CR>
-nnoremap <Leader>vps :!cd ~ && git push github master;<CR>
-nnoremap <Leader>vsy :!cd ~ && sudo git pull github master;<CR>
-nnoremap <Leader>v :!cd ~ && sudo git pull github master;<CR>
+nnoremap <Leader>vcom :!cd ~ && sudo git add .vimrc && sudo git add .vim/michaelSoft/* -f && sudo git commit -m "updating"<CR>
+nnoremap <Leader>vup :!cd ~ && sudo git add .vimrc && sudo git add .vim/michaelSoft/* -f && sudo git commit -m "updating" && sudo git push github master<CR>
+nnoremap <Leader>vps :!cd ~ && git push github master<CR>
+nnoremap <Leader>vsy :!cd ~ && sudo git pull github master<CR>
+nnoremap <Leader>v :!cd ~ && sudo git pull github master<CR>
 nnoremap <Leader>vvv :tabnew ~/.vimrc<CR>:tabmove $<CR>
 " Reload vimrc
 nnoremap <Leader>vso :source $MYVIMRC<CR>
