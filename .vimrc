@@ -41,6 +41,8 @@ Plugin 'ternjs/tern_for_vim'
 " Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
+" jade syntax
+Plugin 'digitaltoad/vim-pug'
 " html quick develop
 Plugin 'mattn/emmet-vim'
 " html5 autocomplete
@@ -167,9 +169,6 @@ autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
 " no swap files
 set noswapfile
-" lower n always search down
-noremap <expr> n 'Nn'[v:searchforward]
-noremap <expr> N 'nN'[v:searchforward]
 set breakindent
 " Netrw top level tree set to dir where vim was opened
 " execute "normal! :silent Ntree" $PWD
@@ -268,6 +267,8 @@ augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
 " ale
+" don't lint on every word change
+let alt_lint_on_text_changed = 0
 " --- typescript
  let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
 " JsDoc
@@ -1429,7 +1430,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 
-source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
 function! TSRelativePathComplete()
   let s:tsconfig = system("cat ./tsconfig.json")
@@ -1448,7 +1449,7 @@ function! TSRelativePathComplete()
   endfor
 endfunction
 
-source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>dbs :call StartDebugSession()<CR>
 nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
 nnoremap <Leader>dbc :call CloseDebugSession()<CR>
