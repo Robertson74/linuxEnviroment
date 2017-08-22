@@ -267,6 +267,7 @@ augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
 " ale
+let g:ale_lint_on_text_changed = 0
 " don't lint on every word change
 let alt_lint_on_text_changed = 0
 " --- typescript
@@ -446,7 +447,7 @@ nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
 nnoremap <C-n> :set number! relativenumber!<CR>
 nnoremap ZX :q<CR>
-nnoremap XZ :q!<CR>
+nnoremap XC :q!<CR>
 " tab navigation
 nnoremap zl :tabnext<CR>
 nnoremap zh :tabprev<CR>
@@ -1432,21 +1433,31 @@ endfunction
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
+" fyi this only supports one path for each module e.g.
+"             "paths": {
+"this--->         "entities/*": ["./src/shared/entities/*"],
+"not this--->     "models/*": ["./src/shared/models/*", "./src/shared/models2/*"]
+"              },
 function! TSRelativePathComplete()
+  " find all classes that have a path in tsconfig
   let s:tsconfig = system("cat ./tsconfig.json")
   let s:jsonTsconfig = json_decode(s:tsconfig)
   let s:paths = get(get(s:jsonTsconfig, "compilerOptions"), "paths")
-  " echom string(s:paths)
   let s:listPaths = values(s:paths)
+  let s:fileMatrix = []
   for s:path in s:listPaths
-    echom string(s:path)
-    let s:tsFiles = systemlist("ls -R ".s:path[0]." | grep .ts")
-    for s:file in s:tsFiles
-      " echom "cat ".s:path."".s:file
-      " echom system("cat ".s:path."".s:file)
-    endof
+    let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts")
     echom string(s:tsFiles)
+    let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts | xargs grep 'export'")
+    echom string(s:tsFiles)
+    for s:file in s:tsFiles
+      call add(s:fileMatrix, [s:path[0], s:file])
+    endfor
   endfor
+
+  " echom string(s:fileMatrix)
+  " let s:importWord = expand(<cword>)
+  " echom s:importWord
 endfunction
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
