@@ -354,6 +354,7 @@ let g:syntastic_loc_list_height = 5
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
 nnoremap <Leader>mas :call MakeAsync()<CR>
 " convert JS function to fat arrow function
 nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
@@ -625,6 +626,37 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
+" quick add constructor args
+function! AddNewConstructorParameter(param)
+  let s:save_cursor = getcurpos()
+  let s:type = input("What type is this - ".a:param." : ")
+  let s:description = input("description for var: ")
+  if s:type == ""
+    return
+  endif
+  " find constructor line
+  execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
+  " if there are agruments, put a comma in
+  if match(getline('.'), ',') > -1
+    execute "normal! i,\<space>".a:param.": ".s:type
+  elseif
+    " insert constructor param
+    execute "normal! i".a:param.": ".s:type
+  endif
+  " assign private variable
+  execute "normal! /{\<CR>othis._".a:param." = ".a:param.";\<ESC>=="
+  " create private variable
+  :set nornu nu
+  normal! zb
+  redraw!
+  let s:privateLine = input("what line for private var - ".a:param." :")
+  execute "normal! ".s:privateLine."gg"
+  execute "normal! oprivate _".a:param.": ".s:type.";\<ESC>=="
+  if s:description != ""
+    execute "normal! O// ".s:description."\<ESC>=="
+  endif
+  call setpos('.', s:save_cursor)
+endfunction
 " quickly make a funciton async
 function! MakeAsync()
   let save_cursor = getcurpos()
@@ -1435,37 +1467,6 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
-nnoremap <Leader>zz :call AddNewConstructorParameter(expand("<cword>"))<CR>
-function! AddNewConstructorParameter(param)
-  let s:save_cursor = getcurpos()
-  let s:type = input("What type is this - ".a:param." : ")
-  let s:description = input("description for var: ")
-  if s:type == ""
-    return
-  endif
-  " find constructor line
-  execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
-  " if there are agruments, put a comma in
-  if match(getline('.'), ',') > -1
-    execute "normal! i,\<space>".a:param.": ".s:type
-  elseif
-    " insert constructor param
-    execute "normal! i".a:param.": ".s:type
-  endif
-  " assign private variable
-  execute "normal! /{\<CR>othis._".a:param." = ".a:param.";\<ESC>=="
-  " create private variable
-  :set nornu nu
-  normal! zb
-  redraw!
-  let s:privateLine = input("what line for private var - ".a:param." :")
-  execute "normal! ".s:privateLine."gg"
-  execute "normal! oprivate _".a:param.": ".s:type.";\<ESC>=="
-  if s:description != ""
-    execute "normal! O// ".s:description."\<ESC>=="
-  endif
-  call setpos('.', s:save_cursor)
-endfunction
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
