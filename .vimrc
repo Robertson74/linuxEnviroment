@@ -628,7 +628,7 @@ nnoremap gl :call GoToSecondThirdOfLine()<CR>
 " quickly make a funciton async
 function! MakeAsync()
   let save_cursor = getcurpos()
-  execute "normal! ?(.*=>\<CR>"
+  execute "normal! ?=>\<CR>F("
   if match(getline('.'), 'async') == -1
     execute "normal! iasync "
   else 
@@ -1435,49 +1435,80 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
-
-" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
-nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
-" fyi this only supports one path for each module e.g.
-"             "paths": {
-"this--->         "entities/*": ["./src/shared/entities/*"],
-"not this--->     "models/*": ["./src/shared/models/*", "./src/shared/models2/*"]
-"              },
-function! TSRelativePathComplete()
-  " find all classes that have a path in tsconfig
-  let s:tsconfig = system("cat ./tsconfig.json")
-  let s:jsonTsconfig = json_decode(s:tsconfig)
-  let s:paths = get(get(s:jsonTsconfig, "compilerOptions"), "paths")
-  let s:listPaths = values(s:paths)
-  let s:fileMatrix = []
-  for s:path in s:listPaths
-    let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts")
-    echom string(s:tsFiles)
-    let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts | xargs grep 'export'")
-    echom string(s:tsFiles)
-    for s:file in s:tsFiles
-      call add(s:fileMatrix, [s:path[0], s:file])
-    endfor
-  endfor
-
-  " echom string(s:fileMatrix)
-  " let s:importWord = expand(<cword>)
-  " echom s:importWord
-endfunction
-
-" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
-nnoremap <Leader>dbs :call StartDebugSession()<CR>
-nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
-nnoremap <Leader>dbc :call CloseDebugSession()<CR>
-
-nnoremap <Leader>qq :call TESTING()<CR>
-nnoremap <Leader>ST :call ToggleAle()<CR>
-function! ToggleAle()
-  if g:ale_enabled == 1
-    let g:ale_enabled = 0
-    echom "ALE off"
-  else 
-    let g:ale_enabled = 1
-    echom "ALE on"
+nnoremap <Leader>zz :call AddNewConstructorParameter(expand("<cword>"))<CR>
+function! AddNewConstructorParameter(param)
+  let s:save_cursor = getcurpos()
+  let s:type = input("What type is this - ".a:param." : ")
+  let s:description = input("description for var: ")
+  if s:type == ""
+    return
   endif
+  " find constructor line
+  execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
+  " if there are agruments, put a comma in
+  if match(getline('.'), ',') > -1
+    execute "normal! i,\<space>".a:param.": ".s:type
+  elseif
+    " insert constructor param
+    execute "normal! i".a:param.": ".s:type
+  endif
+  " assign private variable
+  execute "normal! /{\<CR>othis._".a:param." = ".a:param.";\<ESC>=="
+  " create private variable
+  :set nornu nu
+  normal! zb
+  redraw!
+  let s:privateLine = input("what line for private var - ".a:param." :")
+  execute "normal! ".s:privateLine."gg"
+  execute "normal! oprivate _".a:param.": ".s:type.";\<ESC>=="
+  if s:description != ""
+    execute "normal! O// ".s:description."\<ESC>=="
+  endif
+  call setpos('.', s:save_cursor)
 endfunction
+
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
+" " fyi this only supports one path for each module e.g.
+" "             "paths": {
+" "this--->         "entities/*": ["./src/shared/entities/*"],
+" "not this--->     "models/*": ["./src/shared/models/*", "./src/shared/models2/*"]
+" "              },
+" function! TSRelativePathComplete()
+"   " find all classes that have a path in tsconfig
+"   let s:tsconfig = system("cat ./tsconfig.json")
+"   let s:jsonTsconfig = json_decode(s:tsconfig)
+"   let s:paths = get(get(s:jsonTsconfig, "compilerOptions"), "paths")
+"   let s:listPaths = values(s:paths)
+"   let s:fileMatrix = []
+"   for s:path in s:listPaths
+"     let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts")
+"     echom string(s:tsFiles)
+"     let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts | xargs grep 'export'")
+"     echom string(s:tsFiles)
+"     for s:file in s:tsFiles
+"       call add(s:fileMatrix, [s:path[0], s:file])
+"     endfor
+"   endfor
+
+"   " echom string(s:fileMatrix)
+"   " let s:importWord = expand(<cword>)
+"   " echom s:importWord
+" endfunction
+
+" " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" nnoremap <Leader>dbs :call StartDebugSession()<CR>
+" nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
+" nnoremap <Leader>dbc :call CloseDebugSession()<CR>
+
+" nnoremap <Leader>qq :call TESTING()<CR>
+" nnoremap <Leader>ST :call ToggleAle()<CR>
+" function! ToggleAle()
+"   if g:ale_enabled == 1
+"     let g:ale_enabled = 0
+"     echom "ALE off"
+"   else 
+"     let g:ale_enabled = 1
+"     echom "ALE on"
+"   endif
+" endfunction
