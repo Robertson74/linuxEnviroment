@@ -354,12 +354,8 @@ let g:syntastic_loc_list_height = 5
 " let g:vdebug_options["path_maps"] = {"/var/www/html/repos/" : "/Users/mrobertson/vms/dev/repos/"}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
-nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
-nnoremap <Leader>mas :call MakeAsync()<CR>
-" convert JS function to fat arrow function
-nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
-" quick add snippets
-vnoremap <C-Z> y:call AddQuickSnippet()<CR>
+"ale 
+nnoremap <Leader>ST :ALEToggle<CR>
 " PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 " NERTDTree
@@ -524,6 +520,13 @@ execute "source ".$HOME."/.vim/michaelSoft/projectSpecific/nodeCCP/nodeCCP.vim"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-load custom plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
+nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
+nnoremap <Leader>mas :call MakeAsync()<CR>
+" convert JS function to fat arrow function
+nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
+" quick add snippets
+vnoremap <C-Z> y:call AddQuickSnippet()<CR>
 nnoremap <Leader>for :call FormatPage()<CR>
 nnoremap <Leader>ete :call EditJSTestFile()<CR>
 nnoremap <Leader>sim :call SortImportStatements()<CR>
