@@ -355,8 +355,8 @@ let g:syntastic_loc_list_height = 5
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
 "ale 
-nnoremap <Leader>ST :ALEToggle<CR>
-" PHPDoc
+nnoremap <Leader>ST :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
+"PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 " NERTDTree
 nnoremap <Leader>N :NERDTreeToggle<CR>
