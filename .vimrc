@@ -1472,6 +1472,7 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
+nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateModel.js<CR>
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
