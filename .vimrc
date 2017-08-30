@@ -444,7 +444,7 @@ nnoremap <C-t> <C-w>t
 nnoremap <C-b> <C-w>b
 nnoremap <C-n> :set number! relativenumber!<CR>
 nnoremap ZX :q<CR>
-nnoremap XC :q!<CR>
+nnoremap ZC :q!<CR>
 " tab navigation
 nnoremap zl :tabnext<CR>
 nnoremap zh :tabprev<CR>
@@ -1339,15 +1339,14 @@ function! CloseScreenExtend()
   :let b:extendedViews = [win_getid()] 
 endfunction!
 """"""" Temporary areas
-function! RemoveTempArea()
-  :normal! mb
-  :normal! `b
-endfunction
 function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
   :Commentary
   :execute "normal! o\<esc>a#\<esc>30.\<esc>AEND TEMP\<esc>"
   :Commentary
+endfunction
+function! RemoveTempArea()
+  g/#TEMP AREA/,/#END TEMP/d
 endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 function! GoToFirstThirdOfLine()
@@ -1382,34 +1381,6 @@ function! FlipBoolean()
   endif
 endfunction
 "false 0 1 true
-""""""" Call up Node Debugger
-let debugLaunchFile = "build/server.js"
-let debugFile = "none"
-let debugWord = "none"
-let debugLine = "none"
-function! SetDebugLaunchFile()
-  :execute ":let g:debugLaunchFile = input('Enter Debug File: ')"
-endfunction
-function! SetDebugWord()
-  :execute ":let g:debugWord = expand('<cword>')"
-endfunction
-function! SetDebugLine()
-  :execute ":let g:debugLine = line('.')"
-endfunction
-function! SetDebugFile()
-  if match(@%, ".ts") > 0 
-    let g:debugFile = substitute(expand('%:t'), '.ts', '.js', '')
-  else
-    let g:debugFile = expand('%:t')
-  endif
-endfunction
-function! NodeDebug()
-  :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebug.sh ".@%." ".g:debugLine." ".g:debugWord." ".g:debugLaunchFile
-endfunction
-function! NodeDebugMon()
-  :execute "!expect ~/.vim/michaelSoft/JSDebug/JSDebugMon.sh ".g:debugFile." ".g:debugLine." ".g:debugWord
-endfunction
-" nnoremap <Leader>dd :call NodeDebug()<CR>
 """"""" Place and unplace temp signs for reference
 sign define temp linehl=Error text=--
 let g:tempSignLine = 99
@@ -1470,7 +1441,7 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
-nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateModel.js<CR>
+nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
