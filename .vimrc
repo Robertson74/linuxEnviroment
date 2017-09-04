@@ -1445,6 +1445,14 @@ nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.v
 nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
 nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 
+nnoremap <Leader>tcmd :call SetTempCommand()<CR>
+function! SetTempCommand()
+  let s:defaultShort = "zz"
+  let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
+  let s:command = input("what command to bind to zz: ")
+  execute "nnoremap <Leader>".s:commandShortcut." :!".s:command."<CR>"
+endfunction
+
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
 " " fyi this only supports one path for each module e.g.
