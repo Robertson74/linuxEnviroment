@@ -728,26 +728,9 @@ function! EditJSTestFile()
   end
 endfunction
 function! SortImportStatements()
-  let save_cursor = getcurpos()
-  execute "normal! gg"
-  let s:line = getline('.')
-  if match(s:line, 'import') > -1
-    let s:startLine =  line('.')
-  else
-    silent execute "normal! /import\<CR>"
-    let s:startLine =  line('.')
-  endif
-  while match(getline('.'), '\(import\|^\s*$\)') > -1
-    normal! j
-  endwhile
-  execute "normal! ?^\s\*import\<CR>"
-  let s:endLine = line('.')
-  " echom ":".s:startLine.",".s:endLine." sort\<CR>"
-  let quote = '"'
-  execute s:startLine.",".s:endLine."sort i'".quote."'"
-  execute s:startLine.','.s:endLine.'g/"\.\//m'.s:endLine
-  execute s:startLine.','.s:endLine.'g/"\.\.\//m'.s:endLine
-  call setpos('.', save_cursor)
+  let s:sortCur = getcurpos()
+  g/^\s*import/,/^\s*import/sort
+  call setpos(".", s:sortCur)
 endfunction
 " move a register from common to a saved register
 function! SaveToRegister()
@@ -1342,7 +1325,9 @@ function! PlaceTempArea()
   :Commentary
 endfunction
 function! RemoveTempArea()
+  let s:removeCursor = getcurpos()
   g/#TEMP AREA/,/#END TEMP/d
+  call setpos(".", s:removeCursor)
 endfunction
 "go to first/second third of the line, for easier f and t commands on long lines
 function! GoToFirstThirdOfLine()
