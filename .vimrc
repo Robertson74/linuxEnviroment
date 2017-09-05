@@ -1460,6 +1460,7 @@ function! ListClassReturn()
   bd!
   call win_gotoid(g:classReturnWindow)
   execute "norm! i".s:word
+endfunction
 nnoremap <Leader>tcmd :call SetTempCommand()<CR>
 function! SetTempCommand()
   let s:defaultShort = "zz"
