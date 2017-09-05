@@ -384,6 +384,8 @@ augroup phpShortCuts
   autocmd FileType php nnoremap <buffer> <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+" duplicate line and comment out top one
+nnoremap <Leader>dl :Commentary<CR>:norm! YP<CR>:Commentary<CR>
 nnoremap <Leader>err :call RepositionErrors()<CR>
 function! RepositionErrors()
   let save_cursor = getcurpos()
@@ -575,12 +577,6 @@ nnoremap <Leader>dbvp :call NewVISqlInterface('last', 'side')<CR>
 nnoremap <Leader>dbvtp :call NewVISqlInterface('lastsidele', 'side')<CR> 
 nnoremap <Leader>dbl :call ViSqlListSavedDBs('tab')<CR> 
 nnoremap <Leader>dbvl :call ViSqlListSavedDBs('side')<CR> 
-"node debugger
-nnoremap <Leader>df :call SetDebugLaunchFile()<CR>
-nnoremap <Leader>dw :call SetDebugWord()<CR>
-nnoremap <Leader>dl :call SetDebugLine()<CR>:call SetDebugFile()<CR>
-nnoremap <Leader>dd :call NodeDebugMon()<CR>
-nnoremap <Leader>da :call SetDebugWord()<CR>:call SetDebugLine()<CR>:call SetDebugFile()<CR>:call NodeDebugMon()<CR>
 "VI SQL
 " nnoremap <Leader>dbs :call VIsqlLogin()<CR>
 "remote manipulation of lines
@@ -1468,6 +1464,7 @@ function! SetTempCommand()
   let s:command = input("what command to bind to zz: ")
   execute "nnoremap <Leader>".s:commandShortcut." :!".s:command."<CR>"
 endfunction
+
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
