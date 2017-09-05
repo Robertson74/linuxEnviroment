@@ -1443,6 +1443,23 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 
+nnoremap <Leader>fcl :call ListClasses()<CR>
+function! ListClasses()
+  let g:classReturnWindow = win_getid()
+  :vsplit! +enew
+	:silent read! grep -R "export.*class" ./ --exclude-dir="node_modules" | sed "s/.*class\s\(\S*\).*/\1/"
+  :v/[A-Za-z]/d
+  :v/^[A-Za-z]/d
+  :%sort
+  nnoremap <buffer> <CR> :call ListClassReturn()<CR>
+endfunction
+function! ListClassReturn()
+  let s:word = expand("<cWORD>")
+  bd!
+  call win_gotoid(g:classReturnWindow)
+  execute "norm! i".s:word
+endfunction
+
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
 " " fyi this only supports one path for each module e.g.
@@ -1479,12 +1496,3 @@ nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/gene
 
 " nnoremap <Leader>qq :call TESTING()<CR>
 " nnoremap <Leader>ST :call ToggleAle()<CR>
-" function! ToggleAle()
-"   if g:ale_enabled == 1
-"     let g:ale_enabled = 0
-"     echom "ALE off"
-"   else 
-"     let g:ale_enabled = 1
-"     echom "ALE on"
-"   endif
-" endfunction
