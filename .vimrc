@@ -1441,6 +1441,8 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
+nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.vim<CR>
+nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
 nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 
 nnoremap <Leader>fcl :call ListClasses()<CR>
@@ -1458,6 +1460,12 @@ function! ListClassReturn()
   bd!
   call win_gotoid(g:classReturnWindow)
   execute "norm! i".s:word
+nnoremap <Leader>tcmd :call SetTempCommand()<CR>
+function! SetTempCommand()
+  let s:defaultShort = "zz"
+  let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
+  let s:command = input("what command to bind to zz: ")
+  execute "nnoremap <Leader>".s:commandShortcut." :!".s:command."<CR>"
 endfunction
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
