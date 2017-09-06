@@ -160,7 +160,8 @@ syntax on
 " hi CursorLineNr ctermfg=green
 " hi Search ctermbg=White ctermfg=Black
 " --- jhdark COLORING
-colorscheme jhdark
+" colorscheme jhdark
+colorscheme landscape
 " custom colors
 " allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
 set backspace=indent,eol,start

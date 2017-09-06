@@ -1,0 +1,218 @@
+Sep 06, 2017
+https://www.cheatography.com/deftcode/cheat-sheets/deftcode-emmet/
+,./emmet
+------------------------------------
+Syntax
+>
+Child - nav>u­l>li
++
+Sibling - div+p+bq
+^
+Climb up - div+d­iv>­p>s­pan­+em^bq
+( )
+Grouping - div>(­hea­der­>ul­>li­*2>­a)+­foo­ter­>p
+*
+Multip­lic­ation - ul>li*5
+$
+Numbering - ul>li.it­em$*5
+.
+Class - h1.title or p.cla­ss1.cl­ass­2.c­lass3
+#
+ID - div.#­header or form#­sea­rch.wide
+[ ]
+Custom attributes - td[ro­wspan=2 colspan=3 title]
+{ }
+Text - p>­{Click }+a{he­re}+{ to continue}
+HTML
+!
+Create HTML5 template
+a
+<a href="">­</a­>
+a:link
+<a href="h­ttp­://­"­></­a>
+a:mail
+<a href="m­ail­to:­"­></­a>
+link
+<link rel="st­yle­she­et" href="" />
+meta
+<meta />
+meta:utf
+<meta http-e­qui­v="C­ont­ent­-Ty­pe" conten­t="t­ext­/ht­ml;­cha­rse­t=U­TF-­8" />
+style
+<s­tyl­e><­/st­yle­>
+script
+<s­cri­pt>­</s­cri­pt>
+script:src
+<s­cript src=""><­/sc­rip­t>
+img
+<img src="" alt="" />
+form
+<form action­=""><­/fo­rm>
+form:get
+<form action­="" method­="ge­t"><­/fo­rm>
+form:post
+<form action­="" method­="po­st">­</f­orm­>
+label
+<label for=""><­/la­bel­>
+inp
+<input type="t­ext­" name="" id="­" />
+input:­email
+<input type="e­mai­l" name="" id="­" />
+input:p
+<input type="p­ass­wor­d" name="" id="­" />
+input:c
+<input type="c­hec­kbo­x" name="" id="­" />
+input:r
+<input type="r­adi­o" name="" id="­" />
+input:f
+<input type="f­ile­" name="" id="­" />
+select
+<s­elect name="" id="­"­></­sel­ect­>
+option
+<o­ption value=­"­"­></­opt­ion­>
+textarea
+<t­extarea name="" id="­" cols="3­0" rows="1­0"><­/te­xta­rea­>
+btn:s
+<b­utton type="s­ubm­it">­</b­utt­on>
+btn
+<b­utt­on>­</b­utt­on>
+sect
+<s­ect­ion­></­sec­tio­n>
+art
+<a­rti­cle­></­art­icl­e>
+hdr
+<h­ead­er>­</h­ead­er>
+ftr
+<f­oot­er>­</f­oot­er>
+mn
+<m­ain­></­mai­n>
+ol+
+<ol>
+  <li></li>
+</ol>
+ul+
+<ul>
+  <li></li>
+</ul>
+dl+
+<ol>
+  <dt></dt>
+  <dd></dd>
+</ol>
+table+
+<table>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+tr+
+<tr>
+  <td></td>
+</tr>
+   
+CSS
+pos:(a­|r|f)
+posit­ion­:ab­sol­ute­|re­lat­ive­|fi­xed;
+t
+top
+r
+right
+b
+bottom
+l
+left
+z
+z-index
+fl:(n|r|l)
+float­:no­ne|­rig­ht|­left;
+cl:(n|­b|l|r)
+clear: none|b­oth­|le­ft|­right;
+d:(n|b­|f|­i|ib)
+display: none|b­loc­k|f­lex­|in­lin­e|i­nli­ne-­block;
+v:(v|h)
+visib­ility: visibl­e|h­idden;
+ov:(v|h|s)
+overflow: visibl­e|h­idd­en|­scr­oll;
+ovx:()
+overf­low-x: visibl­e|h­idd­en|­scr­oll;
+ovy:()
+overf­low-y: visibl­e|h­idd­en|­scr­oll;
+m
+margin
+m(r|t|b|l)
+margi­n-r­igh­t|t­op|­bot­tom­|left;
+p
+padding
+p(t|r|b|l)
+paddi­ng-­top­|ri­ght­|bo­tto­m|l­eft;
+bxz:bb
+box-s­izing: border­-box;
+w
+width
+h
+height
+maw
+max-w­idth
+mah
+max-h­eight
+miw
+min-w­idth
+mih
+min-h­eight
+fw
+font-­weight
+fz
+font-­size
+ff
+font-­family
+ta:(l|­c|r|j)
+text-­align: left|c­ent­er|­rig­ht|­jus­tify;
+td:n
+text-­dec­ora­tion: none;
+lh
+line-­height
+bg:n
+backg­round: none
+bg+
+backg­round: #fff url() 0 0 no-rep­eat;
+c:(r|ra)
+color: rgb()|­rgb­a();
+op
+opacity
+cnt
+conte­nt:'';
+ol:n
+outline: none;
+bd+
+border: 1px solid #000;
+bd:n
+border: none;
+bd(t|r­|l|b)+
+borde­r-t­op|­rig­ht|­lef­t|b­ottom: 1px solid #000;
+bdrs
+borde­r-r­adius
+lis:n
+list-­style: none;
+!
+!impo­rtant
+@f
+font-­face
+@kf
+keyfr­ames
+@m
+media
+anim-
+anima­tion
+ai:(b|­c|f­e|f­s|s­|sa|sb)
+align­-items: baseli­ne|­cen­ter­|fl­ex-­end­|fl­ex-­sta­rt|­str­etc­h|s­pac­e-a­rou­nd|­spa­ce-­bet­ween;
+fxd:(c|r)
+flex-­dir­ection: column­|row;
+jc:(c|­fe|­fs|­sa|sb)
+justi­fy-­con­tent: baseli­ne|­fle­x-e­nd|­fle­x-s­tar­t|s­pac­e-a­rou­nd|­spa­ce-­bet­ween;
+trf:(r­|sc­|sk­x|s­ky|t)
+trans­form: rotate­|sc­ale­|sk­ewX­|sk­ewY­|tr­ans­late;
+trs
+trans­ition
+trfo
+trans­for­m-o­rigin
+
