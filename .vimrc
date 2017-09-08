@@ -542,7 +542,7 @@ nnoremap <Leader>bl :call FlipBoolean()<CR>
 " folidng 
 nnoremap <Leader>fl :call ForceFoldLevel()<CR>
 " zooming
-nnoremap <Leader>z :call ToogleZoomSplit()<CR>
+nnoremap <Leader>zz :call ToogleZoomSplit()<CR>
 "extending windows
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
@@ -782,6 +782,36 @@ function! EditPHPTestFile()
   else
     let s:testFilePath = s:testFilePath[0]
     execute "vsplit +e "s:testFilePath
+  endif
+endfunction
+function! ToogleZoomHorizontal()
+  if !exists('t:zoomedStatus')
+    let t:zoomedStatus = 'false'
+  endif
+  if t:zoomedStatus == 'true'
+    execute "norm! \<C-W>="
+    let t:zoomedStatus = "false"
+    echo "un-zoom"
+  else
+    execute "norm! \<C-W>500>"
+    let t:zoomedStatus = "true"
+    echo "zoom"
+  endif
+endfunction
+nnoremap <Leader>zh :call ToogleZoomHorizontal()<CR>
+nnoremap <Leader>zv :call ToogleZoomVertical()<CR>
+function! ToogleZoomVertical()
+  if !exists('t:zoomedStatus')
+    let t:zoomedStatus = 'false'
+  endif
+  if t:zoomedStatus == 'true'
+    execute "norm! \<C-W>="
+    let t:zoomedStatus = "false"
+    echo "un-zoom"
+  else
+    execute "norm! \<C-W>500+"
+    let t:zoomedStatus = "true"
+    echo "zoom"
   endif
 endfunction
 function! ToogleZoomSplit()
