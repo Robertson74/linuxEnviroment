@@ -1480,7 +1480,7 @@ nnoremap <Leader>tcmd :call SetTempCommand()<CR>
 function! SetTempCommand()
   let s:defaultShort = "qq"
   let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
-  let s:command = input("what command to bind to zz: ")
+  let s:command = input("what command to bind to qq: ")
   execute "nnoremap <Leader>".s:commandShortcut." :!".s:command."<CR>"
 endfunction
 
