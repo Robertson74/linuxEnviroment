@@ -15,6 +15,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
+" jsx highlight/syntax
+" Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'ianks/vim-tsx'
 " All sorts of typescript stuff
 Plugin 'Quramy/tsuquyomi'
 " type script syntax highlighting
@@ -36,10 +39,8 @@ Plugin 'ternjs/tern_for_vim'
 " javascript debuggin
 " Plugin 'sidorares/node-vim-debugger'
 "auto import
-" Plugin 'Galooshi/vim-import-js'
-" Plugin 'isRuslan/vim-es6'
 " Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
+" Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
@@ -267,6 +268,8 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" need to set typescript tsx files to typescript.tsx for syntax/indenting to work
+autocmd BufRead,BufNewFile *.tsx setlocal filetype=typescript.tsx
 " ale
 let g:ale_lint_on_text_changed = 0
 " don't lint on every word change
