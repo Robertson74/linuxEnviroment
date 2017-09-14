@@ -388,6 +388,20 @@ augroup phpShortCuts
   autocmd FileType php nnoremap <buffer> <Leader>san :vsp ./src/APIBundle/Controller/TestingController.php<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-quick commands
+"
+nnoremap <Leader>tabs :call ToggleTabSpaces()<CR>
+function! ToggleTabSpaces()
+  if exists("g:tabSpaces") && g:tabSpaces == 2
+    set shiftwidth=4 tabstop=4
+    echom "tabs 4 spaces"
+    let g:tabSpaces = 4
+  else
+    set shiftwidth=2 tabstop=2
+    echom "tabs 2 spaces"
+    let g:tabSpaces = 2
+  endif
+endfunction
+
 " duplicate line and comment out top one
 nnoremap <Leader>dl :Commentary<CR>:norm! YP<CR>:Commentary<CR>
 nnoremap <Leader>err :call RepositionErrors()<CR>
@@ -1456,6 +1470,36 @@ function! ConvertToSnakeCase()
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
+vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
+function! ExtractFromContext()
+  " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())
+  let s:funcName = input("function name: ")
+  execute "'<"
+  let s:startLine = line('.')
+  execute "'<,'>d"
+  execute "norm! O".s:funcName."();"
+  norm! ==
+  let s:upALevel = 0
+  while s:upALevel != 1
+    norm! 0
+    execute "norm! ?{\\s*\\|^\\s*{\\s*$\<CR>"
+    execute "norm! $b/{\<CR>"
+    norm! V
+    redraw!
+    execute "norm! \<ESC>"
+    let s:upALevel = confirm("Place here?", "&yes\n&up a layer", 1)
+  endwhile
+  execute "norm! \<ESC>"
+  execute "norm! %o\<CR>"
+  let s:funcLine = line('.')
+  execute "norm! iconst ".s:funcName." = (): void => {"
+  execute "norm! o}"
+  norm! k
+  norm! ""pk$%
+  let s:endFuncLine = line('.')
+  execute s:funcLine.",".s:endFuncLine."norm! =="
+  execute s:startLine
+endfunction
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"
 
