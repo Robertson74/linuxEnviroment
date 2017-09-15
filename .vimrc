@@ -268,8 +268,6 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
-" enable jsx syntax in js files
-let g:jsx_ext_required = 0
 " need to set typescript tsx files to typescript.tsx for syntax/indenting to work
 autocmd BufRead,BufNewFile *.tsx setlocal filetype=typescript.tsx
 " ale
