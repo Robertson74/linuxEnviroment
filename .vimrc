@@ -16,7 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
 " jsx highlight/syntax
-" Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'chemzqm/vim-jsx-improve'
 Plugin 'ianks/vim-tsx'
 " All sorts of typescript stuff
 Plugin 'Quramy/tsuquyomi'
@@ -268,6 +268,8 @@ augroup END
 :augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-plugin configuration
+" enable jsx syntax in js files
+let g:jsx_ext_required = 0
 " need to set typescript tsx files to typescript.tsx for syntax/indenting to work
 autocmd BufRead,BufNewFile *.tsx setlocal filetype=typescript.tsx
 " ale
