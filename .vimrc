@@ -2,60 +2,37 @@
 execute "source ".$HOME."/.vim/michaelSoft/plugins.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-configuration
 execute "source".$HOME."/.vim/michaelSoft/vimConfiguration.vim"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
-execute "source ".$HOME."/.vim/michaelSoft/scripts/scripts.vim"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-language specific
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                          LOAD SCRIPT AND PLUGINS                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" general
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/generalScripts.vim"
 " typescript 
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/typescript.vim"
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/typescript.vim"
 " PHP
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/php.vim"
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/php.vim"
 " JS 
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/javascript.vim"
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/javascript.vim"
 " VIM
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/vim.vim"
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/vim.vim"
 " css 
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/css.vim"
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/css.vim"
 " css 
-execute "source ".$HOME."/.vim/michaelSoft/languageSpecific/html.vim"
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""- scripts
-" quick adding snippets
-function! AddQuickSnippet() 
-  let s:snipDir = '~/.vim/michaelSoft/custom_snippets/'
-  normal! gvy
-  let s:snippet = input('Snippet: ', @0)
-  let s:snipKeyword = input('Keyword for the snip: ')
-  let s:snipDescript = input('Description for the snip: ')
-  let s:snipFiles = system('ls '.s:snipDir.'  | sed -n "/.*\.snippets/p"')
-  let s:snipFiles = split(s:snipFiles)
-  let s:snipMenu = []
-  let s:snipMenuNum = 1
-  for s:file in s:snipFiles
-    call add(s:snipMenu, [s:snipMenuNum, s:file]) 
-    let s:snipMenuNum+=1
-  endfor
-  echom 'Choose a file for the snippet to live in : '
-  for s:menuItem in s:snipMenu 
-    echom s:menuItem[0].' : '.s:menuItem[1]
-  endfor
-  let s:choice = input('choice: ')
-  silent execute "!echo ' ' >> ".s:snipDir."".s:snipFiles[s:choice-1]
-  silent execute "!echo 'snippet ".s:snipKeyword." \"".s:snipDescript."\"' >> ".s:snipDir."".s:snipFiles[s:choice-1]
-  silent execute "!echo '".s:snippet."' >> ".s:snipDir."".s:snipFiles[s:choice-1]
-  silent execute "!echo endsnippet >> ".s:snipDir."".s:snipFiles[s:choice-1]
-  :redraw!
-endfunction
-
+execute "source ~/.vim/michaelSoft/scriptAndPluginManagers/html.vim"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                         LOAD CUSTOM PLUGINS                         "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vi sql
+execute "source ~/.vim/michaelSoft/customPlugins/ViSql/ViSql.vim"
+" symfony tools
+execute "source ~/.vim/michaelSoft/symfony/symfonyTools.vim"
+" mr completor
+execute "source ~/.vim/michaelSoft/customPlugins/mrComplete/mrComplete.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
-nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
 nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
 nnoremap <Leader>mas :call MakeAsync()<CR>
 " convert JS function to fat arrow function
 nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
-" quick add snippets
-vnoremap <C-Z> y:call AddQuickSnippet()<CR>
-nnoremap <Leader>for :call FormatPage()<CR>
-nnoremap <Leader>ete :call EditJSTestFile()<CR>
 nnoremap <Leader>sim :call SortImportStatements()<CR>
 nnoremap <Leader>reg :call SaveToRegister()<CR>
 
@@ -174,12 +151,6 @@ function! MakeAsync()
   call setpos('.', save_cursor)
 endfunction
 
-" quick format the page
-function! FormatPage()
-  let save_cursor = getcurpos()
-  execute "normal! gg=G"
-  call setpos('.', save_cursor)
-endfunction
 fun! ToggleConstLet()
   if match(getline('.'), '\s*let') > -1
     execute 's/let/const/'
@@ -207,32 +178,6 @@ function! ConvertFunctionToFatArrow()
   execute "normal $?function\<CR>dt(%a\<Space>=>"
 endfunction
 
-function! EditJSTestFile()
-  " config
-  let s:testSuffix = '_spec'
-  let s:sourceDir = 'src'
-  let s:testDir = 'test'
-  """"""""""""""""""""
-  let s:filePath = expand('%:h')
-  let s:file = expand('%:t:r')
-  let s:extention = expand('%:e')
-  let s:rootDir = split(s:filePath, '/')[0]
-  if s:rootDir == s:testDir
-    let s:switchPath = substitute(s:filePath, s:rootDir, s:sourceDir, '')
-    let s:switchFile = substitute(s:file, s:testSuffix, '', '')
-    silent! execute '!mkdir -p '.s:switchPath
-    silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
-    silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
-    redraw!
-  else
-    let s:switchPath = substitute(s:filePath, s:rootDir, s:testDir, '')
-    let s:switchFile = substitute(s:file, '\(.*\)', '\1'.s:testSuffix, '')
-    silent! execute '!mkdir -p '.s:switchPath
-    silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
-    silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
-    redraw!
-  end
-endfunction
 function! SortImportStatements()
   let s:sortCur = getcurpos()
   g/^\s*import/,/^\s*import/sort
@@ -956,6 +901,5 @@ endfunction
 function! ConvertToSnakeCase()
   s/\([A-Z]\)/_\l\1/g
 endfunction
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TODO
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 execute "source".$HOME."/.vim/michaelSoft/sandbox.vim"
