@@ -1,3 +1,101 @@
+vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
+function! ExtractFromContext()
+  " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())
+  let s:funcName = input("function name: ")
+  execute "'<"
+  let s:startLine = line('.')
+  execute "'<,'>d"
+  execute "norm! O".s:funcName."();"
+  norm! ==
+  let s:upALevel = 0
+  while s:upALevel != 1
+    norm! 0
+    execute "norm! ?{\\s*\\|^\\s*{\\s*$\<CR>"
+    execute "norm! $b/{\<CR>"
+    norm! V
+    redraw!
+    execute "norm! \<ESC>"
+    let s:upALevel = confirm("Place here?", "&yes\n&up a layer", 1)
+  endwhile
+  execute "norm! \<ESC>"
+  execute "norm! %o\<CR>"
+  let s:funcLine = line('.')
+  execute "norm! iconst ".s:funcName." = (): void => {"
+  execute "norm! o}"
+  norm! k
+  norm! ""pk$%
+  let s:endFuncLine = line('.')
+  execute s:funcLine.",".s:endFuncLine."norm! =="
+  execute s:startLine
+endfunction
+inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
+inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"
+
+nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.vim<CR>
+nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
+nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
+
+nnoremap <Leader>fcl :call ListClasses()<CR>
+function! ListClasses()
+  let g:classReturnWindow = win_getid()
+  :vsplit! +enew
+	:silent read! grep -R "export.*class" ./ --exclude-dir="node_modules" | sed "s/.*class\s\(\S*\).*/\1/"
+  :v/[A-Za-z]/d
+  :v/^[A-Za-z]/d
+  :%sort
+  nnoremap <buffer> <CR> :call ListClassReturn()<CR>
+endfunction
+function! ListClassReturn()
+  let s:word = expand("<cWORD>")
+  bd!
+  call win_gotoid(g:classReturnWindow)
+  execute "norm! i".s:word
+endfunction
+nnoremap <Leader>qq :call SetTempCommand()<CR>
+function! SetTempCommand()
+  let s:defaultShort = "qq"
+  let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
+  let s:command = input("what command to bind to qq: ")
+  execute "nnoremap <Leader>".s:commandShortcut." :".s:command."<CR>"
+endfunction
+
+
+" source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" nnoremap <Leader>zz :call TSRelativePathComplete()<CR>
+" " fyi this only supports one path for each module e.g.
+" "             "paths": {
+" "this--->         "entities/*": ["./src/shared/entities/*"],
+" "not this--->     "models/*": ["./src/shared/models/*", "./src/shared/models2/*"]
+" "              },
+" function! TSRelativePathComplete()
+"   " find all classes that have a path in tsconfig
+"   let s:tsconfig = system("cat ./tsconfig.json")
+"   let s:jsonTsconfig = json_decode(s:tsconfig)
+"   let s:paths = get(get(s:jsonTsconfig, "compilerOptions"), "paths")
+"   let s:listPaths = values(s:paths)
+"   let s:fileMatrix = []
+"   for s:path in s:listPaths
+"     let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts")
+"     echom string(s:tsFiles)
+"     let s:tsFiles = systemlist("find ".s:path[0]." | grep .ts | xargs grep 'export'")
+"     echom string(s:tsFiles)
+"     for s:file in s:tsFiles
+"       call add(s:fileMatrix, [s:path[0], s:file])
+"     endfor
+"   endfor
+
+"   " echom string(s:fileMatrix)
+"   " let s:importWord = expand(<cword>)
+"   " echom s:importWord
+" endfunction
+
+" " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
+" nnoremap <Leader>dbs :call StartDebugSession()<CR>
+" nnoremap <Leader>dbw :call GoToDebugWindow()<CR>
+" nnoremap <Leader>dbc :call CloseDebugSession()<CR>
+
+" nnoremap <Leader>qq :call TESTING()<CR>
+" nnoremap <Leader>ST :call ToggleAle()<CR>
 " Some stuff;
 " console.log(someStuff)
 " find classes and format
