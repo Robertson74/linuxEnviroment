@@ -1,4 +1,3 @@
-nnoremap <Leader>err :call RepositionErrors()<CR>
 function! RepositionErrors()
   let save_cursor = getcurpos()
   let save_window = win_getid()

@@ -3,6 +3,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup tsConfig
   au!
+  au FileType typescript nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
   au FileType typescript :set makeprg=tsc
   " replace single quotes with double
   au FileType typescript nnoremap <Leader>" :%s/'/"/g"<CR>
@@ -21,6 +22,8 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>run :!npm run start<CR>
   au FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
   au FileType typescript nnoremap <Leader>tes :!npm run test<CR>
+  au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
+  au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Load Typescript Specific Scripts                      "
@@ -33,7 +36,6 @@ augroup typescriptPlugins
   au FileType typescript nnoremap <Leader>doc :JsDoc<CR>
   au FileType typescript nnoremap <Leader>fix :TsuQuickFix<CR>
   au FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
-  au FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   au FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   au FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   au FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>

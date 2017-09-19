@@ -3,14 +3,30 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup jsConfig
   au!
-  autocmd FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
-  autocmd FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
-  autocmd FileType javascript nnoremap <Leader>tes :!npm run test<CR>
+  au FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  au FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
+  au FileType javascript nnoremap <Leader>tes :!npm run test<CR>
+  au FileType javascript nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
+  au FileType javascript nnoremap <Leader>mas :call MakeAsync()<CR>
+  " toggle between let and const on a line
+  au FileType javascript nnoremap <Leader>let :call ToggleConstLet()<CR>
+  au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load Javascript Scripts                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" jump to test files
 execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/EditJsTestFile.vim"
+" add a new constructor parameter
+execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/AddNewConstructorParameter.vim"
+" quickly make a funciton async
+execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/MakeAsync.vim"
+" toggle between let and const on line
+execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleConstLet.vim"
+" quickly wrap or unwrap line in console log
+execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleWrapInConsoleLog.vim"
+" sort top level import statements
+execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/SortImportStatements.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        Javascript Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

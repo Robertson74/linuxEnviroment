@@ -29,15 +29,11 @@ execute "source ~/.vim/michaelSoft/symfony/symfonyTools.vim"
 " mr completor
 execute "source ~/.vim/michaelSoft/customPlugins/mrComplete/mrComplete.vim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
-nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
 nnoremap <Leader>mas :call MakeAsync()<CR>
 " convert JS function to fat arrow function
 nnoremap <Leader>> :call ConvertFunctionToFatArrow()<CR>
 nnoremap <Leader>sim :call SortImportStatements()<CR>
 nnoremap <Leader>reg :call SaveToRegister()<CR>
-
-" delete non active buffers
-" nnoremap <Leader>dbu :call DeleteNonActiveBuffers()<CR>
 "my first bind
 nnoremap <Leader>bl :call FlipBoolean()<CR>
 " folidng 
@@ -49,7 +45,6 @@ nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 " format json
-vnoremap <Leader>fj v:call FormatJSON()<CR>
 " visql
 nnoremap <Leader>dbf :call ViSqlGoToInterface()<CR> 
 nnoremap <Leader>dbn :call NewVISqlInterface('new', 'tab')<CR> 
@@ -108,328 +103,6 @@ nnoremap gh :call GoToFirstThirdOfLine()<CR>
 nnoremap gl :call GoToSecondThirdOfLine()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-scripts
-" quick add constructor args
-function! AddNewConstructorParameter(param)
-  let s:save_cursor = getcurpos()
-  let s:type = input("What type is this - ".a:param." : ")
-  let s:description = input("description for var: ")
-  if s:type == ""
-    return
-  endif
-  " find constructor line
-  execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
-  " if there are agruments, put a comma in
-  if match(getline('.'), ',') > -1
-    execute "normal! i,\<space>".a:param.": ".s:type
-  elseif
-    " insert constructor param
-    execute "normal! i".a:param.": ".s:type
-  endif
-  " assign private variable
-  execute "normal! /{\<CR>othis._".a:param." = ".a:param.";\<ESC>=="
-  " create private variable
-  :set nornu nu
-  normal! zb
-  redraw!
-  let s:privateLine = input("what line for private var - ".a:param." :")
-  execute "normal! ".s:privateLine."gg"
-  execute "normal! oprivate _".a:param.": ".s:type.";\<ESC>=="
-  if s:description != ""
-    execute "normal! O// ".s:description."\<ESC>=="
-  endif
-  call setpos('.', s:save_cursor)
-endfunction
-" quickly make a funciton async
-function! MakeAsync()
-  let save_cursor = getcurpos()
-  execute "normal! ?=>\<CR>F("
-  if match(getline('.'), 'async') == -1
-    execute "normal! iasync "
-  else 
-    execute "normal! ?async\<CR>daw"
-  endif
-  call setpos('.', save_cursor)
-endfunction
-
-fun! ToggleConstLet()
-  if match(getline('.'), '\s*let') > -1
-    execute 's/let/const/'
-  elseif match(getline('.'), '\s*const') > -1
-    execute 's/const/let'
-  elseif match(getline('.'), '\s*var') > -1
-    execute 's/var/let'
-  else
-    echom "No let or const"
-  endif
-endf
-
-function! ToggleWrapInConsoleLog()
-  if match(getline('.'), "console\.log") > -1
-    echom "truth"
-    execute "normal! 0df($F)DA;\<ESC>=="
-  else
-    if match(getline('.'), ";") > -1
-      s/;//g
-    endif
-    execute "normal! Iconsole.log(\<ESC>A);\<ESC>=="
-  endif
-endfunction
-function! ConvertFunctionToFatArrow()
-  execute "normal $?function\<CR>dt(%a\<Space>=>"
-endfunction
-
-function! SortImportStatements()
-  let s:sortCur = getcurpos()
-  g/^\s*import/,/^\s*import/sort
-  call setpos(".", s:sortCur)
-endfunction
-" move a register from common to a saved register
-function! SaveToRegister()
-  echom 'Register: '
-  let s:charNum = getchar()
-  let s:reg = nr2char(s:charNum)
-  execute 'let @'.s:reg.'=@"'
-  echo "Saved to register @".s:reg
-endfunction
-" clear non active buffers
-function! DeleteNonActiveBuffers()
-  let s:abortChoice = getchar('Delete non active buffers? (y/n)')
-  if s:abortChoice != 121
-    return
-  endif
-  redir => s:buffers | ls | redir END
-  let s:buffersArray = split(s:buffers, '\n')
-  " for s:bufferLine in s:buffersArray
-  "   echo split(s:bufferLine)[0]
-  " endfor
-  for s:bufferLine in s:buffersArray
-    if match(s:bufferLine, '^\s*\d\+\s\{,4}\S*a') == -1
-      let s:bufferNumber = split(s:bufferLine)[0]
-      execute "bd ".s:bufferNumber
-    endif
-  endfor
-endfunction
-" find and edit test file (php)
-function! EditPHPTestFile()
-  let s:testDir = './tests/'
-  let s:testFile = expand('%:t:r').'Test.'.expand('%:e')
-  let s:testFilePath = system('find '.s:testDir.' -name "'.s:testFile.'"')
-  let s:testFilePath = split(s:testFilePath)
-  if empty(s:testFilePath)
-    echo 'No test file '.s:testFile.' found. Create it? (y/n)'
-    let s:choice = getchar()
-    if s:choice != 121
-      echo 'Aborting...'
-      return
-    else
-      let s:testFilePath = substitute(expand('%'), '^.*/\(.*Bundle\)', s:testDir.'\1', '')
-      let s:testFilePath = substitute(s:testFilePath, '\w\+\.php', '', '')
-      execute '!mkdir '.s:testFilePath.' -p'
-      execute '!touch '.s:testFilePath.''.s:testFile
-      execute 'vsplit +e '.s:testFilePath.''.s:testFile
-      return
-    endif
-  else
-    let s:testFilePath = s:testFilePath[0]
-    execute "vsplit +e "s:testFilePath
-  endif
-endfunction
-function! ToogleZoomHorizontal()
-  if !exists('t:zoomedStatus')
-    let t:zoomedStatus = 'false'
-  endif
-  if t:zoomedStatus == 'true'
-    execute "norm! \<C-W>="
-    let t:zoomedStatus = "false"
-    echo "un-zoom"
-  else
-    execute "norm! \<C-W>500>"
-    let t:zoomedStatus = "true"
-    echo "zoom"
-  endif
-endfunction
-nnoremap <Leader>zh :call ToogleZoomHorizontal()<CR>
-nnoremap <Leader>zv :call ToogleZoomVertical()<CR>
-function! ToogleZoomVertical()
-  if !exists('t:zoomedStatus')
-    let t:zoomedStatus = 'false'
-  endif
-  if t:zoomedStatus == 'true'
-    execute "norm! \<C-W>="
-    let t:zoomedStatus = "false"
-    echo "un-zoom"
-  else
-    execute "norm! \<C-W>500+"
-    let t:zoomedStatus = "true"
-    echo "zoom"
-  endif
-endfunction
-function! ToogleZoomSplit()
-  if !exists('t:zoomedStatus')
-    let t:zoomedStatus = 'false'
-  endif
-  if t:zoomedStatus == 'true'
-    call UnZoomSplit()
-    echo "un-zoom"
-  elseif t:zoomedStatus == 'false'
-    call ZoomSplit()
-    echo "zoom"
-  endif
-endfunction
-function! ZoomSplit()
-  let s:returnWindow = win_getid()
-  let t:zoomList = []
-
-  windo call add(t:zoomList, [win_getid(), winheight('.'), winwidth('.'), winsaveview()])
-  call win_gotoid(s:returnWindow)
-  vertical res 1000
-  res 1000
-  let t:zoomedStatus = 'true'
-endfunction
-
-function! UnZoomSplit()
-  if exists('t:zoomedStatus') == 0 || t:zoomedStatus == 'false'
-    let t:zoomedList = []
-  endif
-  let s:returnWin = win_getid()
-  for split in t:zoomList
-    call win_gotoid(split[0])
-    exec "res ".split[1]
-    exec "vertical res ".split[2]
-    call winrestview(split[3])
-  endfor
-  let t:zoomList = reverse(t:zoomList)
-  for split in t:zoomList
-    call win_gotoid(split[0])
-    exec "res ".split[1]
-    exec "vertical res ".split[2]
-    call winrestview(split[3])
-  endfor
-  call win_gotoid(s:returnWin)
-  let t:zoomedStatus = 'false'
-  unlet t:zoomList
-endfunction
-
-function! ForceFoldLevel()
-  :let s:level = input('Fold level: ')
-  if (s:level == '')
-    return
-  endif
-  :execute "let &foldlevel=".s:level
-  :execute "let &foldnestmax=".(s:level+1)
-endfunction
-function! PeakSymfonySnippets()
-  :split +e $HOME/.vim/bundle/vim-snippets/UltiSnips/php_symfony2.snippets
-  :g/^snippet/p
-  :bd!
-endfunction
-function! PeakPHPSnippets()
-  :split +e $HOME/.vim/bundle/vim-snippets/snippets/php.snippets
-  :g/^snippet/p
-  :bd!
-endfunction
-function! FormatJSON()
-  :execute "'<,'>!python -m json.tool"
-  :normal! gv
-endfunction
-" delete, move, or copy a line remotely(without using the cursor)
-function! RemoteManipulate()
-  :let s:startWindow = win_getid()
-  :let s:startline = line('.')
-  :let s:moveCommand = 'y'
-  :let s:putCommand = 'put'
-  :let s:adjacentWindow = ''
-  :set nu nornu
-  :redraw!
-  :let s:targetString = input('Move target: ')
-  let s:testVar = match(s:targetString,'\d\?[hjkl]')
-  if (match(s:targetString,'\d\?[hjkl]') == 0) 
-    :noautocmd execute "normal! \<C-w>".s:targetString."\<CR>"
-    :let s:adjacentWindow = s:targetString
-    :set nu nornu
-    :redraw!
-    :let s:targetString = input('Adjacent move target: ')
-  endif
-  if (match(s:targetString, '-') > -1)
-    :let s:targetString = substitute(s:targetString, '-', ',', '')
-  endif
-  if (match(s:targetString,'m') > -1)
-    :let s:moveCommand = 'd'
-    :let s:targetString = split(s:targetString, 'm')[0]
-  elseif (match(s:targetString, 'd') > -1)
-    :let s:putCommand = ''
-    :let s:moveCommand = 'd'
-    :let s:targetString = split(s:targetString, 'd')[0]
-  elseif ( match( s:targetString, 's' ) > -1 )
-    :let s:putCommand = 'swap'
-    :let s:targetString = split( s:targetString, 's' )[0]
-  elseif ( match( s:targetString, 'y' ) > -1 )
-    :let s:putCommand = 'none'
-    :let s:targetString = split( s:targetString, 'y' )[0]
-  endif
-  :execute s:targetString.''.s:moveCommand
-  :execute 'call win_gotoid('.s:startWindow.')'
-  :set nu nornu
-  :execute "normal! :".s:startline."\<CR>"
-  :redraw!
-  if (s:putCommand == 'put')
-    :let s:targetLine = input('Line to move to: ')
-    if (s:targetLine == '')
-      :let s:targetLine = line('.')
-    endif
-    :execute s:targetLine.'|'.s:putCommand
-  elseif ( s:putCommand == 'swap' )
-    :let s:swapString = input( 'Swap lines: ' )
-    if (match(s:swapString, '-') > -1)
-      :let s:swapString = substitute(s:swapString, '-', ',', '')
-    endif
-    if ( s:swapString == '' )
-      :let s:swapString = line( '.' )
-    endif
-    :let s:yankedLine = @0
-    :execute "normal! :".s:swapString."y\<CR>"
-    :let s:yankedSwapLine = @0
-    :execute "normal! :".s:swapString."d\<CR>"
-    :normal! k
-    :execute "put =s:yankedLine"
-    if (s:adjacentWindow != '')
-      :noautocmd execute "normal! \<C-w>".s:adjacentWindow."\<CR>"
-    endif
-    :execute "normal! :".s:targetString."d\<CR>"
-    if ( match( s:targetString, ',' ) > -1 )
-      :let s:targetString = split ( s:targetString, ',' )[0]
-    endif
-    :normal! k
-    :execute "put =s:yankedSwapLine"
-    :execute 'call win_gotoid('.s:startWindow.')'
-  endif
-  :execute "normal! :".s:startline."\<CR>"
-  :set nu rnu
-endfunction
-" sets a new top line for the window
-function! MakeTop()
-  :let s:currentLine = line('.')
-  :let s:newTop = input('New top line: ')
-  :execute 'normal! mb'
-  :execute s:newTop
-  :let s:newTop = line('.')
-  :execute 'normal! zt'
-  if (s:currentLine > s:newTop)
-    :execute 'normal! `b'
-  endif
-endfunction
-function! SnipVarDump()
-  :execute "normal! ovar_dump();"
-  :normal! ==^f)a
-  :startinsert
-endfunction
-" quick view of script available to call
-function! PeekScriptCalls()
-  :vsp +e $MYVIMRC
-  :normal! gg
-  :/-call/,/-scripts/g/./echo getline('.')
-  :execute "normal! \<C-w>q"
-endfunction
 " string with variable repeats
 function! RepetitiveString() 
   let s:template = input('Line template (",./" changes): ')
@@ -648,7 +321,7 @@ function! ToggleNav()
     :call CloseNav()
     :call win_gotoid(s:homeWindow)
   endif
-endfunction!
+endfunction
 function! CloseNav()
   :call win_gotoid(t:navBarWin)
   if(win_getid() == t:navBarWin)
@@ -724,7 +397,7 @@ function! ExtendScreenUp()
   endfor
   :call win_gotoid(s:startWindow)
   :set nowrap
-endfunction!
+endfunction
 """"""" Extending screen down
 function! ExtendScreenDown()
   if (!exists('b:extendedDownList'))
@@ -766,7 +439,7 @@ function! ExtendScreenDown()
   endfor
   :call win_gotoid(s:startWindow)
   :set nowrap
-endfunction!
+endfunction
 """"""" close screen extend
 function! CloseScreenExtend()
   if (exists('b:baseWindow'))
@@ -797,7 +470,7 @@ function! CloseScreenExtend()
   :let b:extendedUpWindow = win_getid()
   :let b:extendedDownList = [] 
   :let b:extendedViews = [win_getid()] 
-endfunction!
+endfunction
 """"""" Temporary areas
 function! PlaceTempArea()
   :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
@@ -897,9 +570,6 @@ function! PlaceSignAtPatternMatch(signName, contextPattern)
     endif
     :let a:lineNumber = a:lineNumber + 1
   endwhile
-endfunction
-function! ConvertToSnakeCase()
-  s/\([A-Z]\)/_\l\1/g
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-TESTING
 execute "source".$HOME."/.vim/michaelSoft/sandbox.vim"

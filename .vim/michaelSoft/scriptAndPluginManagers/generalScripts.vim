@@ -1,3 +1,45 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Call Scripts                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" move a register from common to a saved register
+nnoremap <Leader>reg :call SaveToRegister()<CR>
+" zooming
+nnoremap <Leader>zz :call ToogleZoomSplit()<CR>
+nnoremap <Leader>zh :call ToogleZoomHorizontal()<CR>
+nnoremap <Leader>zv :call ToogleZoomVertical()<CR>
+" quick add snippet
+vnoremap <C-Z> y:call AddQuickSnippet()<CR>
+" quick reposition errors
+nnoremap <Leader>err :call RepositionErrors()<CR>
+" toggle between 4 and 2 spaces for a tab
+nnoremap <Leader>tabs :call ToggleTabSpaces()<CR>
+" quick format a page
+nnoremap <Leader>for :call FormatPage()<CR>
+vnoremap <Leader>fj v:call FormatJSON()<CR>
+nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
+" set a new top line
+nnoremap<Leader>nt :call MakeTop()<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                Load Scripts                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/generalScripts/MakeTop.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/RemoteManipulate.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/FormatJSON.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/Zooming.vim
+" move a register from common to a saved register
+source ~/.vim/michaelSoft/scripts/generalScripts/SaveToRegister.vim
+" quick adding snippets
+source ~/.vim/michaelSoft/scripts/generalScripts/AddQuickSnippet.vim
+" reposition quick fix error screen
+source ~/.vim/michaelSoft/scripts/generalScripts/RepositionErrors.vim
+" ishness
+source ~/.vim/michaelSoft/scripts/generalScripts/ish.vim
+" list out and navigate to language specific configuration
+source ~/.vim/michaelSoft/scripts/generalScripts/editLangaugeConfig.vim
+" Toggle between tabs being four spaces or two
+source ~/.vim/michaelSoft/scripts/generalScripts/ToggleTabSpaces.vim
+" quick format the page
+source ~/.vim/michaelSoft/scripts/generalScripts/FormatPage.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         GENERAL NAVIGATION                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -16,6 +58,8 @@ nnoremap <Leader>elan :call EditLanguageConfig()<CR>
 " edit reference files
 nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
 nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
+nnoremap <Leader>vsan :vsplit +e ~/.vim/michaelSoft/sandbox.vim<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   REMAPS                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -119,20 +163,7 @@ nnoremap <Leader>jun5 :tabnew +e ~/temp/junk5<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        LOAD EXTERNAL SCRIPTS                        "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" move a register from common to a saved register
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/SaveToRegister.vim"
-" quick adding snippets
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/AddQuickSnippet.vim"
-" reposition quick fix error screen
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/RepositionErrors.vim"
-" ishness
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/ish.vim"
-" list out and navigate to language specific configuration
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/editLangaugeConfig.vim"
-" Toggle between tabs being four spaces or two
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/ToggleTabSpaces.vim"
-" quick format the page
-execute "source ~/.vim/michaelSoft/scripts/generalScripts/FormatPage.vim"
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        MISCELLANEOUS SCRIPTS                        "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

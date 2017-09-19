@@ -1,4 +1,3 @@
-nnoremap <Leader>tabs :call ToggleTabSpaces()<CR>
 function! ToggleTabSpaces()
   if exists("g:tabSpaces") && g:tabSpaces == 2
     set shiftwidth=4 tabstop=4

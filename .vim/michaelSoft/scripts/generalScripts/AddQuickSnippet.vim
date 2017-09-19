@@ -1,4 +1,3 @@
-vnoremap <C-Z> y:call AddQuickSnippet()<CR>
 function! AddQuickSnippet() 
   let s:snipDir = '~/.vim/michaelSoft/custom_snippets/'
   normal! gvy
