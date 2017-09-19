@@ -1,6 +1,19 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Call Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Context Searching
+nnoremap <Leader>csl :call SearchContextually("local")<CR>
+nnoremap <Leader>csg :call SearchContextually("global")<CR>
+" temporary line highlights
+nnoremap <Leader>tsp :call PlaceTempSign()<CR>
+nnoremap <Leader>tsr :call RemoveTempSign()<CR>
+"my first bind
+nnoremap <Leader>bl :call FlipBoolean()<CR>
+" Temp areas
+nnoremap <Leader>tap :call PlaceTempArea()<CR>
+nnoremap <Leader>tar :call RemoveTempArea()<CR>
+" Easier window resizing
+nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " move a register from common to a saved register
 nnoremap <Leader>reg :call SaveToRegister()<CR>
 " zooming
@@ -19,9 +32,40 @@ vnoremap <Leader>fj v:call FormatJSON()<CR>
 nnoremap <Leader>rm :silent call RemoteManipulate()<CR>
 " set a new top line
 nnoremap<Leader>nt :call MakeTop()<CR>
+nnoremap <Leader>rep :call FindAndReplaceRange()<CR>
+" Mark and move windows
+nnoremap <Leader>mwp :call MarkWindow()<CR>
+nnoremap <Leader>mwr :call UnMarkWindow()<CR>
+nnoremap <Leader>mwm :call MoveWindowToTab()<CR>
+"repetitive strings 
+nnoremap <Leader>rli :call RepetitiveLines()<CR>
+nnoremap <Leader>rst :call RepetitiveString()<CR>
+" Caps as targets
+nnoremap Q :silent call MoveToPreviousCap()<CR>
+nnoremap <BAR> :silent call MoveToNextCap()<CR>
+nnoremap dic :call DeleteInsideCaps()<CR>
+nnoremap cic :call ChangeInsideCaps()<CR>
+nnoremap dc :call DeleteToCap()<CR>
+nnoremap cc :call ChangeToCap()<CR>
+nnoremap <Leader>cam :call ConvertToCammel()<CR>
+"extending windows
+nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
+nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
+nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/generalScripts/SearchContextually.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/TempSigns.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/FlipBoolean.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/TempAreas.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/ExtendWindows.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/ResizeWindow.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/CapsTarget.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/RepetitiveString.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/RepetitiveLines.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/MarkMoveWindows.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/FindAndReplaceRange.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/MakeTop.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/RemoteManipulate.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/FormatJSON.vim
@@ -41,7 +85,7 @@ source ~/.vim/michaelSoft/scripts/generalScripts/ToggleTabSpaces.vim
 " quick format the page
 source ~/.vim/michaelSoft/scripts/generalScripts/FormatPage.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                         GENERAL NAVIGATION                          "
+"                         General Navigation                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " edit plugins 
 nnoremap <Leader>evim :vsplit ~/.vim/michaelSoft/<CR>
@@ -61,7 +105,7 @@ nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 nnoremap <Leader>vsan :vsplit +e ~/.vim/michaelSoft/sandbox.vim<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                   REMAPS                                   "
+"                                   Remaps                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " completion remaps
 inoremap <C-v> <C-x><C-o>
@@ -78,6 +122,9 @@ nnoremap <C-b> <C-w>b
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           QUICK SCRIPTS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Rotate parameters in parenthesis
+nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
+nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>
 " quickly duplicate line
 nnoremap <Leader>dl :Commentary<CR>:norm! YP<CR>:Commentary<CR>
 " toggle modifiable 
@@ -159,11 +206,3 @@ nnoremap <Leader>jun2 :tabnew +e ~/temp/junk2<CR>
 nnoremap <Leader>jun3 :tabnew +e ~/temp/junk3<CR>
 nnoremap <Leader>jun4 :tabnew +e ~/temp/junk4<CR>
 nnoremap <Leader>jun5 :tabnew +e ~/temp/junk5<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                        LOAD EXTERNAL SCRIPTS                        "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                        MISCELLANEOUS SCRIPTS                        "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

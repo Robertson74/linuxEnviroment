@@ -8,7 +8,10 @@ syntax on
 " column when in insert mode
 autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
-colorscheme landscape
+colorscheme late_evening
+" color scheme tweaks
+hi LineNr ctermbg=black
+hi EndOfBuffer ctermbg=black
 "cursor underlining
 set cursorline
 " highlight when searching

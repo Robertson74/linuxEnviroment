@@ -16,17 +16,17 @@ augroup END
 "                          Load Javascript Scripts                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " jump to test files
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/EditJsTestFile.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/EditJsTestFile.vim
 " add a new constructor parameter
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/AddNewConstructorParameter.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/AddNewConstructorParameter.vim
 " quickly make a funciton async
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/MakeAsync.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/MakeAsync.vim
 " toggle between let and const on line
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleConstLet.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleConstLet.vim
 " quickly wrap or unwrap line in console log
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleWrapInConsoleLog.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleWrapInConsoleLog.vim
 " sort top level import statements
-execute "source ~/.vim/michaelSoft/scripts/javascriptScripts/SortImportStatements.vim"
+source ~/.vim/michaelSoft/scripts/javascriptScripts/SortImportStatements.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        Javascript Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

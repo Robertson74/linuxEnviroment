@@ -15,7 +15,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load PHP Scripts                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-execute "source ~/.vim/michaelSoft/scripts/phpScripts/EditPHPTestFile.vim"
+source ~/.vim/michaelSoft/scripts/phpScripts/EditPHPTestFile.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        PHP Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
