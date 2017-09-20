@@ -1,6 +1,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Call Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" command results to new buffer
+nnoremap <Leader>cmd :call CommandToNewBuffer()<CR>
 " Context Searching
 nnoremap <Leader>csl :call SearchContextually("local")<CR>
 nnoremap <Leader>csg :call SearchContextually("global")<CR>
@@ -52,9 +54,12 @@ nnoremap <Leader>cam :call ConvertToCammel()<CR>
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
+nnoremap<Leader>hii :call HighlightGroupIdentify()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/generalScripts/CommandToNewBuffer.vim
+source ~/.vim/michaelSoft/scripts/generalScripts/HighlightGroupIdentify.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/SearchContextually.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/TempSigns.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/FlipBoolean.vim

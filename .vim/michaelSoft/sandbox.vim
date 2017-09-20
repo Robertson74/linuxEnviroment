@@ -1,6 +1,3 @@
-fun! ConvertToTitleCase()
-
-endfun
 " function! FlashCursor()
 "   redir => g:defaultCursorLineColor
 "     silent highlight Cursorline

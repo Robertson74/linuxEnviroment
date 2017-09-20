@@ -19,7 +19,7 @@ source ~/.vim/michaelSoft/scripts/phpScripts/EditPHPTestFile.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        PHP Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-augroup phpConfig
+augroup phpPlugins
   au!
   autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
   au FileType php inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
