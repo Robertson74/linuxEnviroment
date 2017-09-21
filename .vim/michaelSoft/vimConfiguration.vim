@@ -33,6 +33,9 @@ set nu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" persistent undos
+set undofile
+set undodir="~/.vim/michaelSoft/undos/"
 " fix netrw E command
 command! E Explore
 " allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
