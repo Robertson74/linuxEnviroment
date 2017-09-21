@@ -10,6 +10,7 @@ autocmd InsertEnter * silent! set cursorcolumn
 autocmd InsertLeave * silent! set nocursorcolumn
 colorscheme late_evening
 " color scheme tweaks
+hi TabLinesel ctermfg=magenta ctermbg=black
 hi Constant ctermfg=217 ctermbg=black
 hi String ctermfg=217 ctermbg=black
 hi LineNr ctermbg=black

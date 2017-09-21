@@ -92,6 +92,10 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
+" highlight ex command ranges
+Plugin 'xtal8/traces.vim'
+" persistent undo warnings
+Plugin 'Carpetsmoker/undofile_warn.vim'
 " autocomplete for quotes and the like
 Plugin 'raimondi/delimitmate'
 " extended dot functionality
@@ -116,8 +120,6 @@ Plugin 'flazz/vim-colorschemes'
 """ FUN -------------------------------
 " tetris
 Plugin 'vim-scripts/TeTrIs.vim'
-" snake
-" Plugin 'zyedidia/vim-snake'
 "---------------------------------------
 " END OF PLUGINS
 " All of your Plugins must be added before the following line
@@ -125,6 +127,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+""""""""""""""undo file warm 
+let g:undofile_warn_mode=2
 """"""""""""""ale 
 nnoremap <Leader>ST :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
 let g:ale_lint_on_text_changed = 0
