@@ -35,3 +35,4 @@ source ~/.vim/michaelSoft/sandbox.vim
 "                                   TO DO                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set undo file per project
+" keep an eye on asyncomplete

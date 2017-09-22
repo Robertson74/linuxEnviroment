@@ -74,7 +74,7 @@ set timeoutlen=1000 ttimeoutlen=0
 "                                  options                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " control-p ignore folders
-set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*
+set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*,*/app/cache/*
 " omni complete 
 set completeopt+=longest
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

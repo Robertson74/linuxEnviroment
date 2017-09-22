@@ -1,13 +1,16 @@
 """"""" Temporary areas
 function! PlaceTempArea()
-  :execute "normal! o\<esc>a#\<esc>30.\<esc>ATEMP AREA\<esc>"
+  :exe "norm! o\<ESC>30i#\<ESC>ATEMP AREA\<ESC>=="
   :Commentary
-  :execute "normal! o\<esc>a#\<esc>30.\<esc>AEND TEMP\<esc>"
+  :exe "norm! o\<ESC>30i#\<ESC>AEND TEMP\<ESC>=="
   :Commentary
+  :norm! O
+  :norm! S
+  :startinsert
 endfunction
 function! RemoveTempArea()
   let s:removeCursor = getcurpos()
-  g/#TEMP AREA/,/#END TEMP/d
+  g/####TEMP AREA/,/####END TEMP/d
   call setpos(".", s:removeCursor)
 endfunction
 
