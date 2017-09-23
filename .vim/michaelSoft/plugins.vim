@@ -127,6 +127,13 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+""""""""""""""color schemes
+colorscheme late_evening
+hi TabLinesel ctermfg=magenta ctermbg=black
+hi Constant ctermfg=217 ctermbg=black
+hi String ctermfg=217 ctermbg=black
+hi LineNr ctermbg=black
+hi EndOfBuffer ctermbg=black
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 

@@ -1,12 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                     Load and Configure Plugins                      "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/michaelSoft/plugins.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                         LOAD CUSTOM PLUGINS                         "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/michaelSoft/customPlugins.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         Load Configuration                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source ~/.vim/michaelSoft/vimConfiguration.vim"
@@ -27,6 +19,14 @@ source ~/.vim/michaelSoft/scriptAndPluginManagers/vim.vim
 source ~/.vim/michaelSoft/scriptAndPluginManagers/css.vim
 " css 
 source ~/.vim/michaelSoft/scriptAndPluginManagers/html.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                     Load and Configure Plugins                      "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/plugins.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                         LOAD CUSTOM PLUGINS                         "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/customPlugins.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Testing                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
