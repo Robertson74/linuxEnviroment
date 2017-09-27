@@ -92,6 +92,8 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
+" manage buffers
+Plugin 'Asheq/close-buffers.vim'
 " highlight ex command ranges
 Plugin 'xtal8/traces.vim'
 " persistent undo warnings
@@ -127,6 +129,8 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+""""""""""""""Close Buffers
+nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 colorscheme late_evening
 hi TabLinesel ctermfg=magenta ctermbg=black
