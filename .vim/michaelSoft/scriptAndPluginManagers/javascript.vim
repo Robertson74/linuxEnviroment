@@ -4,6 +4,8 @@
 augroup jsConfig
   au!
   au FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  au FileType javascript nnoremap <Leader>" :s/'/"/g"<CR>
+  au FileType javascript nnoremap <Leader>' :s/"/'/g"<CR>
   au FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
   au FileType javascript nnoremap <Leader>tes :!npm run test<CR>
   au FileType javascript nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>

@@ -7,12 +7,12 @@ source ~/.vim/michaelSoft/vimConfiguration.vim"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " general
 source ~/.vim/michaelSoft/scriptAndPluginManagers/generalScripts.vim
-" typescript 
-source ~/.vim/michaelSoft/scriptAndPluginManagers/typescript.vim
 " PHP
 source ~/.vim/michaelSoft/scriptAndPluginManagers/php.vim
 " JS 
 source ~/.vim/michaelSoft/scriptAndPluginManagers/javascript.vim
+" typescript 
+source ~/.vim/michaelSoft/scriptAndPluginManagers/typescript.vim
 " VIM
 source ~/.vim/michaelSoft/scriptAndPluginManagers/vim.vim
 " css 

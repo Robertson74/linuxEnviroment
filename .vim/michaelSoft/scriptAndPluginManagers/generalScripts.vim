@@ -92,10 +92,12 @@ source ~/.vim/michaelSoft/scripts/generalScripts/FormatPage.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         General Navigation                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" edit plugins 
+" edit main vim director 
 nnoremap <Leader>evim :vsplit ~/.vim/michaelSoft/<CR>
-" edit bundle
-nnoremap <Leader>epl :vsplit ~/.vim/bundle/<CR>
+" edit plugins file
+nnoremap <Leader>epl :vsplit ~/.vim/michaelSoft/plugins.vim<CR>
+" edit plugins file
+nnoremap <Leader>ebu :vsplit ~/.vim/bundle/<CR>
 " edit scripts
 nnoremap <Leader>escr :vsplit ~/.vim/michaelSoft/scripts/<CR>
 " quick edit config

@@ -11,13 +11,14 @@ Plugin 'VundleVim/Vundle.vim'
 """ Typescript ----
 " jsx highlight/syntax
 Plugin 'chemzqm/vim-jsx-improve'
-Plugin 'ianks/vim-tsx'
 " All sorts of typescript stuff
 Plugin 'Quramy/tsuquyomi'
 " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " snips and syntax
 Plugin 'HerringtonDarkholme/yats.vim'
+" tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
+Plugin 'ianks/vim-tsx'
 " --------
 " JS Doc
 Plugin 'othree/jsdoc-syntax.vim'
@@ -138,6 +139,7 @@ hi Constant ctermfg=217 ctermbg=black
 hi String ctermfg=217 ctermbg=black
 hi LineNr ctermbg=black
 hi EndOfBuffer ctermbg=black
+hi ColorColumn ctermbg=black ctermfg=red
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 

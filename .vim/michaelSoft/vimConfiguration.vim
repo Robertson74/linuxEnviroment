@@ -18,7 +18,7 @@ set hlsearch incsearch
 nohl
 " relative numbers
 set rnu
-" absolute number line (with relative displays both)
+" absolute number line (with relative displays both) 
 set nu
 :augroup numberFocus
 :  autocmd!
@@ -27,15 +27,18 @@ set nu
 :  autocmd WinLeave * set nonumber
 :  autocmd WinLeave * set norelativenumber
 :augroup END
+let &colorcolumn=join(range(81,999),",")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" don't wrap text
+set nowrap
 " persistent undos
 set undofile
 set undodir="~/.vim/michaelSoft/undos/"
 " fix netrw E command
 command! E Explore
-" allow backspacing over start of 'insertmode'; necesssary for delimitmate " backspace
+"  necesssary for delimitmate " backspace
 set backspace=indent,eol,start
 " no swap files
 set noswapfile

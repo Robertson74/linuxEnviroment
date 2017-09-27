@@ -6,8 +6,8 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
   au FileType typescript :set makeprg=tsc
   " replace single quotes with double
-  au FileType typescript nnoremap <Leader>" :%s/'/"/g"<CR>
-  au FileType typescript nnoremap <Leader>' :s/'/"/g"<CR>
+  au FileType typescript nnoremap <Leader>" :s/'/"/g"<CR>
+  au FileType typescript nnoremap <Leader>' :s/"/'/g"<CR>
   "edit sandbox
   au FileType typescript nnoremap <Leader>esan :vsp +e ./src/sandbox.ts<CR>
   "edit test file
@@ -45,8 +45,5 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Typescript Plugin Configuration                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" need to set typescript tsx files to typescript.tsx for syntax/indenting to work
-autocmd BufRead,BufNewFile *.tsx setlocal filetype=typescript.tsx
-
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
