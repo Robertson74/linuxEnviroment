@@ -55,9 +55,11 @@ nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
 nnoremap<Leader>hii :call HighlightGroupIdentify()<CR>
+nnoremap <Leader>col :call ToggleColorColumn()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/generalScripts/ToggleColorColumn.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/CommandToNewBuffer.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/HighlightGroupIdentify.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/SearchContextually.vim
