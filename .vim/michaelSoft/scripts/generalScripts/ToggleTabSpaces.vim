@@ -1,5 +1,5 @@
 function! ToggleTabSpaces()
-  if exists("g:tabSpaces") && g:tabSpaces == 2
+  if exists("g:tabSpaces") && g:tabSpaces == 4
     set shiftwidth=2 tabstop=2 shiftwidth=2
     echom "tabs are 2 spaces"
     let g:tabSpaces = 2
