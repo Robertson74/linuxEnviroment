@@ -58,6 +58,8 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" todo manager
+Plugin 'vitalk/vim-simple-todo'
 " visual representation of cursor in document
 Plugin 'gcavallanti/vim-noscrollbar'
 " sorting 
@@ -130,6 +132,19 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
+""""""""""""""ToDo
+" disable defaults by default
+let g:simple_todo_map_keys = 0
+augroup ToDoConfig
+  au!
+  au bufenter *.todo nmap <buffer> <leader>i <Plug>(simple-todo-new)
+  au bufenter *.todo nmap <buffer> <leader>I <Plug>(simple-todo-new-start-of-line)
+  au bufenter *.todo nmap <buffer> <leader>o <Plug>(simple-todo-below)
+  au bufenter *.todo nmap <buffer> <leader>O <Plug>(simple-todo-above)
+  au bufenter *.todo nmap <buffer> <leader>x <Plug>(simple-todo-mark-as-done)
+  au bufenter *.todo nmap <buffer> <leader>X <Plug>(simple-todo-mark-as-undone)
+  au bufenter *.todo nmap <buffer> <leader>s <Plug>(simple-todo-mark-switch)
+augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes

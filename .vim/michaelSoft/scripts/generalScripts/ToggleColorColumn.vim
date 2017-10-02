@@ -1,4 +1,3 @@
-nnoremap <Leader>col :call ToggleColorColumn()<CR>
 function! ToggleColorColumn()
   if &colorcolumn
     set colorcolumn=0

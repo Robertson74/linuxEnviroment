@@ -8,8 +8,6 @@ augroup tsConfig
   " replace single quotes with double
   au FileType typescript nnoremap <Leader>" :s/'/"/g"<CR>
   au FileType typescript nnoremap <Leader>' :s/"/'/g"<CR>
-  "edit sandbox
-  au FileType typescript nnoremap <Leader>esan :vsp +e ./src/sandbox.ts<CR>
   "edit test file
   au FileType typescript nnoremap <Leader>ete :call EditJSTestFile()<CR>
   " toggle between let and const on a line
@@ -25,6 +23,16 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
 augroup END
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            Typscript Navigation                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup tsNavigation
+  au FileType typescript nnoremap <Leader>esan :vsp +e ./src/sandbox.ts<CR>
+  au FileType typescript nnoremap <Leader>epac :vsp +e ./package.json<CR>
+  au FileType typescript nnoremap <Leader>etsc :vsp +e ./tsconfig.json<CR>
+  au FileType typescript nnoremap <Leader>etsl :vsp +e ./tslint.json<CR>
+augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Load Typescript Specific Scripts                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
