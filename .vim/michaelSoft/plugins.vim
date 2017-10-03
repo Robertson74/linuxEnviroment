@@ -41,7 +41,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 """ PHP STUFF -------------------------
 " php autocomplete
-" Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'm2mdas/phpcomplete-extended'
 " Plugin 'm2mdas/phpcomplete-extended-symfony'
 " Twig smyntax
@@ -144,6 +144,8 @@ augroup ToDoConfig
   au bufenter *.todo nmap <buffer> <leader>x <Plug>(simple-todo-mark-as-done)
   au bufenter *.todo nmap <buffer> <leader>X <Plug>(simple-todo-mark-as-undone)
   au bufenter *.todo nmap <buffer> <leader>s <Plug>(simple-todo-mark-switch)
+  au bufenter *.todo nmap <buffer> <leader>nd 
+        \:call PortUnCompletedToDosToNewDay()<CR>
 augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>

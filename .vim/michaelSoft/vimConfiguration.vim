@@ -31,6 +31,8 @@ let &colorcolumn=join(range(81,999),",")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tags 
+set tag+=./.michaelSoft/tags
 " don't wrap text
 set nowrap
 " persistent undos
@@ -75,7 +77,6 @@ set timeoutlen=1000 ttimeoutlen=0
 " control-p ignore folders
 set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*,*/app/cache/*
 " omni complete 
-set completeopt?
 set completeopt-=noselect
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Miscellaneous                                "
