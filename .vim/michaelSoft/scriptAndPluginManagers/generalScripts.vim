@@ -54,12 +54,19 @@ nnoremap <Leader>cam :call ConvertToCammel()<CR>
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
 nnoremap<Leader>ewc :call CloseScreenExtend()<CR>
+" what highlight props does the square under curosr have
 nnoremap<Leader>hii :call HighlightGroupIdentify()<CR>
+" toggle 80 char warning
 nnoremap <Leader>col :call ToggleColorColumn()<CR>
+" todos
 nnoremap <Leader>todo :call GoToGeneralToDoFile()<CR>
+" temp commands
+nnoremap <Leader>tcmd :call SetTempCommand()<CR>
+nnoremap <Leader>tcl :call ClearTempCommand()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/generalScripts/TempCommand.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/ToDo.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/ToggleColorColumn.vim
 source ~/.vim/michaelSoft/scripts/generalScripts/CommandToNewBuffer.vim
@@ -114,7 +121,8 @@ nnoremap <Leader>elan :call EditLanguageConfig()<CR>
 nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
 nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 nnoremap <Leader>vsan :vsplit +e ~/.vim/michaelSoft/sandbox.vim<CR>
-
+" edit snippets
+nnoremap <Leader>esni :vsplit +e ~/.vim/michaelSoft/custom_snippets/all_misc.snippets<CR><BAR>:E<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Remaps                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

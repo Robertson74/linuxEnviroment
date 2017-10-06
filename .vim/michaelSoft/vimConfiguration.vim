@@ -37,7 +37,7 @@ set tag+=./.michaelSoft/tags
 set nowrap
 " persistent undos
 set undofile
-set undodir="~/.vim/michaelSoft/undos/"
+set undodir=~/.vim/michaelSoft/undos/
 " fix netrw E command
 command! E Explore
 "  necesssary for delimitmate " backspace

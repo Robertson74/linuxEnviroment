@@ -1,32 +1,3 @@
-function! PortUnCompletedToDosToNewDay()
-  " set up headers
-  norm! gg
-  norm! O
-  norm! 80i-
-  let s:date = strftime("%b %d %Y")
-  put=s:date
-  " set curosor positions for new day
-  let s:newDayPos = getcurpos()
-  " check each uncompleted task for pulling to new day
-  let s:processing = "true"
-  while s:processing == "true"
-    /\[\s\]
-    norm! V
-    redraw!
-    let s:bringOver = confirm("Bring task to new day?", "&yes\n&No\n&Done", 1)
-    execute "norm! \<esc>"
-    if s:bringOver == 3
-      let s:processing = "false"
-    elseif s:bringOver == 1
-      let s:currentTaskInReview = getcurpos()
-      norm! Y
-      call setpos('.', s:newDayPos)
-      norm! p
-      call setpos('.', s:currentTaskInReview)
-      norm! j^
-    endif
-  endwhile
-endfunction
 " function! FlashCursor()
 "   redir => g:defaultCursorLineColor
 "     silent highlight Cursorline
@@ -103,13 +74,6 @@ function! ListClassReturn()
   bd!
   call win_gotoid(g:classReturnWindow)
   execute "norm! i".s:word
-endfunction
-nnoremap <Leader>qq :call SetTempCommand()<CR>
-function! SetTempCommand()
-  let s:defaultShort = "qq"
-  let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
-  let s:command = input("what command to bind to qq: ")
-  execute "nnoremap <Leader>".s:commandShortcut." :".s:command."<CR>"
 endfunction
 
 
