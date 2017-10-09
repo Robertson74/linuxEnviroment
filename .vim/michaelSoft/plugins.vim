@@ -116,15 +116,17 @@ Plugin 'easymotion/vim-easymotion'
 " Better text objects
 Plugin 'wellle/targets.vim'
 """ MISCELLANEOUS ---------------------
+Plugin 'xolox/vim-misc'
 " NERDTREE
 Plugin 'scrooloose/nerdtree'
 " Plugin 'jceb/vim-orgmode'
 """ AESTHETICS ------------------------
 " color schemes
 Plugin 'flazz/vim-colorschemes'
+Plugin 'chr4/jellygrass.vim'
+Plugin 'xolox/vim-colorscheme-switcher'
+
 """ FUN -------------------------------
-" tetris
-Plugin 'vim-scripts/TeTrIs.vim'
 "---------------------------------------
 " END OF PLUGINS
 " All of your Plugins must be added before the following line
@@ -150,13 +152,15 @@ augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
-colorscheme late_evening
-hi TabLinesel ctermfg=magenta ctermbg=black
-hi Constant ctermfg=217 ctermbg=black
-hi String ctermfg=217 ctermbg=black
-hi LineNr ctermbg=black
-hi EndOfBuffer ctermbg=black
-hi ColorColumn ctermbg=black ctermfg=red
+nnoremap <f8> :RandomColorScheme<CR>
+" colorscheme jellygrass
+" colorscheme late_evening
+" hi TabLinesel ctermfg=magenta ctermbg=black
+" hi Constant ctermfg=217 ctermbg=black
+" hi String ctermfg=217 ctermbg=black
+" hi LineNr ctermbg=black
+" hi EndOfBuffer ctermbg=black
+" hi ColorColumn ctermbg=black ctermfg=red
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 

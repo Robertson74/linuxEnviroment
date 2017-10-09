@@ -27,7 +27,7 @@ set nu
 :  autocmd WinLeave * set nonumber
 :  autocmd WinLeave * set norelativenumber
 :augroup END
-let &colorcolumn=join(range(81,999),",")
+" let &colorcolumn=join(range(81,999),",")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -37,7 +37,7 @@ set tag+=./.michaelSoft/tags
 set nowrap
 " persistent undos
 set undofile
-set undodir=~/.vim/michaelSoft/undos/
+set undodir=~/.vimUndos/
 " fix netrw E command
 command! E Explore
 "  necesssary for delimitmate " backspace
