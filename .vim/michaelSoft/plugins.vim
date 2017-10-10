@@ -152,6 +152,8 @@ augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
+let g:colorscheme_switcher_define_mappings = 0
+let g:colorscheme_switcher_keep_background = 1
 nnoremap <f8> :RandomColorScheme<CR>
 " colorscheme jellygrass
 " colorscheme late_evening

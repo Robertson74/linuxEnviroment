@@ -22,6 +22,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
+  au FileType typescript nnoremap <Leader>fcl :call ListClasses()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Typscript Navigation                            "

@@ -59,22 +59,6 @@ nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.v
 nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
 nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 
-nnoremap <Leader>fcl :call ListClasses()<CR>
-function! ListClasses()
-  let g:classReturnWindow = win_getid()
-  :vsplit! +enew
-	:silent read! grep -R "export.*class" ./ --exclude-dir="node_modules" | sed "s/.*class\s\(\S*\).*/\1/"
-  :v/[A-Za-z]/d
-  :v/^[A-Za-z]/d
-  :%sort
-  nnoremap <buffer> <CR> :call ListClassReturn()<CR>
-endfunction
-function! ListClassReturn()
-  let s:word = expand("<cWORD>")
-  bd!
-  call win_gotoid(g:classReturnWindow)
-  execute "norm! i".s:word
-endfunction
 
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim

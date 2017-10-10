@@ -12,11 +12,14 @@ augroup jsConfig
   au FileType javascript nnoremap <Leader>mas :call MakeAsync()<CR>
   " toggle between let and const on a line
   au FileType javascript nnoremap <Leader>let :call ToggleConstLet()<CR>
-  au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
+  au FileType javascript nnoremap <Leader>simp :call SortImportStatements()<CR>
+  au FileType javascript nnoremap <Leader>fcl :call ListClasses()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load Javascript Scripts                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" find classes and pull the name into current file
+source ~/.vim/michaelSoft/scripts/javascriptScripts/FindClasses.vim
 " jump to test files
 source ~/.vim/michaelSoft/scripts/javascriptScripts/EditJsTestFile.vim
 " add a new constructor parameter
