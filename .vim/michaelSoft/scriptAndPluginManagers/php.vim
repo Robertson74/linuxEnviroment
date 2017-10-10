@@ -27,6 +27,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                   PHP Plugin Configuration                   "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pdv_template_dir = "~/.vim/bundle/pdv/templates_snip"
 " php extended config 
 let g:phpcomplete_parse_docblock_comments = 1
 let g:phpcomplete_index_composer_command = "composer"

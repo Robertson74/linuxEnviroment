@@ -67,6 +67,7 @@ nnoremap <Leader>tcl :call ClearTempCommand()<CR>
 nnoremap <Leader>fcol :call SaveColorSchemeToFavorites()<CR>
 nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>
 nnoremap <Leader>ccol :call CycleColorschemes()<CR>
+nnoremap <Leader>snipa :call QuickAddSnippetSetUp()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -93,7 +94,8 @@ nnoremap <Leader>eref :tabnew ~/.vim/michaelSoft/references<CR>
 nnoremap <Leader>fref :find ~/.vim/michaelSoft/references/*
 nnoremap <Leader>vsan :vsplit +e ~/.vim/michaelSoft/sandbox.vim<CR>
 " edit snippets
-nnoremap <Leader>esni :vsplit +e ~/.vim/michaelSoft/custom_snippets/all_misc.snippets<CR><BAR>:E<CR>
+nnoremap <Leader>esni :vsplit ~/.vim/michaelSoft/custom_snippets<CR>
+nnoremap <Leader>edsn :vsplit ~/.vim/bundle/vim-snippets/UltiSnips/<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                   Remaps                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

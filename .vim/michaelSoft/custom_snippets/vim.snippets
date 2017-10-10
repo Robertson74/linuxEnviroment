@@ -1,0 +1,32 @@
+snippet for "for ... in loop"
+	for ${1} in ${2}
+		${0:${VISUAL}}
+	endfor
+endsnippet
+
+snippet wh "while loop"
+	while ${1}
+		${0:${VISUAL}}
+	endw
+endsnippet
+
+snippet ife "if ... else statement"
+	if ${1}
+		${2:${VISUAL}}
+	else
+		${0}
+	endif
+endsnippet
+
+snippet if "if statement"
+	if ${1}
+		${0:${VISUAL}}
+	endif
+endsnippet
+
+snippet au "augroup ... autocmd block"
+	augroup ${1:AU_NAME}
+		" this one is which you're most likely to use?
+		autocmd ${2:BufRead,BufNewFile} ${3:*.ext,*.ext3|<buffer[=N]>} ${0}
+	augroup end
+endsnippet

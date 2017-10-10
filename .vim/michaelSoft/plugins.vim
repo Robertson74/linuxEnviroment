@@ -180,12 +180,11 @@ let g:completor_auto_trigger = 0
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
 let g:snips_author="Michael Robertson"
-let g:pdv_template_dir = $HOME."/.vim/bundle/pdv/templates_snip"
 let g:UltiSnipsExpandTrigger = "<C-Z>"
 let g:UltiSnipsListSnippets = "<C-L>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.vim/michaelSoft/custom_snippets']
+let g:UltiSnipsSnippetDirectories = [ $HOME.'/.vim/michaelSoft/custom_snippets/' ]
 """"""""""""""Control P
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
