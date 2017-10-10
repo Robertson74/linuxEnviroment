@@ -23,6 +23,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
   au FileType typescript nnoremap <Leader>fcl :call ListClasses()<CR>
+  au FileType typescript nnoremap <Leader>fimp :call FixImportPath()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Typscript Navigation                            "
@@ -37,6 +38,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Load Typescript Specific Scripts                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source ~/.vim/michaelSoft/scripts/typescriptScripts/FixImport.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        Typescript Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
