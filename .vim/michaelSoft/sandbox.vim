@@ -1,26 +1,3 @@
-" function! FlashCursor()
-"   redir => g:defaultCursorLineColor
-"     silent highlight Cursorline
-"   redir END
-"   redir => g:defaultCursorColumnColor
-"     silent highlight CursorColumn
-"   redir END
-"   highlight Cursorline ctermbg=red
-"   highlight CursorColumn ctermbg=red
-"   set cursorcolumn
-"   call timer_start(100, 'CursorFlashTimer')
-" endfunction
-
-" function! CursorFlashTimer(timer)
-"   execute "highlight Cursorline ".split(g:defaultCursorLineColor)[2]
-"   execute "highlight CursorColumn ".split(g:defaultCursorColumnColor)[2]
-"   set nocursorcolumn
-" endfunction
-
-" augroup windowChangeCursorFlash
-"   au!
-"   au WinEnter * call FlashCursor()
-" augroup END
 
 vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
 function! ExtractFromContext()

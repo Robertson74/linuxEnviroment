@@ -1,6 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                Call Scripts                                "
+"                                Bind Script                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " command results to new buffer
 nnoremap <Leader>cmd :call CommandToNewBuffer()<CR>
 " Context Searching
@@ -63,43 +64,13 @@ nnoremap <Leader>todo :call GoToGeneralToDoFile()<CR>
 " temp commands
 nnoremap <Leader>tcmd :call SetTempCommand()<CR>
 nnoremap <Leader>tcl :call ClearTempCommand()<CR>
+nnoremap <Leader>fcol :call SaveColorSchemeToFavorites()<CR>
+nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>
+nnoremap <Leader>ccol :call CycleColorschemes()<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/michaelSoft/scripts/generalScripts/TempCommand.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/ToDo.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/ToggleColorColumn.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/CommandToNewBuffer.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/HighlightGroupIdentify.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/SearchContextually.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/TempSigns.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/FlipBoolean.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/TempAreas.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/ExtendWindows.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/ResizeWindow.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/CapsTarget.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/RepetitiveString.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/RepetitiveLines.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/MarkMoveWindows.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/FindAndReplaceRange.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/MakeTop.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/RemoteManipulate.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/FormatJSON.vim
-source ~/.vim/michaelSoft/scripts/generalScripts/Zooming.vim
-" move a register from common to a saved register
-source ~/.vim/michaelSoft/scripts/generalScripts/SaveToRegister.vim
-" quick adding snippets
-source ~/.vim/michaelSoft/scripts/generalScripts/AddQuickSnippet.vim
-" reposition quick fix error screen
-source ~/.vim/michaelSoft/scripts/generalScripts/RepositionErrors.vim
-" ishness
-source ~/.vim/michaelSoft/scripts/generalScripts/ish.vim
-" list out and navigate to language specific configuration
-source ~/.vim/michaelSoft/scripts/generalScripts/editLangaugeConfig.vim
-" Toggle between tabs being four spaces or two
-source ~/.vim/michaelSoft/scripts/generalScripts/ToggleTabSpaces.vim
-" quick format the page
-source ~/.vim/michaelSoft/scripts/generalScripts/FormatPage.vim
+call SourceAllFromDir('~/.vim/michaelSoft/scripts/generalScripts/')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                         General Navigation                          "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

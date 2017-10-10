@@ -152,9 +152,13 @@ augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
+" IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
+colorscheme behelit
+hi Normal ctermbg=NONE
+hi NonText ctermbg=NONE
 let g:colorscheme_switcher_define_mappings = 0
 let g:colorscheme_switcher_keep_background = 1
-nnoremap <f8> :RandomColorScheme<CR>
+nnoremap <f8> :RandomColorScheme<CR> <BAR> :hi NonText ctermbg=NONE<CR> <BAR> :hi Normal ctermbg=NONE<CR> <BAR> :colorscheme<CR>
 " colorscheme jellygrass
 " colorscheme late_evening
 " hi TabLinesel ctermfg=magenta ctermbg=black

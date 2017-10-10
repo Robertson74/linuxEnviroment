@@ -1,3 +1,12 @@
+behelit
+blackboard
+cobalt2
 forneus
-maroloccio
 gotham256
+inkpot
+kalahari
+kaltex
+maroloccio
+moss
+sky
+valloric

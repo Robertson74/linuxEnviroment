@@ -18,20 +18,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load Javascript Scripts                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" find classes and pull the name into current file
-source ~/.vim/michaelSoft/scripts/javascriptScripts/FindClasses.vim
-" jump to test files
-source ~/.vim/michaelSoft/scripts/javascriptScripts/EditJsTestFile.vim
-" add a new constructor parameter
-source ~/.vim/michaelSoft/scripts/javascriptScripts/AddNewConstructorParameter.vim
-" quickly make a funciton async
-source ~/.vim/michaelSoft/scripts/javascriptScripts/MakeAsync.vim
-" toggle between let and const on line
-source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleConstLet.vim
-" quickly wrap or unwrap line in console log
-source ~/.vim/michaelSoft/scripts/javascriptScripts/ToggleWrapInConsoleLog.vim
-" sort top level import statements
-source ~/.vim/michaelSoft/scripts/javascriptScripts/SortImportStatements.vim
+call SourceAllFromDir('~/.vim/michaelSoft/scripts/javascriptScripts/')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        Javascript Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

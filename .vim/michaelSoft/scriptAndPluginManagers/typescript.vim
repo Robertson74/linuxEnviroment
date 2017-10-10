@@ -38,7 +38,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Load Typescript Specific Scripts                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/michaelSoft/scripts/typescriptScripts/FixImport.vim
+call SourceAllFromDir('~/.vim/michaelSoft/scripts/typescriptScripts/')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                        Typescript Specific Plugins                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
