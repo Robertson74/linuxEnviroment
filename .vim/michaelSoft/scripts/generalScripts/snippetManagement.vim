@@ -30,35 +30,44 @@ function! QuickAddSnippetSetUp()
   set nornu nu
   redraw!
   let s:snipRange = input("Snippet range: ")
-  " let s:snipRange = substitute(s:startLine, "-", ",", "")
   set rnu nu
   " present snippets for edit 
   execute s:snipRange."y"
+  if match(@0, "snippet") == 0 && match(@0, "endsnippet") > -1
+    echom "Adding snippet..."
+    call QuickAddSnippet("true")
+    return
+  endif
   vsplit +enew
-  norm! ggiSaveSnip ${1:exampleVar}
-  norm! osnippet snipName "snipDescription"
-  norm! gpoendsnippet
-  norm! 2G
+  " if the yank reg is a formated snip
+    norm! ggiSaveSnip ${1:exampleVar}
+    norm! osnippet snipName "snipDescription"
+    norm! gpoendsnippet
+    norm! 2G
   nnoremap <buffer> <CR> :call SnipQuickAddButton()<CR>
 endfunction
 
 function! SnipQuickAddButton()
   if line('.') == 1
-    call QuickAddSnippet()
+    call QuickAddSnippet("false")
   else
     norm! <CR>
   endif
 endfunction
 
-function! QuickAddSnippet()
-  g/^snippet/,/endsnippet/y
-  bd!
+function! QuickAddSnippet(formatted)
+  if a:formatted == "false"
+    g/^snippet/,/endsnippet/y
+    bd!
+  endif
   let s:snippetFiles = []
   for s:dir in g:UltiSnipsSnippetDirectories
     let s:files = systemlist("ls -R ".s:dir)
     let s:files = remove(s:files, 1, -1)
     for s:file in s:files
-      execute "call add(s:snippetFiles, '".s:dir."".s:file."')"
+      if match(s:file, ":") == -1 && match(s:file, "\.snippets") > -1
+        execute "call add(s:snippetFiles, '".s:dir."".s:file."')"
+      endif
     endfor
   endfor
   let s:snippetFileChoices = []
@@ -70,8 +79,12 @@ function! QuickAddSnippet()
     let s:counter = s:counter + 1
   endfor
   let s:fileChoice = inputlist(s:snippetFileChoices)
-  let s:snippetAddFile =  s:snippetFiles[s:fileChoice - 1]
-  execute "vsplit +e ".s:snippetAddFile
+  let s:fileName = substitute(s:snippetFileChoices[s:fileChoice - 1], ".* ", "", "")
+  echom s:fileName
+  vsplit
+  execute "find /home/vagrant/.vim/michaelSoft/custom_snippets/**/".s:fileName
+  " let s:snippetAddFile =  s:snippetFiles[s:fileChoice - 1]
+  " execute "vsplit +e ".s:snippetAddFile
   norm! Gp
   norm! O
   norm! j

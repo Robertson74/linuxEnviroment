@@ -1,0 +1,52 @@
+# describe
+snippet m.desc
+describe("${1:Description}", () => {
+});
+endsnippet
+
+# before
+snippet m.before
+before(() => {
+	${1:/* code in here */}
+});
+endsnippet
+
+# after
+snippet m.after
+after(() => {
+	${1:/* code in here */}
+});
+endsnippet
+
+# beforeEach
+snippet m.beforeEach
+beforeEach(() => {
+	${1:/* code in here */}
+});
+endsnippet
+
+# afterEach
+snippet m.afterEach
+afterEach(() => {
+	${1:/* code in here */}
+});
+endsnippet
+
+# it
+snippet m.it
+it("${1:should}", () => {
+	${2:/* code in here */}
+});
+endsnippet
+
+# it pending
+snippet m.itp
+	it("${1:should}");
+endsnippet
+
+snippet qm "quick mock"
+const mock${1:MOCK}: ${2:mockType} = mock(${3:Object});
+when(mock$1.${4:}).thenReturn(${5:mockReturn});
+const stub$1: $2 = instance(mock$1);
+endsnippet
+

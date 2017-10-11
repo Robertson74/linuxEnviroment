@@ -1,0 +1,59 @@
+# Symfony unit test
+snippet webTestCase "class XYZTest extends WebTestCase { ... }"
+<?php
+
+namespace `!p
+relpath = os.path.relpath(path)
+m = re.search(r'[A-Z].+(?=/)', relpath)
+if m:
+	snip.rv = m.group().replace('/', '\\')
+`;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+/**
+ * @author `!v g:snips_author`
+ */
+class `!p
+snip.rv = re.match(r'.*(?=\.)', fn).group()
+` extends WebTestCase
+{
+	public function ${1:test}()
+	{
+		${2:code}
+	}
+}
+endsnippet
+
+# symfony service
+snippet symfonyService "Boilerplate symfony service"
+<?php
+
+namespace `!p
+relpath = os.path.relpath(path)
+m = re.search(r'[A-Z].+(?=/)', relpath)
+if m:
+	snip.rv = m.group().replace('/', '\\')
+`;
+
+/* use ${1:useStatements} */
+
+/**
+ * @author `!v g:snips_author`
+ */
+
+class ${2:}Service {
+	private ${3:internalVariables};
+
+
+  public function __construct(${4:dependencies})
+	{
+
+	}
+
+	public function ${5:serivceMethod}
+	{
+
+	}
+}
+endsnippet

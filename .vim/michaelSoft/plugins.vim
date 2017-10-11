@@ -179,12 +179,16 @@ let g:completor_auto_trigger = 0
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
+set rtp+=~/.vim/michaelSoft/
 let g:snips_author="Michael Robertson"
 let g:UltiSnipsExpandTrigger = "<C-Z>"
 let g:UltiSnipsListSnippets = "<C-L>"
 let g:UltiSnipsJumpForwardTrigger = "<C-J>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
+let g:UltiSnipsEnableSnipMate = 0
 let g:UltiSnipsSnippetDirectories = [ $HOME.'/.vim/michaelSoft/custom_snippets/' ]
+" let g:UltiSnipsSnippetDirectories=["custom_snippets"]
+let g:UltiSnipsEditSplit = "vertical"
 """"""""""""""Control P
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1

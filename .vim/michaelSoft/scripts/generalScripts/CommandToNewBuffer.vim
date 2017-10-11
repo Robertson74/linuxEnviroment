@@ -2,6 +2,9 @@ fun! CommandToNewBuffer()
   let g:command_start_window = win_getid()
   let save_cursor = getcurpos()
   let s:command = input("Command: ")
+  if s:command == ""
+    return
+  endif
   redir => s:output
   silent execute s:command
   redir END
