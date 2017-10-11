@@ -153,7 +153,7 @@ augroup END
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-colorscheme behelit
+colorscheme kalahari
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 let g:colorscheme_switcher_define_mappings = 0
