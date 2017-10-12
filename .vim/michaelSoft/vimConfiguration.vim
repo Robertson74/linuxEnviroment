@@ -31,6 +31,9 @@ set nu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+:
+" show command line completion options
+set wildignorecase
 " tags 
 set tag+=./.michaelSoft/tags
 " don't wrap text

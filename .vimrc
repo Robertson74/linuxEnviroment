@@ -29,3 +29,8 @@ source ~/.vim/michaelSoft/sandbox.vim
 " watch ------------------------
 " https://github.com/lvht/phpcd.vim
 " keep an eye on asyncomplete
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                          Last to execute command                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" show commands as typing
+set showcmd

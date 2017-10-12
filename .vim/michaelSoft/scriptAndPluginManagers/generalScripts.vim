@@ -101,7 +101,7 @@ nnoremap <Leader>edsn :vsplit ~/.vim/bundle/vim-snippets/UltiSnips/<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " completion remaps
 inoremap <C-v> <C-x><C-o>
-inoremap <C-f> <C-x><C-l>
+inoremap <C-f> <C-x><C-f>
 inoremap <C-p> <C-x><C-p>
 inoremap <C-n> <C-x><C-n>
 " pane navigation
