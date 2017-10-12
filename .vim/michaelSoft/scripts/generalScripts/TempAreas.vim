@@ -1,8 +1,10 @@
 """"""" Temporary areas
 function! PlaceTempArea()
-  :exe "norm! o\<ESC>30i#\<ESC>ATEMP AREA\<ESC>=="
+  :exe "norm! o\<ESC>S\<ESC>30i#"
+  norm! ATEMP AREA
   :Commentary
-  :exe "norm! o\<ESC>30i#\<ESC>AEND TEMP\<ESC>=="
+  :exe "norm! o\<ESC>S\<ESC>30i#"
+  norm! AEND TEMP AREA
   :Commentary
   :norm! O
   :norm! S

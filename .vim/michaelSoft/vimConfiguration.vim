@@ -31,7 +31,8 @@ set nu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:
+" command line completion
+set wildmenu
 " show command line completion options
 set wildignorecase
 " tags 

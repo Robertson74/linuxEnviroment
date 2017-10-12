@@ -1,4 +1,4 @@
-snippet asynMeth "async class/object method" b
+snippet ameth "async class/object method" b
 async ${1:methodName}(${2:args}: ${3:argType}): ${4:void} {
 	${5://code}
 }
@@ -65,15 +65,32 @@ constructor(${0}) {
 endsnippet
 
 snippet cls "class .." b
-class ${1:ClassName}${2: extends ${3:ParentClass}} {
-	${4: constructor(${5:args}) {
-    ${6://code...}
+${5:export} class ${1:ClassName} {
+	${2: constructor(${3:args}) {
+    ${4://code...}
   }}
 }
 endsnippet
 
+snippet clse "class .." b
+${6:export} class ${1:ClassName} extends ${2:ParentClass} {
+	${3: constructor(${4:args}) {
+    ${5://code...}
+  }}
+}
+endsnippet
+
+snippet clsi "class .." b
+${6:export} class ${1:ClassName} implements ${2:interface} {
+	${3: constructor(${4:args}) {
+		${5://code...}
+	}}
+}
+endsnippet
+
+
 snippet itf "interface .." b
-interface ${1:InterfaceName}${2: extends ${3:Parent}} {
+${5:export} interface ${1:InterfaceName}${2: extends ${3:Parent}} {
 	${4://code...}
 }
 endsnippet
@@ -125,4 +142,22 @@ for (${1:prop} in ${2:obj}){
 		${VISUAL}$0
 	}
 }
+endsnippet
+
+snippet try "try/catch" b
+try {
+	$1${VISUAL}
+} catch (${2:e}) {
+	${4:throw new Error(${3:e});}
+}
+endsnippet
+
+snippet im "import xyz from 'xyz'"
+import ${1} from '${2:$1}';
+endsnippet
+snippet imas "import * as xyz from 'xyz'"
+import * as ${1} from '${2:$1}';
+endsnippet
+snippet imm "import { member } from 'xyz'"
+import { ${1} } from '${2}';
 endsnippet

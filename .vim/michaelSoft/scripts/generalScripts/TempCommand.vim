@@ -1,7 +1,7 @@
 function! SetTempCommand()
   let s:defaultShort = "qq"
   let s:commandShortcut = input("Temp command shortcut: ", s:defaultShort)
-  let s:command = input("what command to bind to qq: ")
+  let s:command = input("what command to bind to ".s:commandShortcut.": ")
   execute "nnoremap <Leader>".s:commandShortcut." :".s:command."<CR>"
   if !exists('g:tempCommands')
     let g:tempCommands = []
