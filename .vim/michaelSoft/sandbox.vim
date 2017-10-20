@@ -1,18 +1,7 @@
-" onoremap if :<C-u>call search('\(\u\|\^\|\W\zs\w\)', 'b') <BAR> call search('\w\ze\($\|\u\|\W\)', 's') <BAR> norm! v`'<CR>
-vnoremap <Leader>if :echom "testing..."<CR>
-function! RepeatMacoIfFail(macro, failInstructions, repeatCount)
-  let counter = 0
-  while counter < (a:repeatCount - 1)
-    try
-      execute "norm! @".a:macro
-      let counter = counter + 1
-    catch 
-      execute "norm! @".a:failInstructions
-      let counter = counter + 1
-    endtry
-  endwhile
-endfunction
+" testMcTestingTester
+
 vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
+
 function! ExtractFromContext()
   " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())
   let s:funcName = input("function name: ")
@@ -42,14 +31,6 @@ function! ExtractFromContext()
   execute s:funcLine.",".s:endFuncLine."norm! =="
   execute s:startLine
 endfunction
-inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
-inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"
-
-nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.vim<CR>
-nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
-nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
-
-
 
 " source /home/vagrant/.vim/michaelSoft/nodeDebug/debug.vim
 " nnoremap <Leader>zz :call TSRelativePathComplete()<CR>

@@ -116,6 +116,10 @@ nnoremap <C-b> <C-w>b
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           QUICK SCRIPTS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" sessions
+nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.vim<CR>
+nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
+nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/generateRepository.js<CR>
 " Rotate parameters in parenthesis
 nnoremap <Leader>rk :execute "normal! va(<C-v><esc>dF,%pa, <C-v><esc>F,;xxh%"<CR>
 nnoremap <Leader>rj :execute "normal! va(<C-v><esc>%ldf,h%i, <C-v><esc>px%lxh%"<CR>

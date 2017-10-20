@@ -30,6 +30,9 @@ set nu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 3 lines up and down on complete menu
+inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
+inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"
 " don't redraw between macro steps
 set lazyredraw
 " command line completion
@@ -77,7 +80,11 @@ set laststatus=2
 " Fix for delay after pressing escape
 set timeoutlen=1000 ttimeoutlen=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  options                                   "
+"                                Text Objects                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+onoremap ic :<C-U>execute "norm! ?\\(\\l\\zs\\u\\\|\\u\\\|^\\\|\\W\\zs\\w\\)\r/\\(\\w\\ze\\u\\\|\\w\\ze$\\\|\\w\\ze\\W\\)\r:nohl\rv`'"<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Options                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " control-p ignore folders
 set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*,*/app/cache/*
@@ -88,3 +95,4 @@ set completeopt-=noselect
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufRead,BufNewFile *.apidoc    set filetype=apidoc
 au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
