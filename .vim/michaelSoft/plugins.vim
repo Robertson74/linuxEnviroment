@@ -102,7 +102,7 @@ Plugin 'xtal8/traces.vim'
 " persistent undo warnings
 Plugin 'Carpetsmoker/undofile_warn.vim'
 " autocomplete for quotes and the like
-Plugin 'raimondi/delimitmate'
+" Plugin 'raimondi/delimitmate'
 " extended dot functionality
 Plugin 'tpope/vim-repeat.git'
 " extended tag matching with %
@@ -159,14 +159,16 @@ hi NonText ctermbg=NONE
 let g:colorscheme_switcher_define_mappings = 0
 let g:colorscheme_switcher_keep_background = 1
 nnoremap <f8> :RandomColorScheme<CR> <BAR> :hi NonText ctermbg=NONE<CR> <BAR> :hi Normal ctermbg=NONE<CR> <BAR> :colorscheme<CR>
-" colorscheme jellygrass
-" colorscheme late_evening
+"ocolorscheme late_evening
 " hi TabLinesel ctermfg=magenta ctermbg=black
 " hi Constant ctermfg=217 ctermbg=black
 " hi String ctermfg=217 ctermbg=black
 " hi LineNr ctermbg=black
 " hi EndOfBuffer ctermbg=black
 " hi ColorColumn ctermbg=black ctermfg=red
+let &colorcolumn=join(range(81,999),",")
+hi ColorColumn ctermbg=black
+hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 

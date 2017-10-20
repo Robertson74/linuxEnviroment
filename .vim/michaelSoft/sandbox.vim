@@ -1,4 +1,17 @@
-
+" onoremap if :<C-u>call search('\(\u\|\^\|\W\zs\w\)', 'b') <BAR> call search('\w\ze\($\|\u\|\W\)', 's') <BAR> norm! v`'<CR>
+vnoremap <Leader>if :echom "testing..."<CR>
+function! RepeatMacoIfFail(macro, failInstructions, repeatCount)
+  let counter = 0
+  while counter < (a:repeatCount - 1)
+    try
+      execute "norm! @".a:macro
+      let counter = counter + 1
+    catch 
+      execute "norm! @".a:failInstructions
+      let counter = counter + 1
+    endtry
+  endwhile
+endfunction
 vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
 function! ExtractFromContext()
   " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())
@@ -103,9 +116,9 @@ nnoremap <Leader>rg :!tsc && node build/src/domain/repoGen/generateRoutines/gene
 
 "   :let s:keywords = SCGetKeywords()
 "   :let s:commentLine = SCFormatCommentLine(getline('.'))
-"   if type(s:commentLine) != 3
+"   jhhrjf type(s:commentLine) != 3
 "     return
-"   endif
+"repo name
 
 "   for s:word in s:commentLine
 "     if index(s:keywords, s:word.".sc") > -1

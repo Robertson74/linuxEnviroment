@@ -27,10 +27,11 @@ set nu
 :  autocmd WinLeave * set nonumber
 :  autocmd WinLeave * set norelativenumber
 :augroup END
-" let &colorcolumn=join(range(81,999),",")
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" don't redraw between macro steps
+set lazyredraw
 " command line completion
 set wildmenu
 " show command line completion options

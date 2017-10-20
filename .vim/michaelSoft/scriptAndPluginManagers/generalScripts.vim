@@ -44,13 +44,13 @@ nnoremap <Leader>mwm :call MoveWindowToTab()<CR>
 nnoremap <Leader>rli :call RepetitiveLines()<CR>
 nnoremap <Leader>rst :call RepetitiveString()<CR>
 " Caps as targets
-nnoremap Q :silent call MoveToPreviousCap()<CR>
-nnoremap <BAR> :silent call MoveToNextCap()<CR>
-nnoremap dic :call DeleteInsideCaps()<CR>
-nnoremap cic :call ChangeInsideCaps()<CR>
-nnoremap dc :call DeleteToCap()<CR>
-nnoremap cc :call ChangeToCap()<CR>
-nnoremap <Leader>cam :call ConvertToCammel()<CR>
+" nnoremap Q :silent call MoveToPreviousCap()<CR>
+" nnoremap <BAR> :silent call MoveToNextCap()<CR>
+" nnoremap dic :call DeleteInsideCaps()<CR>
+" nnoremap cic :call ChangeInsideCaps()<CR>
+" nnoremap dc :call DeleteToCap()<CR>
+" nnoremap cc :call ChangeToCap()<CR>
+" nnoremap <Leader>cam :call ConvertToCammel()<CR>
 "extending windows
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
@@ -68,6 +68,8 @@ nnoremap <Leader>fcol :call SaveColorSchemeToFavorites()<CR>
 nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>
 nnoremap <Leader>ccol :call CycleColorschemes()<CR>
 nnoremap <Leader>snipa :call QuickAddSnippetSetUp()<CR>
+nnoremap <Leader>tlg :call TempLog()<CR>
+nnoremap <Leader>rma :call RepeatMacoIfFail('q', 'w', )<left>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -193,8 +195,8 @@ nnoremap <Leader>nu :set nu! rnu!<CR>
 nnoremap <Leader>rs :!sudo service apache2 restart<CR>
 nnoremap <Leader>txd :!bash ~/scripts/toggleXDebug.sh<CR>
 " scrap buffer
-nnoremap <Leader>jun1 :tabnew +e ~/temp/junk<CR>
-nnoremap <Leader>jun2 :tabnew +e ~/temp/junk2<CR>
-nnoremap <Leader>jun3 :tabnew +e ~/temp/junk3<CR>
-nnoremap <Leader>jun4 :tabnew +e ~/temp/junk4<CR>
-nnoremap <Leader>jun5 :tabnew +e ~/temp/junk5<CR>
+nnoremap <Leader>jun1 :vsplit +e ~/temp/junk<CR>
+nnoremap <Leader>jun2 :vsplit +e ~/temp/junk2<CR>
+nnoremap <Leader>jun3 :vsplit +e ~/temp/junk3<CR>
+nnoremap <Leader>jun4 :vsplit +e ~/temp/junk4<CR>
+nnoremap <Leader>jun5 :vsplit +e ~/temp/junk5<CR>

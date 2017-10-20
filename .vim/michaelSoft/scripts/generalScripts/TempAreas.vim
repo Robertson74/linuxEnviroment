@@ -6,9 +6,8 @@ function! PlaceTempArea()
   :exe "norm! o\<ESC>S\<ESC>30i#"
   norm! AEND TEMP AREA
   :Commentary
-  :norm! O
-  :norm! S
-  :startinsert
+  norm! O
+  norm! S
 endfunction
 function! RemoveTempArea()
   let s:removeCursor = getcurpos()

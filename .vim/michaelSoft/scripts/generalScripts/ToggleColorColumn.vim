@@ -4,6 +4,8 @@ function! ToggleColorColumn()
     echom "No color column"
   else
     let &colorcolumn=join(range(81,999),",")
+    hi ColorColumn ctermbg=black
+    hi ColorColumn ctermfg=red
     echom "Color column"
   endif
 endfunction
