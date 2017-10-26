@@ -82,7 +82,12 @@ set timeoutlen=1000 ttimeoutlen=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Text Objects                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-onoremap ic :<C-U>execute "norm! ?\\(\\l\\zs\\u\\\|\\u\\\|^\\\|\\W\\zs\\w\\)\r/\\(\\w\\ze\\u\\\|\\w\\ze$\\\|\\w\\ze\\W\\)\r:nohl\rv`'"<CR>
+" inside caps
+onoremap ic :<C-U>:call HighlightCapsTextObject()<CR>
+" to caps
+onoremap c :<C-U>execute "norm! /\\u\rv`'"<CR>
+onoremap C :<C-U>execute "norm! ?\\u\rv`'"<CR>
+" onoremap ic :<C-U>execute "norm! ?\\(\\l\\zs\\u\\\|\\u\\\|^\\\|\\W\\zs\\w\\)\r/\\(\\w\\ze\\u\\\|\\w\\ze$\\\|\\w\\ze\\W\\)\r:nohl\rv`'"<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Options                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

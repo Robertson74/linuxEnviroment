@@ -50,7 +50,7 @@ nnoremap <Leader>rst :call RepetitiveString()<CR>
 " nnoremap cic :call ChangeInsideCaps()<CR>
 " nnoremap dc :call DeleteToCap()<CR>
 " nnoremap cc :call ChangeToCap()<CR>
-" nnoremap <Leader>cam :call ConvertToCammel()<CR>
+nnoremap <Leader>cam :call ConvertToCammel()<CR>
 "extending windows
 nnoremap<Leader>ewu :call ExtendScreenUp()<CR>
 nnoremap<Leader>ewd :call ExtendScreenDown()<CR>
@@ -69,7 +69,7 @@ nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>
 nnoremap <Leader>ccol :call CycleColorschemes()<CR>
 nnoremap <Leader>snipa :call QuickAddSnippetSetUp()<CR>
 nnoremap <Leader>tlg :call TempLog()<CR>
-nnoremap <Leader>rma :call RepeatMacoIfFail('q', 'w', )<left>
+nnoremap <Leader>mac :call RepeatMacoIfFail('q', 'w', )<left>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

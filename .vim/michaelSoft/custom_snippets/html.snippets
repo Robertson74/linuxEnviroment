@@ -1,0 +1,82 @@
+global !p
+def x(snip):
+	if snip.ft.startswith("x"):
+		snip.rv = '/'
+	else:
+		snip.rv = ""
+endglobal
+
+snippet doctype "HTML - 5.0 (doctype)" b
+<!DOCTYPE html>
+
+endsnippet
+
+#############
+# Shortcuts #
+#############
+snippet down "Down (down)"
+&#x2193;
+endsnippet
+
+snippet enter "Enter (enter)"
+&#x2305;
+endsnippet
+
+snippet escape "Escape (escape)"
+&#x238B;
+endsnippet
+
+snippet left "Left (left)"
+&#x2190;
+endsnippet
+
+snippet return "Return (return)"
+&#x21A9;
+endsnippet
+
+snippet right "Right (right)"
+&#x2192;
+endsnippet
+
+snippet shift "Shift (shift)"
+&#x21E7;
+endsnippet
+
+snippet tab "Tab (tab)"
+&#x21E5;
+endsnippet
+
+snippet up "Up (up)"
+&#x2191;
+endsnippet
+
+#############
+# HTML TAGS #
+#############
+snippet a "Link" w
+<a href="${1:http://www.${2:url.com}}"${3: target="_blank"}>${4:Anchor Text}</a>
+endsnippet
+
+snippet html "HTML basic structure" b
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8" />
+			<meta name="viewport" content="width=device-width" />
+			<title>${1:`!p snip.rv = snip.basename.replace('-', ' ').capitalize()`}</title>
+		</head>
+		<body>
+			${0:body}
+		</body>
+	</html>
+endsnippet
+
+snippet script "HTML <script>" w
+<script charset="utf-8">
+	${0:${VISUAL}}
+</script>
+endsnippet
+
+snippet scriptsrc "HTML <script src...>" w
+<script src="$1" charset="${3:utf-8}"></script>
+endsnippet

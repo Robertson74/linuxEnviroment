@@ -1,7 +1,4 @@
-" testMcTestingTester
-
 vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
-
 function! ExtractFromContext()
   " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())
   let s:funcName = input("function name: ")

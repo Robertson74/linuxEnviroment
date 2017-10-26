@@ -1,0 +1,94 @@
+global !p
+from javascript_snippets import (
+	semi, space_before_function_paren, keyword_spacing
+)
+endglobal
+
+snippet fun "function (fun)" w
+function ${1:function_name}`!p snip.rv = space_before_function_paren(snip)`(${2:argument}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet af "Anonymous Function" i
+function`!p snip.rv = space_before_function_paren(snip)`($1) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet iife "Immediately-Invoked Function Expression (iife)"
+(function`!p snip.rv = space_before_function_paren(snip)`(${1:window}) {
+	${VISUAL}$0
+}(${2:$1}))`!p snip.rv = semi(snip)`
+endsnippet
+
+snippet timeout "setTimeout function"
+setTimeout(function`!p snip.rv = space_before_function_paren(snip)`() {
+	${VISUAL}$0
+}${2:.bind(${3:this})}, ${1:10})`!p snip.rv = semi(snip)`
+endsnippet
+
+snippet fi "for prop in obj using hasOwnProperty" b
+for`!p snip.rv = keyword_spacing(snip)`(${1:prop} in ${2:obj}){
+	if`!p snip.rv = keyword_spacing(snip)`($2.hasOwnProperty($1)) {
+		${VISUAL}$0
+	}
+}
+endsnippet
+
+snippet if "if (condition) { ... }"
+if`!p snip.rv = keyword_spacing(snip)`(${1:true}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ife "if (condition) { ... } else { ... }"
+if`!p snip.rv = keyword_spacing(snip)`(${1:true}) {
+	${VISUAL}$0
+}`!p snip.rv = keyword_spacing(snip)`else`!p snip.rv = keyword_spacing(snip)`{
+	${2}
+}
+endsnippet
+
+snippet switch
+switch`!p snip.rv = keyword_spacing(snip)`(${VISUAL}${1:expression}) {
+	case '${VISUAL}${3:case}':
+		${4}
+		break`!p snip.rv = semi(snip)`
+	${0}
+	default:
+		${2}
+}
+endsnippet
+
+snippet case "case 'xyz': ... break"
+case`!p snip.rv = keyword_spacing(snip)`'${VISUAL}${1:case}':
+	${VISUAL}$0
+	break`!p snip.rv = semi(snip)`
+endsnippet
+
+snippet do "do { ... } while (condition)"
+do`!p snip.rv = keyword_spacing(snip)`{
+	${VISUAL}$0
+}`!p snip.rv = keyword_spacing(snip)`while`!p snip.rv = keyword_spacing(snip)`(${1:/* condition */})`!p snip.rv = semi(snip)`
+endsnippet
+
+snippet ret "Return statement"
+return ${VISUAL}$0`!p snip.rv = semi(snip)`
+endsnippet
+
+snippet cl "console log"
+console.log(${1:});
+endsnippet
+
+snippet ready "jquery ready"
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
+endsnippet
+
+snippet => "es6 function"
+${1:funName}(${2:params}): ${3:returnVal} => {
+  ${4:code}
+}
+endsnippet

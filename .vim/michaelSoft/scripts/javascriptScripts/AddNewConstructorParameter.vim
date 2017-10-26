@@ -7,11 +7,12 @@ function! AddNewConstructorParameter(param)
     return
   endif
   " find constructor line
-  execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
+  " execute "normal gg/^\\s.*constructor\<CR>/{\<CR>?)\<CR>"
+  execute "normal gg/^\\s*constructor\rf(%"
   " if there are agruments, put a comma in
   if match(getline('.'), ',') > -1
     execute "normal! i,\<space>".a:param.": ".s:type
-  elseif
+  else
     " insert constructor param
     execute "normal! i".a:param.": ".s:type
   endif

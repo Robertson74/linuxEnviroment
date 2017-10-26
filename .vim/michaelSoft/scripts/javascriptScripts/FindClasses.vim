@@ -1,7 +1,7 @@
 function! ListClasses()
   let g:classReturnWindow = win_getid()
   :vsplit! +enew
-  silent read!grep -R "export.*\(class\|interface\)" ./
+  silent read!grep -R "export.*\(class\|interface\)" ./src
   g/^$/d
   %s/.*\(class\|interface\)\s\+\(\w\+\).*/\2/
   %sort

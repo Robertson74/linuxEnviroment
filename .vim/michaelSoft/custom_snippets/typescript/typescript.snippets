@@ -34,10 +34,6 @@ snippet arr "array"
 ${4:let} ${1:varName}: ${2:type}[] = [${3:val, val}];
 endsnippet
 
-snippet fun "function"
-let ${1:funName}: Function = (${2:}):${3:} => {${4:}};
-endsnippet
-
 snippet getterSetter "Property w/ getter setter" bm
 private _${1:propName}: ${2:propType};
 
@@ -160,4 +156,10 @@ import * as ${1} from '${2:$1}';
 endsnippet
 snippet imm "import { member } from 'xyz'"
 import { ${1} } from '${2}';
+endsnippet
+
+snippet => "es6 function"
+${1:funName}(${2:params}): ${3:returnVal} => {
+  ${4:code}
+}
 endsnippet

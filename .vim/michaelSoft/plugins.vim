@@ -126,7 +126,8 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'chr4/jellygrass.vim'
 Plugin 'xolox/vim-colorscheme-switcher'
 
-""" FUN -------------------------------
+""" Trials ----------------------------
+Plugin 'bigfish/vim-js-context-coloring'
 "---------------------------------------
 " END OF PLUGINS
 " All of your Plugins must be added before the following line
