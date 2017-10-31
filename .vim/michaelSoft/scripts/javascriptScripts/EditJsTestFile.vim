@@ -1,8 +1,8 @@
 function! EditJSTestFile()
   " config
-  let s:testSuffix = '_spec'
+  let s:testSuffix = '_test'
   let s:sourceDir = 'src'
-  let s:testDir = 'test'
+  let s:testDir = 'test/unit'
   """"""""""""""""""""
   let s:filePath = expand('%:h')
   let s:file = expand('%:t:r')
@@ -13,6 +13,7 @@ function! EditJSTestFile()
     let s:switchFile = substitute(s:file, s:testSuffix, '', '')
     silent! execute '!mkdir -p '.s:switchPath
     silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
+    vsplit!
     silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
     redraw!
   else
@@ -20,6 +21,7 @@ function! EditJSTestFile()
     let s:switchFile = substitute(s:file, '\(.*\)', '\1'.s:testSuffix, '')
     silent! execute '!mkdir -p '.s:switchPath
     silent! execute '!touch '.s:switchPath.'/'.s:switchFile.'.ts'
+    vsplit!
     silent! execute 'e '.s:switchPath.'/'.s:switchFile.'.ts'
     redraw!
   end
