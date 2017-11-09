@@ -11,7 +11,7 @@ function! ListClassReturn()
   let s:word = expand("<cWORD>")
   bd!
   call win_gotoid(g:classReturnWindow)
-  execute "norm! i".s:word
+  execute "norm! a".s:word
 endfunction
 
 function! Refactor()

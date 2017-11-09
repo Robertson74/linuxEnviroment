@@ -1,5 +1,11 @@
 function! SortImportStatements()
   let s:sortCur = getcurpos()
-  g/^\s*import/,/^\s*import/sort
-  call setpos(".", s:sortCur)
+  norm! G
+  execute "norm! /import\r"
+  execute "norm! ?import\r"
+  norm! V
+  norm! ''
+  silent! execute "norm! :sort\r"
+  silent! call setpos(".", s:sortCur)
+  echom " imports sorted..."
 endfunction

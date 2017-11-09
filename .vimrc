@@ -33,4 +33,4 @@ source ~/.vim/michaelSoft/sandbox.vim
 "                          Last to execute command                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " show commands as typing
-set showcmd
+" set showcmd

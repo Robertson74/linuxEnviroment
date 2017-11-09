@@ -6,6 +6,7 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 "let Vundle manage Vundle, required
+" 
 Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
@@ -167,7 +168,7 @@ nnoremap <f8> :RandomColorScheme<CR> <BAR> :hi NonText ctermbg=NONE<CR> <BAR> :h
 " hi LineNr ctermbg=black
 " hi EndOfBuffer ctermbg=black
 " hi ColorColumn ctermbg=black ctermfg=red
-let &colorcolumn=join(range(81,999),",")
+let &colorcolumn=join(range(101,999),",")
 hi ColorColumn ctermbg=black
 hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 

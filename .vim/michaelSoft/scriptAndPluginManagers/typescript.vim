@@ -49,6 +49,7 @@ augroup typescriptPlugins
   au FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
   au FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   au FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
+  au FileType typescript nnoremap <Leader>rel :TsuReloadProject<CR>
   au FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
   au FileType typescript nnoremap KK :<C-u>echo tsuquyomi#hint()<CR>
   au FileType typescript nnoremap KL :TsuquyomiSignatureHelp<CR>

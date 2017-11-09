@@ -8,6 +8,7 @@ augroup jsConfig
   au FileType javascript nnoremap <Leader>' :s/"/'/g"<CR>
   au FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
   au FileType javascript nnoremap <Leader>tes :!npm run test<CR>
+  au FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
   au FileType javascript nnoremap <Leader>cona :call AddNewConstructorParameter(expand("<cword>"))<CR>
   au FileType javascript nnoremap <Leader>mas :call MakeAsync()<CR>
   " toggle between let and const on a line
