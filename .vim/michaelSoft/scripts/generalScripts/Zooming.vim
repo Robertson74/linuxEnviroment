@@ -12,6 +12,7 @@ function! ToogleZoomHorizontal()
     echo "zoom"
   endif
 endfunction
+
 function! ToogleZoomVertical()
   if !exists('t:zoomedStatus')
     let t:zoomedStatus = 'false'
@@ -26,6 +27,7 @@ function! ToogleZoomVertical()
     echo "zoom"
   endif
 endfunction
+
 function! ToogleZoomSplit()
   if !exists('t:zoomedStatus')
     let t:zoomedStatus = 'false'
@@ -38,15 +40,16 @@ function! ToogleZoomSplit()
     echo "zoom"
   endif
 endfunction
+
 function! ZoomSplit()
   let s:returnWindow = win_getid()
   let t:zoomList = []
-
   windo call add(t:zoomList, [win_getid(), winheight('.'), winwidth('.'), winsaveview()])
   call win_gotoid(s:returnWindow)
   vertical res 1000
   res 1000
   let t:zoomedStatus = 'true'
+  call MakeTopZoomPane()
 endfunction
 
 function! UnZoomSplit()
@@ -70,5 +73,22 @@ function! UnZoomSplit()
   call win_gotoid(s:returnWin)
   let t:zoomedStatus = 'false'
   unlet t:zoomList
+  call RemoveTopZoomPane()
 endfunction
 
+function! MakeTopZoomPane()
+  let t:zoomBufferWinId = win_getid()
+  execute "norm! \<C-w>\<C-n>"
+  res 1
+  execute "norm! 150izoom\<ESC>"
+  norm! ^
+  let t:topBufferWinId = win_getid()
+  call win_gotoid(t:zoomBufferWinId)
+endfunction
+
+function! RemoveTopZoomPane()
+  if win_gotoid(t:topBufferWinId) == 1
+    bd!
+  endif
+  call win_gotoid(t:zoomBufferWinId)
+endfunction

@@ -1,3 +1,13 @@
+function! Testing()
+  let s:hiLine = execute("hi LineNr")
+  let s:hiArr = split(s:hiLine)
+  let s:LineNrBg = s:hiArr[3]
+  let s:LineNrBgVal = split(s:LineNrBg, "=")[1]
+  let g:defaultLineNrBg = s:LineNrBgVal
+  execute "hi LineNr ctermbg=".g:defaultLineNrBg
+  echom "hi LineNr ctermbg=".g:defaultLineNrBg
+endfunction
+
 vnoremap <Leader>ec <ESC>:call ExtractFromContext()<CR>
 function! ExtractFromContext()
   " (.*).*=>\|function\s\S*(\|\(public\|private\)\s\S*())

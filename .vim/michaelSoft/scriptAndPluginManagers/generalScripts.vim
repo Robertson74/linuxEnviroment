@@ -116,6 +116,7 @@ nnoremap <C-b> <C-w>b
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           QUICK SCRIPTS                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Leader>lw :set wrap!<CR>:set wrap?<CR>
 " sessions
 nnoremap <Leader>ssav :!mkdir ./.michaelSoft/<CR>:mksession! .michaelSoft/save.vim<CR>
 nnoremap <Leader>srel :source ./.michaelSoft/save.vim<CR>
