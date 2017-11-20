@@ -1,6 +1,6 @@
 snippet ameth "async class/object method" b
-async ${1:methodName}(${2:args}: ${3:argType}): ${4:void} {
-	${5://code}
+async ${1:}(${2:args}): ${3:returnType} {
+	${4://code}
 }
 endsnippet
 
@@ -139,7 +139,7 @@ console.debug(${1:"${2:value}"});
 endsnippet
 
 snippet meth "class/object method" b
-${2:methodName}(${3:args}): ${4:void} {
+${2:}(${3:args}): ${4:returnType} {
 		${0://code}
 }
 endsnippet
@@ -174,4 +174,16 @@ snippet => "es6 function"
 ${1:funName}(${2:params}): ${3:returnVal} => {
   ${4:code}
 }
+endsnippet
+
+snippet puameth "public async method"
+  public async ${1:}(): ${2:returnType} {
+    //code
+  }
+endsnippet
+
+snippet prameth "private async method"
+  private async ${1:}(): ${2:returnType} {
+    //code
+  }
 endsnippet

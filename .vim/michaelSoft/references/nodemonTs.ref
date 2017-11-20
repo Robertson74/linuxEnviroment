@@ -1,0 +1,11 @@
+,./nodemon
+,./typescript
+,./watch
+------------------------------------
+############ default nodemon.json to work with typescript
+{
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "ts-node ./src/server.ts"
+}

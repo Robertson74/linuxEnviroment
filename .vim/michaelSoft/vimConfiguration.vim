@@ -94,7 +94,7 @@ onoremap C :<C-U>execute "norm! ?\\u\rv`'"<CR>
 " control-p ignore folders
 set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*,*/app/cache/*
 " omni complete 
-set completeopt-=noselect
+" set completeopt-=noselect
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Miscellaneous                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
