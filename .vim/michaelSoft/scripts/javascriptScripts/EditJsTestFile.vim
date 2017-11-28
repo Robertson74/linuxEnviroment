@@ -1,8 +1,8 @@
 function! EditJSTestFile()
   " config
-  let s:testSuffix = '_test'
+  let s:testSuffix = '.test'
   let s:sourceDir = 'src'
-  let s:testDir = 'test/unit'
+  let s:testDir = 'tests/unit'
   """"""""""""""""""""
   let s:filePath = expand('%:h')
   let s:file = expand('%:t:r')

@@ -34,7 +34,23 @@ snippet arr "array"
 ${4:let} ${1:varName}: ${2:type}[] = [${3:val, val}];
 endsnippet
 
-snippet getterSetter "Property w/ getter setter" bm
+snippet gm "getter method" bm
+private _${1:propName}: ${2:propType};
+
+get $1(): $2 {
+	return this._$1;
+}
+endsnippet
+
+snippet sm "setter method" bm
+private _${1:propName}: ${2:propType};
+
+set $1($1: $2) {
+	this._$1 = $1;
+}
+endsnippet
+
+snippet gs "Property w/ getter setter" bm
 private _${1:propName}: ${2:propType};
 
 get $1(): $2 {
@@ -139,7 +155,7 @@ console.debug(${1:"${2:value}"});
 endsnippet
 
 snippet meth "class/object method" b
-${2:}(${3:args}): ${4:returnType} {
+${2:methodName}(${3:args}): ${4:returnType} {
 		${0://code}
 }
 endsnippet
@@ -161,13 +177,13 @@ try {
 endsnippet
 
 snippet im "import xyz from 'xyz'"
-import ${1} from '${2:$1}';
+import ${2} from "${1:}";
 endsnippet
 snippet imas "import * as xyz from 'xyz'"
-import * as ${1} from '${2:$1}';
+import * as ${2} from "${1:}";
 endsnippet
 snippet imm "import { member } from 'xyz'"
-import { ${1} } from '${2}';
+import { ${2} } from "${1}";
 endsnippet
 
 snippet => "es6 function"

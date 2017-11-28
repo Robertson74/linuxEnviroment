@@ -1,0 +1,65 @@
+snippet nest.module "Nest Module"
+import {Module} from "@nestjs/common";
+
+@Module({${2:}})
+export class ${1:Application}Module {}
+endsnippet
+
+snippet nest.controller "Nest Controller"
+import {Controller} from "@nestjs/common";
+
+@Controller()
+export class ${1:Test}Controller {
+    constructor() {}
+}
+endsnippet
+
+snippet nest.middleware "Nest Middleware"
+import {Middleware, NestMiddleware} from "@nestjs/common";
+
+@Middleware()
+export class ${1:Test}Middleware implements NestMiddleware {
+  resolve(): (req, res, next) => void {
+    return (req, res, next) => {
+      next();
+    };
+  }
+}
+endsnippet
+
+snippet nest.pipe "Nest Pipe"
+import { PipeTransform, Pipe, ArgumentMetadata } from "@nestjs/common";
+
+@Pipe()
+/* tslint:disable-next-line:no-any */ // generic pipe
+export class ${1:Test}Pipe implements PipeTransform<any> {
+    public transform(value, metadata: ArgumentMetadata) {
+        return value;
+    }
+}
+endsnippet
+
+snippet nest.component "Nest Component"
+import {Component} from "@nestjs/common";
+
+@Component()
+export class ${1:Test}Service {
+    constructor() {}
+}
+endsnippet
+
+snippet nest.component.useValue "Nest useValue component"
+export const ${1:connection}Provider = {
+  provide: "${2:token}",
+  useValue: ${3:value}
+};
+endsnippet
+
+snippet nest.component.useFactory "Nest factory component"
+export const ${1:}Factory = [
+  {
+    provide: "${2:Token}",
+    useFactory: ${3:async} (${4:}): ${5:returnVal} => {${6:}}
+  }
+];
+endsnippet

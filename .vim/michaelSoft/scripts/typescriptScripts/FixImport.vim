@@ -5,7 +5,7 @@ function! FixImportPath()
   norm! S
   norm! "0p
   TsuImport
-  norm! dd
+  norm! ddgg
   silent! execute "norm! /\<C-r>0\<CR>"
   echo "Fixed import..."
 endfunction
