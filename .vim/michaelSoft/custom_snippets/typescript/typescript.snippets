@@ -1,3 +1,9 @@
+snippet meth "class/object method" b
+${1:}(${2:args}): ${3:returnType} {
+	${4://code}
+}
+endsnippet
+
 snippet ameth "async class/object method" b
 async ${1:}(${2:args}): ${3:returnType} {
 	${4://code}
@@ -192,14 +198,26 @@ ${1:funName}(${2:params}): ${3:returnVal} => {
 }
 endsnippet
 
-snippet puameth "public async method"
-  public async ${1:}(): ${2:returnType} {
-    //code
-  }
+snippet pubmeth "public method"
+public ${1:}(): ${2:returnType} {
+  //code
+}
 endsnippet
 
-snippet prameth "private async method"
-  private async ${1:}(): ${2:returnType} {
-    //code
-  }
+snippet pubameth "public async method"
+public async ${1:}(): ${2:returnType} {
+  //code
+}
+endsnippet
+
+snippet primeth "private method"
+private ${1:}(): ${2:returnType} {
+  //code
+}
+endsnippet
+
+snippet priameth "private async method"
+private async ${1:}(): ${2:returnType} {
+  //code
+}
 endsnippet
