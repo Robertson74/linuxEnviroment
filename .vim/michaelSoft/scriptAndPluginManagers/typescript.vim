@@ -18,7 +18,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>mk :make<CR>
   au FileType typescript nnoremap <Leader>npmi :!npm i -s 
   au FileType typescript nnoremap <Leader>run :!npm run start<CR>
-  au FileType typescript nnoremap <Leader>san :!ts-node ./src/sandbox.ts<CR>
+  au FileType typescript nnoremap <Leader>san :!npm run sandbox<CR>
   au FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>

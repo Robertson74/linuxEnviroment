@@ -1,12 +1,15 @@
 snippet templateTest "template for a typescript unit test file"
+/**
+ * @file transaction.controller.test.ts - Transaction controller spec
+ * @author Michael Robertson
+ * @version 0.0.1
+ */
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import { instance, mock, verify, when } from "ts-mockito/lib/ts-mockito";
-getStub
-getStubThatThrows
 
-describe("${1:Object}", () => {
+describe("Class", () => {
 
   // enables "chai-as-promised"
   before(() => {
@@ -27,7 +30,7 @@ describe("${1:Object}", () => {
 
   describe("method", () => {
 
-    it("${3:should do a thing}", () => {
+    it("should do a thing", () => {
       // do the test
     });
 

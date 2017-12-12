@@ -63,3 +63,13 @@ export const ${1:}Factory = [
   }
 ];
 endsnippet
+
+snippet nest.middleware.module "module middleware setup"
+export class ${1:Module} implements NestModule {
+  public configure(consumer: MiddlewaresConsumer): void {
+    consumer.apply(${2:middlwareClass}).forRoutes(
+      { path: "${3:path}", method: RequestMethod.${4:verb} }
+    );
+  }
+}
+endsnippet
