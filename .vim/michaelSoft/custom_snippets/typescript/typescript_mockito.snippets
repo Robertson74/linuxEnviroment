@@ -30,3 +30,45 @@ endsnippet
 snippet inst "instance from mock setup"
 let ${1:obj}: ${2:type} = instance(${3:mock});
 endsnippet
+
+snippet templateTest "a mockito unit test template"
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import { instance, mock, verify, when, reset, anything } from "ts-mockito/lib/ts-mockito";
+
+describe("${1:Class}", () => {
+
+  // test class
+  ${2:// test class here}
+
+  // mocks
+  ${3:// mocks here}
+
+  // fake values
+  ${4:// fake values here}
+
+  // enables "chai-as-promised"
+  before(() => {
+    chai.should();
+    chai.use(chaiAsPromised);
+  });
+
+  beforeEach(() => {
+    ${5:// set up mocks/default behaviors here}
+  });
+
+  afterEach(() => {
+    ${6:// reset mocks here}
+  });
+
+  describe("${7:method}", () => {
+
+    it("${7:should do a thing}", async () => {
+      when(${8:mock}.${9:method}()).thenReturn(${10:return});
+      expect(${11:something}).to.be.true;
+    });
+
+  });
+});
+endsnippet
