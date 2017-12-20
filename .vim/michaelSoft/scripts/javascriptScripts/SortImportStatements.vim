@@ -6,6 +6,8 @@ function! SortImportStatements()
   norm! V
   norm! ''
   silent! execute "norm! :sort\r"
+  silent! g/^import/norm gsi{
+  g/^import/norm f{cs{{
   silent! call setpos(".", s:sortCur)
   echom " imports sorted..."
 endfunction

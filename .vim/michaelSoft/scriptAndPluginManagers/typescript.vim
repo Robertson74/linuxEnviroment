@@ -29,7 +29,7 @@ augroup END
 "                            Typscript Navigation                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup tsNavigation
-  au FileType typescript nnoremap <Leader>esan :vsp +e ./src/sandbox.ts<CR>
+  au FileType typescript nnoremap <Leader>esan :vsp +e ./tests/sandbox.ts<CR>
   au FileType typescript nnoremap <Leader>epac :vsp +e ./package.json<CR>
   au FileType typescript nnoremap <Leader>etsc :vsp +e ./tsconfig.json<CR>
   au FileType typescript nnoremap <Leader>etsl :vsp +e ./tslint.json<CR>

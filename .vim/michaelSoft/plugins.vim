@@ -59,6 +59,8 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" stack overflow 
+Plugin 'james9909/stackanswers.vim'
 " todo manager
 Plugin 'vitalk/vim-simple-todo'
 " visual representation of cursor in document
