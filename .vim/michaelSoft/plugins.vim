@@ -31,7 +31,7 @@ Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
 Plugin 'ternjs/tern_for_vim'
 "  auto import
-Plugin 'Galooshi/vim-import-js'
+" Plugin 'Galooshi/vim-import-js'
 " Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
 " jade syntax
@@ -156,7 +156,7 @@ augroup END
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-colorscheme gotham256
+colorscheme cobalt2
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 let g:colorscheme_switcher_define_mappings = 0
