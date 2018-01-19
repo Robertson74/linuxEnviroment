@@ -24,6 +24,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
   au FileType typescript nnoremap <Leader>fcl :call ListClasses()<CR>
   au FileType typescript nnoremap <Leader>fimp :call FixImportPath()<CR>
+  au FileType typescript nnoremap <Leader>aco :call AutoCompleteObject()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Typscript Navigation                            "
@@ -47,7 +48,7 @@ augroup typescriptPlugins
   au FileType typescript nnoremap <Leader>doc :JsDoc<CR>
   au FileType typescript nnoremap <Leader>fix :TsuQuickFix<CR>
   au FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
-  au FileType typescript nnoremap <Leader>wgd :vsplit<CR>:TsuDefinition<CR>
+  au FileType typescript nnoremap <Leader>sgd :vsplit<CR>:TsuDefinition<CR>
   au FileType typescript nnoremap <Leader>imp :TsuImport<CR>
   au FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
   au FileType typescript nnoremap <Leader>rel :TsuReloadProject<CR>

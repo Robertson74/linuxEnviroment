@@ -169,7 +169,7 @@ nnoremap <f8> :RandomColorScheme<CR> <BAR> :hi NonText ctermbg=NONE<CR> <BAR> :h
 " hi LineNr ctermbg=black
 " hi EndOfBuffer ctermbg=black
 " hi ColorColumn ctermbg=black ctermfg=red
-let &colorcolumn=join(range(101,999),",")
+let &colorcolumn=join(range(121,999),",")
 hi ColorColumn ctermbg=black
 hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 
