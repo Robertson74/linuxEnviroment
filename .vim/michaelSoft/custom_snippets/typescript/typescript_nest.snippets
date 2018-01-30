@@ -1,12 +1,12 @@
 snippet nest.module "Nest Module"
-import {Module} from "@nestjs/common";
+import { Module } from "@nestjs/common";
 
 @Module({${2:}})
 export class ${1:Application}Module {}
 endsnippet
 
 snippet nest.controller "Nest Controller"
-import {Controller} from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 
 @Controller()
 export class ${1:Test}Controller {
@@ -15,7 +15,7 @@ export class ${1:Test}Controller {
 endsnippet
 
 snippet nest.middleware "Nest Middleware"
-import {Middleware, NestMiddleware} from "@nestjs/common";
+import { Middleware, NestMiddleware } from "@nestjs/common";
 
 @Middleware()
 export class ${1:Test}Middleware implements NestMiddleware {
@@ -40,7 +40,7 @@ export class ${1:Test}Pipe implements PipeTransform<any> {
 endsnippet
 
 snippet nest.component "Nest Component"
-import {Component} from "@nestjs/common";
+import { Component } from "@nestjs/common";
 
 @Component()
 export class ${1:Test}Service {

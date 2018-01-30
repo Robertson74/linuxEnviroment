@@ -239,3 +239,10 @@ snippet case "switch case"
 case "${1:}":
   ${2:}
 endsnippet
+
+snippet iferr "If statment with error thrown"
+  if (${1:var}) {
+  } else {
+    throw new Error(${3:"${2:}"});
+  }
+endsnippet
