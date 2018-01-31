@@ -246,3 +246,20 @@ snippet iferr "If statment with error thrown"
     throw new Error(${3:"${2:}"});
   }
 endsnippet
+
+snippet err "quick error"
+    throw new Error(${2:"${1:}"});
+endsnippet
+
+snippet if "quick if"
+if (${1:}) {
+  ${2:}
+}
+endsnippet
+
+snippet if "quick if else"
+if (${1:}) {
+  ${2:}
+} else {
+}
+endsnippet
