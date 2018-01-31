@@ -73,3 +73,11 @@ export class ${1:Module} implements NestModule {
   }
 }
 endsnippet
+
+snippet nest.customDecorator "nest custom decorator"
+import { createRouteParamDecorator } from "@nestjs/common";
+
+export const ${1:decoratorName} = createRouteParamDecorator((data, req) => {
+  return ${2:req.user};
+});
+endsnippet
