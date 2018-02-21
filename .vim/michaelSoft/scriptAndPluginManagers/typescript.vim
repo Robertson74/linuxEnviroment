@@ -25,6 +25,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>fcl :call ListClasses()<CR>
   au FileType typescript nnoremap <Leader>fimp :call FixImportPath()<CR>
   au FileType typescript nnoremap <Leader>aco :call AutoCompleteObject()<CR>
+  au FileType typescript nnoremap <Leader>uflm :call UpdateFileLastModified()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Typscript Navigation                            "
