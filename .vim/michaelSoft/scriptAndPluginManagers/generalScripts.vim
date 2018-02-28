@@ -106,6 +106,7 @@ inoremap <C-v> <C-x><C-o>
 inoremap <C-f> <C-x><C-f>
 inoremap <C-p> <C-x><C-p>
 inoremap <C-n> <C-x><C-n>
+inoremap <C-q> <C-x><C-l>
 " pane navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j

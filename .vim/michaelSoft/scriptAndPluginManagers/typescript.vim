@@ -28,6 +28,12 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>uflm :call UpdateFileLastModified()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                          Typescript Auto Commands                          "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup tsAutoCommands
+  autocmd BufWrite *.ts call UpdateFileLastModified()
+augroup END
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Typscript Navigation                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup tsNavigation

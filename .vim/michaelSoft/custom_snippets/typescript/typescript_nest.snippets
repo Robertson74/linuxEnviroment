@@ -14,19 +14,6 @@ export class ${1:Test}Controller {
 }
 endsnippet
 
-snippet nest.middleware "Nest Middleware"
-import { Middleware, NestMiddleware } from "@nestjs/common";
-
-@Middleware()
-export class ${1:Test}Middleware implements NestMiddleware {
-  resolve(): (req, res, next) => void {
-    return (req, res, next) => {
-      next();
-    };
-  }
-}
-endsnippet
-
 snippet nest.pipe "Nest Pipe"
 import { PipeTransform, Pipe, ArgumentMetadata } from "@nestjs/common";
 
@@ -80,4 +67,49 @@ import { createRouteParamDecorator } from "@nestjs/common";
 export const ${1:decoratorName} = createRouteParamDecorator((data, req) => {
   return ${2:req.user};
 });
+endsnippet
+
+snippet nest.middleware "synchronous nest middleware"
+import { Middleware, NestMiddleware, ExpressMiddleware } from "@nestjs/common";
+
+@Middleware()
+export class ${1:}Middleware implements NestMiddleware {
+
+  resolve(): ExpressMiddleware {
+
+    return (req, res, next) => {
+      next();
+    };
+
+  }
+}
+endsnippet
+
+snippet nest.middlewareAsync "async nest middleware"
+import { Middleware, NestMiddleware, ExpressMiddleware } from "@nestjs/common";
+
+@Middleware()
+export class ${1:}Middleware implements NestMiddleware {
+
+  async resolve(): Promise<ExpressMiddleware> {
+
+    return async (req, res, next) => {
+      next();
+    };
+
+  }
+}
+endsnippet
+
+snippet nest.interceptor "nest interceptor"
+import { Interceptor, NestInterceptor, ExecutionContext } from '@nestjs/common';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+@Interceptor()
+export class ${1:Name}Interceptor implements NestInterceptor {
+  intercept(dataOrRequest, context: ExecutionContext, stream$: Observable<any>): Observable<any> {
+    ${2:return stream$.map((data) => ({ data }));}
+  }
+}
 endsnippet
