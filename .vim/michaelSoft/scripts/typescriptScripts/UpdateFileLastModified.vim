@@ -1,5 +1,6 @@
 function! UpdateFileLastModified()
   let save_cursor = getcurpos()
+  let savedView = winsaveview()
   norm! gg
   try
     silent! let searchResult = search('\* lastModified')
@@ -12,4 +13,5 @@ function! UpdateFileLastModified()
     " echom "No file header with last modified"
   endtry
   call setpos('.', save_cursor)
+  call winrestview(savedView)
 endfunction

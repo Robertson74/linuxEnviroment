@@ -48,7 +48,7 @@ Plugin 'shawncplus/phpcomplete.vim'
 " Twig smyntax
 Plugin 'lumiliet/vim-twig'
 " PHP Debugger
-Plugin 'joonty/vdebug'
+" Plugin 'joonty/vdebug'
 " php documenter 
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'

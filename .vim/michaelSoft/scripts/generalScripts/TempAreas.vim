@@ -9,9 +9,19 @@ function! PlaceTempArea()
   norm! O
   norm! S
 endfunction
+
 function! RemoveTempArea()
   let s:removeCursor = getcurpos()
   g/####TEMP AREA/,/####END TEMP/d
+  silent! call ReactivateLines()
   call setpos(".", s:removeCursor)
 endfunction
 
+function! DeactivateLine()
+  norm! Im,.UNDO 
+  :Commentary
+endfunction
+
+function! ReactivateLines()
+  g/m,.UNDO/execute "norm! :s/m,.UNDO //\<CR>:Commentary\<CR>=="
+endfunction

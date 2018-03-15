@@ -256,3 +256,9 @@ if (${1:}) {
   ${2:}
 }
 endsnippet
+
+snippet die "Error to force app to end for testing"
+if (1) {
+  throw new Error("force die...");
+}
+endsnippet

@@ -15,6 +15,8 @@ nnoremap <Leader>bl :call FlipBoolean()<CR>
 " Temp areas
 nnoremap <Leader>tap :call PlaceTempArea()<CR>
 nnoremap <Leader>tar :call RemoveTempArea()<CR>
+nnoremap <Leader>dal :call DeactivateLine()<CR>
+nnoremap <Leader>ral :call ReactivateLines()<CR>
 " Easier window resizing
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " move a register from common to a saved register
