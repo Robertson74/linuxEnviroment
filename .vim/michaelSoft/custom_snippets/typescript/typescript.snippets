@@ -262,3 +262,67 @@ if (1) {
   throw new Error("force die...");
 }
 endsnippet
+
+snippet .map "map over array"
+${6:}${1:}.map((${2:something}) => { return ${3:something}; });
+endsnippet
+
+snippet .mapcr "map over array, format with line break"
+${6:}${1:}.map((${2:something}) => {
+	return ${3:something};
+});
+endsnippet
+
+snippet .filter "filter an array"
+${6:}${1:}.filter((${2:something}) => { return ${3:something} === ${4:somethingElse}; });
+endsnippet
+
+snippet .filtercr "filter an array, format with line break"
+${6:}${1:}.filter((${2:something}) => {
+	return ${3:something} === ${4:somethingElse};
+});
+endsnippet
+
+snippet .reduce "reduce an array"
+${6:}${1:}.reduce((accum: ${2:mustType}, item: ${3:mustType}) => {
+  ${5:// do some stuff}
+  return accum;
+}, ${4:initialVal});
+endsnippet
+
+snippet .reducecr "reduce an array"
+${6:}${1:}.reduce((accum: ${2:mustType}, item: ${3:mustType}) => {
+  ${5:// do some stuff}
+  return accum;
+}, ${4:initialVal});
+endsnippet
+
+snippet .find "find an array item"
+${6:}${1:}.find((${2:item}) => { return ${3:item} === ${5:someCondition}; });
+endsnippet
+
+snippet .findcr "find an array item, format with line break"
+${5:}${1:}.find((${2:item}) => {
+	return ${3:item} === ${5:someCondition};
+});
+endsnippet
+
+snippet .findindex "find an array item"
+${6:}${1:}.findIndex((${2:item}) => { return ${3:item} === ${5:someCondition}; });
+endsnippet
+
+snippet .findindexcr "find an array item, format with line break"
+${6:}${1:}.findIndex((${2:item}) => {
+	return ${3:item} === ${5:someCondition};
+});
+endsnippet
+
+snippet .foreach "run a for each on array"
+${4:}${1:}.forEach((${2:item}) => { ${3:// do some stuff} });
+endsnippet
+
+snippet .foreachcr "run a for each on array"
+${4:}${1:}.forEach((${2:item}) => {
+  ${3:// do some stuff}
+});
+endsnippet
