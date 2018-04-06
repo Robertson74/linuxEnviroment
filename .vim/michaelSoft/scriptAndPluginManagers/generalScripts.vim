@@ -158,7 +158,7 @@ nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>hl :tab help 
 nnoremap <Leader>hg :tab helpgrep 
 nnoremap <Leader>f. :find ./**/*
-nnoremap <Leader>fs :find ./src/**/* -i<left><left><left>
+nnoremap <Leader>fs :find ./src/**/*
 nnoremap <Leader>fm :find ./server/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
 nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
