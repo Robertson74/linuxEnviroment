@@ -156,7 +156,8 @@ augroup END
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-colorscheme cobalt2
+let g:defaultColorscheme="cobalt2"
+execute "colorscheme ".g:defaultColorscheme
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
 let g:colorscheme_switcher_define_mappings = 0
@@ -169,7 +170,7 @@ nnoremap <f8> :RandomColorScheme<CR> <BAR> :hi NonText ctermbg=NONE<CR> <BAR> :h
 " hi LineNr ctermbg=black
 " hi EndOfBuffer ctermbg=black
 " hi ColorColumn ctermbg=black ctermfg=red
-let &colorcolumn=join(range(121,999),",")
+let &colorcolumn=join(range(101,999),",")
 hi ColorColumn ctermbg=black
 hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 

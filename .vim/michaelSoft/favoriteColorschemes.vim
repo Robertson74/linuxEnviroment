@@ -8,5 +8,6 @@ kalahari
 kaltex
 maroloccio
 moss
+pf_earth
 sky
 valloric
