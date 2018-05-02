@@ -6,8 +6,10 @@ gotham256
 inkpot
 kalahari
 kaltex
+literal_tango
 maroloccio
 moss
+nightflight2
 pf_earth
 sky
 valloric
