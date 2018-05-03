@@ -9,15 +9,15 @@ endsnippet
 
 snippet mockw "mock object with when setup"
 const mock$1: ${1:obj} = mock($1);
-when(mock$1.${2:}).thenReturn(${3:});
+when(mock$1.${2:})${4:}.thenReturn(${3:});
 endsnippet
 
 snippet when "set up new return value"
-when(${1:obj}.${2:}(${3:})).thenReturn(${4:returnValu});
+when(${1:obj}.${2:}(${3:}))${5:}.thenReturn(${4:returnValu});
 endsnippet
 
 snippet whent "set up new throw"
-when(${1:}.${2:}(${4:})).thenThrow(${6:new Error("${5}")});
+when(${1:}.${2:}(${4:}))${7:}.thenThrow(${6:new Error("${5}")});
 endsnippet
 
 snippet whenc "set up call"
@@ -43,12 +43,11 @@ describe("${1:Class}", () => {
     chai.use(chaiAsPromised);
   });
 
-  // mocks
-  ${3:// mocks here}
-
-
   // fake values
   ${4:// fake values here}
+
+  // mocks
+  ${3:// mocks here}
 
   // class under test
   ${2:// test class here}
