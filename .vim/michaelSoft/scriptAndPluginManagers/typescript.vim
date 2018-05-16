@@ -18,7 +18,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>mk :make<CR>
   au FileType typescript nnoremap <Leader>npmi :!npm i -s 
   au FileType typescript nnoremap <Leader>run :!npm run start<CR>
-  au FileType typescript nnoremap <Leader>san :!ts-node tests/sandbox.ts<CR>
+  au FileType typescript nnoremap <Leader>san :!ts-node test/sandbox.ts<CR>
   au FileType typescript nnoremap <Leader>tes :!npm run test<CR>
   au FileType typescript nnoremap <Leader>mas :call MakeAsync()<CR>
   au FileType typescript nnoremap <Leader>simp :call SortImportStatements()<CR>
@@ -28,6 +28,9 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>uflm :call UpdateFileLastModified()<CR>
   au FileType typescript nnoremap <Leader>rcl :call RandomMarker()<CR>
   au FileType typescript nnoremap <Leader>lvar :call LogVariable()<CR>
+  au FileType typescript nnoremap <Leader>pimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-platform")<CR>
+  au FileType typescript nnoremap <Leader>eimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-entities")<CR>
+  au FileType typescript nnoremap <Leader>nimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-nest-tools")<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Typescript Auto Commands                          "
@@ -39,7 +42,7 @@ augroup END
 "                            Typscript Navigation                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup tsNavigation
-  au FileType typescript nnoremap <Leader>esan :vsp +e ./tests/sandbox.ts<CR>
+  au FileType typescript nnoremap <Leader>esan :vsp +e ./test/sandbox.ts<CR>
   au FileType typescript nnoremap <Leader>epac :vsp +e ./package.json<CR>
   au FileType typescript nnoremap <Leader>etsc :vsp +e ./tsconfig.json<CR>
   au FileType typescript nnoremap <Leader>etsl :vsp +e ./tslint.json<CR>
