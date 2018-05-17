@@ -65,5 +65,5 @@ function! FindImportSourcePath(importSource)
 endfunction
 
 function! IsItemImported(importItem)
-  return search("import.*".a:importItem)
+  return search("import.* ".a:importItem." ")
 endfunction

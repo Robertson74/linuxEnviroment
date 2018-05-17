@@ -113,3 +113,42 @@ export class ${1:Name}Interceptor implements NestInterceptor {
   }
 }
 endsnippet
+
+snippet nest.mixinInterceptor "template for a mixin class"
+import { Interceptor, NestInterceptor, ExecutionContext, mixin } from "@nestjs/common";
+import { Observable } from "rxjs/Observable";
+import { wrapSuccess } from "../../nma-platform/nma_core/utils/envelope";
+import { classToPlain } from "class-transformer";
+import { Reflector } from "@nestjs/core/services/reflector.service";
+import "rxjs/add/operator/map";
+
+/* tslint:disable:no-any max-classes-per-file */
+@Interceptor()
+abstract class $1Base implements NestInterceptor {
+
+  protected abstract readonly $2: () => $3;
+
+  constructor(private readonly reflector: Reflector) {}
+
+  public intercept(dataOrRequest: Object, context: ExecutionContext, stream$: Observable<any>): Observable<any> {
+	  ${6:}// before
+    return stream$.map((data: any) => {
+			// after
+      const message: string = this.reflector.get<string>("message", context.handler);
+      return wrapSuccess(classToPlain(data), message);
+    });
+  }
+
+}
+
+export function ${1:SuccessInterceptor}(${2:message}: () => ${3:string}): any {
+
+	// default the variable
+  const ${4:successMessage}: () => $3 = $2 ? $2 : () => ${5:default};
+
+  return mixin(class extends $1Base {
+    protected readonly $2: () => $3 = $4;
+  });
+
+}
+endsnippet
