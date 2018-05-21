@@ -210,3 +210,4 @@ nnoremap <Leader>jun2 :vsplit +e ~/temp/junk2<CR>
 nnoremap <Leader>jun3 :vsplit +e ~/temp/junk3<CR>
 nnoremap <Leader>jun4 :vsplit +e ~/temp/junk4<CR>
 nnoremap <Leader>jun5 :vsplit +e ~/temp/junk5<CR>
+nnoremap <Leader>csp :s/,/,\r/g<CR>

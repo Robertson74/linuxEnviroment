@@ -31,6 +31,8 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>pimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-platform")<CR>
   au FileType typescript nnoremap <Leader>eimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-entities")<CR>
   au FileType typescript nnoremap <Leader>nimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-nest-tools")<CR>
+  au FileType typescript nnoremap <Leader>rfm :call MethodReFormat()<CR>
+
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Typescript Auto Commands                          "
