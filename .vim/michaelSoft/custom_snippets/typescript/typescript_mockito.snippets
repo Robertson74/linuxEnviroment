@@ -12,6 +12,10 @@ const mock$1: ${1:obj} = mock($1);
 when(mock$1.${2:})${4:}.thenReturn(${3:});
 endsnippet
 
+snippet spy "set up a spy on an object"
+const spy$1: ${1:obj} = spy($1);
+endsnippet
+
 snippet when "set up new return value"
 when(${1:obj}.${2:}(${3:}))${5:}.thenReturn(${4:returnValu});
 endsnippet
@@ -27,14 +31,14 @@ when(${1:obj}.${2:}(${4:callVal})).thenCall((${5:}) => {
 endsnippet
 
 snippet inst "instance from mock setup"
-let ${1:obj}: ${2:type} = instance(${3:mock});
+${4}instance(${3:mock})${7:;}
 endsnippet
 
 snippet templateTest "a mockito unit test template"
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import { instance, mock, verify, when, reset, anything } from "ts-mockito/lib/ts-mockito";
+import { instance, mock, verify, when, reset, anything, spy } from "ts-mockito/lib/ts-mockito";
 
 describe("${1:Class}", () => {
 
@@ -53,6 +57,7 @@ describe("${1:Class}", () => {
 
   beforeEach(() => {
 		// default mock behaviours
+		// reset test under class and spies
   });
 
   afterEach(() => {
