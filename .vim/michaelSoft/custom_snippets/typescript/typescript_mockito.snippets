@@ -24,6 +24,16 @@ snippet whent "set up new throw"
 when(${1:}.${2:}(${4:}))${7:}.thenThrow(${6:new Error("${5}")});
 endsnippet
 
+snippet whenr "set up a resolve mock"
+when(${1:}.${2:}(${4:}))
+	${7:}.thenResolve();
+endsnippet
+
+snippet whenrej "set up a resolve mock"
+when(${1:}.${2:}(${4:}))
+	${7:}.thenReject();
+endsnippet
+
 snippet whenc "set up call"
 when(${1:obj}.${2:}(${4:callVal})).thenCall((${5:}) => {
 	${6:// code}

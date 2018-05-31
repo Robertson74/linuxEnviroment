@@ -11,15 +11,15 @@ Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
 " jsx highlight/syntax
-Plugin 'chemzqm/vim-jsx-improve'
-" All sorts of typescript stuff
+" Plugin 'chemzqm/vim-jsx-improve'
+" " All sorts of typescript stuff
 Plugin 'Quramy/tsuquyomi'
-" type script syntax highlighting
+" " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
-" snips and syntax
+" " snips and syntax
 Plugin 'HerringtonDarkholme/yats.vim'
-" tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
-Plugin 'ianks/vim-tsx'
+" " tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
+" Plugin 'ianks/vim-tsx'
 " --------
 " JS Doc
 Plugin 'othree/jsdoc-syntax.vim'
