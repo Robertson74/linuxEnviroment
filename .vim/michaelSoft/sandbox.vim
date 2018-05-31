@@ -1,119 +1,93 @@
-" nnoremap <Leader>qq :call Testing()<CR>
-" function! Testing()
-"   vsplit +enew
-"   let s:nodeModules = systemlist("cat ./package.json")
-"   silent put=s:nodeModules
-"   execute "norm! ggd/dependencies\<CR>"
-"   silent v/\s\s\s\s/d
-"   silent %s/:.*//
-"   silent %s/"//g
-"   %sort u
-"   %norm! ==
-"   silent g/@types\//call RemoveDuplicateType()
-"   norm! gg
-"   " au BufLeave <buffer> bd!
-"   nnoremap <buffer> <CR> :call FindExportsAndList(expand("<cWORD>"))<CR>
-" endfunction
+nnoremap <Leader>tdo :call OpenTodos()<CR>
+nnoremap <Leader>tdc :call CloseToDoWins()<CR>
+function! OpenTodos()
+  if ToDoIsOpen() == 1
+    return
+  endif
+  tabnew
+  split +enew
+  vsplit +enew
+  " todo
+  :e ~/.vim/michaelSoft/todo/todo
+  :let g:todoWin = win_getid()
+  " done
+  :execute "norm! \<C-w>j"
+  :e ~/.vim/michaelSoft/todo/done
+  :let g:doneWin = win_getid()
+  :call win_gotoid(g:todoWin)
+  " waiting
+  :execute "norm! \<C-w>l"
+  :e ~/.vim/michaelSoft/todo/waiting
+  : let g:waitingWin = win_getid()
+  :call win_gotoid(g:todoWin)
+  :call SetToDoCommands()
+endfunction
 
-" function! RemoveDuplicateType()
-"   let s:lib = substitute(getline('.'), '.*/', '', '')
-"   try
-"     let searchResult = search('^'.s:lib)
-"     if searchResult > 0
-"       norm! dd
-"     endif
-"   catch 
-"   endtry
-" endfunction
+function! ToDoIsOpen()
+  if exists("g:todoWin") == 1
+    call win_gotoid(g:todoWin)
+    return 1
+  else
+    return 0
+  endif
+endfunction
 
-" function! UpdateImportHeaders()
-" endfunction
+function! CloseToDoWins()
+  let s:startWin = win_getid()
+  " todo
+  call win_gotoid(g:todoWin)
+  wq
+  " done
+  call win_gotoid(g:doneWin)
+  wq
+  " waiting
+  call win_gotoid(g:waitingWin)
+  wq
+  "return
+  call win_gotoid(s:startWin)
+  unlet g:todoWin
+  unlet g:waitingWin
+  unlet g:doneWin
+endfunction
 
-" function! InsertSelectedElement()
-" endfunction
+function! SetToDoCommands()
+  call win_gotoid(g:todoWin)
+  call SetTodoWinCommands()
+  call win_gotoid(g:doneWin)
+  call SetDoneWinCommands()
+  call win_gotoid(g:waitingWin)
+  call SetWaitingWinCommands()
+  call win_gotoid(g:todoWin)
+  norm! ggjjj
+endfunction
 
-" function! SearchFilesForExportedPackages(library, files)
-"   let s:allExports = []
-"   for s:file in a:files
-"     let s:exportLines = systemlist('grep "^\s*export" node_modules/'.a:library.'/'.s:file)
-"     call extend(s:allExports, s:allExports)
-"   endfor
-"   return s:exportLines
-" endfunction
+function! SetTodoWinCommands()
+  map <buffer> <CR> :call MoveToDoDone()<CR>
+endfunction
 
-" function! FindFilesWithRelevantExports()
-" endfunction
+function! SetDoneWinCommands()
+  map <buffer> <CR> :call MoveBackToToDo()<CR>
+endfunction
 
-" function! FindMainFileExportsFile(library)
-"   " let mainFile = systemlist('cat node_modules/'.a:library.'/package.json')
-"   let s:mainFileLine = systemlist('cat node_modules/'.a:library.'/package.json | grep "\"main\":"')
-"   if (len(s:mainFileLine) == 1)
-"     if (len(s:mainFileLine[0]) > 13)
-"       let s:mainFileName = split(s:mainFileLine[0], '"')[3]
-"       return substitute("lib/ts-mockito.js", "\\..*", ".d.ts", "")
-"     endif
-"   endif
-"   return "index.js"
-" endfunction
+function! SetWaitingWinCommands()
+  map <buffer> <CR> :call MoveBackToToDo()<CR>
+endfunction
 
-" function! FindExportsAndList(library)
-"   " find main file
-"   let s:mainFile = FindMainFileExportsFile(a:library)
-"   " find index.d.ts
-"   let s:indexFile = "index.d.ts"
-"   " find all files that have relevant exports (including index.d)
-"   let s:exportFiles = [ s:indexFile ]
-"   " let s:exportFiles = FindFilesWithRelevantExports()
-"   " grep files for exports
-"   let s:exports = SearchFilesForExportedPackages(a:library, s:exportFiles)
-"   " list exports
-"   call ListExports(s:exports)
-"   " bind enter to select Export
-"   nnoremap <buffer> <CR> :call SelectExport(expand("<cWORD>"))<CR>
-" endfunction
+function! MoveToDoDone()
+  let s:doneItem = getline(".")
+  norm! dd
+  call win_gotoid(g:doneWin)
+  norm! ggjj
+  put=s:doneItem
+  call win_gotoid(g:todoWin)
+endfunction
 
-" function! SelectExport(export)
-"   call confirm("Selected ".a:export)
-" endfunction
-
-" function! ListExports(exports)
-"   %d
-"   put=a:exports
-"   norm! gg
-" endfunction
-
-" function! FindIndexFile()
-" endfunction
-
-" " list packages
-" " select package
-" " find main file
-" " find index.d.ts
-" " find all files that have releavant exports (including index.d)
-" " grep files for exports
-" " list exports
-" " select exports
-" " insert the selected element
-" " update import headers
-
-
-" " how to get the export name
-" "     could be -
-
-" " export funciton
-" " export type
-" " export interface
-" " export class
-
-" " export { stuff, stuff } from 
-" " export { stuff } from 
-" " export { stuff, stuff } <nothing here>
-" " export { stuff } <nothing here>
-
-" " export * from "blah"
-
-" " export = module
-" " s/.*{\(.*\)}.*/\1
-" " if match(getline('.'), ',') > -1
-" "   s/,/\r/g
-" " endif
+function! MoveBackToToDo()
+  let s:returnWin = win_getid()
+  let s:toDoItem = getline(".")
+  norm! dd
+  call win_gotoid(g:todoWin)
+  norm! ggjj
+  put=s:toDoItem
+  call win_gotoid(s:returnWin)
+endfunction
