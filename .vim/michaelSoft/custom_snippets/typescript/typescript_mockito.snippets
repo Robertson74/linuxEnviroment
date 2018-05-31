@@ -26,12 +26,12 @@ endsnippet
 
 snippet whenr "set up a resolve mock"
 when(${1:}.${2:}(${4:}))
-	${7:}.thenResolve();
+	${7:}.thenResolve(${6:});
 endsnippet
 
 snippet whenrej "set up a resolve mock"
 when(${1:}.${2:}(${4:}))
-	${7:}.thenReject();
+	${7:}.thenReject(${6:});
 endsnippet
 
 snippet whenc "set up call"
