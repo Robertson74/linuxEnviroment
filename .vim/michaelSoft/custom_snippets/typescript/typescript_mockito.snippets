@@ -48,7 +48,7 @@ snippet templateTest "a mockito unit test template"
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import { instance, mock, verify, when, reset, anything, spy } from "ts-mockito/lib/ts-mockito";
+import { anyOfClass, anything, instance, mock, reset, spy, verify, when } from "ts-mockito/lib/ts-mockito";
 
 describe("${1:Class}", () => {
 
