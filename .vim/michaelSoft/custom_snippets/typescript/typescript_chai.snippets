@@ -77,8 +77,6 @@ snippet c.ce "chai check error"
 let err: HttpException;
 try {
 ${1: call func that throws}
-} catch (e) {
-  err = e;
-}
+} catch (e) { err = e; }
 expect(err.${4:getStatus()}).to.equal(${8:HttpStatus.${5:NOT_FOUND}});
 endsnippet
