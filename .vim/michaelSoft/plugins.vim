@@ -19,7 +19,7 @@ Plugin 'leafgarland/typescript-vim'
 " " snips and syntax
 Plugin 'HerringtonDarkholme/yats.vim'
 " " tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
-" Plugin 'ianks/vim-tsx'
+Plugin 'ianks/vim-tsx'
 " --------
 " JS Doc
 Plugin 'othree/jsdoc-syntax.vim'
