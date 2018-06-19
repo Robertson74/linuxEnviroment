@@ -44,7 +44,7 @@ snippet c.thr "set up throw expectation"
 expect(() => ${1:obj}.${2:meth}(${3:arg})).to.throw(${4:Error});
 endsnippet
 snippet c.rej "set up rejection expectation"
-expect(${1:obj}.${2:meth}(${3:arg})).to.eventually.be.rejected;
+await expect(${1:obj}.${2:meth}(${3:arg})).to.eventually.be.rejected;
 endsnippet
 
 snippet c.asExpected "set up chai as promised"
