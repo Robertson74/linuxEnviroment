@@ -36,6 +36,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>tdo :call OpenTodos()<CR>
   au FileType typescript nnoremap <Leader>tdc :call CloseToDoWins()<CR>
   au FileType typescript nnoremap <Leader>mtt :call MakeTypescriptTestFile()<CR>
+  au FileType typescript nnoremap <Leader>gch :call GitChooseHead()<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Typescript Auto Commands                          "
