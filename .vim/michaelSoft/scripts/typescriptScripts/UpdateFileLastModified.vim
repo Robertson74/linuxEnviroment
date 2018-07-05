@@ -5,7 +5,9 @@ function! UpdateFileLastModified()
   try
     silent! let searchResult = search('\* lastModified')
     if searchResult != 0
-      silent execute "norm! ^f:lC \<ESC>:put=strftime('%m/%d/%Y')\<CR>kJ"
+      if match(getline("."), strftime('%m/%d/%Y')) == -1
+        keepjumps silent execute "norm! ^f:lC \<ESC>:put=strftime('%m/%d/%Y')\<CR>kJ"
+      endif
     else
       " echoe "Could not update file last modified"
     endif

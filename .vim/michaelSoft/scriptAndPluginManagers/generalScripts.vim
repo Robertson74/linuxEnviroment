@@ -62,7 +62,8 @@ nnoremap<Leader>hii :call HighlightGroupIdentify()<CR>
 " toggle 80 char warning
 nnoremap <Leader>col :call ToggleColorColumn()<CR>
 " todos
-nnoremap <Leader>todo :call GoToGeneralToDoFile()<CR>
+nnoremap <Leader>tdo :call OpenTodos()<CR>
+nnoremap <Leader>tdc :call CloseToDoWins()<CR>
 " temp commands
 nnoremap <Leader>tcmd :call SetTempCommand()<CR>
 nnoremap <Leader>tcl :call ClearTempCommand()<CR>

@@ -1,5 +1,5 @@
 # Get request template
-snippet @apiGet "apidoc - GET Template"
+snippet @apiGET "apidoc - GET Template"
 /**
  * apiVersion
  * @api {${1:get}} /${2:route} ${3:APITitle}
@@ -16,7 +16,7 @@ snippet @apiGet "apidoc - GET Template"
 endsnippet
 
 # POST request template
-snippet @apiPost "apidoc - POST Template"
+snippet @apiPOST "apidoc - POST Template"
 /**
  * apiVersion
  * @api {${1:post}} /${2:route} ${3:APITitle}
@@ -36,7 +36,7 @@ snippet @apiPost "apidoc - POST Template"
 endsnippet
 
 # PUT request template
-snippet @apiPut "apidoc - PUT Template"
+snippet @apiPUT "apidoc - PUT Template"
 /**
  * apiVersion
  * @api {${1:put}} /${2:route} ${3:APITitle}
@@ -56,7 +56,7 @@ snippet @apiPut "apidoc - PUT Template"
 endsnippet
 
 # DELETE request template
-snippet @apiDelete "apidoc - DELETE Template"
+snippet @apiDELETE "apidoc - DELETE Template"
 /**
  * apiVersion
  * @api {${1:delete}} /${2:route} ${3:APITitle}
@@ -74,7 +74,7 @@ snippet @apiDelete "apidoc - DELETE Template"
 endsnippet
 
 # PATCH request template
-snippet @apiPatch "apidoc - POST Template"
+snippet @apiPATCH "apidoc - POST Template"
 /**
  * apiVersion
  * @api {${1:patch}} /${2:route} ${3:APITitle}

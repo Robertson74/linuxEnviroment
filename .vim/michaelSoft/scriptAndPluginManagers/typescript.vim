@@ -33,8 +33,6 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>nimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-nest-tools")<CR>
   au FileType typescript nnoremap <Leader>ncimp :call ImportFromTopLevelSource(expand("<cword>"), "@nestjs/common")<CR>
   au FileType typescript nnoremap <Leader>rfm :call MethodReFormat()<CR>
-  au FileType typescript nnoremap <Leader>tdo :call OpenTodos()<CR>
-  au FileType typescript nnoremap <Leader>tdc :call CloseToDoWins()<CR>
   au FileType typescript nnoremap <Leader>mtt :call MakeTypescriptTestFile()<CR>
   au FileType typescript nnoremap <Leader>gch :call GitChooseHead()<CR>
 augroup END
