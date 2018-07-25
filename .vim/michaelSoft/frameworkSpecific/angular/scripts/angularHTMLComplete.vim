@@ -1,7 +1,6 @@
-
 nnoremap <Leader>anh :call AngularHTMLComplete()<CR>
-
 nnoremap <Leader>ant :call AngularTagComplete()<CR>
+
 function! AngularTagComplete()
   let s:save_cursor=getcurpos()
   call search("<", "b")
@@ -55,8 +54,3 @@ function! AngularComplete(selector)
   return completeLines
 endfunction
 
-
-function! GitChooseHead()
-  g/======/,/>>>>>>/d
-  g/HEAD/d
-endfunction
