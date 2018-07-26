@@ -22,7 +22,7 @@ source ~/.vim/michaelSoft/customPlugins.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          LOAD FRAMEWORK SPECIFIC                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/michaelSoft/frameworkSpecific/loadFrameworks.vim
+source ~/.vim/michaelSoft/scripts/frameworkSpecific/loadFrameworks.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Testing                            "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
