@@ -136,7 +136,9 @@ nnoremap <Leader>dl :Commentary<CR>:norm! YP<CR>:Commentary<CR>
 nnoremap <Leader>mod :set modifiable!<CR>
 " toggle format pasting
 nnoremap <Leader>pas :set paste!<CR>
-nnoremap <C-n> :set number! relativenumber!<CR>
+nnoremap <C-n><C-n> :set number norelativenumber<CR>
+nnoremap <C-n><C-r> :set number relativenumber<CR>
+nnoremap <C-n><C-o> :set nonumber norelativenumber<CR>
 nnoremap ZX :q<CR>
 nnoremap ZC :q!<CR>
 " tab navigation

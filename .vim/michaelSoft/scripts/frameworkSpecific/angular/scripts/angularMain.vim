@@ -9,3 +9,6 @@ nnoremap <Leader>aneh :call AngularSwitchComponent("html", "edit")<CR>
 " completions
 nnoremap <Leader>anch :call AngularHTMLComplete()<CR>
 nnoremap <Leader>anct :call AngularTagComplete()<CR>
+
+" angular imports
+nnoremap <Leader>anic :call ImportFromTopLevelSource(expand("<cword>"), "@angular/core")<CR>
