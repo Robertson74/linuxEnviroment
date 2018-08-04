@@ -22,9 +22,9 @@ nnoremap <Leader>res :silent call ResizeWindow()<CR>
 " move a register from common to a saved register
 nnoremap <Leader>reg :call SaveToRegister()<CR>
 " zooming
-nnoremap <Leader>zz :call ToogleZoomSplit()<CR>
-nnoremap <Leader>zh :call ToogleZoomHorizontal()<CR>
-nnoremap <Leader>zv :call ToogleZoomVertical()<CR>
+nnoremap <Leader>z :call ToogleZoomSplit()<CR>
+nnoremap <Leader>hz :call ToogleZoomHorizontal()<CR>
+nnoremap <Leader>vz :call ToogleZoomVertical()<CR>
 " quick add snippet
 vnoremap <C-Z> y:call AddQuickSnippet()<CR>
 " quick reposition errors
