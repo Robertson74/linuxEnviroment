@@ -1,3 +1,4 @@
+// .tern-config
 {
   "plugins": {
     "node": {},
