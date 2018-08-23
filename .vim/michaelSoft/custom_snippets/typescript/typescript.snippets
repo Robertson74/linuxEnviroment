@@ -192,8 +192,14 @@ import { ${2} } from "${1}";
 endsnippet
 
 snippet => "es6 function"
-${1:funName}(${2:params}): ${3:returnVal} => {
-  ${4:code}
+${6:}(${2:})${3: ${4:}} => {
+  ${5:}
+}
+endsnippet
+
+snippet ==> "es6 function named"
+const ${5:funName}: Function = (${2:}): ${3:} => {
+  ${4:}
 }
 endsnippet
 

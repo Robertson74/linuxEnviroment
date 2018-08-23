@@ -12,3 +12,4 @@ nnoremap <Leader>anct :call AngularTagComplete()<CR>
 
 " angular imports
 nnoremap <Leader>anic :call ImportFromTopLevelSource(expand("<cword>"), "@angular/core")<CR>
+nnoremap <Leader>anir :call ImportFromTopLevelSource(expand("<cword>"), "@angular/router")<CR>

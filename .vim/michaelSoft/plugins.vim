@@ -11,6 +11,7 @@ Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
 " jsx highlight/syntax
+Plugin 'mxw/vim-jsx'
 " Plugin 'chemzqm/vim-jsx-improve'
 " " All sorts of typescript stuff
 Plugin 'Quramy/tsuquyomi'
