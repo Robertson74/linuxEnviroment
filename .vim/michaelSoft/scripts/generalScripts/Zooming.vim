@@ -50,7 +50,7 @@ function! ZoomSplit()
   res 1000
   let t:zoomedStatus = 'true'
   au WinLeave <buffer> :call UnZoomSplit() | au! WinLeave <buffer>
-  " call MakeTopZoomPane()
+  " call MakeTopZoomPane)
 endfunction
 
 function! UnZoomSplit()
