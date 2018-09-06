@@ -16,7 +16,6 @@ function! QuickImport()
   call search("^import", "b")
   " display quick imports
   execute "vsplit +e ".g:quickImportsFile
-  set nomodifiable
   " set up <CR> as add quick import button
   nnoremap <buffer> <CR> :call AddQuickImport()<CR>
 endfunction
