@@ -1,0 +1,2 @@
+@angular/core
+@angular/http

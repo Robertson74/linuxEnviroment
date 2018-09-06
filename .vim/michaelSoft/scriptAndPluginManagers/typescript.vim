@@ -28,13 +28,13 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>uflm :call UpdateFileLastModified()<CR>
   au FileType typescript nnoremap <Leader>rcl :call RandomMarker()<CR>
   au FileType typescript nnoremap <Leader>lvar :call LogVariable()<CR>
-  au FileType typescript nnoremap <Leader>pimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-platform")<CR>
-  au FileType typescript nnoremap <Leader>eimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-entities")<CR>
-  au FileType typescript nnoremap <Leader>nimp :call ImportFromTopLevelSource(expand("<cword>"), "nma-nest-tools")<CR>
-  au FileType typescript nnoremap <Leader>ncimp :call ImportFromTopLevelSource(expand("<cword>"), "@nestjs/common")<CR>
   au FileType typescript nnoremap <Leader>rfm :call MethodReFormat()<CR>
   au FileType typescript nnoremap <Leader>mtt :call MakeTypescriptTestFile()<CR>
   au FileType typescript nnoremap <Leader>gch :call GitChooseHead()<CR>
+  au FileType typescript nnoremap <Leader>mim :call ManualImport()<CR>
+  au FileType typescript nnoremap <Leader>nim :call NewImport()<CR>
+  au FileType typescript nnoremap <Leader>eqim :execute "vsplit +e ".g:quickImportsFile<CR>
+
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Typescript Auto Commands                          "
@@ -77,3 +77,7 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tsuquyomi
 let g:tsuquyomi_completion_detail = 1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                            Custom script config                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:importSingleQuote=1

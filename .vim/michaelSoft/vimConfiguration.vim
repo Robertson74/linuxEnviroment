@@ -100,4 +100,3 @@ set wildignore+=*/build/*,*/node_modules/*,*/test/*,*/vendor/*,*/tests/*,*/web/*
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufRead,BufNewFile *.apidoc    set filetype=apidoc
 au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
