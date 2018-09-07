@@ -1,5 +1,3 @@
-nnoremap <Leader>qim :call QuickImport()<CR>
-
 function! QuickImport()
   " check that there is a quickImport file to diplay
   if !exists("g:quickImportsFile")

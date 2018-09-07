@@ -34,6 +34,7 @@ augroup tsConfig
   au FileType typescript nnoremap <Leader>mim :call ManualImport()<CR>
   au FileType typescript nnoremap <Leader>nim :call NewImport()<CR>
   au FileType typescript nnoremap <Leader>eqim :execute "vsplit +e ".g:quickImportsFile<CR>
+  au FileType typescript nnoremap <Leader>qim :call QuickImport()<CR>
 
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
