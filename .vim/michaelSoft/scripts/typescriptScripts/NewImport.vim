@@ -17,4 +17,5 @@ function! NewImport()
     execute "norm!oimport { ".s:newImportWord." } from ".s:quote."".s:importSource."".s:quote.";"
   " return the cursor
   call setpos('.', s:save_cursor)
+  norm! j
 endfunction

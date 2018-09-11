@@ -54,8 +54,9 @@ function! ZoomSplit()
 endfunction
 
 function! UnZoomSplit()
+  au! WinLeave <buffer>
   if exists('t:zoomedStatus') == 0 || t:zoomedStatus == 'false'
-    let t:zoomedList = []
+    let t:zoomList = []
   endif
   let s:returnWin = win_getid()
   for split in t:zoomList
@@ -74,7 +75,7 @@ function! UnZoomSplit()
   call win_gotoid(s:returnWin)
   let t:zoomedStatus = 'false'
   unlet t:zoomList
-  call RemoveTopZoomPane()
+  " call RemoveTopZoomPane()
 endfunction
 
 function! MakeTopZoomPane()
