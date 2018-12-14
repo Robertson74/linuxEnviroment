@@ -60,6 +60,8 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" hex color preview
+Plugin 'etdev/vim-hexcolor'
 " stack overflow 
 Plugin 'james9909/stackanswers.vim'
 " todo manager
