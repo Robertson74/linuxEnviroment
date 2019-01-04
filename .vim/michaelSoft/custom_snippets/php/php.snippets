@@ -115,6 +115,10 @@ snippet vd "var dump"
 var_dump(${1:var});
 endsnippet
 
+snippet vdb "var dump with break"
+echo '<pre>' , var_dump(${1:}) , '</pre>';
+endsnippet
+
 snippet if "If statment"
 if (${1:condition}) {
   ${2:code}
