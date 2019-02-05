@@ -77,8 +77,13 @@ augroup END
 "                      Typescript Plugin Configuration                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tsuquyomi
+au FileType typescript au! tsuquyomi_geterr
 let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_single_quote_import=1
+augroup tsuFixes
+  au!
+  autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Custom script config                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

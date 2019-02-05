@@ -101,8 +101,6 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
-" manage buffers
-Plugin 'Asheq/close-buffers.vim'
 " highlight ex command ranges
 Plugin 'xtal8/traces.vim'
 " persistent undo warnings
@@ -185,6 +183,7 @@ let alt_lint_on_text_changed = 0
 let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
 """"""""""""""completor
 let g:completor_auto_trigger = 0
+let g:completor_complete_options="menuone,noselect"
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
