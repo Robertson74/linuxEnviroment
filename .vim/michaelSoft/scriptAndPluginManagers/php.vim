@@ -35,8 +35,8 @@ let g:phpcomplete_index_composer_command = "composer"
 "                                    LSP                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " npm -g install intelephense-server
-au User lsp_setup call lsp#register_server({
-      \ 'name': 'intelephense',
-      \ 'cmd': {server_info->['node', expand('~/.npm-global/lib/node_modules/intelephense-server/lib/server.js'), '--stdio']},
-      \ 'whitelist': ['php'],
-      \ })
+" au User lsp_setup call lsp#register_server({
+"       \ 'name': 'intelephense',
+"       \ 'cmd': {server_info->['node', expand('~/.npm-global/lib/node_modules/intelephense-server/lib/server.js'), '--stdio']},
+"       \ 'whitelist': ['php'],
+"       \ })

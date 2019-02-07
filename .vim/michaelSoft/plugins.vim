@@ -60,13 +60,13 @@ Plugin 'joonty/vim-phpunitqf'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
-" Language Server protocol
+" LSP
+Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'ryanolsonx/vim-lsp-typescript'
-Plugin 'ryanolsonx/vim-lsp-javascript'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+" Plugin 'ryanolsonx/vim-lsp-javascript'
 Plugin 'Shougo/neco-vim'
 Plugin 'prabirshrestha/asyncomplete-necovim.vim'
 " Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
@@ -235,15 +235,26 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
 imap <c-v> <Plug>(asyncomplete_force_refresh)
-let g:asyncomplete_auto_completeopt=0
+" let g:asyncomplete_auto_completeopt=1
+" set completeopt+=preview
 augroup lspCommands
   au!
   nnoremap <Leader>fix :LspCodeAction<CR>
   nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
+  nnoremap <Leader>cd :cclose<CR>
   nnoremap <Leader>gd :LspDefinition<CR>
   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
   nnoremap <Leader>ref :LspReferences<CR>
   nnoremap <Leader>ren :LspRename<CR>
   nnoremap <Leader>st :LspStatus<CR>
-  nnoremap K :LspHover<CR>
+  nnoremap KK :LspHover<CR>
+  nnoremap KL :pclose<CR>
 augroup END
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "j"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "k"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+" for asyncomplete.vim log
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
+let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
