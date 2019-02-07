@@ -67,6 +67,8 @@ Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'ryanolsonx/vim-lsp-typescript'
 Plugin 'ryanolsonx/vim-lsp-javascript'
+Plugin 'Shougo/neco-vim'
+Plugin 'prabirshrestha/asyncomplete-necovim.vim'
 " Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
 " hex color preview
 Plugin 'etdev/vim-hexcolor'
@@ -229,6 +231,7 @@ nnoremap <Leader>GC :Gcommit<CR>
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" LSP
 " NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
+" npm install -g vscode-css-languageserver-bin
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
 imap <c-v> <Plug>(asyncomplete_force_refresh)
@@ -241,5 +244,6 @@ augroup lspCommands
   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
   nnoremap <Leader>ref :LspReferences<CR>
   nnoremap <Leader>ren :LspRename<CR>
+  nnoremap <Leader>st :LspStatus<CR>
   nnoremap K :LspHover<CR>
 augroup END
