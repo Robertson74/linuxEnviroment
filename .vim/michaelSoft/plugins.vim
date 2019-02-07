@@ -14,7 +14,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'mxw/vim-jsx'
 " Plugin 'chemzqm/vim-jsx-improve'
 " " All sorts of typescript stuff
-Plugin 'Quramy/tsuquyomi'
+" Plugin 'Quramy/tsuquyomi'
 " " type script syntax highlighting
 Plugin 'leafgarland/typescript-vim'
 " " snips and syntax
@@ -43,9 +43,6 @@ Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 """ PHP STUFF -------------------------
 " php autocomplete
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'tobyS/pdv'
 " Plugin 'm2mdas/phpcomplete-extended'
 " Plugin 'm2mdas/phpcomplete-extended-symfony'
 " Twig smyntax
@@ -61,12 +58,24 @@ Plugin 'lumiliet/vim-twig'
 let g:php_manual_online_search_shortcut = "<C-q>"
 Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" LSP
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'ryanolsonx/vim-lsp-typescript'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+" Plugin 'ryanolsonx/vim-lsp-javascript'
+Plugin 'Shougo/neco-vim'
+Plugin 'prabirshrestha/asyncomplete-necovim.vim'
+" Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
+" hex color preview
+Plugin 'etdev/vim-hexcolor'
 " stack overflow 
-Plugin 'james9909/stackanswers.vim'
+" Plugin 'james9909/stackanswers.vim'
 " todo manager
-Plugin 'vitalk/vim-simple-todo'
+" Plugin 'vitalk/vim-simple-todo'
 " visual representation of cursor in document
-Plugin 'gcavallanti/vim-noscrollbar'
+" Plugin 'gcavallanti/vim-noscrollbar'
 " sorting 
 Plugin 'christoomey/vim-sort-motion'
 " JSON tools
@@ -89,7 +98,7 @@ Plugin 'tpope/vim-commentary'
 " tag browser
 Plugin 'majutsushi/tagbar'
 " auto complete
-Plugin 'maralla/completor.vim'
+" Plugin 'maralla/completor.vim'
 " Syntax error highlighting
 " Plugin 'scrooloose/syntastic'
 Plugin 'w0rp/ale'
@@ -100,8 +109,11 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
+<<<<<<< HEAD
 " manage buffers
 " Plugin 'Asheq/close-buffers.vim'
+=======
+>>>>>>> e7b28e0ad4e4d6cd97e869c6327057947e5388eb
 " highlight ex command ranges
 Plugin 'xtal8/traces.vim'
 " persistent undo warnings
@@ -131,6 +143,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'chr4/jellygrass.vim'
 Plugin 'xolox/vim-colorscheme-switcher'
 
+""" DEPENDENCIES ------------------------
 """ Trials ----------------------------
 "---------------------------------------
 " END OF PLUGINS
@@ -185,6 +198,7 @@ let alt_lint_on_text_changed = 0
 let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
 """"""""""""""completor
 let g:completor_auto_trigger = 0
+let g:completor_complete_options="menuone,noselect"
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
@@ -202,6 +216,8 @@ let g:UltiSnipsEditSplit = "vertical"
 let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
 let g:user_command_async=1
 """"""""""""""NERD Tree
+let NERDTreeWinSize=50
+let NERDTreeQuitOnOpen=1
 let NERDTreeShowLineNumbers=1
 nnoremap <Leader>N :NERDTreeToggle<CR>
 nnoremap <Leader>LN :NERDTreeFind<CR>
@@ -217,3 +233,32 @@ nnoremap <Leader>GS :Gstatus<CR>
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
+"""""""""""""" LSP
+" NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
+" npm install -g vscode-css-languageserver-bin
+" npm -g install intelephense-server
+" npm install -g typescript typescript-language-server
+imap <c-v> <Plug>(asyncomplete_force_refresh)
+" let g:asyncomplete_auto_completeopt=1
+" set completeopt+=preview
+augroup lspCommands
+  au!
+  nnoremap <Leader>fix :LspCodeAction<CR>
+  nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
+  nnoremap <Leader>cd :cclose<CR>
+  nnoremap <Leader>gd :LspDefinition<CR>
+  nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
+  nnoremap <Leader>ref :LspReferences<CR>
+  nnoremap <Leader>ren :LspRename<CR>
+  nnoremap <Leader>st :LspStatus<CR>
+  nnoremap KK :LspHover<CR>
+  nnoremap KL :pclose<CR>
+augroup END
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "j"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "k"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+" for asyncomplete.vim log
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
+let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')

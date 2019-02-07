@@ -4,10 +4,11 @@ function! RepositionErrors()
   execute "normal! \<C-W>b\<C-W>J"
   set colorcolumn=0
   set wrap
-  if line('$') > 10
-    resize 10
+  if line('$') > 3
+    resize 3
   else
-    execute "resize ".line('$')
+    resize 3
+    " execute "resize ".line('$')
   endif
   call win_gotoid(save_window)
   call setpos('.', save_cursor)

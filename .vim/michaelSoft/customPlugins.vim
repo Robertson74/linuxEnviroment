@@ -18,7 +18,7 @@
 " vi sql
 " source ~/.vim/michaelSoft/customPlugins/ViSql/ViSql.vim
 " symfony tools
-source ~/.vim/michaelSoft/symfony/symfonyTools.vim
+" source ~/.vim/michaelSoft/symfony/symfonyTools.vim
 " mr completor
-source ~/.vim/michaelSoft/customPlugins/mrComplete/mrComplete.vim
+" source ~/.vim/michaelSoft/customPlugins/mrComplete/mrComplete.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
