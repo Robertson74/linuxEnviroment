@@ -109,11 +109,8 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
-<<<<<<< HEAD
 " manage buffers
 " Plugin 'Asheq/close-buffers.vim'
-=======
->>>>>>> e7b28e0ad4e4d6cd97e869c6327057947e5388eb
 " highlight ex command ranges
 Plugin 'xtal8/traces.vim'
 " persistent undo warnings
