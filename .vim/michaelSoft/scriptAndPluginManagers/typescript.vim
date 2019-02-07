@@ -62,29 +62,33 @@ call SourceAllFromDir('~/.vim/michaelSoft/scripts/typescriptScripts/')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup typescriptPlugins
   au!
-  au FileType typescript nnoremap <Leader>doc :JsDoc<CR>
-  au FileType typescript nnoremap <Leader>fix :TsuQuickFix<CR>
-  au FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
-  au FileType typescript nnoremap <Leader>sgd :vsplit<CR>:TsuDefinition<CR>
+  " au FileType typescript nnoremap <Leader>doc :JsDoc<CR>
+  " au FileType typescript nnoremap <Leader>fix :TsuQuickFix<CR>
+  " au FileType typescript nnoremap <Leader>gd :TsuDefinition<CR>
+  " au FileType typescript nnoremap <Leader>sgd :vsplit<CR>:TsuDefinition<CR>
   au FileType typescript nnoremap <Leader>imp :TsuImport<CR>
-  au FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
-  au FileType typescript nnoremap <Leader>rel :TsuReloadProject<CR>
-  au FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
-  au FileType typescript nnoremap KK :<C-u>echo tsuquyomi#hint()<CR>
-  au FileType typescript nnoremap KL :TsuquyomiSignatureHelp<CR>
+  " au FileType typescript nnoremap <Leader>ref :TsuReferences<CR>
+  " au FileType typescript nnoremap <Leader>rel :TsuReloadProject<CR>
+  " au FileType typescript nnoremap <Leader>ren :TsuquyomiRenameSymbol<CR>
+  " au FileType typescript nnoremap KK :<C-u>echo tsuquyomi#hint()<CR>
+  " au FileType typescript nnoremap KL :TsuquyomiSignatureHelp<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                      Typescript Plugin Configuration                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " tsuquyomi
-au FileType typescript au! tsuquyomi_geterr
-let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_single_quote_import=1
-augroup tsuFixes
-  au!
-  autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
-augroup END
+" au FileType typescript au! tsuquyomi_geterr
+" let g:tsuquyomi_completion_detail = 1
+" let g:tsuquyomi_single_quote_import=1
+" augroup tsuFixes
+"   au!
+"   autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+" augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                            Custom script config                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:importSingleQuote=1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Langauge Server                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" npm install -g typescript typescript-language-server

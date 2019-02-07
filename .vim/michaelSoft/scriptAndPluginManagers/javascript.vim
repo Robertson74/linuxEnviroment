@@ -27,10 +27,10 @@ augroup jsPlugins
   au!
   autocmd FileType javascript nnoremap <Leader>doc :JsDoc<CR>
   autocmd FileType javascript nnoremap <Leader>fimp :ImportJSFix<CR>
-  autocmd FileType javascript nnoremap <Leader>gd :ImportJSGoto<CR>
-  autocmd FileType javascript nnoremap <Leader>imp :ImportJSWord<CR>
-  autocmd FileType javascript nnoremap <buffer> K :TernDoc<CR>
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript nnoremap <Leader>gd :ImportJSGoto<CR>
+  " autocmd FileType javascript nnoremap <Leader>imp :ImportJSWord<CR>
+  " autocmd FileType javascript nnoremap <buffer> K :TernDoc<CR>
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                   javascript Plugin Configuration                   "
@@ -48,3 +48,7 @@ let g:jsdoc_user_defined_tags = {
 " tern
 let g:tern_show_argument_hints='on_hold'
 let g:tern_map_keys=1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    LSP                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" npm install -g typescript typescript-language-server
