@@ -234,7 +234,7 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " npm install -g vscode-css-languageserver-bin
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
-imap <c-v> <Plug>(asyncomplete_force_refresh)
+imap <c-j> <Plug>(asyncomplete_force_refresh)
 " let g:asyncomplete_auto_completeopt=1
 " set completeopt+=preview
 augroup lspCommands
