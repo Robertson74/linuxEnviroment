@@ -43,7 +43,6 @@ Plugin 'mattn/emmet-vim'
 Plugin 'othree/html5.vim'
 """ PHP STUFF -------------------------
 " php autocomplete
-" Plugin 'shawncplus/phpcomplete.vim'
 " Plugin 'm2mdas/phpcomplete-extended'
 " Plugin 'm2mdas/phpcomplete-extended-symfony'
 " Twig smyntax
@@ -51,10 +50,9 @@ Plugin 'lumiliet/vim-twig'
 " PHP Debugger
 " Plugin 'joonty/vdebug'
 " php documenter 
-Plugin 'tobyS/pdv'
-Plugin 'tobyS/vmustache'
+" Plugin 'tobyS/vmustache'
 " PHP unit testing
-Plugin 'joonty/vim-phpunitqf'
+" Plugin 'joonty/vim-phpunitqf'
 " dictionary
 """ no online help
 let g:php_manual_online_search_shortcut = "<C-q>"
@@ -111,6 +109,8 @@ Plugin 'Shougo/unite.vim'
 "Git wrapper
 Plugin 'tpope/vim-fugitive'
 """ NATIVE UPGRADES -------------------
+" manage buffers
+" Plugin 'Asheq/close-buffers.vim'
 " highlight ex command ranges
 Plugin 'xtal8/traces.vim'
 " persistent undo warnings
@@ -168,7 +168,8 @@ augroup END
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-let g:defaultColorscheme="cobalt2"
+let g:defaultColorscheme="literal_tango"
+" let g:defaultColorscheme="cobalt2"
 execute "colorscheme ".g:defaultColorscheme
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
