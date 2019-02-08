@@ -33,7 +33,10 @@ set nu
 " 3 lines up and down on complete menu
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"
+" local complete / nave
 inoremap \<c-v>: "\<C-x>\<C-O>"
+nnoremap \<c-n>: "\<C-x>\<C-N>"
+nnoremap \<c-p>: "\<C-x>\<C-P>"
 " don't redraw between macro steps
 set lazyredraw
 " command line completion

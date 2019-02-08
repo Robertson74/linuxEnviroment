@@ -168,7 +168,7 @@ augroup END
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-let g:defaultColorscheme="literal_tango"
+let g:defaultColorscheme="cobalt2"
 " let g:defaultColorscheme="cobalt2"
 execute "colorscheme ".g:defaultColorscheme
 hi Normal ctermbg=NONE
