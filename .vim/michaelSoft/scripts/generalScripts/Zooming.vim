@@ -60,17 +60,24 @@ function! UnZoomSplit()
   endif
   let s:returnWin = win_getid()
   for split in t:zoomList
-    call win_gotoid(split[0])
-    exec "res ".split[1]
-    exec "vertical res ".split[2]
-    call winrestview(split[3])
+    " call confirm('check window ' . split[0])
+    " call confirm('return window ' . s:returnWin)
+    " call confirm(split[0] != s:returnWin)
+    if split[0] != s:returnWin
+      call win_gotoid(split[0])
+      exec "res ".split[1]
+      exec "vertical res ".split[2]
+      call winrestview(split[3])
+    endif
   endfor
   let t:zoomList = reverse(t:zoomList)
   for split in t:zoomList
-    call win_gotoid(split[0])
-    exec "res ".split[1]
-    exec "vertical res ".split[2]
-    call winrestview(split[3])
+    if split[0] != s:returnWin
+      call win_gotoid(split[0])
+      exec "res ".split[1]
+      exec "vertical res ".split[2]
+      call winrestview(split[3])
+    endif
   endfor
   call win_gotoid(s:returnWin)
   let t:zoomedStatus = 'false'

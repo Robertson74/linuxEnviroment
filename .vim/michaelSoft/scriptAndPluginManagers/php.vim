@@ -21,8 +21,9 @@ call SourceAllFromDir('~/.vim/michaelSoft/scripts/phpScripts/')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup phpPlugins
   au!
-  autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-  au FileType php inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
+  autocmd FileType php setlocal omnifunc=
+  " autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+  " au FileType php inoremap <buffer> <C-C> <C-R>=MRComplete(g:MRCdefinitionsPHP)<CR>
 augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                   PHP Plugin Configuration                   "
@@ -35,8 +36,13 @@ let g:phpcomplete_index_composer_command = "composer"
 "                                    LSP                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " npm -g install intelephense-server
-" au User lsp_setup call lsp#register_server({
-"       \ 'name': 'intelephense',
-"       \ 'cmd': {server_info->['node', expand('~/.npm-global/lib/node_modules/intelephense-server/lib/server.js'), '--stdio']},
-"       \ 'whitelist': ['php'],
-"       \ })
+" au User lsp_setup call lsp#register_server({                                    
+"      \ 'name': 'php-language-server',                                            
+"      \ 'cmd': {server_info->['php', expand('~/.vim/bundle/php-language-server/bin/php-language-server.php')]},
+"      \ 'whitelist': ['php'],                                                     
+"      \ })
+au User lsp_setup call lsp#register_server({
+      \ 'name': 'intelephense',
+      \ 'cmd': {server_info->['node', '/usr/local/lib/node_modules/intelephense-server/lib/server.js', '--stdio']},
+      \ 'whitelist': ['php'],
+      \ })

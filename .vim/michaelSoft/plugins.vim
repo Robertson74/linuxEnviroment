@@ -55,16 +55,17 @@ Plugin 'lumiliet/vim-twig'
 " Plugin 'joonty/vim-phpunitqf'
 " dictionary
 """ no online help
-let g:php_manual_online_search_shortcut = "<C-q>"
-Plugin 'alvan/vim-php-manual'
+" let g:php_manual_online_search_shortcut = "<C-q>"
+" Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
 " LSP
 Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
-Plugin 'ryanolsonx/vim-lsp-typescript'
+" Plugin 'felixfbecker/php-language-server', {'do': 'composer install && composer run-script parse-stubs'}
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-" Plugin 'ryanolsonx/vim-lsp-javascript'
+Plugin 'ryanolsonx/vim-lsp-typescript'
+Plugin 'ryanolsonx/vim-lsp-javascript'
 Plugin 'Shougo/neco-vim'
 Plugin 'prabirshrestha/asyncomplete-necovim.vim'
 " Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
@@ -149,21 +150,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call plugin 
-""""""""""""""ToDo
-" disable defaults by default
-let g:simple_todo_map_keys = 0
-augroup ToDoConfig
-  au!
-  au bufenter *.todo nmap <buffer> <leader>i <Plug>(simple-todo-new)
-  au bufenter *.todo nmap <buffer> <leader>I <Plug>(simple-todo-new-start-of-line)
-  au bufenter *.todo nmap <buffer> <leader>o <Plug>(simple-todo-below)
-  au bufenter *.todo nmap <buffer> <leader>O <Plug>(simple-todo-above)
-  au bufenter *.todo nmap <buffer> <leader>x <Plug>(simple-todo-mark-as-done)
-  au bufenter *.todo nmap <buffer> <leader>X <Plug>(simple-todo-mark-as-undone)
-  au bufenter *.todo nmap <buffer> <leader>s <Plug>(simple-todo-mark-switch)
-  au bufenter *.todo nmap <buffer> <leader>nd 
-        \:call PortUnCompletedToDosToNewDay()<CR>
-augroup END
 """"""""""""""Close Buffers
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
@@ -193,9 +179,6 @@ nnoremap <Leader>ST :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
 let g:ale_lint_on_text_changed = 0
 let alt_lint_on_text_changed = 0
 let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
-""""""""""""""completor
-let g:completor_auto_trigger = 0
-let g:completor_complete_options="menuone,noselect"
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
@@ -236,7 +219,7 @@ nnoremap <Leader>I :IndentGuidesToggle<CR>
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
 imap <c-j> <Plug>(asyncomplete_force_refresh)
-" let g:asyncomplete_auto_completeopt=1
+let g:asyncomplete_auto_completeopt=1
 " set completeopt+=preview
 augroup lspCommands
   au!

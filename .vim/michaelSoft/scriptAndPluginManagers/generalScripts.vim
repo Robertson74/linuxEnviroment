@@ -71,7 +71,7 @@ nnoremap <Leader>fcol :call SaveColorSchemeToFavorites()<CR>
 nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
 nnoremap <Leader>dcol :execute "colorscheme ".g:defaultColorscheme<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
 nnoremap <Leader>ncol :RandomColorScheme<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
-nnoremap <Leader>col :call CycleColorschemes()<CR>
+" nnoremap <Leader>col :call CycleColorschemes()<CR>
 nnoremap <Leader>snipa :call QuickAddSnippetSetUp()<CR>
 nnoremap <Leader>tlg :call TempLog()<CR>
 nnoremap <Leader>mac :call RepeatMacoIfFail('q', 'w', )<left>
