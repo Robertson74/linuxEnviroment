@@ -8,8 +8,13 @@ kalahari
 kaltex
 literal_tango
 maroloccio
+molokai
 moss
 nightflight2
+nightsky
+northsky
 pf_earth
 sky
+thor
 valloric
+xterm16

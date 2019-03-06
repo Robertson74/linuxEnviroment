@@ -30,6 +30,9 @@ set nu
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Functionality                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" scrolloff
+set scrolloff=3
+set sidescrolloff=5
 " 3 lines up and down on complete menu
 inoremap <expr> <C-J> pumvisible() ? "\<C-N>\<C-N>\<C-N>" : "\<C-J>"
 inoremap <expr> <C-K> pumvisible() ? "\<C-P>\<C-P>\<C-P>" : "\<C-K>"

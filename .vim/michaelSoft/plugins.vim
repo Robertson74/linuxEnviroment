@@ -58,6 +58,8 @@ Plugin 'lumiliet/vim-twig'
 " let g:php_manual_online_search_shortcut = "<C-q>"
 " Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
+" expand slection
+Plugin 'terryma/vim-expand-region'
 " LSP
 Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
@@ -154,7 +156,7 @@ filetype plugin indent on    " required
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-let g:defaultColorscheme="cobalt2"
+let g:defaultColorscheme="forneus"
 " let g:defaultColorscheme="cobalt2"
 execute "colorscheme ".g:defaultColorscheme
 hi Normal ctermbg=NONE
@@ -226,6 +228,7 @@ augroup lspCommands
   nnoremap <Leader>fix :LspCodeAction<CR>
   nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
   nnoremap <Leader>cd :cclose<CR>
+  nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
   nnoremap <Leader>gd :LspDefinition<CR>
   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
   nnoremap <Leader>ref :LspReferences<CR>
@@ -242,3 +245,6 @@ augroup END
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
 let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
+"""""""""""""" Easy Motions
+nmap <Leader><Leader>o <Plug>(easymotion-overwin-w)
+

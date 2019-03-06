@@ -67,6 +67,7 @@ nnoremap <Leader>tdc :call CloseToDoWins()<CR>
 " temp commands
 nnoremap <Leader>tcmd :call SetTempCommand()<CR>
 nnoremap <Leader>tcl :call ClearTempCommand()<CR>
+" colors
 nnoremap <Leader>fcol :call SaveColorSchemeToFavorites()<CR>
 nnoremap <Leader>rcol :call ChangeToRandomFavoriteColor()<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
 nnoremap <Leader>dcol :execute "colorscheme ".g:defaultColorscheme<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
