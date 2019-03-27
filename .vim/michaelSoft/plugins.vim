@@ -242,9 +242,9 @@ augroup END
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 " for asyncomplete.vim log
-let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
-let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
+" let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
 """""""""""""" Easy Motions
 nmap <Leader><Leader>o <Plug>(easymotion-overwin-w)
 

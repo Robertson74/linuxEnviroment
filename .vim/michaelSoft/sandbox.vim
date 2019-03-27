@@ -1,3 +1,12 @@
+nnoremap <Leader>fn :call NextFunctionParameter('forward')<CR>
+function! NextFunctionParameter(direction)
+  " find the next terminiating symbol
+  if a:direction == 'forward'
+    execute 'norm! /,\<CR>'
+  elseif a:direction == 'backward'
+  endif
+  " highlight the parameter
+endfunction
 
 " nnoremap <Leader>anh :call AngularHTMLComplete()<CR>
 

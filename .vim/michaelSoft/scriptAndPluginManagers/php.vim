@@ -43,6 +43,7 @@ let g:phpcomplete_index_composer_command = "composer"
 "      \ })
 au User lsp_setup call lsp#register_server({
       \ 'name': 'intelephense',
-      \ 'cmd': {server_info->['node', '/usr/local/lib/node_modules/intelephense-server/lib/server.js', '--stdio']},
+      \ 'cmd': {server_info->['node', '/usr/local/lib/node_modules/intelephense/lib/intelephense.js', '--stdio']},
+      \ 'initialization_options': {"storagePath": "/usr/local/lib/node_modules/temp/intelephense"},
       \ 'whitelist': ['php'],
       \ })
