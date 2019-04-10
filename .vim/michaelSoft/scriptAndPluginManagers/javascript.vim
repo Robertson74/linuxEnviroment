@@ -15,6 +15,7 @@ augroup jsConfig
   au FileType javascript nnoremap <Leader>let :call ToggleConstLet()<CR>
   au FileType javascript nnoremap <Leader>simp :call SortImportStatements()<CR>
   au FileType javascript nnoremap <Leader>fcl :call ListClasses()<CR>
+  au FileType javascript nnoremap <Leader>epac :e package.json<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load Javascript Scripts                           "

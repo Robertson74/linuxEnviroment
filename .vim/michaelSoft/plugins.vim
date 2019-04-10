@@ -30,10 +30,10 @@ Plugin 'bdauria/angular-cli.vim'
 " Syntax for template strings
 Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
-Plugin 'ternjs/tern_for_vim'
+" Plugin 'ternjs/tern_for_vim'
 "  auto import
 " Plugin 'Galooshi/vim-import-js'
-" Plugin 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
