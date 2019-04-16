@@ -4,6 +4,7 @@
 augroup jsConfig
   au!
   au FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  au FileType javascript nnoremap <Leader>epac :e package.json<CR>
   au FileType javascript nnoremap <Leader>" :s/'/"/g"<CR>
   au FileType javascript nnoremap <Leader>' :s/"/'/g"<CR>
   au FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>
@@ -15,7 +16,6 @@ augroup jsConfig
   au FileType javascript nnoremap <Leader>let :call ToggleConstLet()<CR>
   au FileType javascript nnoremap <Leader>simp :call SortImportStatements()<CR>
   au FileType javascript nnoremap <Leader>fcl :call ListClasses()<CR>
-  au FileType javascript nnoremap <Leader>epac :e package.json<CR>
 augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                          Load Javascript Scripts                           "
