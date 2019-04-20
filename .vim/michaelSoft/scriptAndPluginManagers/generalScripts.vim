@@ -164,10 +164,10 @@ nnoremap <Leader>scr :windo set scrollbind!<CR>
 nnoremap <Leader>hl :tab help 
 nnoremap <Leader>hg :tab helpgrep 
 nnoremap <Leader>f. :find ./**/*
-nnoremap <Leader>fs :find ./src/**/*
+nnoremap <Leader>fs :find ./app/**/*
 nnoremap <Leader>fm :find ./server/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
-nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
+nnoremap <Leader>gs :grep -R "" ./app<left><left><left><left><left><left><left>
 nnoremap <Leader>gm :grep -R "" ./server<left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>sw :w !sudo tee %<cr>
 " find trailing spaces

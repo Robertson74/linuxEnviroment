@@ -4,6 +4,7 @@
 augroup jsConfig
   au!
   au FileType javascript nnoremap <Leader>ete :call EditJSTestFile()<CR>
+  au FileType javascript nnoremap <Leader>epac :e package.json<CR>
   au FileType javascript nnoremap <Leader>" :s/'/"/g"<CR>
   au FileType javascript nnoremap <Leader>' :s/"/'/g"<CR>
   au FileType javascript nnoremap <Leader>lg :call ToggleWrapInConsoleLog()<CR>

@@ -30,10 +30,10 @@ Plugin 'bdauria/angular-cli.vim'
 " Syntax for template strings
 Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
-Plugin 'ternjs/tern_for_vim'
+" Plugin 'ternjs/tern_for_vim'
 "  auto import
 " Plugin 'Galooshi/vim-import-js'
-" Plugin 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
 """ HTML STUFF ------------------------
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
@@ -61,16 +61,16 @@ Plugin 'lumiliet/vim-twig'
 " expand slection
 Plugin 'terryma/vim-expand-region'
 " LSP
+" Plugin 'neoclide/coc.nvim'
 Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
-" Plugin 'felixfbecker/php-language-server', {'do': 'composer install && composer run-script parse-stubs'}
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'ryanolsonx/vim-lsp-typescript'
 Plugin 'ryanolsonx/vim-lsp-javascript'
 Plugin 'Shougo/neco-vim'
 Plugin 'prabirshrestha/asyncomplete-necovim.vim'
-" Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
+Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
 " hex color preview
 Plugin 'etdev/vim-hexcolor'
 " stack overflow 
@@ -215,14 +215,38 @@ nnoremap <Leader>GS :Gstatus<CR>
 nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
+"""""""""""""" COC
+" augroup lspCommands
+"   au!
+"   inoremap <silent><expr> <c-v> coc#refresh()
+"   nmap <silent> <Leader>gd <Plug>(coc-definition)
+"   nmap <silent> <Leader>gy <Plug>(coc-type-definition)
+"   nmap <silent> <Leader>gi <Plug>(coc-implementation)
+"   nmap <silent> <Leader>gr <Plug>(coc-references)
+"   nmap <silent> <Leader>ren <Plug>(coc-rename)
+"   nmap <silent> <Leader>fix <Plug>(coc-codeaction)
+"   nmap <silent> <Leader>cc <Plug>(coc-diagnostic-info)
+"   nnoremap <silent> <space>dl  :<C-u>CocList diagnostics<cr>
+"   nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
+"   nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
+"   nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
+"   nnoremap <silent> K :call <SID>show_documentation()<CR>
+" augroup END
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 """""""""""""" LSP
 " NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
 " npm install -g vscode-css-languageserver-bin
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
-imap <c-j> <Plug>(asyncomplete_force_refresh)
+imap <c-v> <Plug>(asyncomplete_force_refresh)
 let g:asyncomplete_auto_completeopt=1
-" set completeopt+=preview
+set completeopt+=preview
 augroup lspCommands
   au!
   nnoremap <Leader>fix :LspCodeAction<CR>
@@ -230,8 +254,7 @@ augroup lspCommands
   nnoremap <Leader>cd :cclose<CR>
   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
   nnoremap <Leader>gd :LspDefinition<CR>
-  nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
-  nnoremap <Leader>ref :LspReferences<CR>
+  nnoremap <Leader>gr :LspReferences<CR>
   nnoremap <Leader>ren :LspRename<CR>
   nnoremap <Leader>st :LspStatus<CR>
   nnoremap KK :LspHover<CR>
