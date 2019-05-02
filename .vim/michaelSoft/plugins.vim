@@ -24,6 +24,8 @@ Plugin 'ianks/vim-tsx'
 " Debug
 " Plugin 'vim-vdebug/vdebug'
 " --------
+"  auto imports
+Plugin 'Galooshi/vim-import-js'
 " JS Doc
 Plugin 'othree/jsdoc-syntax.vim'
 Plugin 'heavenshell/vim-jsdoc'
@@ -34,8 +36,9 @@ Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
 " Plugin 'ternjs/tern_for_vim'
 "  auto import
-" Plugin 'Galooshi/vim-import-js'
 Plugin 'pangloss/vim-javascript'
+""" RUBY/RAILS ------------------------
+Plugin 'tpope/vim-rails'
 """ HTML STUFF ------------------------
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
@@ -64,6 +67,7 @@ Plugin 'lumiliet/vim-twig'
 Plugin 'terryma/vim-expand-region'
 " COC
 Plugin 'neoclide/coc.nvim'
+Plugin 'Shougo/echodoc.vim'
 " LSP
 " Plugin 'prabirshrestha/asyncomplete.vim'
 " Plugin 'prabirshrestha/async.vim'
@@ -181,7 +185,7 @@ hi ColorColumn ctermfg=red
 let g:undofile_warn_mode=2
 """"""""""""""ale 
 nnoremap <Leader>AT :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
-let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_text_changed = 1
 let alt_lint_on_text_changed = 0
 let g:ale_linters = {
       \ 'typescript': ['tslint', 'tsserver'],
@@ -222,6 +226,7 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
+let g:coc_node_path = "/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node"
 augroup cocCommands
   au!
   inoremap <silent><expr> <c-v> coc#refresh()
@@ -236,7 +241,8 @@ augroup cocCommands
   nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
   nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
   nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
+  nnoremap <silent> KK :call <SID>show_documentation()<CR>
+  nnoremap <silent> KL :pclose<CR>
 augroup END
 function! s:show_documentation()
   if &filetype == 'vim'
