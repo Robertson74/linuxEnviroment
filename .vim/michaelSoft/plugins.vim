@@ -21,7 +21,11 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'HerringtonDarkholme/yats.vim'
 " " tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
 Plugin 'ianks/vim-tsx'
+" Debug
+" Plugin 'vim-vdebug/vdebug'
 " --------
+"  auto imports
+Plugin 'Galooshi/vim-import-js'
 " JS Doc
 Plugin 'othree/jsdoc-syntax.vim'
 Plugin 'heavenshell/vim-jsdoc'
@@ -32,8 +36,9 @@ Plugin 'Quramy/vim-js-pretty-template'
 " Tern/JS autocomplete
 " Plugin 'ternjs/tern_for_vim'
 "  auto import
-" Plugin 'Galooshi/vim-import-js'
 Plugin 'pangloss/vim-javascript'
+""" RUBY/RAILS ------------------------
+Plugin 'tpope/vim-rails'
 """ HTML STUFF ------------------------
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
@@ -60,17 +65,19 @@ Plugin 'lumiliet/vim-twig'
 """ TOOLS -----------------------------
 " expand slection
 Plugin 'terryma/vim-expand-region'
+" COC
+Plugin 'neoclide/coc.nvim'
+Plugin 'Shougo/echodoc.vim'
 " LSP
-" Plugin 'neoclide/coc.nvim'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/vim-lsp'
-Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-Plugin 'ryanolsonx/vim-lsp-typescript'
-Plugin 'ryanolsonx/vim-lsp-javascript'
-Plugin 'Shougo/neco-vim'
-Plugin 'prabirshrestha/asyncomplete-necovim.vim'
-Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
+" Plugin 'prabirshrestha/asyncomplete.vim'
+" Plugin 'prabirshrestha/async.vim'
+" Plugin 'prabirshrestha/vim-lsp'
+" Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+" Plugin 'ryanolsonx/vim-lsp-typescript'
+" Plugin 'ryanolsonx/vim-lsp-javascript'
+" Plugin 'Shougo/neco-vim'
+" Plugin 'prabirshrestha/asyncomplete-necovim.vim'
+" Plugin 'prabirshrestha/asyncomplete-tscompletejob.vim' " completor for typescript
 " hex color preview
 Plugin 'etdev/vim-hexcolor'
 " stack overflow 
@@ -177,10 +184,13 @@ hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 
-nnoremap <Leader>ST :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
-let g:ale_lint_on_text_changed = 0
+nnoremap <Leader>AT :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
+let g:ale_lint_on_text_changed = 1
 let alt_lint_on_text_changed = 0
-let g:ale_linters = { 'typescript': ['tslint', 'tsserver'] }
+let g:ale_linters = {
+      \ 'typescript': ['tslint', 'tsserver'],
+      \ 'javascript': ['eslint'],
+      \ }
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
@@ -216,50 +226,52 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
-" augroup lspCommands
-"   au!
-"   inoremap <silent><expr> <c-v> coc#refresh()
-"   nmap <silent> <Leader>gd <Plug>(coc-definition)
-"   nmap <silent> <Leader>gy <Plug>(coc-type-definition)
-"   nmap <silent> <Leader>gi <Plug>(coc-implementation)
-"   nmap <silent> <Leader>gr <Plug>(coc-references)
-"   nmap <silent> <Leader>ren <Plug>(coc-rename)
-"   nmap <silent> <Leader>fix <Plug>(coc-codeaction)
-"   nmap <silent> <Leader>cc <Plug>(coc-diagnostic-info)
-"   nnoremap <silent> <space>dl  :<C-u>CocList diagnostics<cr>
-"   nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
-"   nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
-"   nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
-"   nnoremap <silent> K :call <SID>show_documentation()<CR>
-" augroup END
-" function! s:show_documentation()
-"   if &filetype == 'vim'
-"     execute 'h '.expand('<cword>')
-"   else
-"     call CocAction('doHover')
-"   endif
-" endfunction
+let g:coc_node_path = "/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node"
+augroup cocCommands
+  au!
+  inoremap <silent><expr> <c-v> coc#refresh()
+  nmap <silent> <Leader>gd <Plug>(coc-definition)
+  nmap <silent> <Leader>gy <Plug>(coc-type-definition)
+  nmap <silent> <Leader>gi <Plug>(coc-implementation)
+  nmap <silent> <Leader>gr <Plug>(coc-references)
+  nmap <silent> <Leader>ren <Plug>(coc-rename)
+  nmap <silent> <Leader>fix <Plug>(coc-codeaction)
+  nmap <silent> <Leader>cc <Plug>(coc-diagnostic-info)
+  nnoremap <silent> <space>di  :<C-u>CocList diagnostics<cr>
+  nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
+  nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
+  nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
+  nnoremap <silent> KK :call <SID>show_documentation()<CR>
+  nnoremap <silent> KL :pclose<CR>
+augroup END
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 """""""""""""" LSP
 " NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
 " npm install -g vscode-css-languageserver-bin
 " npm -g install intelephense-server
 " npm install -g typescript typescript-language-server
-imap <c-v> <Plug>(asyncomplete_force_refresh)
-let g:asyncomplete_auto_completeopt=1
-set completeopt+=preview
-augroup lspCommands
-  au!
-  nnoremap <Leader>fix :LspCodeAction<CR>
-  nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
-  nnoremap <Leader>cd :cclose<CR>
-  nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
-  nnoremap <Leader>gd :LspDefinition<CR>
-  nnoremap <Leader>gr :LspReferences<CR>
-  nnoremap <Leader>ren :LspRename<CR>
-  nnoremap <Leader>st :LspStatus<CR>
-  nnoremap KK :LspHover<CR>
-  nnoremap KL :pclose<CR>
-augroup END
+" imap <c-v> <Plug>(asyncomplete_force_refresh)
+" let g:asyncomplete_auto_completeopt=1
+" set completeopt+=preview
+" augroup lspCommands
+"   au!
+"   nnoremap <Leader>fix :LspCodeAction<CR>
+"   nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
+"   nnoremap <Leader>cd :cclose<CR>
+"   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
+"   nnoremap <Leader>gd :LspDefinition<CR>
+"   nnoremap <Leader>gr :LspReferences<CR>
+"   nnoremap <Leader>ren :LspRename<CR>
+"   nnoremap <Leader>st :LspStatus<CR>
+"   nnoremap KK :LspHover<CR>
+"   nnoremap KL :pclose<CR>
+" augroup END
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "j"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "k"
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
