@@ -198,7 +198,7 @@ nnoremap <Leader>ln :lnext<CR>
 nnoremap <Leader>lp :lprevious<CR>
 " quick fix commands
 nnoremap <Leader>co  :copen<CR><C-w>J
-nnoremap <Leader>cc :ccl<CR>
+nnoremap <Leader>cl :ccl<CR>
 nnoremap <Leader>cn :cnext<CR>
 nnoremap <Leader>cp :cprevious<CR>
 " Count search terms

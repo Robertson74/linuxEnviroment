@@ -186,7 +186,6 @@ let g:undofile_warn_mode=2
 """"""""""""""ale 
 nnoremap <Leader>AT :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
 let g:ale_lint_on_text_changed = 1
-let alt_lint_on_text_changed = 0
 let g:ale_linters = {
       \ 'typescript': ['tslint', 'tsserver'],
       \ 'javascript': ['eslint'],
@@ -240,7 +239,7 @@ augroup cocCommands
   nnoremap <silent> <space>di  :<C-u>CocList diagnostics<cr>
   nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
   nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
-  nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
+  " nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
   nnoremap <silent> KK :call <SID>show_documentation()<CR>
   nnoremap <silent> KL :pclose<CR>
 augroup END
