@@ -40,6 +40,8 @@ Plugin 'pangloss/vim-javascript'
 """ RUBY/RAILS ------------------------
 Plugin 'tpope/vim-rails'
 """ HTML STUFF ------------------------
+" ejs syntax
+Plugin 'nikvdp/ejs-syntax'
 " jade syntax
 Plugin 'digitaltoad/vim-pug'
 " html quick develop
