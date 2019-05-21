@@ -12,6 +12,7 @@ endfunction
 
 function! RemoveTempArea()
   let s:removeCursor = getcurpos()
+  g/####TEMP AREA/,/####END TEMP/d
   silent! call ReactivateLines()
   call setpos(".", s:removeCursor)
 endfunction
