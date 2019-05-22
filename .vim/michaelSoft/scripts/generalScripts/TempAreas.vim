@@ -18,10 +18,15 @@ function! RemoveTempArea()
 endfunction
 
 function! DeactivateLine()
-  norm! Im,.UNDO 
+  " norm! I
   :Commentary
 endfunction
 
+function! DeactivateMultipleLines()
+  let s:linesToDisable = input('Which lines to disable? ')
+  execute s:linesToDisable.'call DeactivateLine()'
+endfunction
+
 function! ReactivateLines()
-  g/m,.UNDO/execute "norm! :s/m,.UNDO //\<CR>:Commentary\<CR>=="
+  g/----!/execute "norm! :s/----! //\<CR>:Commentary\<CR>=="
 endfunction

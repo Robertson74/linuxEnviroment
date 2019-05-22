@@ -16,6 +16,7 @@ nnoremap <Leader>bl :call FlipBoolean()<CR>
 nnoremap <Leader>tap :call PlaceTempArea()<CR>
 nnoremap <Leader>tar :call RemoveTempArea()<CR>
 nnoremap <Leader>dal :call DeactivateLine()<CR>
+nnoremap <Leader>dam :call DeactivateMultipleLines()<CR>
 nnoremap <Leader>ral :call ReactivateLines()<CR>
 " Easier window resizing
 nnoremap <Leader>res :silent call ResizeWindow()<CR>
@@ -215,4 +216,6 @@ nnoremap <Leader>jun3 :vsplit +e ~/temp/junk3<CR>
 nnoremap <Leader>jun4 :vsplit +e ~/temp/junk4<CR>
 nnoremap <Leader>jun5 :vsplit +e ~/temp/junk5<CR>
 nnoremap <Leader>csp :s/,/,\r/g<CR>
+" open file in vs code
+nnoremap <Leader>oic :call OpenInVSCode()<CR>
 
