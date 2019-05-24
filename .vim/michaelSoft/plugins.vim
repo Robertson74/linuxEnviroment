@@ -227,8 +227,7 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
-let g:coc_node_path = system('which node')
-" let g:coc_node_path = "/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node"
+let g:coc_node_path = systemlist('which node')[0]
 augroup cocCommands
   au!
   inoremap <silent><expr> <c-v> coc#refresh()
