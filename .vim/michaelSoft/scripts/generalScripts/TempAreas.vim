@@ -18,7 +18,7 @@ function! RemoveTempArea()
 endfunction
 
 function! DeactivateLine()
-  " norm! I
+  norm! I----! 
   :Commentary
 endfunction
 
