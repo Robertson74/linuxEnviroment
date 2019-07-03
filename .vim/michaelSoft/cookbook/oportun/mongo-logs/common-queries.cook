@@ -1,0 +1,4 @@
+db.getCollection('request_logs').find({message: /^!(?!(CIS|CTS))/}).sort({timestamp: -1})
+db.getCollection('info_logs').find().sort({timestamp: -1})
+db.getCollection('error_logs').find().sort({timestamp: -1})
+db.getCollection('database_error_logs').find().sort({timestamp: -1})
