@@ -1,0 +1,1 @@
+git tag | sed -n /v[[:digit:]]/p | sed -n s/v//p | sort -V -r | sed -n 1p
