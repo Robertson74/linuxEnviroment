@@ -2,3 +2,12 @@ db.getCollection('request_logs').find({message: /^!(?!(CIS|CTS))/}).sort({timest
 db.getCollection('info_logs').find().sort({timestamp: -1})
 db.getCollection('error_logs').find().sort({timestamp: -1})
 db.getCollection('database_error_logs').find().sort({timestamp: -1})
+
+
+// searching
+db.getCollection('request_logs').find({
+    "meta.req.url": "/api/v1/application/",
+    "meta.x-correlcation-id": "<ID>"
+});
+
+x-correlation-id - important, can be used to match up with other calls in that request time
