@@ -22,7 +22,7 @@ Plugin 'HerringtonDarkholme/yats.vim'
 " " tsx stuff MUST BE LAST TYPESCRIPT PLUGIN LOADED
 Plugin 'ianks/vim-tsx'
 " Debug
-" Plugin 'vim-vdebug/vdebug'
+Plugin 'vim-vdebug/vdebug'
 " --------
 "  auto imports
 Plugin 'Galooshi/vim-import-js'
@@ -103,6 +103,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'airblade/vim-gitgutter'
 " status bar plugin
 Plugin 'vim-airline/vim-airline'
+" Plugin 'itchyny/lightline.vim'
 " undo/redo tree structure
 Plugin 'sjl/gundo.vim'
 " easy comments
