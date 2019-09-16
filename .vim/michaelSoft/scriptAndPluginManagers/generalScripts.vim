@@ -75,7 +75,8 @@ nnoremap <Leader>dcol :execute "colorscheme ".g:defaultColorscheme<CR>:call Togg
 nnoremap <Leader>ncol :RandomColorScheme<CR>:call ToggleColorColumn()<CR>:call ToggleColorColumn()<CR>
 " nnoremap <Leader>col :call CycleColorschemes()<CR>
 nnoremap <Leader>snipa :call QuickAddSnippetSetUp()<CR>
-nnoremap <Leader>tlg :call TempLog()<CR>
+nnoremap <Leader>tlg :call TempLog('word')<CR>
+nnoremap <Leader>tLG :call TempLog('WORD')<CR>
 nnoremap <Leader>mac :call RepeatMacoIfFail('q', 'w', )<left>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Load Scripts                                "
