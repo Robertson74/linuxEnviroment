@@ -3,6 +3,16 @@ db.getCollection('info_logs').find().sort({timestamp: -1})
 db.getCollection('error_logs').find().sort({timestamp: -1})
 db.getCollection('database_error_logs').find().sort({timestamp: -1})
 
+db.getCollection('info_logs').find({"meta.req.url": /api\/v1\/quotes\/\d+\/vehicles/}).sort({timestamp: -1})
+db.getCollection('request_logs').find({"meta.x-correlation-id": "e6c2f4bd-ec6f-4357-805e-b
+
+db.getCollection('info_logs').find({ 'message': /4\d\d \d+ms/}).sort({timestamp: -1})
+db.getCollection('info_logs').find({message: /quotes\/\d+\/pricing/}).sort({timestamp: -1})
+
+db.getCollection('info_logs').find({ 'message': { $regex: '/profile/language-preference' } }).sort({timestamp: -1})
+
+
+
 
 // searching
 db.getCollection('request_logs').find({
