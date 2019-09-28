@@ -1,0 +1,6 @@
+INSERT INTO "public"."other_trade_lines"("id","credit_offer_id","quote_id","type","is_oportun","lender_name","original_balance","original_term","original_rate","current_balance","current_monthly_payment","remaining_term","remaining_finance_charge","account_number","payoff_amount","payoff_good_through_date","interest_per_diem","created_at","updated_at","deleted_at")
+VALUES
+(1,1,1,E'INSTALLMENT',TRUE,E'Pizza hut',10000,60,0.0123,8000,200,55,NULL,NULL,9000,E'2019-09-25 15:38:57.997-07',NULL,E'2019-09-25 22:39:00.431889-07',E'2019-09-26 00:56:53.319-07',NULL);
+
+
+turn off is_oportun to disable isConsolidated

@@ -11,7 +11,7 @@ db.getCollection('info_logs').find({message: /quotes\/\d+\/pricing/}).sort({time
 
 db.getCollection('info_logs').find({ 'message': { $regex: '/profile/language-preference' } }).sort({timestamp: -1})
 
-
+db.getCollection('info_logs').find({ 'message': /api\/v1\/quotes\/\d*\/vehicles (4|5)\d\d/}).sort({timestamp: -1})
 
 
 // searching
