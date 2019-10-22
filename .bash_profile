@@ -182,10 +182,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #######################################
 
 server() {
- local port="${1:-8000}"
- open "http://localhost:${port}/"
- # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
- # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
 
  # Simple Pythong Server:
  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
@@ -211,17 +211,17 @@ server() {
 
 # Builds the prompt with git branch notifications.
 if [ -f ~/.bash_prompt.sh ]; then
- source ~/.bash_prompt.sh
+  source ~/.bash_prompt.sh
 fi
 
 # A welcome prompt with stats for sanity checks
 if [ -f ~/.welcome_prompt.sh ]; then
- source ~/.welcome_prompt.sh
+  source ~/.welcome_prompt.sh
 fi
 
 # bash/zsh completion support for core Git.
 if [ -f ~/.git-completion.bash ]; then
- source ~/.git-completion.bash
+  source ~/.git-completion.bash
 fi
 
 #########################
@@ -255,6 +255,14 @@ alias copypath='pwd|pbcopy'
 ########################################################################## Quick Directories
 alias vup='cd ~/vms/dev; vagrant up'
 alias vssh='cd ~/vms/dev; vagrant ssh'
+alias api="cd ~/Documents/repos/keen-koala/api"
+alias client="cd ~/Documents/repos/keen-koala/client"
+alias atk="cd ~/Documents/repos/keen-koala/atk"
+alias shc="cd ~/Documents/repos/keen-koala/shared-config"
+alias wfp="cd ~/Documents/repos/keen-koala/waterfront-protractor"
+alias wft="cd ~/Documents/repos/keen-koala/waterfront-translation/"
+alias wfn="cd ~/Documents/repos/keen-koala/waterfront-notice"
+alias wfd="cd ~/Documents/repos/keen-koala/waterfront-deployments/"
 # Below here is an area for other commands added by outside programs or
 # commands. Attempt to reserve this area for their use!
 ##########################################################################
@@ -271,11 +279,35 @@ alias vimprivate='cd /Users/mroberston/Library/Application\ Support/Karabiner;vi
 ##########################################################Git alias
 alias gch="git checkout"
 alias gcb="git checkout -b"
-alias gcp="git checkout -"
+alias gc="git checkout -"
 alias gbv="git branch -v"
 alias gst="git status"
 alias gps="git push"
+alias gpo="git push origin"
 alias gpl="git pull"
+alias gpo="git pull origin"
 alias gme="git merge"
 alias gco="git commit -m"
+alias gop="git open"
 alias v="vim ."
+
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+source ~/.git-completion.bash
+export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
+export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"
+export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"
+export PKG_CONFIG_PATH="$PATH:/usr/local/opt/imagemagick@6/lib/pkgconfig"
+
+
+alias newtag="sh ~/Documents/repos/tools/new-git-tag-command-generator.sh"
+alias work="(nohup npm run dev &) && vim . || (nohup npm run start &) && vim ."
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+export ANDROID_HOME=/usr/local/share/android-sdk
+export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+alias sandbox='cd ~/Documents/repos/sandbox/'
