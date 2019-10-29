@@ -182,10 +182,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #######################################
 
 server() {
- local port="${1:-8000}"
- open "http://localhost:${port}/"
- # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
- # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
 
  # Simple Pythong Server:
  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
@@ -211,17 +211,17 @@ server() {
 
 # Builds the prompt with git branch notifications.
 if [ -f ~/.bash_prompt.sh ]; then
- source ~/.bash_prompt.sh
+  source ~/.bash_prompt.sh
 fi
 
 # A welcome prompt with stats for sanity checks
 if [ -f ~/.welcome_prompt.sh ]; then
- source ~/.welcome_prompt.sh
+  source ~/.welcome_prompt.sh
 fi
 
 # bash/zsh completion support for core Git.
 if [ -f ~/.git-completion.bash ]; then
- source ~/.git-completion.bash
+  source ~/.git-completion.bash
 fi
 
 #########################
@@ -279,3 +279,31 @@ alias gpl="git pull"
 alias gme="git merge"
 alias gco="git commit -m"
 alias v="vim ."
+alias fcadent="cd ~/dev/repos/cadent/iot/iot-fe/"
+alias bcadent="cd ~/dev/repos/cadent/iot/iot-be/"
+alias ubssh="cd ~/dev/boxes/ub16/ && vagrant ssh"
+alias sshcadent='ssh -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
+alias sftpcadent='sftp -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+# export ANDROID_HOME=/usr/local/share/android-sdk
+# export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+# export ANDROID_HOME=/usr/local/share/android-sdk
+# export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+# export ANDROID_HOME=/Users/michaelrobertson/Library/Android/sdk
+
+export PATH=/Users/michaelrobertson/Library/Android/sdk/platform-tools:$PATH
+# export PATH=~/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/$USER/Library/Android/sdk
+export ANDROID_AVD_HOME=/Users/$USER/.android/avd
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
