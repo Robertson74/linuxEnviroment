@@ -22,3 +22,13 @@
 " mr completor
 " source ~/.vim/michaelSoft/customPlugins/mrComplete/mrComplete.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""-call script
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  EasyAng                                   "
+source ~/.vim/michaelSoft/customPlugins/easyAng/easyAng.vim
+nnoremap <Leader>ngst :call EditAngularFileType('component', 's')<CR> 
+nnoremap <Leader>ngsc :call EditAngularFileType('css', 's')<CR> 
+nnoremap <Leader>ngsh :call EditAngularFileType('html', 's')<CR> 
+nnoremap <Leader>nget :call EditAngularFileType('component', 'e')<CR> 
+nnoremap <Leader>ngec :call EditAngularFileType('css', 'e')<CR> 
+nnoremap <Leader>ngeh :call EditAngularFileType('html', 'e')<CR> 
