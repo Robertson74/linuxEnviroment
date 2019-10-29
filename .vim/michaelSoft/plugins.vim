@@ -11,7 +11,7 @@ Plugin 'VundleVim/Vundle.vim'
 """ JS STUFF --------------------------
 """ Typescript ----
 " jsx highlight/syntax
-Plugin 'mxw/vim-jsx'
+" Plugin 'mxw/vim-jsx'
 " Plugin 'chemzqm/vim-jsx-improve'
 " " All sorts of typescript stuff
 " Plugin 'Quramy/tsuquyomi'
@@ -114,7 +114,7 @@ Plugin 'majutsushi/tagbar'
 " Plugin 'maralla/completor.vim'
 " Syntax error highlighting
 " Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 " Fuzzy file finder
 Plugin 'ctrlpvim/ctrlp.vim'
 " File information display
@@ -187,12 +187,12 @@ hi ColorColumn ctermfg=red
 """"""""""""""undo file warm 
 let g:undofile_warn_mode=2
 """"""""""""""ale 
-nnoremap <Leader>AT :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
-let g:ale_lint_on_text_changed = 1
-let g:ale_linters = {
-      \ 'typescript': ['tslint', 'tsserver'],
-      \ 'javascript': ['eslint'],
-      \ }
+" nnoremap <Leader>AT :ALEToggle<CR>:echom "ALE is ".g:ale_enabled<CR>
+" let g:ale_lint_on_text_changed = 1
+" let g:ale_linters = {
+"       \ 'typescript': ['tslint', 'tsserver'],
+"       \ 'javascript': ['eslint'],
+"       \ }
 """"""""""""""PHPDoc
 nnoremap <Leader>PD :call pdv#DocumentWithSnip()<CR>
 """"""""""""""Ultrasnips
@@ -228,8 +228,8 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
-" let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
-let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
+let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
+" let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
 " let g:coc_node_path = systemlist('which node')[0]
 augroup cocCommands
   au!
@@ -255,6 +255,39 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+" echo doc
+set cmdheight=2
+set noshowmode
+let g:echodoc_enable_at_startup = 1
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" To make <cr> select the first completion item and confirm the completion when no item has been selected:
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+" Fix autofix problem of current line
+nmap KJ :call CocActionAsync('showSignatureHelp')<CR>
+nmap <leader>qf  <Plug>(coc-fix-current)
 """""""""""""" LSP
 " NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
 " npm install -g vscode-css-languageserver-bin
@@ -286,4 +319,6 @@ endfunction
 " let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
 """""""""""""" Easy Motions
 nmap <Leader><Leader>o <Plug>(easymotion-overwin-w)
+
+"""""""""""""" TESTING AREA
 

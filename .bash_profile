@@ -255,6 +255,14 @@ alias copypath='pwd|pbcopy'
 ########################################################################## Quick Directories
 alias vup='cd ~/vms/dev; vagrant up'
 alias vssh='cd ~/vms/dev; vagrant ssh'
+alias api="cd ~/Documents/repos/keen-koala/api"
+alias client="cd ~/Documents/repos/keen-koala/client"
+alias atk="cd ~/Documents/repos/keen-koala/atk"
+alias shc="cd ~/Documents/repos/keen-koala/shared-config"
+alias wfp="cd ~/Documents/repos/keen-koala/waterfront-protractor"
+alias wft="cd ~/Documents/repos/keen-koala/waterfront-translation/"
+alias wfn="cd ~/Documents/repos/keen-koala/waterfront-notice"
+alias wfd="cd ~/Documents/repos/keen-koala/waterfront-deployments/"
 # Below here is an area for other commands added by outside programs or
 # commands. Attempt to reserve this area for their use!
 ##########################################################################
@@ -271,19 +279,25 @@ alias vimprivate='cd /Users/mroberston/Library/Application\ Support/Karabiner;vi
 ##########################################################Git alias
 alias gch="git checkout"
 alias gcb="git checkout -b"
-alias gcp="git checkout -"
+alias gc="git checkout -"
 alias gbv="git branch -v"
 alias gst="git status"
 alias gps="git push"
+alias gpo="git push origin"
 alias gpl="git pull"
+alias gpo="git pull origin"
 alias gme="git merge"
 alias gco="git commit -m"
+alias gop="git open"
 alias v="vim ."
 alias fcadent="cd ~/dev/repos/cadent/iot/iot-fe/"
 alias bcadent="cd ~/dev/repos/cadent/iot/iot-be/"
 alias ubssh="cd ~/dev/boxes/ub16/ && vagrant ssh"
 alias sshcadent='ssh -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
 alias sftpcadent='sftp -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
+=======
+
+
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -307,3 +321,19 @@ export ANDROID_HOME=/Users/$USER/Library/Android/sdk
 export ANDROID_SDK_ROOT=/Users/$USER/Library/Android/sdk
 export ANDROID_AVD_HOME=/Users/$USER/.android/avd
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+=======
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+source ~/.git-completion.bash
+export PATH="$PATH:/usr/local/opt/imagemagick@6/bin"
+export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"
+export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"
+export PKG_CONFIG_PATH="$PATH:/usr/local/opt/imagemagick@6/lib/pkgconfig"
+
+
+alias newtag="sh ~/Documents/repos/tools/new-git-tag-command-generator.sh"
+alias work="(nohup npm run dev &) && vim . || (nohup npm run start &) && vim ."
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+export ANDROID_HOME=/usr/local/share/android-sdk
+export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+alias sandbox='cd ~/Documents/repos/sandbox/'
