@@ -228,9 +228,9 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
-" let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
+let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
 " let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
-let g:coc_node_path = systemlist('which node')[0]
+" let g:coc_node_path = systemlist('which node')[0]
 augroup cocCommands
   au!
   inoremap <silent><expr> <c-v> coc#refresh()
@@ -321,4 +321,4 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 nmap <Leader><Leader>o <Plug>(easymotion-overwin-w)
 
 """""""""""""" TESTING AREA
-
+Plugin 'metakirby5/codi.vim'
