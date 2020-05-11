@@ -166,8 +166,10 @@ filetype plugin indent on    " required
 nnoremap <Leader>buf :CloseBuffers<CR>
 """"""""""""""color schemes
 " IDK WHY BUT THESE SETTING FIX A LOT OF COLOR SCHEMES
-let g:defaultColorscheme="forneus"
+" let g:defaultColorscheme="behelit"
+" let g:defaultColorscheme="forneus"
 " let g:defaultColorscheme="cobalt2"
+let g:defaultColorscheme="northsky"
 execute "colorscheme ".g:defaultColorscheme
 hi Normal ctermbg=NONE
 hi NonText ctermbg=NONE
@@ -288,37 +290,22 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR
 " Fix autofix problem of current line
 nmap KJ :call CocActionAsync('showSignatureHelp')<CR>
 nmap <leader>qf  <Plug>(coc-fix-current)
-"""""""""""""" LSP
-" NPM INSTALL FOR LANGUAGE SPECIFIC SERVER
-" npm install -g vscode-css-languageserver-bin
-" npm -g install intelephense-server
-" npm install -g typescript typescript-language-server
-" imap <c-v> <Plug>(asyncomplete_force_refresh)
-" let g:asyncomplete_auto_completeopt=1
-" set completeopt+=preview
-" augroup lspCommands
-"   au!
-"   nnoremap <Leader>fix :LspCodeAction<CR>
-"   nnoremap <Leader>cc :LspDocumentDiagnostics<CR>
-"   nnoremap <Leader>cd :cclose<CR>
-"   nnoremap <Leader>sgd :vsplit<CR>:LspDefinition<CR>
-"   nnoremap <Leader>gd :LspDefinition<CR>
-"   nnoremap <Leader>gr :LspReferences<CR>
-"   nnoremap <Leader>ren :LspRename<CR>
-"   nnoremap <Leader>st :LspStatus<CR>
-"   nnoremap KK :LspHover<CR>
-"   nnoremap KL :pclose<CR>
-" augroup END
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "j"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "k"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-
-" for asyncomplete.vim log
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/.vim/logs/vim-lsp.log')
-" let g:asyncomplete_log_file = expand('~/.vim/logs/asyncomplete.log')
 """""""""""""" Easy Motions
 nmap <Leader><Leader>o <Plug>(easymotion-overwin-w)
 
 """""""""""""" TESTING AREA
 Plugin 'metakirby5/codi.vim'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    TODO                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>2dl :CocList todolist<cr>
+nnoremap <leader>2da :CocCommand todolist.create<cr>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    MISC                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vim_json_syntax_conceal=0 " don't conceal json quotes
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  Lazy Git                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>lg :!lazygit<cr>
+nnoremap <leader>gito :!git open<cr>

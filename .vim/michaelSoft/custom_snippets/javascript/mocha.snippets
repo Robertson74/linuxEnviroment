@@ -1,53 +1,35 @@
-snippet m.desc "Mocha describe"
-describe('`!p snip.rv = fn.split(os.extsep)[0]`', () => {
-	$0
-});
-endsnippet
-
-snippet m.desc5 "Mocha describe (ES5)"
-describe('`!p snip.rv = fn.split(os.extsep)[0]`', function() {
-	$0
-});
-endsnippet
-
-snippet m.describe "Mocha describe verbose"
-describe('${1:`!p snip.rv = fn.split(os.extsep)[0]`}', () => {
-	$0
+snippet m.d "Mocha describe"
+describe('$1', () => {
+	$2
 });
 endsnippet
 
 snippet m.it "Mocha it"
-it('${1:It}', () => {
-	$0
+it('${1:}', () => {
+	$2
 });
 endsnippet
 
-snippet m.it5 "Mocha it (ES5)"
-it('${1:It}', function() {
-	$0
-});
-endsnippet
-
-snippet m.bee "Mocha beforeEach"
+snippet m.be "Mocha beforeEach"
 beforeEach(() => {
-	$0
+	$1
 });
 endsnippet
 
-snippet m.afe "Mocha afterEach"
+snippet m.ae "Mocha afterEach"
 afterEach(() => {
-	$0
+	$1
 });
 endsnippet
 
-snippet m.before "Mocha before"
+snippet m.b "Mocha before"
 before(() => {
-	$0
+	$1
 });
 endsnippet
 
-snippet m.after "Mocha after"
+snippet m.a "Mocha after"
 after(() => {
-	$0
+	$1
 });
 endsnippet
