@@ -12,7 +12,7 @@
 	changed = yellow
 	untracked = red
 [core]
-	editor = nano
+	editor = vim
 	excludesfile = /Users/jaytee/.gitignore_global
 [push]
 	default = current

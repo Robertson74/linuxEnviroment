@@ -120,7 +120,7 @@ alias rm='rm -iv'
 alias mkdir='mkdir -pv'
 alias cdw='cd ~/Documents/code'
 alias gpum='git pull upstream master'
-alias repos='cd ~/vms/dev/repos'
+alias repos='cd ~/dev/repos'
 alias ccp='cd ~/vms/dev/repos/ccp_fe/'
 # =================
 # Additional Aliases
@@ -295,9 +295,7 @@ alias bcadent="cd ~/dev/repos/cadent/iot/iot-be/"
 alias ubssh="cd ~/dev/boxes/ub16/ && vagrant ssh"
 alias sshcadent='ssh -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
 alias sftpcadent='sftp -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
-=======
-
-
+alias sshchoredinate='cd ~/.ssh/chordinate && ssh -i "chordinate.pem" ubuntu@ec2-54-176-21-219.us-west-1.compute.amazonaws.com'
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -307,21 +305,7 @@ export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash
-# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
-# export ANDROID_HOME=/usr/local/share/android-sdk
-# export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
-# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
-# export ANDROID_HOME=/usr/local/share/android-sdk
-# export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
-# export ANDROID_HOME=/Users/michaelrobertson/Library/Android/sdk
 
-export PATH=/Users/michaelrobertson/Library/Android/sdk/platform-tools:$PATH
-# export PATH=~/Library/Android/sdk/platform-tools:$PATH
-export ANDROID_HOME=/Users/$USER/Library/Android/sdk
-export ANDROID_SDK_ROOT=/Users/$USER/Library/Android/sdk
-export ANDROID_AVD_HOME=/Users/$USER/.android/avd
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-=======
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 source ~/.git-completion.bash
@@ -330,10 +314,24 @@ export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"
 export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"
 export PKG_CONFIG_PATH="$PATH:/usr/local/opt/imagemagick@6/lib/pkgconfig"
 
-
 alias newtag="sh ~/Documents/repos/tools/new-git-tag-command-generator.sh"
 alias work="(nohup npm run dev &) && vim . || (nohup npm run start &) && vim ."
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 export ANDROID_HOME=/usr/local/share/android-sdk
 export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
 alias sandbox='cd ~/Documents/repos/sandbox/'
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export ANDROID_HOME=/Users/michaelrobertson/Library/Android/sdk/
+
+PATH="/usr/local/opt/inetutils/libexec/gnubin:$PATH"
+alias sshdev='ssh -i ~/.ssh/dev/MichaelDev.pem ubuntu@ec2-13-52-252-71.us-west-1.compute.amazonaws.com'
+alias lg="lazygit"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/michaelrobertson/dev/repos/ally/google/google-cloud-sdk/path.bash.inc' ]; then . '/Users/michaelrobertson/dev/repos/ally/google/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/michaelrobertson/dev/repos/ally/google/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/michaelrobertson/dev/repos/ally/google/google-cloud-sdk/completion.bash.inc'; fi
+
+alias sshclientivity='ssh -i ~/.ssh/id_rsa ec2-user@ec2-13-52-147-59.us-west-1.compute.amazonaws.com'
