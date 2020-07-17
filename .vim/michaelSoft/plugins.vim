@@ -38,6 +38,7 @@ Plugin 'Quramy/vim-js-pretty-template'
 "  auto import
 Plugin 'pangloss/vim-javascript'
 """ RUBY/RAILS ------------------------
+Plugin 'slim-template/vim-slim'
 Plugin 'tpope/vim-rails'
 """ HTML STUFF ------------------------
 " ejs syntax
@@ -102,7 +103,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 " git gutter
 Plugin 'airblade/vim-gitgutter'
 " status bar plugin
-Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline'
+Plugin 'itchyny/lightline.vim'
 " Plugin 'itchyny/lightline.vim'
 " undo/redo tree structure
 Plugin 'sjl/gundo.vim'
@@ -116,7 +118,11 @@ Plugin 'majutsushi/tagbar'
 " Plugin 'scrooloose/syntastic'
 " Plugin 'w0rp/ale'
 " Fuzzy file finder
-Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+nnoremap <C-p> :Files<CR>
+nnoremap <C-b> :Buffers<CR>
 " File information display
 Plugin 'Shougo/unite.vim'
 "Git wrapper
@@ -149,6 +155,7 @@ Plugin 'scrooloose/nerdtree'
 " Plugin 'jceb/vim-orgmode'
 """ AESTHETICS ------------------------
 " color schemes
+Plugin 'bignimbus/pop-punk.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'chr4/jellygrass.vim'
 Plugin 'xolox/vim-colorscheme-switcher'
@@ -307,5 +314,5 @@ let g:vim_json_syntax_conceal=0 " don't conceal json quotes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                  Lazy Git                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>lg :!lazygit<cr>
+nnoremap <leader>LG :!lazygit<cr>
 nnoremap <leader>gito :!git open<cr>

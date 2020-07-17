@@ -1,6 +1,6 @@
 [user]
 	name = Michael Robertson
-	email = mrobertson@nationalmerchants.org
+	email = michael.robertson@oportun.com
 [color]
 	ui = always
 [color "branch"]
@@ -12,7 +12,7 @@
 	changed = yellow
 	untracked = red
 [core]
-	editor = nano
+	editor = vim
 	excludesfile = /Users/jaytee/.gitignore_global
 [push]
 	default = current

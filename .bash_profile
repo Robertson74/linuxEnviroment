@@ -56,6 +56,7 @@ PATH="/usr/local/bin:/usr/local/sbin:$PATH"                         # Homebrew
 PATH="/usr/local/heroku/bin:$PATH"                                  # Heroku Toolbelt
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"                # Coreutils
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"          # Manual pages
+export PATH="$HOME/bin:$PATH"
 
 # =================
 # Settings
@@ -68,7 +69,7 @@ export LANG="en_US"
 #Hide computer name 
 export PS1="\u \w \n $ "
 # # Adds colors to LS!!!!
-# export CLICOLOR=1
+export CLICOLOR=1
 # # http://geoff.greer.fm/lscolors/
 # # Describes what color to use for which attribute (files, folders etc.)
 # export LSCOLORS=exfxcxdxbxegedabagacad # PJ: turned off
@@ -119,7 +120,7 @@ alias mv='mv -iv'
 alias rm='rm -iv'
 alias mkdir='mkdir -pv'
 alias cdw='cd ~/Documents/code'
-alias gpum='git pull upstream master'
+# alias gpum='git pull upstream master'
 alias repos='cd ~/vms/dev/repos'
 alias ccp='cd ~/vms/dev/repos/ccp_fe/'
 # =================
@@ -127,7 +128,6 @@ alias ccp='cd ~/vms/dev/repos/ccp_fe/'
 # =================
 
 #Open project files
-alias work-start="cd vms/dev && vagrant up"
 
 # Hide/show all desktop icons (useful when presenting)
 alias hide_desktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
@@ -255,14 +255,6 @@ alias copypath='pwd|pbcopy'
 ########################################################################## Quick Directories
 alias vup='cd ~/vms/dev; vagrant up'
 alias vssh='cd ~/vms/dev; vagrant ssh'
-alias api="cd ~/Documents/repos/keen-koala/api"
-alias client="cd ~/Documents/repos/keen-koala/client"
-alias atk="cd ~/Documents/repos/keen-koala/atk"
-alias shc="cd ~/Documents/repos/keen-koala/shared-config"
-alias wfp="cd ~/Documents/repos/keen-koala/waterfront-protractor"
-alias wft="cd ~/Documents/repos/keen-koala/waterfront-translation/"
-alias wfn="cd ~/Documents/repos/keen-koala/waterfront-notice"
-alias wfd="cd ~/Documents/repos/keen-koala/waterfront-deployments/"
 # Below here is an area for other commands added by outside programs or
 # commands. Attempt to reserve this area for their use!
 ##########################################################################
@@ -270,38 +262,43 @@ alias wfd="cd ~/Documents/repos/keen-koala/waterfront-deployments/"
 PATH=/opt/local/bin:$PATH
 alias resource="source ~/.bash_profile"
 ##########################################################vim related
-alias ccpwork='cd /var/www/html/repos/ccp_be; vim .'
-alias agentwork='cd /var/www/html/repos/agentportal; vim .'
-alias vimbash='cd ~;vim .bash_profile'
-alias vimtest=' cd ~/test;vim test.text'
-alias vimprivate='cd /Users/mroberston/Library/Application\ Support/Karabiner;vim private.xml'
+alias vimbash='vim ~/.bash_profile'
+alias vimtest='vim ~/test.text'
 
 ##########################################################Git alias
 alias gch="git checkout"
 alias gcb="git checkout -b"
 alias gc="git checkout -"
 alias gbv="git branch -v"
+alias gb="parse_git_branch"
+alias gbc="copy_git_branch"
 alias gst="git status"
-alias gps="git push"
-alias gpo="git push origin"
-alias gpl="git pull"
-alias gpo="git pull origin"
+alias gpsh="git push"
+alias gpsho="git push origin"
+alias gpll="git pull"
+alias gpllo="git pull origin"
 alias gme="git merge"
 alias gco="git commit -m"
 alias gop="git open"
 alias v="vim ."
-alias fcadent="cd ~/dev/repos/cadent/iot/iot-fe/"
-alias bcadent="cd ~/dev/repos/cadent/iot/iot-be/"
-alias ubssh="cd ~/dev/boxes/ub16/ && vagrant ssh"
 alias sshcadent='ssh -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
 alias sftpcadent='sftp -i ~/iotyourproduct.pem ec2-user@ec2-13-56-186-252.us-west-1.compute.amazonaws.com'
-=======
 
 
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+copy_git_branch() {
+  echo "`git branch -v | grep ^* | sed -e 's/^.........//' | sed -e 's/ .*//'`" | pbcopy
+}
+
+get_current_branch() {
+  echo `git branch -v | grep ^* | sed -e 's/^.........//' | sed -e 's/ .*//'`
+}
+
+# export PS1="\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+export PS1="\W $ "
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export NVM_DIR="$HOME/.nvm"
@@ -320,8 +317,7 @@ export PATH=/Users/michaelrobertson/Library/Android/sdk/platform-tools:$PATH
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk
 export ANDROID_SDK_ROOT=/Users/$USER/Library/Android/sdk
 export ANDROID_AVD_HOME=/Users/$USER/.android/avd
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-=======
+# export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 source ~/.git-completion.bash
@@ -333,7 +329,123 @@ export PKG_CONFIG_PATH="$PATH:/usr/local/opt/imagemagick@6/lib/pkgconfig"
 
 alias newtag="sh ~/Documents/repos/tools/new-git-tag-command-generator.sh"
 alias work="(nohup npm run dev &) && vim . || (nohup npm run start &) && vim ."
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
-export ANDROID_HOME=/usr/local/share/android-sdk
-export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+
+# fun
+# export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export ANDROID_HOME=/Users/michael.robertson/Library/Android/sdk/
+
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/
+export PATH="${JAVA_HOME}/bin:${PATH}"
+  
+#export JAVA_OPTS="-Xms512m -Xmx1024m -XX:PermSize=512m -XX:MaxPermSize=1024m -Djdk.tls.client.protocols=TLSv1.2"
+  
+export MYSQL_HOME=/usr/local/mysql
+export PATH="${MYSQL_HOME}/bin:${PATH}"
+  
+export GRAILS_HOME=/Users/michaelrobertson/Oportun/Installed/grails-1.3.6
+export PATH="${GRAILS_HOME}/bin:${PATH}"
+  
+export GROOVY_HOME=/Users/michaelrobertson/Oportun/Installed/groovy-2.4.5
+export PATH="${GROOVY_HOME}/bin:${PATH}"
+  
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
+export PATH="${DYLD_LIBRARY_PATH}:${PATH}"
+  
+export GRADLE_HOME=/Users/michaelrobertson/Oportun/Installed/gradle-2.5
+export PATH="${GRADLE_HOME}/bin:${PATH}"
+  
+#export GRADLE_OPTS="-XX:MaxPermSize=128m -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8777"
+  
+export ACTIVEMQ_HOME=/Users/michaelrobertson/Oportun/Installed/apache-activemq-5.5.1
+export PATH="${ACTIVEMQ_HOME}/bin:${PATH}"
+ 
+export PATH=$PATH:/Users/michaelrobertson/Oportun/Installed/mongodb-osx-x86_64-3.2.10/bin
+
+
+bind "set completion-ignore-case on"
+bind "set show-all-if-ambiguous on"
+
+
+#######################################################################
+#                             JAVA STUFF                              #
+#######################################################################
+# export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home/
+export PATH="${JAVA_HOME}/bin:${PATH}"
+  
+#export JAVA_OPTS="-Xms512m -Xmx1024m -XX:PermSize=512m -XX:MaxPermSize=1024m -Djdk.tls.client.protocols=TLSv1.2"
+export MYSQL_HOME=/usr/local/mysql
+export PATH="${MYSQL_HOME}/bin:${PATH}"
+  
+export GRAILS_HOME=/Users/michael.robertson/Oportun/Installed/grails-1.3.6
+export PATH="${GRAILS_HOME}/bin:${PATH}"
+  
+export GROOVY_HOME=/Users/michael.robertson/Oportun/Installed/groovy-2.4.5
+export PATH="${GROOVY_HOME}/bin:${PATH}"
+  
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
+export PATH="${DYLD_LIBRARY_PATH}:${PATH}"
+  
+export GRADLE_HOME=/Users/michael.robertson/Oportun/Installed/gradle-2.5
+export PATH="${GRADLE_HOME}/bin:${PATH}"
+  
+#export GRADLE_OPTS="-XX:MaxPermSize=128m -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8777"
+  
+export ACTIVEMQ_HOME=/Users/michael.robertson/Oportun/Installed/apache-activemq-5.5.1
+export PATH="${ACTIVEMQ_HOME}/bin:${PATH}"
+ 
+export PATH=$PATH:/Users/michael.robertson/Oportun/Installed/mongodb-osx-x86_64-3.2.10/bin
+export MONGO_HOME=/Users/michael.robertson/Oportun/installed/mongodb-osx-x86_64-3.2.10
+
+# automatically switch to the correct node version if .nvmrc exists in dir
+#
+# Run 'nvm use' automatically every time there's
+# a .nvmrc file in the directory. Also, revert to default
+# version when entering a directory without .nvmrc
+#
+# Run 'nvm use' automatically every time there's
+# a .nvmrc file in the directory. Also, revert to default
+# version when entering a directory without .nvmrc
+#
+enter_directory() {
+if [[ $PWD == $PREV_PWD ]]; then
+    return
+fi
+ 
+PREV_PWD=$PWD
+if [[ -f ".nvmrc" ]]; then
+    nvm use
+    NVM_DIRTY=true
+elif [[ $NVM_DIRTY = true ]]; then
+    nvm use default
+    NVM_DIRTY=false
+fi
+}
+ 
+export PROMPT_COMMAND=enter_directory
+# allow backwards reverse image search
+stty -ixon
+
+alias lg="lazygit"
+export GIT_EDITOR=vim
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# dir shortcuts
+alias api="cd ~/Documents/repos/keen-koala/api"
+alias atk="cd ~/Documents/repos/keen-koala/atk"
+alias bcadent="cd ~/dev/repos/cadent/iot/iot-be/"
+alias client="cd ~/Documents/repos/keen-koala/client"
+alias fcadent="cd ~/dev/repos/cadent/iot/iot-fe/"
+alias fe="cd /Users/michael.robertson/Documents/repos/core/frontend"
+alias gol="cd ~/dev/misc/game-of-life-lua && lua gol_play.lua"
+alias la="cd ~/Oportun/code/loanapplication"
 alias sandbox='cd ~/Documents/repos/sandbox/'
+alias shc="cd ~/Documents/repos/keen-koala/shared-config"
+alias ubssh="cd ~/dev/boxes/ub16/ && vagrant ssh"
+alias wfd="cd ~/Documents/repos/keen-koala/waterfront-deployments/"
+alias wfn="cd ~/Documents/repos/keen-koala/waterfront-notice"
+alias wfp="cd ~/Documents/repos/keen-koala/waterfront-protractor"
+alias wft="cd ~/Documents/repos/keen-koala/waterfront-translation/"
+alias work-start="cd vms/dev && vagrant up"
+alias sshfeature="ssh mrobertson.admin@dev-michael-robertson-7474.dev.pfops.com"
