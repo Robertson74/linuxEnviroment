@@ -92,7 +92,7 @@ Plugin 'etdev/vim-hexcolor'
 " sorting 
 Plugin 'christoomey/vim-sort-motion'
 " JSON tools
-Plugin 'elzr/vim-json'
+" Plugin 'elzr/vim-json'
 " better join
 Plugin 'sk1418/Join'
 " Snippets
@@ -237,8 +237,8 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
-let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
-" let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
+" let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
+let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
 " let g:coc_node_path = systemlist('which node')[0]
 augroup cocCommands
   au!
