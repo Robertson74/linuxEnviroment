@@ -67,6 +67,8 @@ Plugin 'lumiliet/vim-twig'
 " Plugin 'alvan/vim-php-manual'
 """ TOOLS -----------------------------
 " expand slection
+Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'kshenoy/vim-signature'
 Plugin 'terryma/vim-expand-region'
 " COC
 Plugin 'neoclide/coc.nvim'
@@ -121,8 +123,6 @@ Plugin 'majutsushi/tagbar'
 " Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-nnoremap <C-p> :Files<CR>
-nnoremap <C-b> :Buffers<CR>
 " File information display
 Plugin 'Shougo/unite.vim'
 "Git wrapper
@@ -216,8 +216,8 @@ let g:UltiSnipsSnippetDirectories = [ $HOME.'/.vim/michaelSoft/custom_snippets/'
 " let g:UltiSnipsSnippetDirectories=["custom_snippets"]
 let g:UltiSnipsEditSplit = "vertical"
 """"""""""""""Control P
-let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
-let g:user_command_async=1
+" let g:ctrlp_custom_ignore = '\v[\/]\.(docs)$'
+" let g:user_command_async=1
 """"""""""""""NERD Tree
 let NERDTreeWinSize=50
 let NERDTreeQuitOnOpen=1
@@ -237,8 +237,9 @@ nnoremap <Leader>GC :Gcommit<CR>
 " indent  mapping
 nnoremap <Leader>I :IndentGuidesToggle<CR>
 """""""""""""" COC
+" let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
+let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
 " let g:coc_node_path = '/Users/michael.robertson/.nvm/versions/node/v12.1.0/bin/node'
-let g:coc_node_path = '/Users/michaelrobertson/.nvm/versions/node/v12.2.0/bin/node'
 " let g:coc_node_path = systemlist('which node')[0]
 augroup cocCommands
   au!
@@ -249,8 +250,12 @@ augroup cocCommands
   nmap <silent> <Leader>gr <Plug>(coc-references)
   nmap <silent> <Leader>ren <Plug>(coc-rename)
   nmap <silent> <Leader>fix <Plug>(coc-codeaction)
-  nmap <silent> <Leader>cc <Plug>(coc-diagnostic-info)
-  nnoremap <silent> <space>di  :<C-u>CocList diagnostics<cr>
+  " TODO find a damn binding to close popups
+  " inoremap <silent><expr> <c-p><c-p> coc#util#close_floats()
+  nnoremap <silent> <Leader>cc :call coc#util#close_floats()<CR>
+  " nmap <silent> <Leader>cc <Plug>(coc-diagnostic-info)
+  nnoremap <silent> <space>di :CocDiagnostics<CR>
+  " nnoremap <silent> <space>di  :<C-u>CocList diagnostics<cr>
   nmap <silent> <Leader>, <Plug>(coc-diagnostic-prev)
   nmap <silent> <Leader>. <Plug>(coc-diagnostic-next)
   " nmap <silent> <Leader>cl <Plug>(coc-codelens-action)
@@ -316,3 +321,25 @@ let g:vim_json_syntax_conceal=0 " don't conceal json quotes
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>LG :!lazygit<cr>
 nnoremap <leader>gito :!git open<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              mini map                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>MM :MinimapToggle<cr>
+nmap <silent><Leader>g :call setbufvar(winbufnr(popup_atcursor(split(system("git log -n 1 -L " . line(".") . ",+1:" . expand("%:p")), "\n"), { "padding": [1,1,1,1], "pos": "botleft", "wrap": 0 })), "&filetype", "git")<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 lightline                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set statusline^=%{coc#status()}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                    FZF                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <C-p> :Files<CR>
+nnoremap <C-f><C-p> :Files 
+nnoremap <C-f><C-b> :Buffers<CR>
+nnoremap <C-f><C-h> :History<CR>
+nnoremap <C-f><C-s> :Snippets<CR>
+nnoremap <C-f><C-l> :Lines<CR>
+nnoremap <C-f><C-m> :Maps<CR>
+nnoremap <C-f><C-h> :Helptags<CR>

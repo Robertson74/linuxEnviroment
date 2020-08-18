@@ -171,7 +171,7 @@ nnoremap <Leader>fm :find ./server/**/
 nnoremap <Leader>g. :grep -R "" ./<left><left><left><left>
 nnoremap <Leader>gs :grep -R "" ./src<left><left><left><left><left><left><left>
 nnoremap <Leader>ga :grep -R "" ./app<left><left><left><left><left><left><left>
-nnoremap <Leader>gm :grep -R "" ./server<left><left><left><left><left><left><left><left><left><left>
+nnoremap <Leader>gm :grep -R "" ./modules<left><left><left><left><left><left><left><left><left><left><left>
 nnoremap <Leader>sw :w !sudo tee %<cr>
 " find trailing spaces
 nnoremap <Leader>ts /\S\zs\s\+$<cr>
